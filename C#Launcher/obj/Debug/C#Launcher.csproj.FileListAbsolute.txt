@@ -1,0 +1,12 @@
+D:\Bibliotecas\Escritorio\c++\LauncherProject\C#Launcher\C#Launcher\bin\Debug\C#Launcher.exe.config
+D:\Bibliotecas\Escritorio\c++\LauncherProject\C#Launcher\C#Launcher\bin\Debug\C#Launcher.exe
+D:\Bibliotecas\Escritorio\c++\LauncherProject\C#Launcher\C#Launcher\bin\Debug\C#Launcher.pdb
+D:\Bibliotecas\Escritorio\c++\LauncherProject\C#Launcher\C#Launcher\obj\Debug\C#Launcher.csproj.AssemblyReference.cache
+D:\Bibliotecas\Escritorio\c++\LauncherProject\C#Launcher\C#Launcher\obj\Debug\C#Launcher.csproj.SuggestedBindingRedirects.cache
+D:\Bibliotecas\Escritorio\c++\LauncherProject\C#Launcher\C#Launcher\obj\Debug\C_Launcher.Form1.resources
+D:\Bibliotecas\Escritorio\c++\LauncherProject\C#Launcher\C#Launcher\obj\Debug\C_Launcher.Properties.Resources.resources
+D:\Bibliotecas\Escritorio\c++\LauncherProject\C#Launcher\C#Launcher\obj\Debug\C#Launcher.csproj.GenerateResource.cache
+D:\Bibliotecas\Escritorio\c++\LauncherProject\C#Launcher\C#Launcher\obj\Debug\C#Launcher.csproj.CoreCompileInputs.cache
+D:\Bibliotecas\Escritorio\c++\LauncherProject\C#Launcher\C#Launcher\obj\Debug\C#Launcher.exe
+D:\Bibliotecas\Escritorio\c++\LauncherProject\C#Launcher\C#Launcher\obj\Debug\C#Launcher.pdb
+D:\Bibliotecas\Escritorio\c++\LauncherProject\C#Launcher\C#Launcher\obj\Debug\C_Launcher.Home.resources
