@@ -16,7 +16,9 @@ namespace C_Launcher
     public partial class Form1 : Form
     {
         private int currentX, currentY;
+        private int resizing = 0; // 0=no se esta ajustando; 1=ajustando ancho; 2=ajustando alto; 3=ajustando ambos
         private bool isResizing;
+
 
         public Form1()
         {
@@ -232,11 +234,32 @@ namespace C_Launcher
 
         private void pictureBox1_MouseDown(object sender, MouseEventArgs e)
         {
-            // Verifique si el mouse está dentro de los límites del PictureBox
-            if (e.X > pictureBox1.Width - 5 && e.Y > pictureBox1.Height - 5)
+            int margin = 10;
+
+            //Ancho (Mouse a la derecha)
+            if (e.X >= pictureBox1.Width - margin && e.Y < pictureBox1.Height - margin)
             {
-                // El mouse está en la esquina inferior derecha, por lo que comenzamos a cambiar el tamaño
-                isResizing = true;
+                //isResizing = true;
+                resizing = 1;
+                currentX = e.X;
+                currentY = 0;
+                
+            }
+
+            //Alto (Mouse en la parte inferior)
+            if (e.X < pictureBox1.Width - margin && e.Y >= pictureBox1.Height - margin)
+            {
+                //isResizing = true;
+                resizing = 2;
+                currentX = 0;
+                currentY = e.Y;
+
+            }
+
+            //Ajustando ambos (mouse en esquina inferior derecha)
+            if (e.X >= pictureBox1.Width - margin && e.Y >= pictureBox1.Height - margin)
+            {
+                resizing = 3;
                 currentX = e.X;
                 currentY = e.Y;
             }
@@ -245,7 +268,7 @@ namespace C_Launcher
         private void pictureBox1_MouseMove(object sender, MouseEventArgs e)
         {
             // Verifique si estamos cambiando el tamaño
-            if (isResizing)
+            if (resizing > 0)
             {
                 // Calcule el nuevo ancho y alto del PictureBox
                 int newWidth = pictureBox1.Width + (e.X - currentX);
@@ -255,12 +278,12 @@ namespace C_Launcher
                 if (newWidth > 0 && newHeight > 0)
                 {
                     // Establecer el nuevo ancho y alto del PictureBox
-                    pictureBox1.Width = newWidth;
-                    pictureBox1.Height = newHeight;
+                    if (resizing != 2) pictureBox1.Width = newWidth;//No ajustar el ancho si solo estamos cambiando el alto
+                    if (resizing != 1)  pictureBox1.Height = newHeight;//No ajustar el alto si solo estamos cambiando el ancho
 
                     // Actualizar las coordenadas actuales del mouse
-                    currentX = e.X;
-                    currentY = e.Y;
+                    if (resizing != 2) currentX = e.X;
+                    if (resizing != 1) currentY = e.Y;
                 }
             }
         }
@@ -269,6 +292,7 @@ namespace C_Launcher
         {
             // Dejar de cambiar el tamaño
             isResizing = false;
+            resizing = 0;
         }
 
         
@@ -300,6 +324,11 @@ namespace C_Launcher
             FontBrush.Dispose();
             RectBrush.Dispose();//Dejar de ocupar pincel
             g.Dispose();//Dejar de ocupar graphics
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
         }
 
         //Al salir

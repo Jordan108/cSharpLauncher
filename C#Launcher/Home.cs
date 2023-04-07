@@ -14,6 +14,14 @@ namespace C_Launcher
     {
          private PictureBox[] picBoxArr = new PictureBox[0];//Crear el array de picBox que se mantendra en memoria
 
+        /*
+         como hacer un get y un set de una clase
+
+        Clase a = new clase()
+
+        a.name = "value"; Set
+        string name = a.name; Get
+         */
         public Home()
         {
             InitializeComponent();
@@ -22,7 +30,7 @@ namespace C_Launcher
 
         private void Home_Load(object sender, EventArgs e)
         {
-
+            
         }
 
         #region controlar vista de usuario 

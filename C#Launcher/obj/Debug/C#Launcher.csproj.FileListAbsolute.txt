@@ -10,3 +10,15 @@ D:\Bibliotecas\Escritorio\c++\LauncherProject\C#Launcher\C#Launcher\obj\Debug\C#
 D:\Bibliotecas\Escritorio\c++\LauncherProject\C#Launcher\C#Launcher\obj\Debug\C#Launcher.exe
 D:\Bibliotecas\Escritorio\c++\LauncherProject\C#Launcher\C#Launcher\obj\Debug\C#Launcher.pdb
 D:\Bibliotecas\Escritorio\c++\LauncherProject\C#Launcher\C#Launcher\obj\Debug\C_Launcher.Home.resources
+D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\bin\Debug\C#Launcher.exe.config
+D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\bin\Debug\C#Launcher.exe
+D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\bin\Debug\C#Launcher.pdb
+D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\obj\Debug\C#Launcher.csproj.AssemblyReference.cache
+D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\obj\Debug\C#Launcher.csproj.SuggestedBindingRedirects.cache
+D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\obj\Debug\C_Launcher.Form1.resources
+D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\obj\Debug\C_Launcher.Home.resources
+D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\obj\Debug\C_Launcher.Properties.Resources.resources
+D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\obj\Debug\C#Launcher.csproj.GenerateResource.cache
+D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\obj\Debug\C#Launcher.csproj.CoreCompileInputs.cache
+D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\obj\Debug\C#Launcher.exe
+D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\obj\Debug\C#Launcher.pdb
