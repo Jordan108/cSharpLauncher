@@ -64,8 +64,9 @@
             // splitterLeft
             // 
             this.splitterLeft.Location = new System.Drawing.Point(108, 64);
+            this.splitterLeft.Margin = new System.Windows.Forms.Padding(3, 3, 10, 3);
             this.splitterLeft.Name = "splitterLeft";
-            this.splitterLeft.Size = new System.Drawing.Size(10, 488);
+            this.splitterLeft.Size = new System.Drawing.Size(4, 488);
             this.splitterLeft.TabIndex = 3;
             this.splitterLeft.TabStop = false;
             // 

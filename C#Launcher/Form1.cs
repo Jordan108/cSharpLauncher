@@ -10,6 +10,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
+using System.Xml.Serialization;
 
 namespace C_Launcher
 {
@@ -34,27 +35,62 @@ namespace C_Launcher
         //Crear elementos a un xml
         private void appendXML(string abc)
         {
+            string xmlPath = "example.xml";
+            //Verificar que el archivo xml exista (y si no es asi, crearlo y formatearlo)
+            if (!File.Exists(xmlPath))
+            {
+                XmlWriterSettings settings = new XmlWriterSettings();
+                settings.Indent = true;
+
+                using (XmlWriter writer = XmlWriter.Create(xmlPath, settings))
+                {
+                    //Crear el elemento raiz del archivo (obligatorio)
+                    writer.WriteStartElement("Launcher");
+                    writer.WriteEndElement();
+                }
+            }
+
             //Cargar el archivo XML
             XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.Load("example.xml");
+            xmlDoc.Load(xmlPath);
+
+            XmlNodeList nodeList = xmlDoc.SelectNodes("//Launcher/collection");
+
+            //Itera para encontrar el id mas alto
+            int maxId = 0;
+            foreach (XmlNode node in nodeList)
+            {
+                int currentId;
+                if (int.TryParse(node.Attributes["id"].Value, out currentId))
+                {
+                    if (currentId > maxId)
+                    {
+                        maxId = currentId;
+                    }
+                }
+            }
 
             //Crea una coleccion/archivo nueva
-            XmlElement coleccion = xmlDoc.CreateElement("ColeccionX");
-            coleccion.SetAttribute("id", "1");//establecer el atributo id para facilitar la busqueda por xPath
+            XmlElement coleccion = xmlDoc.CreateElement("collection");
+            coleccion.SetAttribute("id", maxId+1+"");//establecer el atributo id para facilitar la busqueda por xPath
             xmlDoc.DocumentElement.AppendChild(coleccion);//agrega la coleccion al documento
 
 
-            //Aqui se crearan los elementos dentro de esa coleccion
-            XmlElement nuevoElemento = xmlDoc.CreateElement("nombreDelElemento");
-            //nuevoElemento.SetAttribute("atributo1", "valor2");
-           nuevoElemento.InnerText = abc;
+            //Elementos de esa coleccion
+            //Crea el nombre del elemento a agregar; agrega los datos; agrega los elementos de la coleccion a la coleccion
+            XmlElement colFather = xmlDoc.CreateElement("IDFather"); colFather.InnerText = "-1"; coleccion.AppendChild(colFather);
+            XmlElement colName = xmlDoc.CreateElement("Name"); colName.InnerText = "nombre"; coleccion.AppendChild(colName);
+            XmlElement colImage = xmlDoc.CreateElement("Image"); colImage.InnerText = "/"; coleccion.AppendChild(colImage);
+            XmlElement colBgRed = xmlDoc.CreateElement("BackgroundRed"); colBgRed.InnerText = "255"; coleccion.AppendChild(colBgRed);
+            XmlElement colBgGreen = xmlDoc.CreateElement("BackgroundGreen"); colBgGreen.InnerText = "255"; coleccion.AppendChild(colBgGreen);
+            XmlElement colBgBlue = xmlDoc.CreateElement("BackgroundBlue"); colBgBlue.InnerText = "255"; coleccion.AppendChild(colBgBlue);
+            XmlElement colResolution = xmlDoc.CreateElement("CoverResolutionID"); colResolution.InnerText = "0"; coleccion.AppendChild(colResolution);
+            XmlElement colWith = xmlDoc.CreateElement("CoverWidth"); colWith.InnerText = "200"; coleccion.AppendChild(colWith);
+            XmlElement colHeight = xmlDoc.CreateElement("CoverHeight"); colHeight.InnerText = "200"; coleccion.AppendChild(colHeight);
+            XmlElement colTags = xmlDoc.CreateElement("TagsID"); colTags.InnerText = "0"; coleccion.AppendChild(colTags);
+            XmlElement colFavorite = xmlDoc.CreateElement("Favorite"); colFavorite.InnerText = "false"; coleccion.AppendChild(colFavorite);
 
-
-
-            coleccion.AppendChild(nuevoElemento);//agrega los elementos de la coleccion a la coleccion
-           // xmlDoc.DocumentElement.AppendChild(nuevoElemento);
-
-            xmlDoc.Save("example.xml");
+            xmlDoc.Save(xmlPath);
         }
 
         //Empezar los procesos

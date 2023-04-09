@@ -1,9 +1,46 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Append>
-  <ColeccionX>
-    <nombreDelElemento>aaa</nombreDelElemento>
-  </ColeccionX>
-  <ColeccionX>
-    <nombreDelElemento>bbb</nombreDelElemento>
-  </ColeccionX>
-</Append>
+<Launcher>
+  <collection id="1">
+    <IDFather>0</IDFather>
+    <Name>nombre</Name>
+    <Image>
+    </Image>
+	<ImageLayout>0</ImageLayout>
+    <BackgroundRed>0</BackgroundRed>
+    <BackgroundGreen>0</BackgroundGreen>
+    <BackgroundBlue>0</BackgroundBlue>
+    <CoverResolutionID>0</CoverResolutionID>
+    <CoverWidth>10</CoverWidth>
+    <CoverHeight>200</CoverHeight>
+    <TagsID>0</TagsID>
+    <Favorite>false</Favorite>
+  </collection>
+  <collection id="2">
+    <IDFather>0</IDFather>
+    <Name>nombre</Name>
+    <Image>D:\Bibliotecas\Imágenes\WallpaperBlock.png</Image>
+	<ImageLayout>1</ImageLayout>
+    <BackgroundRed>255</BackgroundRed>
+    <BackgroundGreen>255</BackgroundGreen>
+    <BackgroundBlue>255</BackgroundBlue>
+    <CoverResolutionID>0</CoverResolutionID>
+    <CoverWidth>400</CoverWidth>
+    <CoverHeight>200</CoverHeight>
+    <TagsID>0</TagsID>
+    <Favorite>false</Favorite>
+  </collection>
+  <collection id="3">
+    <IDFather>0</IDFather>
+    <Name>nombre</Name>
+    <Image></Image>
+	<ImageLayout>0</ImageLayout>
+    <BackgroundRed>255</BackgroundRed>
+    <BackgroundGreen>0</BackgroundGreen>
+    <BackgroundBlue>255</BackgroundBlue>
+    <CoverResolutionID>0</CoverResolutionID>
+    <CoverWidth>100</CoverWidth>
+    <CoverHeight>100</CoverHeight>
+    <TagsID>0</TagsID>
+    <Favorite>false</Favorite>
+  </collection>
+</Launcher>
