@@ -13,10 +13,12 @@ namespace C_Launcher.Clases
         private int idFather;
         private string name;
         //rutas de directorio
-        private string imagePath;
         private string filePath;
         private string programPath;
         private string cmdLine;
+        //Imagen
+        private string imagePath;
+        private int imageLayout;
         //Color de fondo del picture box
         private int colRed;
         private int colGreen;
@@ -30,12 +32,13 @@ namespace C_Launcher.Clases
         private bool favorite;
 
         //Constructor
-        public Files(int _id, int _idFather, string _name, string _imgPath, string _filePath, string _programPath, string _cmd, int _r, int _g, int _b, int _res, int _w, int _h, bool _url, int[] _tag, bool _fav)
+        public Files(int _id, int _idFather, string _name, string _imgPath, int _layout, string _filePath, string _programPath, string _cmd, int _r, int _g, int _b, int _res, int _w, int _h, bool _url, int[] _tag, bool _fav)
         {
             id = _id;
             idFather = _idFather;
             name = _name;
             imagePath = _imgPath;
+            imageLayout = _layout;
             filePath = _filePath;
             programPath = _programPath;
             cmdLine = _cmd;
@@ -69,6 +72,11 @@ namespace C_Launcher.Clases
         {
             set { imagePath = value; }
             get { return imagePath; }
+        }
+        public int ImageLayout
+        {
+            set { imageLayout = value; }
+            get { return imageLayout; }
         }
         public string FilePath
         {
