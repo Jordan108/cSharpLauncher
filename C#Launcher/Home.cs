@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Text;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -21,10 +22,28 @@ namespace C_Launcher
         //Rutas de los archivos XML
         private string xmlColPath = "example.xml";
         private string xmlFilesPath = "example2.xml";
+        //ToolStrip
+       // private ContextMenuStrip panelContexMenuStrip;
 
         public Home()
         {
             InitializeComponent();
+            //Tool strip
+            ContextMenuStrip  contextMenuLayoutPanel = new ContextMenuStrip();
+            ToolStripMenuItem ToolStripAddCollection = new ToolStripMenuItem();
+            ToolStripMenuItem ToolStripAddFile       = new ToolStripMenuItem();
+
+            ToolStripAddCollection.Text = "crear coleccion";
+            ToolStripAddCollection.Click += new EventHandler(ToolStripAddCollection_Click);
+            ToolStripAddFile.Text = "crear archivo";
+            ToolStripAddFile.Click += new EventHandler(ToolStripAddFile_Click);
+
+            contextMenuLayoutPanel.Items.AddRange(new ToolStripItem[] { ToolStripAddCollection, ToolStripAddFile });
+
+            //Agregar al layout panel
+            flowLayoutPanelMain.ContextMenuStrip = contextMenuLayoutPanel;
+
+            //Cargar paneles
             int colSize = LoadCollectionSize();
             int fileSize = LoadFilesSize();
 
@@ -40,6 +59,19 @@ namespace C_Launcher
         {
             
         }
+        #region
+        //Crear la nueva ventana para añadir las colecciones
+        private void ToolStripAddCollection_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("si funca");
+        }
+
+        //Crear la nueva ventana para crear los archivos (individual)
+        private void ToolStripAddFile_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("si funca");
+        }
+        #endregion
 
         #region controlar vista de usuario 
         private void loadPictureBox(int colSize, int fileSize, bool filter)
@@ -300,7 +332,16 @@ namespace C_Launcher
             }
             catch (Exception)
             {
-                Console.WriteLine("No se pudo cargar el xml de los archivos");
+                Console.WriteLine("No se encontro el fichero de los archivos, se creara uno nuevo");
+                XmlWriterSettings settings = new XmlWriterSettings();
+                settings.Indent = true;
+
+                using (XmlWriter writer = XmlWriter.Create(xmlFilesPath, settings))
+                {
+                    //Crear el elemento raiz del archivo (obligatorio)
+                    writer.WriteStartElement("Launcher");
+                    writer.WriteEndElement();
+                }
             }
             
             return size;
@@ -320,7 +361,16 @@ namespace C_Launcher
             }
             catch (Exception)
             {
-                Console.WriteLine("No se pudo cargar el xml de las colecciones");
+                Console.WriteLine("No se encontro el fichero de las colecciones, se creara uno nuevo");
+                XmlWriterSettings settings = new XmlWriterSettings();
+                settings.Indent = true;
+
+                using (XmlWriter writer = XmlWriter.Create(xmlColPath, settings))
+                {
+                    //Crear el elemento raiz del archivo (obligatorio)
+                    writer.WriteStartElement("Launcher");
+                    writer.WriteEndElement();
+                }
             }
            
             return size;
