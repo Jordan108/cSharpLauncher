@@ -22,3 +22,4 @@ D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\obj\Debug\C#Launcher.
 D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\obj\Debug\C#Launcher.csproj.CoreCompileInputs.cache
 D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\obj\Debug\C#Launcher.exe
 D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\obj\Debug\C#Launcher.pdb
+D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\obj\Debug\C_Launcher.NewFile.resources

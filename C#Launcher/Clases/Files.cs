@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace C_Launcher.Clases
 {
-    internal class Files
+    public class Files
     {
         //Atributos
         private int id;

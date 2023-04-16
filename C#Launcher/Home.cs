@@ -59,18 +59,29 @@ namespace C_Launcher
         {
             
         }
-        #region
+
+        #region ToolStrip
         //Crear la nueva ventana para añadir las colecciones
         private void ToolStripAddCollection_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("si funca");
+            NewCollection newCollection = new NewCollection();
+            newCollection.ShowDialog();
         }
 
         //Crear la nueva ventana para crear los archivos (individual)
         private void ToolStripAddFile_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("si funca");
+            NewFile newFile = new NewFile();
+            newFile.ReturnedObject += NewFile_ReturnedObject;
+            newFile.ShowDialog();
         }
+
+        private void NewFile_ReturnedObject(object sender, Files e)
+        {
+            //throw new NotImplementedException();
+            SaveXMLFile(e);
+        }
+
         #endregion
 
         #region controlar vista de usuario 
@@ -254,7 +265,7 @@ namespace C_Launcher
             xmlDoc.Save(xmlColPath);
         }
 
-        private void SaveXMLFile()
+        private void SaveXMLFile(Files Class)
         {
             //Verificar que el archivo xml exista (y si no es asi, crearlo y formatearlo)
             if (!File.Exists(xmlColPath))
@@ -295,25 +306,33 @@ namespace C_Launcher
             file.SetAttribute("id", maxId + 1 + "");//establecer el atributo id para facilitar la busqueda por xPath
             xmlDoc.DocumentElement.AppendChild(file);//agrega la coleccion al documento
 
-
             //Elementos de ese file
             //Crea el nombre del elemento a agregar; agrega los datos; agrega los elementos de la coleccion a la coleccion
-            XmlElement fileFather = xmlDoc.CreateElement("IDFather"); fileFather.InnerText = "-1"; file.AppendChild(fileFather);
-            XmlElement fileName = xmlDoc.CreateElement("Name"); fileName.InnerText = "nombre"; file.AppendChild(fileName);
-            XmlElement fileImage = xmlDoc.CreateElement("Image"); fileImage.InnerText = "/"; file.AppendChild(fileImage);
-            XmlElement fileLayout = xmlDoc.CreateElement("ImageLayout"); fileLayout.InnerText = "/"; file.AppendChild(fileLayout);
-            XmlElement filePath = xmlDoc.CreateElement("FilePath"); filePath.InnerText = "/"; file.AppendChild(filePath);
-            XmlElement fileProgram = xmlDoc.CreateElement("ProgramPath"); fileProgram.InnerText = "/"; ; file.AppendChild(fileProgram);
-            XmlElement filecmd = xmlDoc.CreateElement("CMDLine"); filecmd.InnerText = ""; file.AppendChild(filecmd);
-            XmlElement fileBgRed = xmlDoc.CreateElement("BackgroundRed"); fileBgRed.InnerText = "255"; file.AppendChild(fileBgRed);
-            XmlElement fileBgGreen = xmlDoc.CreateElement("BackgroundGreen"); fileBgGreen.InnerText = "255"; file.AppendChild(fileBgGreen);
-            XmlElement fileBgBlue = xmlDoc.CreateElement("BackgroundBlue"); fileBgBlue.InnerText = "255"; file.AppendChild(fileBgBlue);
-            XmlElement fileResolution = xmlDoc.CreateElement("CoverResolutionID"); fileResolution.InnerText = "0"; file.AppendChild(fileResolution);
-            XmlElement fileWith = xmlDoc.CreateElement("CoverWidth"); fileWith.InnerText = "200"; file.AppendChild(fileWith);
-            XmlElement fileHeight = xmlDoc.CreateElement("CoverHeight"); fileHeight.InnerText = "200"; file.AppendChild(fileHeight);
-            XmlElement fileURL = xmlDoc.CreateElement("URLCheck"); fileURL.InnerText = "false"; file.AppendChild(fileURL);
-            XmlElement fileTags = xmlDoc.CreateElement("TagsID"); fileTags.InnerText = "0"; file.AppendChild(fileTags);
-            XmlElement fileFavorite = xmlDoc.CreateElement("Favorite"); fileFavorite.InnerText = "false"; file.AppendChild(fileFavorite);
+            XmlElement fileFather = xmlDoc.CreateElement("IDFather"); fileFather.InnerText                  = Class.IDFather.ToString();     file.AppendChild(fileFather);
+            XmlElement fileName = xmlDoc.CreateElement("Name"); fileName.InnerText                          = Class.Name;                    file.AppendChild(fileName);
+            XmlElement fileImage = xmlDoc.CreateElement("Image"); fileImage.InnerText                       = Class.ImagePath;               file.AppendChild(fileImage);
+            XmlElement fileLayout = xmlDoc.CreateElement("ImageLayout"); fileLayout.InnerText               = Class.ImageLayout.ToString();  file.AppendChild(fileLayout);
+            XmlElement filePath = xmlDoc.CreateElement("FilePath"); filePath.InnerText                      = Class.FilePath;                file.AppendChild(filePath);
+            XmlElement fileProgram = xmlDoc.CreateElement("ProgramPath"); fileProgram.InnerText             = Class.ProgramPath;             file.AppendChild(fileProgram);
+            XmlElement filecmd = xmlDoc.CreateElement("CMDLine"); filecmd.InnerText                         = Class.CMDLine;                 file.AppendChild(filecmd);
+            XmlElement fileBgRed = xmlDoc.CreateElement("BackgroundRed"); fileBgRed.InnerText               = Class.ColorRed.ToString();     file.AppendChild(fileBgRed);
+            XmlElement fileBgGreen = xmlDoc.CreateElement("BackgroundGreen"); fileBgGreen.InnerText         = Class.ColorGreen.ToString();   file.AppendChild(fileBgGreen);
+            XmlElement fileBgBlue = xmlDoc.CreateElement("BackgroundBlue"); fileBgBlue.InnerText            = Class.ColorBlue.ToString();    file.AppendChild(fileBgBlue);
+            XmlElement fileResolution = xmlDoc.CreateElement("CoverResolutionID"); fileResolution.InnerText = Class.ResolutionID.ToString(); file.AppendChild(fileResolution);
+            XmlElement fileWith = xmlDoc.CreateElement("CoverWidth"); fileWith.InnerText                    = Class.Width.ToString();        file.AppendChild(fileWith);
+            XmlElement fileHeight = xmlDoc.CreateElement("CoverHeight"); fileHeight.InnerText               = Class.Height.ToString();       file.AppendChild(fileHeight);
+            XmlElement fileURL = xmlDoc.CreateElement("URLCheck"); fileURL.InnerText                        = Class.URLCheck.ToString();     file.AppendChild(fileURL);
+            //Guardar el array de tags
+            XmlElement fileTags = xmlDoc.CreateElement("TagsID"); file.AppendChild(fileTags);
+                foreach (int num in Class.TagsID)
+                {
+                    XmlElement numArray = xmlDoc.CreateElement("id"); 
+                    numArray.InnerText = num.ToString();
+                    fileTags.AppendChild(numArray);
+                //Console.WriteLine(num);
+                }  
+            
+            XmlElement fileFavorite = xmlDoc.CreateElement("Favorite"); fileFavorite.InnerText              = Class.Favorite.ToString();     file.AppendChild(fileFavorite);
 
             xmlDoc.Save(xmlFilesPath);
         }
@@ -485,10 +504,9 @@ namespace C_Launcher
                 int width = 0;
                 int height = 0;
                 bool urlCheck = false;
-                int[] tagsArray = { };
+                int[] tagsArray = new int[] { };
                 bool fav = false;
 
-                //"1, 3, 4, 5, 6, 9, 10, 14, 23"
                 //Navegar entre todos los elementos que contenga el elemento base del xml
                 foreach (XmlNode rootxml in root.ChildNodes)
                 {
@@ -510,8 +528,12 @@ namespace C_Launcher
                         case "CoverHeight": height = int.Parse(rootxml.InnerText); break;
                         case "URLCheck": urlCheck = bool.Parse(rootxml.InnerText); break;
                         case "TagsID":
-                            string[] strArray = rootxml.InnerText.Split(' ');
-                            tagsArray = strArray.Select(s => int.Parse(s)).ToArray();
+                            //leer los tags dentro del elemento
+                            foreach(XmlNode tagid in rootxml)
+                            {
+                                //hacer un append al array
+                                tagsArray = tagsArray.Append(int.Parse(tagid.InnerText)).ToArray();
+                            }
                             break;
                         case "Favorite": fav = bool.Parse(rootxml.InnerText); break;
                     }
