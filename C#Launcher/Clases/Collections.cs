@@ -24,12 +24,18 @@ namespace C_Launcher.Clases
         private int resolution;//Guardo la resolucion para permitir que al momento de que el usuario cambie una resolucion, las colecciones se adapten automaticamente
         private int width;
         private int height;
+        //Tamaño del pictureBox de los hijos + formato
+        private int sonResolution;
+        private int sonWidth;
+        private int sonHeight;
+        private int sonImageLayout;
+        //Datos
         private int[] tagsId;
         private bool favorite;
 
 
         //Constructor
-        public Collections(int _id, int _idFather, string _name, string _imgPath, int _layout, int _r, int _g, int _b, int _res, int _w, int _h, int[] _tag, bool _fav)
+        public Collections(int _id, int _idFather, string _name, string _imgPath, int _layout, int _r, int _g, int _b, int _res, int _w, int _h, int _sRint, int _sW, int _sH, int _sL, int [] _tag, bool _fav)
         {
             id = _id; 
             idFather = _idFather; 
@@ -42,6 +48,10 @@ namespace C_Launcher.Clases
             resolution = _res;
             width = _w; 
             height = _h;
+            sonResolution = _sRint;
+            sonWidth = _sW;
+            sonHeight = _sH;
+            sonImageLayout = _sL;
             tagsId = _tag;
             favorite = _fav;
         }
@@ -100,6 +110,26 @@ namespace C_Launcher.Clases
         {
             set { height = value; }
             get { return height; }
+        }
+        public int SonResolution
+        {
+            set { sonResolution = value; }
+            get { return sonResolution; }
+        }
+        public int SonWidth
+        {
+            set { sonWidth = value; }
+            get { return sonWidth; }
+        }
+        public int SonHeight
+        {
+            set { sonHeight = value; }
+            get { return sonHeight; }
+        }
+        public int SonLayout
+        {
+            set { SonLayout = value; }
+            get { return SonLayout; }
         }
         public int[] TagsID
         {

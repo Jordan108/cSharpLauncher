@@ -200,7 +200,11 @@ namespace C_Launcher
         {
             int idFather = 0;
             string nameFile = textBoxName.Text;
-            string imgPath = pictureBoxCover.Tag.ToString();
+            string imgPath = "";
+            if (pictureBoxCover.Tag != null)
+            {
+                imgPath = pictureBoxCover.Tag.ToString();
+            }
 
             //Image layout
             int imgLayout = 0;
