@@ -25,76 +25,22 @@
     </TagsID>
     <Favorite>False</Favorite>
   </file>
-  <file id="2">
+  <file id="5">
     <IDFather>0</IDFather>
-    <Name>juanito 2</Name>
+    <Name>Mario kart 8</Name>
     <Image>
     </Image>
     <ImageLayout>0</ImageLayout>
-    <FilePath>
-    </FilePath>
-    <ProgramPath>
-    </ProgramPath>
+    <FilePath>D:\Bibliotecas\Juegos\Roms Switch\Mario Kart 8 Deluxe\Mario Kart 8 Deluxe.nsp</FilePath>
+    <ProgramPath>D:\Bibliotecas\Juegos\Yuzu\yuzu.exe</ProgramPath>
     <CMDLine>
     </CMDLine>
-    <BackgroundRed>0</BackgroundRed>
-    <BackgroundGreen>0</BackgroundGreen>
-    <BackgroundBlue>0</BackgroundBlue>
-    <CoverResolutionID>0</CoverResolutionID>
-    <CoverWidth>100</CoverWidth>
-    <CoverHeight>100</CoverHeight>
-    <URLCheck>False</URLCheck>
-    <TagsID>
-      <id>1</id>
-      <id>2</id>
-      <id>3</id>
-    </TagsID>
-    <Favorite>False</Favorite>
-  </file>
-  <file id="3">
-    <IDFather>0</IDFather>
-    <Name>juanito 3</Name>
-    <Image>
-    </Image>
-    <ImageLayout>0</ImageLayout>
-    <FilePath>
-    </FilePath>
-    <ProgramPath>
-    </ProgramPath>
-    <CMDLine>
-    </CMDLine>
-    <BackgroundRed>128</BackgroundRed>
+    <BackgroundRed>255</BackgroundRed>
     <BackgroundGreen>255</BackgroundGreen>
     <BackgroundBlue>0</BackgroundBlue>
     <CoverResolutionID>0</CoverResolutionID>
-    <CoverWidth>100</CoverWidth>
-    <CoverHeight>100</CoverHeight>
-    <URLCheck>False</URLCheck>
-    <TagsID>
-      <id>1</id>
-      <id>2</id>
-      <id>3</id>
-    </TagsID>
-    <Favorite>False</Favorite>
-  </file>
-  <file id="4">
-    <IDFather>0</IDFather>
-    <Name>juanito 4</Name>
-    <Image>
-    </Image>
-    <ImageLayout>0</ImageLayout>
-    <FilePath>
-    </FilePath>
-    <ProgramPath>
-    </ProgramPath>
-    <CMDLine>
-    </CMDLine>
-    <BackgroundRed>0</BackgroundRed>
-    <BackgroundGreen>64</BackgroundGreen>
-    <BackgroundBlue>0</BackgroundBlue>
-    <CoverResolutionID>0</CoverResolutionID>
-    <CoverWidth>239</CoverWidth>
-    <CoverHeight>257</CoverHeight>
+    <CoverWidth>240</CoverWidth>
+    <CoverHeight>164</CoverHeight>
     <URLCheck>False</URLCheck>
     <TagsID>
       <id>1</id>

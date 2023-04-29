@@ -35,16 +35,16 @@
             this.comboBoxResolutionCol = new System.Windows.Forms.ComboBox();
             this.labelResolutionCol = new System.Windows.Forms.Label();
             this.groupBoxCover = new System.Windows.Forms.GroupBox();
+            this.labelColHeight = new System.Windows.Forms.Label();
+            this.labelColWidth = new System.Windows.Forms.Label();
+            this.numericColHeight = new System.Windows.Forms.NumericUpDown();
+            this.numericColWidth = new System.Windows.Forms.NumericUpDown();
             this.groupBoxImageFormat = new System.Windows.Forms.GroupBox();
+            this.radioButtonColEstreched = new System.Windows.Forms.RadioButton();
+            this.radioButtonColZoom = new System.Windows.Forms.RadioButton();
             this.buttonSave = new System.Windows.Forms.Button();
             this.panelImageLimit = new System.Windows.Forms.Panel();
             this.pictureBoxCoverCollection = new System.Windows.Forms.PictureBox();
-            this.numericColWidth = new System.Windows.Forms.NumericUpDown();
-            this.numericColHeight = new System.Windows.Forms.NumericUpDown();
-            this.labelColWidth = new System.Windows.Forms.Label();
-            this.labelColHeight = new System.Windows.Forms.Label();
-            this.radioButtonColZoom = new System.Windows.Forms.RadioButton();
-            this.radioButtonColEstreched = new System.Windows.Forms.RadioButton();
             this.checkBoxFavorite = new System.Windows.Forms.CheckBox();
             this.panelSonImageLimit = new System.Windows.Forms.Panel();
             this.pictureBoxCoverSon = new System.Windows.Forms.PictureBox();
@@ -63,11 +63,11 @@
             this.buttonSearchSonCoverTest = new System.Windows.Forms.Button();
             this.buttonColorPickIMG = new System.Windows.Forms.Button();
             this.groupBoxCover.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericColHeight)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericColWidth)).BeginInit();
             this.groupBoxImageFormat.SuspendLayout();
             this.panelImageLimit.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCoverCollection)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericColWidth)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericColHeight)).BeginInit();
             this.panelSonImageLimit.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCoverSon)).BeginInit();
             this.groupBox1.SuspendLayout();
@@ -141,65 +141,23 @@
             this.groupBoxCover.TabStop = false;
             this.groupBoxCover.Text = "Tamaño en pixeles (100-300)";
             // 
-            // groupBoxImageFormat
+            // labelColHeight
             // 
-            this.groupBoxImageFormat.Controls.Add(this.radioButtonColEstreched);
-            this.groupBoxImageFormat.Controls.Add(this.radioButtonColZoom);
-            this.groupBoxImageFormat.Location = new System.Drawing.Point(12, 309);
-            this.groupBoxImageFormat.Name = "groupBoxImageFormat";
-            this.groupBoxImageFormat.Size = new System.Drawing.Size(200, 69);
-            this.groupBoxImageFormat.TabIndex = 7;
-            this.groupBoxImageFormat.TabStop = false;
-            this.groupBoxImageFormat.Text = "Formato de la imagen";
+            this.labelColHeight.AutoSize = true;
+            this.labelColHeight.Location = new System.Drawing.Point(8, 59);
+            this.labelColHeight.Name = "labelColHeight";
+            this.labelColHeight.Size = new System.Drawing.Size(28, 13);
+            this.labelColHeight.TabIndex = 3;
+            this.labelColHeight.Text = "Alto:";
             // 
-            // buttonSave
+            // labelColWidth
             // 
-            this.buttonSave.Location = new System.Drawing.Point(55, 415);
-            this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(75, 23);
-            this.buttonSave.TabIndex = 8;
-            this.buttonSave.Text = "Guardar";
-            this.buttonSave.UseVisualStyleBackColor = true;
-            // 
-            // panelImageLimit
-            // 
-            this.panelImageLimit.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.panelImageLimit.Controls.Add(this.pictureBoxCoverCollection);
-            this.panelImageLimit.Location = new System.Drawing.Point(218, 138);
-            this.panelImageLimit.Name = "panelImageLimit";
-            this.panelImageLimit.Size = new System.Drawing.Size(300, 300);
-            this.panelImageLimit.TabIndex = 9;
-            // 
-            // pictureBoxCoverCollection
-            // 
-            this.pictureBoxCoverCollection.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.pictureBoxCoverCollection.Location = new System.Drawing.Point(0, 0);
-            this.pictureBoxCoverCollection.Name = "pictureBoxCoverCollection";
-            this.pictureBoxCoverCollection.Size = new System.Drawing.Size(100, 100);
-            this.pictureBoxCoverCollection.TabIndex = 0;
-            this.pictureBoxCoverCollection.TabStop = false;
-            // 
-            // numericColWidth
-            // 
-            this.numericColWidth.Location = new System.Drawing.Point(55, 32);
-            this.numericColWidth.Maximum = new decimal(new int[] {
-            300,
-            0,
-            0,
-            0});
-            this.numericColWidth.Minimum = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-            this.numericColWidth.Name = "numericColWidth";
-            this.numericColWidth.Size = new System.Drawing.Size(120, 20);
-            this.numericColWidth.TabIndex = 0;
-            this.numericColWidth.Value = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
+            this.labelColWidth.AutoSize = true;
+            this.labelColWidth.Location = new System.Drawing.Point(8, 32);
+            this.labelColWidth.Name = "labelColWidth";
+            this.labelColWidth.Size = new System.Drawing.Size(41, 13);
+            this.labelColWidth.TabIndex = 2;
+            this.labelColWidth.Text = "Ancho:";
             // 
             // numericColHeight
             // 
@@ -222,24 +180,52 @@
             0,
             0,
             0});
+            this.numericColHeight.ValueChanged += new System.EventHandler(this.numericColHeight_ValueChanged);
             // 
-            // labelColWidth
+            // numericColWidth
             // 
-            this.labelColWidth.AutoSize = true;
-            this.labelColWidth.Location = new System.Drawing.Point(8, 32);
-            this.labelColWidth.Name = "labelColWidth";
-            this.labelColWidth.Size = new System.Drawing.Size(41, 13);
-            this.labelColWidth.TabIndex = 2;
-            this.labelColWidth.Text = "Ancho:";
+            this.numericColWidth.Location = new System.Drawing.Point(55, 32);
+            this.numericColWidth.Maximum = new decimal(new int[] {
+            300,
+            0,
+            0,
+            0});
+            this.numericColWidth.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.numericColWidth.Name = "numericColWidth";
+            this.numericColWidth.Size = new System.Drawing.Size(120, 20);
+            this.numericColWidth.TabIndex = 0;
+            this.numericColWidth.Value = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.numericColWidth.ValueChanged += new System.EventHandler(this.numericColWidth_ValueChanged);
             // 
-            // labelColHeight
+            // groupBoxImageFormat
             // 
-            this.labelColHeight.AutoSize = true;
-            this.labelColHeight.Location = new System.Drawing.Point(8, 59);
-            this.labelColHeight.Name = "labelColHeight";
-            this.labelColHeight.Size = new System.Drawing.Size(28, 13);
-            this.labelColHeight.TabIndex = 3;
-            this.labelColHeight.Text = "Alto:";
+            this.groupBoxImageFormat.Controls.Add(this.radioButtonColEstreched);
+            this.groupBoxImageFormat.Controls.Add(this.radioButtonColZoom);
+            this.groupBoxImageFormat.Location = new System.Drawing.Point(12, 309);
+            this.groupBoxImageFormat.Name = "groupBoxImageFormat";
+            this.groupBoxImageFormat.Size = new System.Drawing.Size(200, 69);
+            this.groupBoxImageFormat.TabIndex = 7;
+            this.groupBoxImageFormat.TabStop = false;
+            this.groupBoxImageFormat.Text = "Formato de la imagen";
+            // 
+            // radioButtonColEstreched
+            // 
+            this.radioButtonColEstreched.AutoSize = true;
+            this.radioButtonColEstreched.Location = new System.Drawing.Point(11, 44);
+            this.radioButtonColEstreched.Name = "radioButtonColEstreched";
+            this.radioButtonColEstreched.Size = new System.Drawing.Size(63, 17);
+            this.radioButtonColEstreched.TabIndex = 1;
+            this.radioButtonColEstreched.Text = "Estirada";
+            this.radioButtonColEstreched.UseVisualStyleBackColor = true;
+            this.radioButtonColEstreched.CheckedChanged += new System.EventHandler(this.radioButtonColEstreched_CheckedChanged);
             // 
             // radioButtonColZoom
             // 
@@ -252,16 +238,36 @@
             this.radioButtonColZoom.TabStop = true;
             this.radioButtonColZoom.Text = "Mantener escala";
             this.radioButtonColZoom.UseVisualStyleBackColor = true;
+            this.radioButtonColZoom.CheckedChanged += new System.EventHandler(this.radioButtonColZoom_CheckedChanged);
             // 
-            // radioButtonColEstreched
+            // buttonSave
             // 
-            this.radioButtonColEstreched.AutoSize = true;
-            this.radioButtonColEstreched.Location = new System.Drawing.Point(11, 44);
-            this.radioButtonColEstreched.Name = "radioButtonColEstreched";
-            this.radioButtonColEstreched.Size = new System.Drawing.Size(63, 17);
-            this.radioButtonColEstreched.TabIndex = 1;
-            this.radioButtonColEstreched.Text = "Estirada";
-            this.radioButtonColEstreched.UseVisualStyleBackColor = true;
+            this.buttonSave.Location = new System.Drawing.Point(55, 415);
+            this.buttonSave.Name = "buttonSave";
+            this.buttonSave.Size = new System.Drawing.Size(75, 23);
+            this.buttonSave.TabIndex = 8;
+            this.buttonSave.Text = "Guardar";
+            this.buttonSave.UseVisualStyleBackColor = true;
+            this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
+            // 
+            // panelImageLimit
+            // 
+            this.panelImageLimit.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.panelImageLimit.Controls.Add(this.pictureBoxCoverCollection);
+            this.panelImageLimit.Location = new System.Drawing.Point(218, 138);
+            this.panelImageLimit.Name = "panelImageLimit";
+            this.panelImageLimit.Size = new System.Drawing.Size(300, 300);
+            this.panelImageLimit.TabIndex = 9;
+            // 
+            // pictureBoxCoverCollection
+            // 
+            this.pictureBoxCoverCollection.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.pictureBoxCoverCollection.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pictureBoxCoverCollection.Location = new System.Drawing.Point(0, 0);
+            this.pictureBoxCoverCollection.Name = "pictureBoxCoverCollection";
+            this.pictureBoxCoverCollection.Size = new System.Drawing.Size(100, 100);
+            this.pictureBoxCoverCollection.TabIndex = 0;
+            this.pictureBoxCoverCollection.TabStop = false;
             // 
             // checkBoxFavorite
             // 
@@ -285,6 +291,7 @@
             // pictureBoxCoverSon
             // 
             this.pictureBoxCoverSon.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.pictureBoxCoverSon.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.pictureBoxCoverSon.Location = new System.Drawing.Point(0, 0);
             this.pictureBoxCoverSon.Name = "pictureBoxCoverSon";
             this.pictureBoxCoverSon.Size = new System.Drawing.Size(100, 100);
@@ -361,6 +368,7 @@
             0,
             0,
             0});
+            this.numericSonHeight.ValueChanged += new System.EventHandler(this.numericSonHeight_ValueChanged);
             // 
             // numericSonWidth
             // 
@@ -383,6 +391,7 @@
             0,
             0,
             0});
+            this.numericSonWidth.ValueChanged += new System.EventHandler(this.numericSonWidth_ValueChanged);
             // 
             // groupBoxSonFormat
             // 
@@ -404,6 +413,7 @@
             this.radioButtonSonEstreched.TabIndex = 1;
             this.radioButtonSonEstreched.Text = "Estirada";
             this.radioButtonSonEstreched.UseVisualStyleBackColor = true;
+            this.radioButtonSonEstreched.CheckedChanged += new System.EventHandler(this.radioButtonSonEstreched_CheckedChanged);
             // 
             // radioButtonSonZoom
             // 
@@ -416,6 +426,7 @@
             this.radioButtonSonZoom.TabStop = true;
             this.radioButtonSonZoom.Text = "Mantener escala";
             this.radioButtonSonZoom.UseVisualStyleBackColor = true;
+            this.radioButtonSonZoom.CheckedChanged += new System.EventHandler(this.radioButtonSonZoom_CheckedChanged);
             // 
             // buttonSearchCover
             // 
@@ -425,6 +436,7 @@
             this.buttonSearchCover.TabIndex = 13;
             this.buttonSearchCover.Text = "Seleccionar Caratula";
             this.buttonSearchCover.UseVisualStyleBackColor = true;
+            this.buttonSearchCover.Click += new System.EventHandler(this.buttonSearchCover_Click);
             // 
             // buttonBackgroundColor
             // 
@@ -434,6 +446,7 @@
             this.buttonBackgroundColor.TabIndex = 14;
             this.buttonBackgroundColor.Text = "Color de fondo";
             this.buttonBackgroundColor.UseVisualStyleBackColor = true;
+            this.buttonBackgroundColor.Click += new System.EventHandler(this.buttonBackgroundColor_Click);
             // 
             // buttonSearchSonCoverTest
             // 
@@ -443,6 +456,7 @@
             this.buttonSearchSonCoverTest.TabIndex = 15;
             this.buttonSearchSonCoverTest.Text = "Seleccionar Caratula de prueba";
             this.buttonSearchSonCoverTest.UseVisualStyleBackColor = true;
+            this.buttonSearchSonCoverTest.Click += new System.EventHandler(this.buttonSearchSonCoverTest_Click);
             // 
             // buttonColorPickIMG
             // 
@@ -481,12 +495,12 @@
             this.Text = "NewCollection";
             this.groupBoxCover.ResumeLayout(false);
             this.groupBoxCover.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.numericColHeight)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericColWidth)).EndInit();
             this.groupBoxImageFormat.ResumeLayout(false);
             this.groupBoxImageFormat.PerformLayout();
             this.panelImageLimit.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCoverCollection)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericColWidth)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericColHeight)).EndInit();
             this.panelSonImageLimit.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCoverSon)).EndInit();
             this.groupBox1.ResumeLayout(false);

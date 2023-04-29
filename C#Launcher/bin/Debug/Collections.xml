@@ -1,2 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Launcher />
+<Launcher>
+  <collection id="1">
+    <IDFather>0</IDFather>
+    <Name>Coleccion 1</Name>
+    <Image>D:\Bibliotecas\Imágenes\Wallpaper.png</Image>
+    <ImageLayout>0</ImageLayout>
+    <BackgroundRed>255</BackgroundRed>
+    <BackgroundGreen>128</BackgroundGreen>
+    <BackgroundBlue>64</BackgroundBlue>
+    <CoverResolutionID>0</CoverResolutionID>
+    <CoverWidth>300</CoverWidth>
+    <CoverHeight>188</CoverHeight>
+    <CoverSonResolutionID>0</CoverSonResolutionID>
+    <CoverSonWidth>242</CoverSonWidth>
+    <CoverSonHeight>213</CoverSonHeight>
+    <SonImageLayout>0</SonImageLayout>
+    <TagsID>
+      <id>1</id>
+      <id>2</id>
+      <id>3</id>
+    </TagsID>
+    <Favorite>false</Favorite>
+  </collection>
+</Launcher>

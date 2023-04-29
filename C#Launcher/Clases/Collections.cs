@@ -7,7 +7,7 @@ using System.Windows.Forms;
 
 namespace C_Launcher.Clases
 {
-    internal class Collections
+    public class Collections
     {
         //Atributos
         private int id;

@@ -78,6 +78,7 @@ namespace C_Launcher
         private void ToolStripAddCollection_Click(object sender, EventArgs e)
         {
             NewCollection newCollection = new NewCollection();
+            newCollection.ReturnedObject += NewCollection_ReturnedObject;
             newCollection.ShowDialog();
         }
 
@@ -94,6 +95,12 @@ namespace C_Launcher
         #endregion
 
         #region Manejar interaccion entre ventanas
+        private void NewCollection_ReturnedObject(object sender, Collections e)
+        {
+            SaveXMLCollection(e);
+            loadPictureBox(colSize, fileSize, false);
+        }
+
         private void NewFile_ReturnedObject(object sender, Files e)
         {
             //Guarda los archivos XML
@@ -103,40 +110,47 @@ namespace C_Launcher
         }
         #endregion
 
-        #region Interaccion de paneles
+        #region Interaccion pictureBox
         //Empezar un proceso al hacer click a un archivo
-        private void startProcess()
+        private void startProcess(string file, string program, string cmdLine, bool url)
         {
-            bool url = true;
+            //bool url = true;
+
+            //file y program se deben de formatear
             string fileExe = "";
             string fileDir = "";
             string programDir = "";
-            string cmdLine = "";//es necesario establecerlo como "", por default es null, pero si alguien escribe algo y lo borra quedara como "" y complicara las validaciones
+            //string cmdLine = "";//es necesario establecerlo como "", por default es null, pero si alguien escribe algo y lo borra quedara como "" y complicara las validaciones
 
             //Crear el process start
             Process process = new Process();
-            // ProcessStartInfo startInfo = new ProcessStartInfo();//De todas formas despues se declara con un new ProcessStart...
-
-            //prueba para no perderme
-            //if (textBoxFileName.Text != "") fileExe = textBoxFileName.Text;
-            //if (textBoxProgramName.Text != "") programDir = Path.GetFullPath(textBoxProgramName.Text);
-            //cmdLine = textBoxCMDline.Text;
 
             //es necesario comprobar si es una URL o un archivo del sistema, 
             if (url == false)
             {
                 //Solo formatear la ruta del archivo si este no es un URL
-                fileExe = Path.GetFullPath(fileExe);
-                fileDir = Path.GetDirectoryName(fileExe);
+                try
+                {
+                    fileExe = Path.GetFullPath(file);
+                    fileDir = Path.GetDirectoryName(file);
+                    if (program != "") programDir = Path.GetFullPath(program);
 
-                Console.WriteLine("ruta del archivo: " + fileExe);
-                Console.WriteLine("ruta de la carpeta: " + fileDir);
+                    Console.WriteLine("ruta del archivo: " + fileExe);
+                    Console.WriteLine("ruta de la carpeta: " + fileDir);
+                    Console.WriteLine("ruta programa: " + programDir);
+                    Console.WriteLine("cmd: " + cmdLine);
+                }
+                catch
+                {
+                    MessageBox.Show("Error al intentar buscar los directorios, revisa si los archivos existen en el directorio especificado", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
             }
 
             //Intentar ejecutar los archivos/URL
             try
             {
-                //Intentar abrir un archivo solo o abrir una URL
+                //Intentar abrir solo un archivo o abrir una URL
                 if ((programDir == "") || (url == true))
                 {
                     Console.WriteLine("abriendo un archivo o URL");
@@ -171,6 +185,9 @@ namespace C_Launcher
                     {
                         startInfo.Arguments = "\"" + fileExe + "\"" + " " + cmdLine;
                     }
+
+                    process.StartInfo = startInfo;
+                    process.Start();
                 }
             }
             //En caso de errores
@@ -187,22 +204,9 @@ namespace C_Launcher
         private void pictureBox_MouseEnter(object sender, EventArgs e)
         {
             PictureBox pictureBox = (PictureBox)sender;
-            int idBox = int.Parse(pictureBox.Tag.ToString());//no se puede transformar un objeto a int, pero si a un string
-            string boxType = pictureBox.Name;//Recoje el tipo de picture box para buscar en el array especifico (col/file)
+            string picName = pictureBox.Name;
 
-            string picName = "";
-
-            if (boxType == "file")
-            {
-                //Buscar en el array de los archivos
-                Files[] files = new Files[1];
-                files = searchFile(idBox);
-                picName = files[0].Name;
-
-            } else
-            {
-                //Buscar en el array de las colecciones
-            }
+           
 
             Graphics g = pictureBox.CreateGraphics();//Crear graphics
 
@@ -233,10 +237,28 @@ namespace C_Launcher
             PictureBox pictureBox = (PictureBox)sender;
             pictureBox.Invalidate();//Vuelve a dibujar el control otra vez, eliminando cualquier graphics
         }
+
+        //Clickear para ejecutar el archivo o entrar en la coleccion
+        private void pictureBox_Click(object sender, EventArgs e)
+        {
+            PictureBox pictureBox = (PictureBox)sender;
+            int idBox = int.Parse(pictureBox.Tag.ToString());//no se puede transformar un objeto a int, pero si a un string
+            string boxType = pictureBox.AccessibleDescription;//Recoje el tipo de picture box para buscar en el array especifico (col/file)
+
+            if (boxType == "file")
+            {
+                //Dentro de la funcion se buscara los procesos asociados al archivo y llamara a start process
+                searchFileProcess(idBox);
+
+            } else
+            {
+                //Buscar en el array de las colecciones
+            }
+        }
         #endregion
 
-        #region controlar vista de HOME
-        private void destroyPanels()
+        #region Creacion/Destruccion pictureBox
+        private void destroyPictureBox()
         {
             //remueve todos los paneles del control
             for (int i=0; i< picBoxArr.Length; i++)
@@ -262,7 +284,7 @@ namespace C_Launcher
             flowLayoutPanelMain.SuspendLayout();
 
             //Primero remueve todos los paneles del control
-            destroyPanels();
+            destroyPictureBox();
 
             //Luego carga todos los archivos en los arrays
             Collections[] colls = new Collections[colSize];
@@ -287,7 +309,9 @@ namespace C_Launcher
                     //Definir el picture box
                     picBoxArr[pL] = new PictureBox
                     {
-                        Name = "collection",//Aqui se indica que tipo de picture box es (coleccion / archivo)
+                        AccessibleDescription = "collection",//Aqui se indica que tipo de picture box es (coleccion / archivo)
+                        Name = colls[i].Name,//Aqui se guarda el nombre de la coleccion
+                        
                         Size = new Size(colls[i].Width, colls[i].Height),
                         BackColor = Color.FromArgb(colls[i].ColorRed, colls[i].ColorGreen, colls[i].ColorBlue),
 
@@ -315,7 +339,9 @@ namespace C_Launcher
                         picBoxArr[pL].BackgroundImageLayout = ImageLayout.Stretch;
                     }
                     //picBoxArr[pL].Click +=
-
+                    picBoxArr[pL].MouseEnter += new System.EventHandler(this.pictureBox_MouseEnter);
+                    picBoxArr[pL].MouseLeave += new System.EventHandler(this.pictureBox_MouseLeave);
+                    picBoxArr[pL].Click += new System.EventHandler(this.pictureBox_Click);
 
                     flowLayoutPanelMain.Controls.Add(picBoxArr[pL]);
 
@@ -333,7 +359,8 @@ namespace C_Launcher
                     //Definir el picture box
                     picBoxArr[pL] = new PictureBox
                     {
-                        Name = "file",//Aqui se indica que tipo de picture box es (coleccion / archivo)//files[f].Name,
+                        AccessibleDescription = "file",//Aqui se indica que tipo de picture box es (coleccion / archivo)//,
+                        Name = files[f].Name,
                         Size = new Size(files[f].Width, files[f].Height),
                         BackColor = Color.FromArgb(files[f].ColorRed, files[f].ColorGreen, files[f].ColorBlue),
                         /*
@@ -365,9 +392,9 @@ namespace C_Launcher
                         picBoxArr[pL].BackgroundImageLayout = ImageLayout.Stretch;
                     }
                     //agregar la funcionalidad
-                    //picBoxArr[pL].Click += new System.EventHandler(this.startProcess);
                     picBoxArr[pL].MouseEnter += new System.EventHandler(this.pictureBox_MouseEnter);
                     picBoxArr[pL].MouseLeave += new System.EventHandler(this.pictureBox_MouseLeave);
+                    picBoxArr[pL].Click += new System.EventHandler(this.pictureBox_Click);
 
 
                     flowLayoutPanelMain.Controls.Add(picBoxArr[pL]);
@@ -442,7 +469,7 @@ namespace C_Launcher
             return size;
         }
 
-        private void SaveXMLCollection()
+        private void SaveXMLCollection(Collections Class)
         {   
             //Verificar que el archivo xml exista (y si no es asi, crearlo y formatearlo)
             if (!File.Exists(xmlColPath))
@@ -486,24 +513,35 @@ namespace C_Launcher
 
             //Elementos de esa coleccion
             //Crea el nombre del elemento a agregar; agrega los datos; agrega los elementos de la coleccion a la coleccion
-            XmlElement colFather = xmlDoc.CreateElement("IDFather"); colFather.InnerText = "-1"; coleccion.AppendChild(colFather);
-            XmlElement colName = xmlDoc.CreateElement("Name"); colName.InnerText = "nombre"; coleccion.AppendChild(colName);
-            XmlElement colImage = xmlDoc.CreateElement("Image"); colImage.InnerText = "/"; coleccion.AppendChild(colImage);
-            XmlElement colLayout = xmlDoc.CreateElement("ImageLayout"); colLayout.InnerText = "/"; coleccion.AppendChild(colLayout);
-            XmlElement colBgRed = xmlDoc.CreateElement("BackgroundRed"); colBgRed.InnerText = "255"; coleccion.AppendChild(colBgRed);
-            XmlElement colBgGreen = xmlDoc.CreateElement("BackgroundGreen"); colBgGreen.InnerText = "255"; coleccion.AppendChild(colBgGreen);
-            XmlElement colBgBlue = xmlDoc.CreateElement("BackgroundBlue"); colBgBlue.InnerText = "255"; coleccion.AppendChild(colBgBlue);
-            XmlElement colResolution = xmlDoc.CreateElement("CoverResolutionID"); colResolution.InnerText = "0"; coleccion.AppendChild(colResolution);
-            XmlElement colWith = xmlDoc.CreateElement("CoverWidth"); colWith.InnerText = "200"; coleccion.AppendChild(colWith);
-            XmlElement colHeight = xmlDoc.CreateElement("CoverHeight"); colHeight.InnerText = "200"; coleccion.AppendChild(colHeight);
-            XmlElement colSonResolution = xmlDoc.CreateElement("CoverSonResolutionID"); colSonResolution.InnerText = "0"; coleccion.AppendChild(colSonResolution);
-            XmlElement colSonWidth = xmlDoc.CreateElement("CoverSonWidth"); colSonWidth.InnerText = "200"; coleccion.AppendChild(colSonWidth);
-            XmlElement colSonHeight = xmlDoc.CreateElement("CoverSonHeight"); colSonHeight.InnerText = "200"; coleccion.AppendChild(colSonHeight);
-            XmlElement colSonLayout = xmlDoc.CreateElement("SonImageLayout"); colSonLayout.InnerText = "/"; coleccion.AppendChild(colSonLayout);
-            XmlElement colTags = xmlDoc.CreateElement("TagsID"); colTags.InnerText = "0"; coleccion.AppendChild(colTags);
-            XmlElement colFavorite = xmlDoc.CreateElement("Favorite"); colFavorite.InnerText = "false"; coleccion.AppendChild(colFavorite);
+            XmlElement colFather = xmlDoc.CreateElement("IDFather"); colFather.InnerText                            = Class.IDFather.ToString();        coleccion.AppendChild(colFather);
+            XmlElement colName = xmlDoc.CreateElement("Name"); colName.InnerText                                    = Class.Name;                       coleccion.AppendChild(colName);
+            XmlElement colImage = xmlDoc.CreateElement("Image"); colImage.InnerText                                 = Class.ImagePath;                  coleccion.AppendChild(colImage);
+            XmlElement colLayout = xmlDoc.CreateElement("ImageLayout"); colLayout.InnerText                         = Class.ImageLayout.ToString();     coleccion.AppendChild(colLayout);
+            XmlElement colBgRed = xmlDoc.CreateElement("BackgroundRed"); colBgRed.InnerText                         = Class.ColorRed.ToString();        coleccion.AppendChild(colBgRed);
+            XmlElement colBgGreen = xmlDoc.CreateElement("BackgroundGreen"); colBgGreen.InnerText                   = Class.ColorGreen.ToString();      coleccion.AppendChild(colBgGreen);
+            XmlElement colBgBlue = xmlDoc.CreateElement("BackgroundBlue"); colBgBlue.InnerText                      = Class.ColorBlue.ToString();       coleccion.AppendChild(colBgBlue);
+            XmlElement colResolution = xmlDoc.CreateElement("CoverResolutionID"); colResolution.InnerText           = Class.ResolutionID.ToString();    coleccion.AppendChild(colResolution);
+            XmlElement colWith = xmlDoc.CreateElement("CoverWidth"); colWith.InnerText                              = Class.Width.ToString();           coleccion.AppendChild(colWith);
+            XmlElement colHeight = xmlDoc.CreateElement("CoverHeight"); colHeight.InnerText                         = Class.Height.ToString();          coleccion.AppendChild(colHeight);
+            XmlElement colSonResolution = xmlDoc.CreateElement("CoverSonResolutionID"); colSonResolution.InnerText  = Class.SonResolution.ToString();   coleccion.AppendChild(colSonResolution);
+            XmlElement colSonWidth = xmlDoc.CreateElement("CoverSonWidth"); colSonWidth.InnerText                   = Class.SonWidth.ToString();        coleccion.AppendChild(colSonWidth);
+            XmlElement colSonHeight = xmlDoc.CreateElement("CoverSonHeight"); colSonHeight.InnerText                = Class.SonHeight.ToString();       coleccion.AppendChild(colSonHeight);
+            XmlElement colSonLayout = xmlDoc.CreateElement("SonImageLayout"); colSonLayout.InnerText                = Class.ImageLayout.ToString();     coleccion.AppendChild(colSonLayout);
+            //Guardar el array de tags
+            XmlElement colTags = xmlDoc.CreateElement("TagsID"); coleccion.AppendChild(colTags);
+                foreach (int num in Class.TagsID)
+                {
+                    XmlElement numArray = xmlDoc.CreateElement("id"); 
+                    numArray.InnerText = num.ToString();
+                    colTags.AppendChild(numArray);
+                //Console.WriteLine(num);
+                }  
+            XmlElement colFavorite = xmlDoc.CreateElement("Favorite"); colFavorite.InnerText                        = "false"; coleccion.AppendChild(colFavorite);
 
             xmlDoc.Save(xmlColPath);
+
+            //Actualizar cantidad de colecciones
+            colSize = LoadCollectionSize();
         }
 
         private void SaveXMLFile(Files Class)
@@ -741,9 +779,8 @@ namespace C_Launcher
         }
 
         //Cargar los datos de un archivo especifico
-        private Files[] searchFile(int fileID)
+        private void searchFileProcess(int fileID)
         {
-            Files[] fileData = new Files[1];
 
             XmlDocument doc = new XmlDocument();
             doc.Load(xmlFilesPath);
@@ -751,22 +788,10 @@ namespace C_Launcher
             string xpath = "//Launcher/file[@id='" + fileID+ "']"; //Buscar un elemento que se llame "ColeccionX" que tenga en el atributo id un 1
             XmlNode root = doc.SelectSingleNode(xpath);
 
-            int idFather = 0;
-            string name = "name";
-            string imgPath = "";
-            int imgLayout = 0;
             string filePath = "";
             string programPath = "";
             string cmdLine = "";
-            int red = 0;
-            int green = 0;
-            int blue = 0;
-            int resolution = 0;
-            int width = 0;
-            int height = 0;
             bool urlCheck = false;
-            int[] tagsArray = new int[] { };
-            bool fav = false;
 
             if (root != null)
             {
@@ -776,36 +801,18 @@ namespace C_Launcher
                     Console.WriteLine(rootxml.Name + " | " + rootxml.InnerText);
                     switch (rootxml.Name)
                     {
-                        case "IDFather": idFather = int.Parse(rootxml.InnerText); break;
-                        case "Name": name = rootxml.InnerText; break;
-                        case "Image": imgPath = rootxml.InnerText; break;
-                        case "ImageLayout": imgLayout = int.Parse(rootxml.InnerText); break;
                         case "FilePath": filePath = rootxml.InnerText; break;
                         case "ProgramPath": programPath = rootxml.InnerText; break;
                         case "CMDLine": cmdLine = rootxml.InnerText; break;
-                        case "BackgroundRed": red = int.Parse(rootxml.InnerText); break;
-                        case "BackgroundGreen": green = int.Parse(rootxml.InnerText); break;
-                        case "BackgroundBlue": blue = int.Parse(rootxml.InnerText); break;
-                        case "CoverResolutionID": resolution = int.Parse(rootxml.InnerText); break;
-                        case "CoverWidth": width = int.Parse(rootxml.InnerText); break;
-                        case "CoverHeight": height = int.Parse(rootxml.InnerText); break;
                         case "URLCheck": urlCheck = bool.Parse(rootxml.InnerText); break;
-                        case "TagsID":
-                            //leer los tags dentro del elemento
-                            foreach (XmlNode tagid in rootxml)
-                            {
-                                //hacer un append al array
-                                tagsArray = tagsArray.Append(int.Parse(tagid.InnerText)).ToArray();
-                            }
-                            break;
-                        case "Favorite": fav = bool.Parse(rootxml.InnerText); break;
                     }
                 }
             }
-            fileData[0] = new Files(fileID, idFather, name, imgPath, imgLayout, filePath, programPath, cmdLine, red, green, blue, resolution, width, height, urlCheck, tagsArray, fav);
 
+            //Llamar a la funcion para que empiece el proceso
+            startProcess(filePath, programPath, cmdLine, urlCheck);
 
-            return fileData;
+            //return fileData;
         }
         #endregion
     }

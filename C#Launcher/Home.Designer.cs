@@ -36,7 +36,7 @@
             // 
             // panelTop
             // 
-            this.panelTop.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.panelTop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(29)))), ((int)(((byte)(37)))));
             this.panelTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTop.Location = new System.Drawing.Point(0, 0);
             this.panelTop.Name = "panelTop";
@@ -45,7 +45,7 @@
             // 
             // panelSide
             // 
-            this.panelSide.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.panelSide.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(40)))), ((int)(((byte)(47)))));
             this.panelSide.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelSide.Location = new System.Drawing.Point(0, 64);
             this.panelSide.Name = "panelSide";
@@ -54,7 +54,7 @@
             // 
             // flowLayoutPanelMain
             // 
-            this.flowLayoutPanelMain.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.flowLayoutPanelMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(40)))), ((int)(((byte)(47)))));
             this.flowLayoutPanelMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanelMain.Location = new System.Drawing.Point(108, 64);
             this.flowLayoutPanelMain.Name = "flowLayoutPanelMain";
@@ -63,6 +63,7 @@
             // 
             // splitterLeft
             // 
+            this.splitterLeft.BackColor = System.Drawing.Color.Black;
             this.splitterLeft.Location = new System.Drawing.Point(108, 64);
             this.splitterLeft.Margin = new System.Windows.Forms.Padding(3, 3, 10, 3);
             this.splitterLeft.Name = "splitterLeft";
