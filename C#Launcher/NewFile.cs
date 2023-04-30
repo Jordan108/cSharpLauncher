@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
 using System.Xml.Linq;
 
 namespace C_Launcher
@@ -17,8 +18,11 @@ namespace C_Launcher
         private int currentX, currentY;
         private int resizing = 0; // 0=no se esta ajustando; 1=ajustando ancho; 2=ajustando alto; 3=ajustando ambos
         public event EventHandler<Files> ReturnedObject;
+        private string xmlColPath = "Collections.xml";
+        private int[] combID = new int[0];
 
 
+        
         public NewFile()
         {
             InitializeComponent();
@@ -26,7 +30,71 @@ namespace C_Launcher
             this.pictureBoxCover.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBoxCover_MouseDown);
             this.pictureBoxCover.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBoxCover_MouseMove);
             this.pictureBoxCover.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBoxCover_MouseUp);
+
+            #region Combobox
+            //Agregando item default
+            comboBoxFather.Items.Add("Ninguno");
+            comboBoxFather.SelectedIndex = 0;
+
+            //Añadir las colecciones al comboBox de padres
+            int colSize = LoadCollectionSize();
+            Array.Resize(ref combID, colSize);
+
+            Console.WriteLine("SIZE: " + colSize.ToString());
+
+            int ColID = 1;
+            for (int i = 1; i < (colSize+1); i++)
+            {
+                Console.WriteLine("iterando en: " + i + " sobre la id: " + ColID);
+                XmlDocument doc = new XmlDocument();
+                doc.Load(xmlColPath);
+
+                string xpath = "//Launcher/collection[@id='" + ColID + "']";
+                XmlNode root = doc.SelectSingleNode(xpath);
+                while (root == null) {
+                    ColID++;
+                    xpath = "//Launcher/collection[@id='" + ColID + "']";
+                    root = doc.SelectSingleNode(xpath);
+                }
+
+                string name = root.SelectSingleNode("Name").InnerText;
+
+                comboBoxFather.Items.Add(name);
+                combID[i-1] = ColID;
+                ColID++;
+            }
+            #endregion
         }
+
+        #region Manejar archivos XML
+        private int LoadCollectionSize()
+        {
+            int size = 0;
+
+            try
+            {
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.Load(xmlColPath);
+                XmlNodeList colElements = xmlDoc.SelectNodes("//*[@id]");
+                size = colElements.Count;
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("No se encontro el fichero de las colecciones, se creara uno nuevo");
+                XmlWriterSettings settings = new XmlWriterSettings();
+                settings.Indent = true;
+
+                using (XmlWriter writer = XmlWriter.Create(xmlColPath, settings))
+                {
+                    //Crear el elemento raiz del archivo (obligatorio)
+                    writer.WriteStartElement("Launcher");
+                    writer.WriteEndElement();
+                }
+            }
+
+            return size;
+        }
+        #endregion
 
         #region Buscar archivos y programas
         private void buttonSearchFile_Click(object sender, EventArgs e)
@@ -194,11 +262,36 @@ namespace C_Launcher
         }
         #endregion
 
-        
+        private void checkBoxURL_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxURL.Checked == true)
+            {
+                labelFilePath.Text = "URL";
+                labelFilePath.Location = new Point(98, 164);
+                buttonSearchFile.Enabled = false;
+                labelOptional.Enabled = false;
+                labelProgramPath.Enabled = false;
+                textBoxProgramPath.Enabled = false;
+                buttonSearchProgram.Enabled = false;
+                labelCMD.Enabled = false;
+                textBoxCMD.Enabled = false;
+            } else
+            {
+                labelFilePath.Text = "Ruta del archivo";
+                labelFilePath.Location = new Point(45, 164);
+                buttonSearchFile.Enabled = true;
+                labelOptional.Enabled = true;
+                labelProgramPath.Enabled = true;
+                textBoxProgramPath.Enabled = true;
+                buttonSearchProgram.Enabled = true;
+                labelCMD.Enabled = true;
+                textBoxCMD.Enabled = true;
+            }
+        }
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
-            int idFather = 0;
+            int idFather = combID[comboBoxFather.SelectedIndex - 1];
             string nameFile = textBoxName.Text;
             string imgPath = "";
             if (pictureBoxCover.Tag != null)

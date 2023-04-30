@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
 
 namespace C_Launcher
 {
@@ -18,10 +19,67 @@ namespace C_Launcher
         private int currentSonX, currentSonY;
         private int resizingSon = 0; //mismos datos que original
         public event EventHandler<Collections> ReturnedObject;
-        // public event EventHandler<Collections> ReturnedObject;
+        private string xmlColPath = "Collections.xml";
+        private int[] combID = new int[0];
+
+        //Id de la coleccion, si es nuevo, -1, si no, se establece
+        private int idCollection = -1;
         public NewCollection()
         {
             InitializeComponent();
+            CustomComponent();
+        }
+
+        public NewCollection(Collections colData)
+        {
+            InitializeComponent();
+            CustomComponent();
+            idCollection = colData.ID;//Actualizar la id para editarla
+            textBoxName.Text = colData.Name;
+
+            //RGB
+            //Color BackgroundCol = new Color();
+            Color BackgroundCol = Color.FromArgb(255, colData.ColorRed, colData.ColorGreen, colData.ColorBlue);
+            pictureBoxCoverCollection.BackColor = BackgroundCol;
+            //Caratula
+            numericColWidth.Value = colData.Width;
+            numericColHeight.Value = colData.Height;
+            pictureBoxCoverCollection.Width = colData.Width;
+            pictureBoxCoverCollection.Height = colData.Height;
+            if (colData.ImagePath != "")
+            {
+                try
+                {
+                    Image imagen = Image.FromFile(colData.ImagePath);
+                    pictureBoxCoverCollection.BackgroundImage = imagen;
+                    Console.WriteLine("/////////////////Imagen " + colData.ImagePath + " establecida//////////////////////");
+                }
+                catch //(Exception ex)
+                {
+                    Console.WriteLine("no se pudo establecer una imagen");
+                }
+            }
+
+            if (colData.ImageLayout == 1)
+            {
+                radioButtonColEstreched.Checked = true;
+                pictureBoxCoverCollection.BackgroundImageLayout = ImageLayout.Stretch;
+            }
+
+            //Caratula hijos
+            numericSonWidth.Value = colData.SonWidth;
+            numericSonHeight.Value = colData.SonHeight;
+            pictureBoxCoverSon.Width = colData.SonWidth;
+            pictureBoxCoverSon.Height = colData.SonHeight;
+            if (colData.SonLayout == 1)
+            {
+                radioButtonSonEstreched.Checked = true;
+                pictureBoxCoverSon.BackgroundImageLayout = ImageLayout.Stretch;
+            }
+        }
+
+        private void CustomComponent()
+        {
             //Manejar coverBox de la coleccion
             //Coleccion
             this.pictureBoxCoverCollection.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBoxCoverCollection_MouseDown);
@@ -31,8 +89,72 @@ namespace C_Launcher
             this.pictureBoxCoverSon.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBoxCoverSon_MouseDown);
             this.pictureBoxCoverSon.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBoxCoverSon_MouseMove);
             this.pictureBoxCoverSon.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBoxCoverSon_MouseUp);
-            
+
+            #region Combobox
+            //Agregando item default
+            comboBoxFather.Items.Add("Ninguno");
+            comboBoxFather.SelectedIndex = 0;
+
+            //Añadir las colecciones al comboBox de padres
+            int colSize = LoadCollectionSize();
+            Array.Resize(ref combID, colSize);
+
+            Console.WriteLine("SIZE: " + colSize.ToString());
+
+            int ColID = 1;
+            for (int i = 1; i < (colSize + 1); i++)
+            {
+                Console.WriteLine("iterando en: " + i + " sobre la id: " + ColID);
+                XmlDocument doc = new XmlDocument();
+                doc.Load(xmlColPath);
+
+                string xpath = "//Launcher/collection[@id='" + ColID + "']";
+                XmlNode root = doc.SelectSingleNode(xpath);
+                while (root == null)
+                {
+                    ColID++;
+                    xpath = "//Launcher/collection[@id='" + ColID + "']";
+                    root = doc.SelectSingleNode(xpath);
+                }
+
+                string name = root.SelectSingleNode("Name").InnerText;
+
+                comboBoxFather.Items.Add(name);
+                combID[i - 1] = ColID;
+                ColID++;
+            }
+            #endregion
         }
+
+        #region Manejar archivos XML
+        private int LoadCollectionSize()
+        {
+            int size = 0;
+
+            try
+            {
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.Load(xmlColPath);
+                XmlNodeList colElements = xmlDoc.SelectNodes("//*[@id]");
+                size = colElements.Count;
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("No se encontro el fichero de las colecciones, se creara uno nuevo");
+                XmlWriterSettings settings = new XmlWriterSettings();
+                settings.Indent = true;
+
+                using (XmlWriter writer = XmlWriter.Create(xmlColPath, settings))
+                {
+                    //Crear el elemento raiz del archivo (obligatorio)
+                    writer.WriteStartElement("Launcher");
+                    writer.WriteEndElement();
+                }
+            }
+
+            return size;
+        }
+        #endregion
 
         #region Modificar ancho y alto de los coverbox
         #region Collection Coverbox
@@ -137,6 +259,7 @@ namespace C_Launcher
 
         
         #endregion
+
         #region Son coverbox
         private void pictureBoxCoverSon_MouseDown(object sender, MouseEventArgs e)
         {
@@ -238,6 +361,7 @@ namespace C_Launcher
 
         #endregion
 
+        #region Caratula
         //Buscar caratula de la coleccion
         private void buttonSearchCover_Click(object sender, EventArgs e)
         {
@@ -249,7 +373,6 @@ namespace C_Launcher
                 pictureBoxCoverCollection.Tag = openFileDialog.FileName;//Establecer la ruta de la imagen
             }
         }
-
        
         //Buscar caratula de prueba
         private void buttonSearchSonCoverTest_Click(object sender, EventArgs e)
@@ -284,6 +407,8 @@ namespace C_Launcher
         }
         #endregion
 
+        #endregion
+
         //Color picker
         private void buttonBackgroundColor_Click(object sender, EventArgs e)
         {
@@ -301,7 +426,13 @@ namespace C_Launcher
         //Guardar coleccion
         private void buttonSave_Click(object sender, EventArgs e)
         {
+            Console.WriteLine(comboBoxFather.SelectedIndex - 1);
             int idFather = 0;
+            if ((comboBoxFather.SelectedIndex - 1) > 0)
+            {
+               idFather = combID[comboBoxFather.SelectedIndex - 1];
+            }
+            
             string nameCollection = textBoxName.Text;
             string imgPath = "";
             if (pictureBoxCoverCollection.Tag != null)
@@ -331,7 +462,7 @@ namespace C_Launcher
             int[] tagsArray = new int[] { 1, 2, 3 };
             bool favorite = checkBoxFavorite.Checked;
 
-            Collections passCollection = new Collections(-1, idFather, nameCollection, imgPath, imgLayout, R, G, B, resID, width, height, resSonID, sonWidth, sonHeight, sonLayout, tagsArray, favorite);
+            Collections passCollection = new Collections(idCollection, idFather, nameCollection, imgPath, imgLayout, R, G, B, resID, width, height, resSonID, sonWidth, sonHeight, sonLayout, tagsArray, favorite);
             ReturnedObject?.Invoke(this, passCollection);
             this.Close();
         }

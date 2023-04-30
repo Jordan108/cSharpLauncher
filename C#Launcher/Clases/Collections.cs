@@ -128,8 +128,8 @@ namespace C_Launcher.Clases
         }
         public int SonLayout
         {
-            set { SonLayout = value; }
-            get { return SonLayout; }
+            set { sonImageLayout = value; }
+            get { return sonImageLayout; }
         }
         public int[] TagsID
         {

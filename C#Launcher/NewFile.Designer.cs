@@ -110,11 +110,12 @@
             this.checkBoxURL.TabIndex = 4;
             this.checkBoxURL.Text = "Utilizar una URL en vez de una ruta del sistema";
             this.checkBoxURL.UseVisualStyleBackColor = true;
+            this.checkBoxURL.CheckedChanged += new System.EventHandler(this.checkBoxURL_CheckedChanged);
             // 
             // labelFilePath
             // 
             this.labelFilePath.AutoSize = true;
-            this.labelFilePath.Location = new System.Drawing.Point(45, 161);
+            this.labelFilePath.Location = new System.Drawing.Point(45, 163);
             this.labelFilePath.Name = "labelFilePath";
             this.labelFilePath.Size = new System.Drawing.Size(85, 13);
             this.labelFilePath.TabIndex = 5;
@@ -123,7 +124,7 @@
             // labelProgramPath
             // 
             this.labelProgramPath.AutoSize = true;
-            this.labelProgramPath.Location = new System.Drawing.Point(34, 208);
+            this.labelProgramPath.Location = new System.Drawing.Point(40, 208);
             this.labelProgramPath.Name = "labelProgramPath";
             this.labelProgramPath.Size = new System.Drawing.Size(90, 13);
             this.labelProgramPath.TabIndex = 6;
@@ -132,7 +133,7 @@
             // labelCMD
             // 
             this.labelCMD.AutoSize = true;
-            this.labelCMD.Location = new System.Drawing.Point(25, 234);
+            this.labelCMD.Location = new System.Drawing.Point(25, 237);
             this.labelCMD.Name = "labelCMD";
             this.labelCMD.Size = new System.Drawing.Size(105, 13);
             this.labelCMD.TabIndex = 7;

@@ -26,7 +26,7 @@
     <Favorite>False</Favorite>
   </file>
   <file id="5">
-    <IDFather>0</IDFather>
+    <IDFather>1</IDFather>
     <Name>Mario kart 8</Name>
     <Image>
     </Image>
@@ -41,6 +41,32 @@
     <CoverResolutionID>0</CoverResolutionID>
     <CoverWidth>240</CoverWidth>
     <CoverHeight>164</CoverHeight>
+    <URLCheck>False</URLCheck>
+    <TagsID>
+      <id>1</id>
+      <id>2</id>
+      <id>3</id>
+    </TagsID>
+    <Favorite>False</Favorite>
+  </file>
+  <file id="6">
+    <IDFather>3</IDFather>
+    <Name>Testeando</Name>
+    <Image>
+    </Image>
+    <ImageLayout>0</ImageLayout>
+    <FilePath>
+    </FilePath>
+    <ProgramPath>
+    </ProgramPath>
+    <CMDLine>
+    </CMDLine>
+    <BackgroundRed>0</BackgroundRed>
+    <BackgroundGreen>0</BackgroundGreen>
+    <BackgroundBlue>0</BackgroundBlue>
+    <CoverResolutionID>0</CoverResolutionID>
+    <CoverWidth>100</CoverWidth>
+    <CoverHeight>100</CoverHeight>
     <URLCheck>False</URLCheck>
     <TagsID>
       <id>1</id>

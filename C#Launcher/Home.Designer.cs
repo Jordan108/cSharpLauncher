@@ -32,11 +32,14 @@
             this.panelSide = new System.Windows.Forms.Panel();
             this.flowLayoutPanelMain = new System.Windows.Forms.FlowLayoutPanel();
             this.splitterLeft = new System.Windows.Forms.Splitter();
+            this.btnBackView = new System.Windows.Forms.Button();
+            this.panelTop.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelTop
             // 
             this.panelTop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(29)))), ((int)(((byte)(37)))));
+            this.panelTop.Controls.Add(this.btnBackView);
             this.panelTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTop.Location = new System.Drawing.Point(0, 0);
             this.panelTop.Name = "panelTop";
@@ -71,6 +74,16 @@
             this.splitterLeft.TabIndex = 3;
             this.splitterLeft.TabStop = false;
             // 
+            // btnBackView
+            // 
+            this.btnBackView.Location = new System.Drawing.Point(12, 21);
+            this.btnBackView.Name = "btnBackView";
+            this.btnBackView.Size = new System.Drawing.Size(75, 23);
+            this.btnBackView.TabIndex = 0;
+            this.btnBackView.Text = "Volver";
+            this.btnBackView.UseVisualStyleBackColor = true;
+            this.btnBackView.Click += new System.EventHandler(this.btnBackView_Click);
+            // 
             // Home
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -83,6 +96,7 @@
             this.Name = "Home";
             this.Text = "Home";
             this.Load += new System.EventHandler(this.Home_Load);
+            this.panelTop.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -93,5 +107,6 @@
         private System.Windows.Forms.Panel panelSide;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelMain;
         private System.Windows.Forms.Splitter splitterLeft;
+        private System.Windows.Forms.Button btnBackView;
     }
 }
