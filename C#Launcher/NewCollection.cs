@@ -36,6 +36,7 @@ namespace C_Launcher
             CustomComponent();
             idCollection = colData.ID;//Actualizar la id para editarla
             textBoxName.Text = colData.Name;
+            checkBoxFavorite.Checked = colData.Favorite;
 
             //RGB
             //Color BackgroundCol = new Color();
@@ -52,6 +53,7 @@ namespace C_Launcher
                 {
                     Image imagen = Image.FromFile(colData.ImagePath);
                     pictureBoxCoverCollection.BackgroundImage = imagen;
+                    pictureBoxCoverCollection.Tag = colData.ImagePath;
                     Console.WriteLine("/////////////////Imagen " + colData.ImagePath + " establecida//////////////////////");
                 }
                 catch //(Exception ex)

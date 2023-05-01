@@ -21,11 +21,74 @@ namespace C_Launcher
         private string xmlColPath = "Collections.xml";
         private int[] combID = new int[0];
 
-
+        private int idFile = -1;//Si es un archivo nuevo -1, si no, se actualiza con el segundo constructor
         
         public NewFile()
         {
             InitializeComponent();
+            CustomComponent();
+        }
+
+        public NewFile(Files fileData)
+        {
+            InitializeComponent();
+            CustomComponent();
+            idFile = fileData.ID;//Actualizar la id para editarla
+            textBoxName.Text = fileData.Name;
+            checkBoxFavorite.Checked = fileData.Favorite;
+
+            //Archivos
+            checkBoxURL.Checked = fileData.URLCheck;
+            if (checkBoxURL.Checked == true)
+            {
+                labelFilePath.Text = "URL";
+                labelFilePath.Location = new Point(98, 164);
+                buttonSearchFile.Enabled = false;
+                labelOptional.Enabled = false;
+                labelProgramPath.Enabled = false;
+                textBoxProgramPath.Enabled = false;
+                buttonSearchProgram.Enabled = false;
+                labelCMD.Enabled = false;
+                textBoxCMD.Enabled = false;
+            }
+            textBoxFilePath.Text = fileData.FilePath;
+            textBoxProgramPath.Text = fileData.ProgramPath;
+            textBoxCMD.Text = fileData.CMDLine;
+
+            
+            //Picture Box
+            Color BackgroundCol = Color.FromArgb(255, fileData.ColorRed, fileData.ColorGreen, fileData.ColorBlue);
+            pictureBoxCover.BackColor = BackgroundCol;
+            //Caratula
+            numericWidthImage.Value = fileData.Width;
+            numericHeightImage.Value = fileData.Height;
+            pictureBoxCover.Width = fileData.Width;
+            pictureBoxCover.Height = fileData.Height;
+            if (fileData.ImagePath != "")
+            {
+                try
+                {
+                    Image imagen = Image.FromFile(fileData.ImagePath);
+                    pictureBoxCover.BackgroundImage = imagen;
+                    pictureBoxCover.Tag = fileData.ImagePath;
+                    Console.WriteLine("/////////////////Imagen " + fileData.ImagePath + " establecida//////////////////////");
+                }
+                catch //(Exception ex)
+                {
+                    Console.WriteLine("no se pudo establecer una imagen");
+                }
+            }
+
+            if (fileData.ImageLayout == 1)
+            {
+                radioButtonEstreched.Checked = true;
+                pictureBoxCover.BackgroundImageLayout = ImageLayout.Stretch;
+            }
+
+        }
+
+        private void CustomComponent()
+        {
             //Scripts para ajustar el tamaño del picture box
             this.pictureBoxCover.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBoxCover_MouseDown);
             this.pictureBoxCover.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBoxCover_MouseMove);
@@ -43,7 +106,7 @@ namespace C_Launcher
             Console.WriteLine("SIZE: " + colSize.ToString());
 
             int ColID = 1;
-            for (int i = 1; i < (colSize+1); i++)
+            for (int i = 1; i < (colSize + 1); i++)
             {
                 Console.WriteLine("iterando en: " + i + " sobre la id: " + ColID);
                 XmlDocument doc = new XmlDocument();
@@ -51,7 +114,8 @@ namespace C_Launcher
 
                 string xpath = "//Launcher/collection[@id='" + ColID + "']";
                 XmlNode root = doc.SelectSingleNode(xpath);
-                while (root == null) {
+                while (root == null)
+                {
                     ColID++;
                     xpath = "//Launcher/collection[@id='" + ColID + "']";
                     root = doc.SelectSingleNode(xpath);
@@ -60,7 +124,7 @@ namespace C_Launcher
                 string name = root.SelectSingleNode("Name").InnerText;
 
                 comboBoxFather.Items.Add(name);
-                combID[i-1] = ColID;
+                combID[i - 1] = ColID;
                 ColID++;
             }
             #endregion
@@ -291,7 +355,12 @@ namespace C_Launcher
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
-            int idFather = combID[comboBoxFather.SelectedIndex - 1];
+            Console.WriteLine(comboBoxFather.SelectedIndex - 1);
+            int idFather = 0;
+            if ((comboBoxFather.SelectedIndex - 1) > 0)
+            {
+                idFather = combID[comboBoxFather.SelectedIndex - 1];
+            }
             string nameFile = textBoxName.Text;
             string imgPath = "";
             if (pictureBoxCover.Tag != null)
@@ -316,7 +385,7 @@ namespace C_Launcher
             int[] tagsArray = new int[] { 1, 2, 3};
             bool favorite = checkBoxFavorite.Checked;
 
-            Files passFile = new Files(-1, idFather, nameFile, imgPath, imgLayout, filePath, programPath, cmdLine, R, G, B, resID, width, height, url, tagsArray, favorite);
+            Files passFile = new Files(idFile, idFather, nameFile, imgPath, imgLayout, filePath, programPath, cmdLine, R, G, B, resID, width, height, url, tagsArray, favorite);
             ReturnedObject?.Invoke(this, passFile);
             this.Close();
         }

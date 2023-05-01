@@ -75,4 +75,28 @@
     </TagsID>
     <Favorite>False</Favorite>
   </file>
+  <file id="7">
+    <IDFather>0</IDFather>
+    <Name>chao</Name>
+    <Image>D:\Bibliotecas\Imágenes\Wallpaper.png</Image>
+    <ImageLayout>0</ImageLayout>
+    <FilePath>aaa</FilePath>
+    <ProgramPath>
+    </ProgramPath>
+    <CMDLine>
+    </CMDLine>
+    <BackgroundRed>0</BackgroundRed>
+    <BackgroundGreen>0</BackgroundGreen>
+    <BackgroundBlue>0</BackgroundBlue>
+    <CoverResolutionID>0</CoverResolutionID>
+    <CoverWidth>150</CoverWidth>
+    <CoverHeight>188</CoverHeight>
+    <URLCheck>True</URLCheck>
+    <TagsID>
+      <id>1</id>
+      <id>2</id>
+      <id>3</id>
+    </TagsID>
+    <Favorite>False</Favorite>
+  </file>
 </Launcher>

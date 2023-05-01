@@ -29,22 +29,46 @@
         private void InitializeComponent()
         {
             this.panelTop = new System.Windows.Forms.Panel();
+            this.btnHomeView = new System.Windows.Forms.Button();
+            this.btnBackView = new System.Windows.Forms.Button();
             this.panelSide = new System.Windows.Forms.Panel();
             this.flowLayoutPanelMain = new System.Windows.Forms.FlowLayoutPanel();
             this.splitterLeft = new System.Windows.Forms.Splitter();
-            this.btnBackView = new System.Windows.Forms.Button();
+            this.btnReloadView = new System.Windows.Forms.Button();
             this.panelTop.SuspendLayout();
             this.SuspendLayout();
             // 
             // panelTop
             // 
             this.panelTop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(29)))), ((int)(((byte)(37)))));
+            this.panelTop.Controls.Add(this.btnReloadView);
+            this.panelTop.Controls.Add(this.btnHomeView);
             this.panelTop.Controls.Add(this.btnBackView);
             this.panelTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTop.Location = new System.Drawing.Point(0, 0);
             this.panelTop.Name = "panelTop";
             this.panelTop.Size = new System.Drawing.Size(770, 64);
             this.panelTop.TabIndex = 0;
+            // 
+            // btnHomeView
+            // 
+            this.btnHomeView.Location = new System.Drawing.Point(66, 21);
+            this.btnHomeView.Name = "btnHomeView";
+            this.btnHomeView.Size = new System.Drawing.Size(48, 23);
+            this.btnHomeView.TabIndex = 1;
+            this.btnHomeView.Text = "Home";
+            this.btnHomeView.UseVisualStyleBackColor = true;
+            this.btnHomeView.Click += new System.EventHandler(this.btnHomeView_Click);
+            // 
+            // btnBackView
+            // 
+            this.btnBackView.Location = new System.Drawing.Point(12, 21);
+            this.btnBackView.Name = "btnBackView";
+            this.btnBackView.Size = new System.Drawing.Size(48, 23);
+            this.btnBackView.TabIndex = 0;
+            this.btnBackView.Text = "Volver";
+            this.btnBackView.UseVisualStyleBackColor = true;
+            this.btnBackView.Click += new System.EventHandler(this.btnBackView_Click);
             // 
             // panelSide
             // 
@@ -74,15 +98,15 @@
             this.splitterLeft.TabIndex = 3;
             this.splitterLeft.TabStop = false;
             // 
-            // btnBackView
+            // btnReloadView
             // 
-            this.btnBackView.Location = new System.Drawing.Point(12, 21);
-            this.btnBackView.Name = "btnBackView";
-            this.btnBackView.Size = new System.Drawing.Size(75, 23);
-            this.btnBackView.TabIndex = 0;
-            this.btnBackView.Text = "Volver";
-            this.btnBackView.UseVisualStyleBackColor = true;
-            this.btnBackView.Click += new System.EventHandler(this.btnBackView_Click);
+            this.btnReloadView.Location = new System.Drawing.Point(120, 21);
+            this.btnReloadView.Name = "btnReloadView";
+            this.btnReloadView.Size = new System.Drawing.Size(60, 23);
+            this.btnReloadView.TabIndex = 2;
+            this.btnReloadView.Text = "Recargar";
+            this.btnReloadView.UseVisualStyleBackColor = true;
+            this.btnReloadView.Click += new System.EventHandler(this.btnReloadView_Click);
             // 
             // Home
             // 
@@ -108,5 +132,7 @@
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelMain;
         private System.Windows.Forms.Splitter splitterLeft;
         private System.Windows.Forms.Button btnBackView;
+        private System.Windows.Forms.Button btnHomeView;
+        private System.Windows.Forms.Button btnReloadView;
     }
 }

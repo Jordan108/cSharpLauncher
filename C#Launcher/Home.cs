@@ -105,6 +105,11 @@ namespace C_Launcher
             //PictureBox pictureBox = (PictureBox)sender;
             if (boxType == "file")
             {
+                Files file = searchFileData(int.Parse(id));
+
+                NewFile editFile = new NewFile(file);
+                editFile.ReturnedObject += NewFile_ReturnedObject;
+                editFile.ShowDialog();
             }
             else if (boxType == "collection")
             {
@@ -467,12 +472,28 @@ namespace C_Launcher
                 XmlDocument doc = new XmlDocument();
                 doc.Load(xmlColPath);
 
-                string xpath = "//Launcher/collection[@id='" + viewDepth + "']"; //Buscar un elemento que se llame "ColeccionX" que tenga en el atributo id un 1
+                string xpath = "//Launcher/collection[@id='" + viewDepth + "']";
                 XmlNode root = doc.SelectSingleNode(xpath);
                 int id = int.Parse(root.SelectSingleNode("IDFather").InnerText);
                 viewDepth = id;
                 loadPictureBox(colSize, fileSize, false);
             }
+        }
+
+        private void btnHomeView_Click(object sender, EventArgs e)
+        {
+            if (viewDepth != 0)
+            {
+                viewDepth = 0;
+                loadPictureBox(colSize, fileSize, false);
+            }
+        }
+
+        private void btnReloadView_Click(object sender, EventArgs e)
+        {
+            colSize = LoadCollectionSize();
+            fileSize = LoadFilesSize();
+            loadPictureBox(colSize, fileSize, false);
         }
         #endregion
 
@@ -582,7 +603,7 @@ namespace C_Launcher
             } else
             {
                 //Editar colecciones
-                string xpath = "//Launcher/collection[@id='"+ Class.ID+"']"; //Buscar un elemento que se llame "ColeccionX" que tenga en el atributo id un 1
+                string xpath = "//Launcher/collection[@id='"+ Class.ID+"']";
                 coleccion = xmlDoc.SelectSingleNode(xpath) as XmlElement;
                 //Limpiarlo para agregarle las modificaciones
                 coleccion.RemoveAll();
@@ -642,26 +663,39 @@ namespace C_Launcher
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load(xmlFilesPath);
 
-            XmlNodeList nodeList = xmlDoc.SelectNodes("//Launcher/file");
-
-            //Itera para encontrar el id mas alto
-            int maxId = 0;
-            foreach (XmlNode node in nodeList)
+            XmlElement file;
+            if (Class.ID == -1)
             {
-                int currentId;
-                if (int.TryParse(node.Attributes["id"].Value, out currentId))
+                XmlNodeList nodeList = xmlDoc.SelectNodes("//Launcher/file");
+
+                //Itera para encontrar el id mas alto
+                int maxId = 0;
+                foreach (XmlNode node in nodeList)
                 {
-                    if (currentId > maxId)
+                    int currentId;
+                    if (int.TryParse(node.Attributes["id"].Value, out currentId))
                     {
-                        maxId = currentId;
+                        if (currentId > maxId)
+                        {
+                            maxId = currentId;
+                        }
                     }
                 }
-            }
 
-            //Crea una coleccion/archivo nueva
-            XmlElement file = xmlDoc.CreateElement("file");
-            file.SetAttribute("id", maxId + 1 + "");//establecer el atributo id para facilitar la busqueda por xPath
-            xmlDoc.DocumentElement.AppendChild(file);//agrega la coleccion al documento
+                //Crea una coleccion/archivo nueva
+                file = xmlDoc.CreateElement("file");
+                file.SetAttribute("id", maxId + 1 + "");//establecer el atributo id para facilitar la busqueda por xPath
+                xmlDoc.DocumentElement.AppendChild(file);//agrega la coleccion al documento
+            }
+            else
+            {
+                //Editar colecciones
+                string xpath = "//Launcher/file[@id='" + Class.ID + "']"; 
+                file = xmlDoc.SelectSingleNode(xpath) as XmlElement;
+                //Limpiarlo para agregarle las modificaciones
+                file.RemoveAll();
+                file.SetAttribute("id", Class.ID.ToString());
+            }
 
             //Elementos de ese file
             //Crea el nombre del elemento a agregar; agrega los datos; agrega los elementos de la coleccion a la coleccion
@@ -863,7 +897,7 @@ namespace C_Launcher
             XmlDocument doc = new XmlDocument();
             doc.Load(xmlFilesPath);
             
-            string xpath = "//Launcher/file[@id='" + fileID+ "']"; //Buscar un elemento que se llame "ColeccionX" que tenga en el atributo id un 1
+            string xpath = "//Launcher/file[@id='" + fileID+ "']"; 
             XmlNode root = doc.SelectSingleNode(xpath);
 
             string filePath = "";
@@ -893,13 +927,74 @@ namespace C_Launcher
             //return fileData;
         }
 
+        private Files searchFileData(int fileID)
+        {
+            Console.WriteLine("Buscando en el archivo con id: " + fileID);
+            XmlDocument doc = new XmlDocument();
+            doc.Load(xmlFilesPath);
+
+            string xpath = "//Launcher/file[@id='" + fileID + "']";
+            XmlNode root = doc.SelectSingleNode(xpath);
+
+            int idFather = 0;
+            string name = "name";
+            string imgPath = "image";
+            int imgLayout = 0;
+            string filePath = "path";
+            string programPath = "path";
+            string cmdLine = "";
+            int red = 0;
+            int green = 0;
+            int blue = 0;
+            int resolution = 0;
+            int width = 0;
+            int height = 0;
+            bool urlCheck = false;
+            int[] tagsArray = new int[] { };
+            bool fav = false;
+
+            foreach (XmlNode rootxml in root.ChildNodes)
+            {
+                switch (rootxml.Name)
+                {
+                    case "IDFather": idFather = int.Parse(rootxml.InnerText); break;
+                    case "Name": name = rootxml.InnerText; break;
+                    case "Image": imgPath = rootxml.InnerText; break;
+                    case "ImageLayout": imgLayout = int.Parse(rootxml.InnerText); break;
+                    case "FilePath": filePath = rootxml.InnerText; break;
+                    case "ProgramPath": programPath = rootxml.InnerText; break;
+                    case "CMDLine": cmdLine = rootxml.InnerText; break;
+                    case "BackgroundRed": red = int.Parse(rootxml.InnerText); break;
+                    case "BackgroundGreen": green = int.Parse(rootxml.InnerText); break;
+                    case "BackgroundBlue": blue = int.Parse(rootxml.InnerText); break;
+                    case "CoverResolutionID": resolution = int.Parse(rootxml.InnerText); break;
+                    case "CoverWidth": width = int.Parse(rootxml.InnerText); break;
+                    case "CoverHeight": height = int.Parse(rootxml.InnerText); break;
+                    case "URLCheck": urlCheck = bool.Parse(rootxml.InnerText); break;
+                    case "TagsID":
+                        //leer los tags dentro del elemento
+                        foreach (XmlNode tagid in rootxml)
+                        {
+                            //hacer un append al array
+                            tagsArray = tagsArray.Append(int.Parse(tagid.InnerText)).ToArray();
+                        }
+                        break;
+                    case "Favorite": fav = bool.Parse(rootxml.InnerText); break;
+                }
+            }
+
+            Files FileReturn = new Files(fileID, idFather, name, imgPath, imgLayout, filePath, programPath, cmdLine, red, green, blue, resolution, width, height, urlCheck, tagsArray, fav);
+
+            return FileReturn;
+        }
+
         private Collections searchCollectionData(int colID)
         {
             Console.WriteLine("buscando en coleccion con id " + colID);
             XmlDocument doc = new XmlDocument();
             doc.Load(xmlColPath);
 
-            string xpath = "//Launcher/collection[@id='" + colID + "']"; //Buscar un elemento que se llame "ColeccionX" que tenga en el atributo id un 1
+            string xpath = "//Launcher/collection[@id='" + colID + "']"; 
             XmlNode root = doc.SelectSingleNode(xpath);
 
             int idFather = 0;
@@ -952,6 +1047,8 @@ namespace C_Launcher
 
             return colReturn;
         }
+
+
         #endregion
 
         
