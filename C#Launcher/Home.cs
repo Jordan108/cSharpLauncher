@@ -14,7 +14,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+//using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace C_Launcher
 {
@@ -25,8 +25,8 @@ namespace C_Launcher
 
         private int viewDepth = 0;
         //Rutas de los archivos XML
-        private string xmlColPath = "Collections.xml";
-        private string xmlFilesPath = "Files.xml";
+        private string xmlColPath = "System\\Collections.xml";
+        private string xmlFilesPath = "System\\Files.xml";
 
         //Mantener el tamaño de los archivos y colecciones
         private int colSize = 0;
@@ -38,7 +38,9 @@ namespace C_Launcher
         public Home()
         {
             InitializeComponent();
-            //Tool strip 
+            //Menu strip
+            
+            //Tool strip (click derecho)
             //Layout Panel
             ContextMenuStrip  contextMenuLayoutPanel = new ContextMenuStrip();
             ToolStripMenuItem ToolStripAddCollection = new ToolStripMenuItem();
@@ -101,6 +103,7 @@ namespace C_Launcher
             string boxType = pic.AccessibleDescription;
 
             Console.WriteLine("id del context menu " + id);
+            //destroyPictureBox();
 
             //PictureBox pictureBox = (PictureBox)sender;
             if (boxType == "file")
@@ -367,8 +370,17 @@ namespace C_Launcher
                     {
                         try
                         {
-                            Image imagen = Image.FromFile(colls[i].ImagePath);
-                            picBoxArr[pL].BackgroundImage = imagen;
+                            Image image;
+                            using (Stream stream = File.OpenRead(colls[i].ImagePath))
+                            {
+                                image = System.Drawing.Image.FromStream(stream);
+                            }
+                            picBoxArr[pL].BackgroundImage = image;
+                            image = null;
+
+                            //Image imagen = Image.FromFile(colls[i].ImagePath);
+                            //picBoxArr[pL].BackgroundImage = imagen;
+                            //imagen.Dispose();
                         }
                         catch (Exception ex)
                         {
@@ -428,8 +440,16 @@ namespace C_Launcher
                     {
                         try
                         {
-                            Image imagen = Image.FromFile(files[f].ImagePath);
-                            picBoxArr[pL].BackgroundImage = imagen;
+                            Image image;
+                            using (Stream stream = File.OpenRead(files[f].ImagePath))
+                            {
+                                image = System.Drawing.Image.FromStream(stream);
+                            }
+                            picBoxArr[pL].BackgroundImage = image;
+                            image = null;
+                            //Image imagen = Image.FromFile(files[f].ImagePath);
+                            //picBoxArr[pL].BackgroundImage = imagen;
+                            // imagen.Dispose();
                         }
                         catch (Exception ex)
                         {
@@ -451,9 +471,8 @@ namespace C_Launcher
                     picBoxArr[pL].MouseLeave += new System.EventHandler(this.pictureBox_MouseLeave);
                     picBoxArr[pL].Click += new System.EventHandler(this.pictureBox_Click);
                     picBoxArr[pL].ContextMenuStrip = contextMenuPictureBox;
-
+                    
                     flowLayoutPanelMain.Controls.Add(picBoxArr[pL]);
-
                     pL++;//iterar en el array de paneles
                 }
             }
@@ -1049,8 +1068,13 @@ namespace C_Launcher
         }
 
 
+
         #endregion
 
-        
+        private void administrarResolucionesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Resolution res = new Resolution();
+            res.ShowDialog();
+        }
     }
 }

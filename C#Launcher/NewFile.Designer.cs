@@ -59,6 +59,7 @@
             this.comboBox1 = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.buttonColorPickIMG = new System.Windows.Forms.Button();
+            this.checkBoxImageLocation = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCover)).BeginInit();
             this.groupBoxImageFormat.SuspendLayout();
             this.panelImageLimit.SuspendLayout();
@@ -332,7 +333,7 @@
             // 
             // buttonSearchCover
             // 
-            this.buttonSearchCover.Location = new System.Drawing.Point(305, 315);
+            this.buttonSearchCover.Location = new System.Drawing.Point(280, 290);
             this.buttonSearchCover.Name = "buttonSearchCover";
             this.buttonSearchCover.Size = new System.Drawing.Size(115, 23);
             this.buttonSearchCover.TabIndex = 24;
@@ -342,7 +343,7 @@
             // 
             // buttonSetColor
             // 
-            this.buttonSetColor.Location = new System.Drawing.Point(439, 286);
+            this.buttonSetColor.Location = new System.Drawing.Point(439, 290);
             this.buttonSetColor.Name = "buttonSetColor";
             this.buttonSetColor.Size = new System.Drawing.Size(119, 23);
             this.buttonSetColor.TabIndex = 25;
@@ -386,12 +387,23 @@
             this.buttonColorPickIMG.TabIndex = 29;
             this.buttonColorPickIMG.UseVisualStyleBackColor = true;
             // 
+            // checkBoxImageLocation
+            // 
+            this.checkBoxImageLocation.AutoSize = true;
+            this.checkBoxImageLocation.Location = new System.Drawing.Point(280, 319);
+            this.checkBoxImageLocation.Name = "checkBoxImageLocation";
+            this.checkBoxImageLocation.Size = new System.Drawing.Size(215, 17);
+            this.checkBoxImageLocation.TabIndex = 30;
+            this.checkBoxImageLocation.Text = "Utilizar la imagen en su ubicacion actual";
+            this.checkBoxImageLocation.UseVisualStyleBackColor = true;
+            // 
             // NewFile
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(592, 691);
+            this.ClientSize = new System.Drawing.Size(592, 654);
+            this.Controls.Add(this.checkBoxImageLocation);
             this.Controls.Add(this.buttonColorPickIMG);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.comboBox1);
@@ -464,5 +476,6 @@
         private System.Windows.Forms.ComboBox comboBox1;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button buttonColorPickIMG;
+        private System.Windows.Forms.CheckBox checkBoxImageLocation;
     }
 }

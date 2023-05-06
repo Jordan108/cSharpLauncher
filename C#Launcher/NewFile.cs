@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,17 +19,21 @@ namespace C_Launcher
         private int currentX, currentY;
         private int resizing = 0; // 0=no se esta ajustando; 1=ajustando ancho; 2=ajustando alto; 3=ajustando ambos
         public event EventHandler<Files> ReturnedObject;
-        private string xmlColPath = "Collections.xml";
+        private string xmlColPath = "System\\Collections.xml";//Para cargar el comboBox
         private int[] combID = new int[0];
 
         private int idFile = -1;//Si es un archivo nuevo -1, si no, se actualiza con el segundo constructor
-        
+        private string xmlImagePath;//Lo ocupare para editar la caratula
+        //private Image imagen;
+
+        //Creando un archivo desde 0
         public NewFile()
         {
             InitializeComponent();
             CustomComponent();
         }
 
+        //Editando un archivo existente
         public NewFile(Files fileData)
         {
             InitializeComponent();
@@ -60,6 +65,7 @@ namespace C_Launcher
             Color BackgroundCol = Color.FromArgb(255, fileData.ColorRed, fileData.ColorGreen, fileData.ColorBlue);
             pictureBoxCover.BackColor = BackgroundCol;
             //Caratula
+            checkBoxImageLocation.Checked = true;
             numericWidthImage.Value = fileData.Width;
             numericHeightImage.Value = fileData.Height;
             pictureBoxCover.Width = fileData.Width;
@@ -68,9 +74,19 @@ namespace C_Launcher
             {
                 try
                 {
-                    Image imagen = Image.FromFile(fileData.ImagePath);
-                    pictureBoxCover.BackgroundImage = imagen;
+                    Image image;
+                    using (Stream stream = File.OpenRead(fileData.ImagePath))
+                    {
+                        image = System.Drawing.Image.FromStream(stream);
+                    }
+                    pictureBoxCover.BackgroundImage = image;
                     pictureBoxCover.Tag = fileData.ImagePath;
+                    xmlImagePath = fileData.ImagePath;//Para editar la imagen
+                    image = null;
+
+                    //imagen = Image.FromFile(fileData.ImagePath);
+                    //pictureBoxCover.BackgroundImage = imagen;
+                    //pictureBoxCover.Tag = fileData.ImagePath;
                     Console.WriteLine("/////////////////Imagen " + fileData.ImagePath + " establecida//////////////////////");
                 }
                 catch //(Exception ex)
@@ -306,9 +322,20 @@ namespace C_Launcher
             openFileDialog.Filter = "Archivos de imagen (*.png;*.jpg;*.jpeg;)|*.png;*.jpg;*.jpeg;";
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                pictureBoxCover.BackgroundImage = Image.FromFile(openFileDialog.FileName);
-                pictureBoxCover.Tag = openFileDialog.FileName;//Establecer la ruta de la imagen
+                Image image;
+                using (Stream stream = File.OpenRead(openFileDialog.FileName))
+                {
+                    image = System.Drawing.Image.FromStream(stream);
+                }
+                pictureBoxCover.BackgroundImage = image;
+                pictureBoxCover.Tag = openFileDialog.FileName;
+                image = null;
+
+                //imagen = Image.FromFile(openFileDialog.FileName);
+                //pictureBoxCover.BackgroundImage = imagen;
+                //pictureBoxCover.Tag = openFileDialog.FileName;//Establecer la ruta de la imagen
             }
+            openFileDialog.Dispose();
         }
 
         //Color picker
@@ -363,9 +390,55 @@ namespace C_Launcher
             }
             string nameFile = textBoxName.Text;
             string imgPath = "";
+
             if (pictureBoxCover.Tag != null)
             {
-                imgPath = pictureBoxCover.Tag.ToString();
+                if (checkBoxImageLocation.Checked == true)
+                {
+                    imgPath = pictureBoxCover.Tag.ToString();
+                } else
+                {
+                    string outputFolder = System.Environment.CurrentDirectory + "\\System\\Covers";
+
+                    //Si estas creando un nuevo archivo, verificar si no existe un archivo con el mismo nombre, y si es asi, ponerle un iterador
+                    if (idFile == -1)
+                    {
+                        imgPath = returnImagePath(outputFolder, textBoxName.Text);
+                    } else
+                    {
+                        //Si estas editando un archivo, ocupar la misma direccion que en el xml, pues el nombre se decidio al crearlo (arriba)
+                        if (xmlImagePath != null)
+                        {
+                            string systemCoverDir = System.Environment.CurrentDirectory + "\\System\\Covers";
+                            string xmlDir = Path.GetDirectoryName(xmlImagePath);
+                            if (xmlDir != systemCoverDir)
+                            {
+                                imgPath = returnImagePath(outputFolder, textBoxName.Text);
+                            }
+                            else
+                            {
+                                imgPath = xmlImagePath;//pictureBoxCover.Tag.ToString();
+                            }
+                        } else
+                        {
+                            imgPath = returnImagePath(outputFolder, textBoxName.Text);
+                        }
+                        
+                    }
+
+                    if (!Directory.Exists(outputFolder))
+                    {
+                        // Crea la carpeta si no existe
+                        Directory.CreateDirectory(outputFolder);
+                    }
+
+                    string source = pictureBoxCover.Tag.ToString();
+                    //Solo reemplazar una imagen si esta existe o si la imagen de origen no es la misma que el destino
+                    if ((imgPath != "") && (imgPath != null) && (source != imgPath))
+                    {
+                        System.IO.File.Copy(source, imgPath, true);
+                    }
+                }
             }
 
             //Image layout
@@ -385,9 +458,22 @@ namespace C_Launcher
             int[] tagsArray = new int[] { 1, 2, 3};
             bool favorite = checkBoxFavorite.Checked;
 
+
             Files passFile = new Files(idFile, idFather, nameFile, imgPath, imgLayout, filePath, programPath, cmdLine, R, G, B, resID, width, height, url, tagsArray, favorite);
             ReturnedObject?.Invoke(this, passFile);
             this.Close();
+        }
+
+        private string returnImagePath(string outputFolder, string fileName)
+        {
+            string destinationFile = outputFolder + "\\file_" + fileName + ".png";
+            int i = 0;
+            while (File.Exists(destinationFile))
+            {
+                i++;
+                destinationFile = outputFolder + "\\file_" + fileName + "(" + i + ").png";//Se le cambia la extension a png
+            }
+            return destinationFile;
         }
     }
 }

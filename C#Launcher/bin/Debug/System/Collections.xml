@@ -25,8 +25,7 @@
   <collection id="3">
     <IDFather>0</IDFather>
     <Name>Coleccion 2</Name>
-    <Image>
-    </Image>
+    <Image>D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\bin\Debug\System\Covers\col_Coleccion 2.png</Image>
     <ImageLayout>0</ImageLayout>
     <BackgroundRed>255</BackgroundRed>
     <BackgroundGreen>128</BackgroundGreen>

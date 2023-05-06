@@ -99,4 +99,54 @@
     </TagsID>
     <Favorite>False</Favorite>
   </file>
+  <file id="8">
+    <IDFather>0</IDFather>
+    <Name>abb</Name>
+    <Image>D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\bin\Debug\System\Covers\file_abb.png</Image>
+    <ImageLayout>0</ImageLayout>
+    <FilePath>
+    </FilePath>
+    <ProgramPath>
+    </ProgramPath>
+    <CMDLine>
+    </CMDLine>
+    <BackgroundRed>0</BackgroundRed>
+    <BackgroundGreen>0</BackgroundGreen>
+    <BackgroundBlue>0</BackgroundBlue>
+    <CoverResolutionID>0</CoverResolutionID>
+    <CoverWidth>100</CoverWidth>
+    <CoverHeight>100</CoverHeight>
+    <URLCheck>False</URLCheck>
+    <TagsID>
+      <id>1</id>
+      <id>2</id>
+      <id>3</id>
+    </TagsID>
+    <Favorite>False</Favorite>
+  </file>
+  <file id="9">
+    <IDFather>0</IDFather>
+    <Name>abb</Name>
+    <Image>D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\bin\Debug\System\Covers\file_abb(1).png</Image>
+    <ImageLayout>0</ImageLayout>
+    <FilePath>
+    </FilePath>
+    <ProgramPath>
+    </ProgramPath>
+    <CMDLine>
+    </CMDLine>
+    <BackgroundRed>0</BackgroundRed>
+    <BackgroundGreen>0</BackgroundGreen>
+    <BackgroundBlue>0</BackgroundBlue>
+    <CoverResolutionID>0</CoverResolutionID>
+    <CoverWidth>100</CoverWidth>
+    <CoverHeight>263</CoverHeight>
+    <URLCheck>False</URLCheck>
+    <TagsID>
+      <id>1</id>
+      <id>2</id>
+      <id>3</id>
+    </TagsID>
+    <Favorite>False</Favorite>
+  </file>
 </Launcher>

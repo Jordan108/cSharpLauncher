@@ -62,6 +62,7 @@
             this.buttonBackgroundColor = new System.Windows.Forms.Button();
             this.buttonSearchSonCoverTest = new System.Windows.Forms.Button();
             this.buttonColorPickIMG = new System.Windows.Forms.Button();
+            this.checkBoxImageLocation = new System.Windows.Forms.CheckBox();
             this.groupBoxCover.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericColHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericColWidth)).BeginInit();
@@ -242,7 +243,7 @@
             // 
             // buttonSave
             // 
-            this.buttonSave.Location = new System.Drawing.Point(55, 415);
+            this.buttonSave.Location = new System.Drawing.Point(52, 448);
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(75, 23);
             this.buttonSave.TabIndex = 8;
@@ -254,7 +255,7 @@
             // 
             this.panelImageLimit.BackColor = System.Drawing.SystemColors.ControlDark;
             this.panelImageLimit.Controls.Add(this.pictureBoxCoverCollection);
-            this.panelImageLimit.Location = new System.Drawing.Point(218, 138);
+            this.panelImageLimit.Location = new System.Drawing.Point(218, 165);
             this.panelImageLimit.Name = "panelImageLimit";
             this.panelImageLimit.Size = new System.Drawing.Size(300, 300);
             this.panelImageLimit.TabIndex = 9;
@@ -283,10 +284,11 @@
             // 
             this.panelSonImageLimit.BackColor = System.Drawing.SystemColors.ControlDark;
             this.panelSonImageLimit.Controls.Add(this.pictureBoxCoverSon);
-            this.panelSonImageLimit.Location = new System.Drawing.Point(739, 138);
+            this.panelSonImageLimit.Location = new System.Drawing.Point(739, 165);
             this.panelSonImageLimit.Name = "panelSonImageLimit";
             this.panelSonImageLimit.Size = new System.Drawing.Size(300, 300);
             this.panelSonImageLimit.TabIndex = 10;
+            this.panelSonImageLimit.Paint += new System.Windows.Forms.PaintEventHandler(this.panelSonImageLimit_Paint);
             // 
             // pictureBoxCoverSon
             // 
@@ -450,7 +452,7 @@
             // 
             // buttonSearchSonCoverTest
             // 
-            this.buttonSearchSonCoverTest.Location = new System.Drawing.Point(801, 109);
+            this.buttonSearchSonCoverTest.Location = new System.Drawing.Point(802, 136);
             this.buttonSearchSonCoverTest.Name = "buttonSearchSonCoverTest";
             this.buttonSearchSonCoverTest.Size = new System.Drawing.Size(170, 23);
             this.buttonSearchSonCoverTest.TabIndex = 15;
@@ -466,11 +468,22 @@
             this.buttonColorPickIMG.TabIndex = 16;
             this.buttonColorPickIMG.UseVisualStyleBackColor = true;
             // 
+            // checkBoxImageLocation
+            // 
+            this.checkBoxImageLocation.AutoSize = true;
+            this.checkBoxImageLocation.Location = new System.Drawing.Point(218, 140);
+            this.checkBoxImageLocation.Name = "checkBoxImageLocation";
+            this.checkBoxImageLocation.Size = new System.Drawing.Size(215, 17);
+            this.checkBoxImageLocation.TabIndex = 17;
+            this.checkBoxImageLocation.Text = "Utilizar la imagen en su ubicacion actual";
+            this.checkBoxImageLocation.UseVisualStyleBackColor = true;
+            // 
             // NewCollection
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1065, 450);
+            this.ClientSize = new System.Drawing.Size(1065, 483);
+            this.Controls.Add(this.checkBoxImageLocation);
             this.Controls.Add(this.buttonColorPickIMG);
             this.Controls.Add(this.buttonSearchSonCoverTest);
             this.Controls.Add(this.buttonBackgroundColor);
@@ -550,5 +563,6 @@
         private System.Windows.Forms.Button buttonBackgroundColor;
         private System.Windows.Forms.Button buttonSearchSonCoverTest;
         private System.Windows.Forms.Button buttonColorPickIMG;
+        private System.Windows.Forms.CheckBox checkBoxImageLocation;
     }
 }
