@@ -30,20 +30,23 @@
         {
             this.buttonSearchSonCoverTest = new System.Windows.Forms.Button();
             this.panelSonImageLimit = new System.Windows.Forms.Panel();
-            this.pictureBoxCoverSon = new System.Windows.Forms.PictureBox();
+            this.pictureBoxCover = new System.Windows.Forms.PictureBox();
             this.dataGridViewResolutions = new System.Windows.Forms.DataGridView();
             this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.width = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.height = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.imageLayout = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.buttonAddRow = new System.Windows.Forms.Button();
+            this.buttonDeleteRow = new System.Windows.Forms.Button();
+            this.buttonSaveRes = new System.Windows.Forms.Button();
             this.panelSonImageLimit.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCoverSon)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCover)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewResolutions)).BeginInit();
             this.SuspendLayout();
             // 
             // buttonSearchSonCoverTest
             // 
-            this.buttonSearchSonCoverTest.Location = new System.Drawing.Point(557, 109);
+            this.buttonSearchSonCoverTest.Location = new System.Drawing.Point(556, 12);
             this.buttonSearchSonCoverTest.Name = "buttonSearchSonCoverTest";
             this.buttonSearchSonCoverTest.Size = new System.Drawing.Size(170, 23);
             this.buttonSearchSonCoverTest.TabIndex = 17;
@@ -54,24 +57,26 @@
             // panelSonImageLimit
             // 
             this.panelSonImageLimit.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.panelSonImageLimit.Controls.Add(this.pictureBoxCoverSon);
-            this.panelSonImageLimit.Location = new System.Drawing.Point(494, 138);
+            this.panelSonImageLimit.Controls.Add(this.pictureBoxCover);
+            this.panelSonImageLimit.Location = new System.Drawing.Point(488, 41);
             this.panelSonImageLimit.Name = "panelSonImageLimit";
             this.panelSonImageLimit.Size = new System.Drawing.Size(300, 300);
             this.panelSonImageLimit.TabIndex = 16;
             // 
-            // pictureBoxCoverSon
+            // pictureBoxCover
             // 
-            this.pictureBoxCoverSon.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
-            this.pictureBoxCoverSon.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBoxCoverSon.Location = new System.Drawing.Point(0, 0);
-            this.pictureBoxCoverSon.Name = "pictureBoxCoverSon";
-            this.pictureBoxCoverSon.Size = new System.Drawing.Size(100, 100);
-            this.pictureBoxCoverSon.TabIndex = 0;
-            this.pictureBoxCoverSon.TabStop = false;
+            this.pictureBoxCover.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.pictureBoxCover.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pictureBoxCover.Location = new System.Drawing.Point(0, 0);
+            this.pictureBoxCover.Name = "pictureBoxCover";
+            this.pictureBoxCover.Size = new System.Drawing.Size(100, 100);
+            this.pictureBoxCover.TabIndex = 0;
+            this.pictureBoxCover.TabStop = false;
             // 
             // dataGridViewResolutions
             // 
+            this.dataGridViewResolutions.AllowUserToAddRows = false;
+            this.dataGridViewResolutions.AllowUserToDeleteRows = false;
             this.dataGridViewResolutions.AllowUserToResizeColumns = false;
             this.dataGridViewResolutions.AllowUserToResizeRows = false;
             this.dataGridViewResolutions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -80,11 +85,13 @@
             this.width,
             this.height,
             this.imageLayout});
-            this.dataGridViewResolutions.Location = new System.Drawing.Point(12, 138);
+            this.dataGridViewResolutions.Location = new System.Drawing.Point(12, 41);
+            this.dataGridViewResolutions.MultiSelect = false;
             this.dataGridViewResolutions.Name = "dataGridViewResolutions";
             this.dataGridViewResolutions.Size = new System.Drawing.Size(445, 300);
             this.dataGridViewResolutions.TabIndex = 18;
             this.dataGridViewResolutions.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewResolutions_CellClick);
+            this.dataGridViewResolutions.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewResolutions_CellEndEdit);
             // 
             // name
             // 
@@ -117,18 +124,51 @@
             "5"});
             this.imageLayout.Name = "imageLayout";
             // 
-            // Resolutions
+            // buttonAddRow
+            // 
+            this.buttonAddRow.Location = new System.Drawing.Point(294, 12);
+            this.buttonAddRow.Name = "buttonAddRow";
+            this.buttonAddRow.Size = new System.Drawing.Size(75, 23);
+            this.buttonAddRow.TabIndex = 19;
+            this.buttonAddRow.Text = "Añadir";
+            this.buttonAddRow.UseVisualStyleBackColor = true;
+            this.buttonAddRow.Click += new System.EventHandler(this.buttonAddRow_Click);
+            // 
+            // buttonDeleteRow
+            // 
+            this.buttonDeleteRow.Location = new System.Drawing.Point(382, 12);
+            this.buttonDeleteRow.Name = "buttonDeleteRow";
+            this.buttonDeleteRow.Size = new System.Drawing.Size(75, 23);
+            this.buttonDeleteRow.TabIndex = 20;
+            this.buttonDeleteRow.Text = "Eliminar";
+            this.buttonDeleteRow.UseVisualStyleBackColor = true;
+            this.buttonDeleteRow.Click += new System.EventHandler(this.buttonDeleteRow_Click);
+            // 
+            // buttonSaveRes
+            // 
+            this.buttonSaveRes.Location = new System.Drawing.Point(382, 349);
+            this.buttonSaveRes.Name = "buttonSaveRes";
+            this.buttonSaveRes.Size = new System.Drawing.Size(75, 23);
+            this.buttonSaveRes.TabIndex = 21;
+            this.buttonSaveRes.Text = "Guardar";
+            this.buttonSaveRes.UseVisualStyleBackColor = true;
+            this.buttonSaveRes.Click += new System.EventHandler(this.buttonSaveRes_Click);
+            // 
+            // Resolution
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(800, 384);
+            this.Controls.Add(this.buttonSaveRes);
+            this.Controls.Add(this.buttonDeleteRow);
+            this.Controls.Add(this.buttonAddRow);
             this.Controls.Add(this.dataGridViewResolutions);
             this.Controls.Add(this.buttonSearchSonCoverTest);
             this.Controls.Add(this.panelSonImageLimit);
-            this.Name = "Resolutions";
+            this.Name = "Resolution";
             this.Text = "Resolutions";
             this.panelSonImageLimit.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCoverSon)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCover)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewResolutions)).EndInit();
             this.ResumeLayout(false);
 
@@ -138,11 +178,14 @@
 
         private System.Windows.Forms.Button buttonSearchSonCoverTest;
         private System.Windows.Forms.Panel panelSonImageLimit;
-        private System.Windows.Forms.PictureBox pictureBoxCoverSon;
+        private System.Windows.Forms.PictureBox pictureBoxCover;
         private System.Windows.Forms.DataGridView dataGridViewResolutions;
         private System.Windows.Forms.DataGridViewTextBoxColumn name;
         private System.Windows.Forms.DataGridViewTextBoxColumn width;
         private System.Windows.Forms.DataGridViewTextBoxColumn height;
         private System.Windows.Forms.DataGridViewComboBoxColumn imageLayout;
+        private System.Windows.Forms.Button buttonAddRow;
+        private System.Windows.Forms.Button buttonDeleteRow;
+        private System.Windows.Forms.Button buttonSaveRes;
     }
 }
