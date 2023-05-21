@@ -9,6 +9,7 @@ using System.Drawing;
 using System.Drawing.Text;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -27,6 +28,7 @@ namespace C_Launcher
         //Rutas de los archivos XML
         private string xmlColPath = "System\\Collections.xml";
         private string xmlFilesPath = "System\\Files.xml";
+        private string xmlResPath = "System\\Resolutions.xml";
 
         //Mantener el tamaño de los archivos y colecciones
         private int colSize = 0;
@@ -81,7 +83,27 @@ namespace C_Launcher
         //Crear la nueva ventana para añadir las colecciones
         private void ToolStripAddCollection_Click(object sender, EventArgs e)
         {
-            NewCollection newCollection = new NewCollection();
+            int defaultWidth = 100;
+            int defaultHeight = 100;
+            int defaultRes = 0;
+            int defaultImageLayout = 0;
+
+            //Si la profundidad es mayor a 0, buscar la coleccion con esa id en especifico y extraerle los valores default
+            if (viewDepth > 0)
+            {
+                XmlDocument doc = new XmlDocument();
+                doc.Load(xmlColPath);
+
+                string xpath = "//Launcher/collection[@id='" + viewDepth + "']";
+                XmlNode root = doc.SelectSingleNode(xpath);
+
+                defaultRes = int.Parse(root.SelectSingleNode("CoverSonResolutionID").InnerText);
+                defaultWidth = int.Parse(root.SelectSingleNode("CoverSonWidth").InnerText);
+                defaultHeight = int.Parse(root.SelectSingleNode("CoverSonHeight").InnerText);
+                defaultImageLayout = int.Parse(root.SelectSingleNode("SonImageLayout").InnerText);
+            }
+
+            NewCollection newCollection = new NewCollection(viewDepth, defaultRes, defaultWidth, defaultHeight, defaultImageLayout);
             newCollection.ReturnedObject += NewCollection_ReturnedObject;
             newCollection.ShowDialog();
         }
@@ -89,7 +111,28 @@ namespace C_Launcher
         //Crear la nueva ventana para crear los archivos (individual)
         private void ToolStripAddFile_Click(object sender, EventArgs e)
         {
-            NewFile newFile = new NewFile();
+            int defaultWidth = 100; 
+            int defaultHeight = 100;
+            int defaultRes = 0;
+            int defaultImageLayout = 0;
+
+            //Si la profundidad es mayor a 0, buscar la coleccion con esa id en especifico y extraerle los valores default
+            if (viewDepth > 0)
+            {
+                XmlDocument doc = new XmlDocument();
+                doc.Load(xmlColPath);
+
+                string xpath = "//Launcher/collection[@id='" + viewDepth + "']";
+                XmlNode root = doc.SelectSingleNode(xpath);
+
+                defaultRes = int.Parse(root.SelectSingleNode("CoverSonResolutionID").InnerText);
+                defaultWidth = int.Parse(root.SelectSingleNode("CoverSonWidth").InnerText);
+                defaultHeight = int.Parse(root.SelectSingleNode("CoverSonHeight").InnerText);
+                defaultImageLayout = int.Parse(root.SelectSingleNode("SonImageLayout").InnerText);
+            }
+            
+
+            NewFile newFile = new NewFile(viewDepth, defaultRes, defaultWidth, defaultHeight, defaultImageLayout);
             newFile.ReturnedObject += NewFile_ReturnedObject;
             newFile.ShowDialog();
         }
@@ -136,6 +179,13 @@ namespace C_Launcher
             {
             }
         }
+
+        //Administrar las resoluciones
+        private void administrarResolucionesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Resolution res = new Resolution();
+            res.ShowDialog();
+        }
         #endregion
 
         #region Manejar interaccion entre ventanas
@@ -179,10 +229,10 @@ namespace C_Launcher
                     fileDir = Path.GetDirectoryName(file);
                     if (program != "") programDir = Path.GetFullPath(program);
 
-                    Console.WriteLine("ruta del archivo: " + fileExe);
-                    Console.WriteLine("ruta de la carpeta: " + fileDir);
-                    Console.WriteLine("ruta programa: " + programDir);
-                    Console.WriteLine("cmd: " + cmdLine);
+                    //Console.WriteLine("ruta del archivo: " + fileExe);
+                    //Console.WriteLine("ruta de la carpeta: " + fileDir);
+                    //Console.WriteLine("ruta programa: " + programDir);
+                    //Console.WriteLine("cmd: " + cmdLine);
                 }
                 catch
                 {
@@ -348,8 +398,9 @@ namespace C_Launcher
 
             int pL = 0;//largo de los pictureBox de esa profundidad
 
+            #region Colecciones
             //Recorrer todos el array de las colecciones
-            for(int i = 0; i < colls.Length; i++)
+            for (int i = 0; i < colls.Length; i++)
             {
                 //Solo agregar las colecciones que coincidan con la profundidad actual
                 if (viewDepth == colls[i].IDFather)
@@ -414,19 +465,47 @@ namespace C_Launcher
                 }
             }
 
+            #endregion
+
+            #region archivos
             //Recorrer todo el array de los files
             for (int f = 0; f < files.Length; f++)
             {
                 //Solo agregar las colecciones que coincidan con la profundidad actual
                 if (viewDepth == files[f].IDFather)
                 {
-                    //Image imagen = Image.FromFile(colls[i].ImagePath);
+                    int fileW = 100;
+                    int fileH = 100;
+
+                    if (files[f].ResolutionID == 0)
+                    {
+                        fileW = files[f].Width;
+                        fileH = files[f].Height;
+                    } else
+                    {
+                        try
+                        {
+                            //Cargar la resolucion perteneciente a esa id
+                            XmlDocument doc = new XmlDocument();
+                            doc.Load(xmlResPath);
+                            string xpath = "//Launcher/resolution[@id='" + files[f].ResolutionID + "']";
+                            XmlNode root = doc.SelectSingleNode(xpath);
+
+                            fileW = int.Parse(root.SelectSingleNode("Width").InnerText);
+                            fileH = int.Parse(root.SelectSingleNode("Height").InnerText);
+                        } catch (Exception ex)
+                        {
+                            Console.WriteLine("\n///////\nNo se pudo cargar la resolucion del archivo xml\nerror\n"+ex);
+                        }
+                        
+                    }
+
                     //Definir el picture box
                     picBoxArr[pL] = new PictureBox
                     {
                         AccessibleDescription = "file",//Aqui se indica que tipo de picture box es (coleccion / archivo)//,
                         Name = files[f].Name,
-                        Size = new Size(files[f].Width, files[f].Height),
+                        Size = new Size(fileW, fileH),
                         BackColor = Color.FromArgb(files[f].ColorRed, files[f].ColorGreen, files[f].ColorBlue),
                         /*
                         BackgroundImage = imagen,
@@ -476,6 +555,7 @@ namespace C_Launcher
                     pL++;//iterar en el array de paneles
                 }
             }
+            #endregion
 
             //Optimizar el tamaño del array
             Array.Resize(ref picBoxArr, pL);
@@ -795,7 +875,7 @@ namespace C_Launcher
                 //Navegar entre todos los elementos que contenga el elemento base del xml
                 foreach (XmlNode rootxml in root.ChildNodes)
                 {
-                    Console.WriteLine(rootxml.Name + " | " + rootxml.InnerText);
+                    //Console.WriteLine(rootxml.Name + " | " + rootxml.InnerText);
                     switch (rootxml.Name)
                     {
                         case "IDFather": idFather = int.Parse(rootxml.InnerText); break;
@@ -872,7 +952,7 @@ namespace C_Launcher
                 //Navegar entre todos los elementos que contenga el elemento base del xml
                 foreach (XmlNode rootxml in root.ChildNodes)
                 {
-                    Console.WriteLine(rootxml.Name + " | " + rootxml.InnerText);
+                    //Console.WriteLine(rootxml.Name + " | " + rootxml.InnerText);
                     switch (rootxml.Name)
                     {
                         case "IDFather": idFather = int.Parse(rootxml.InnerText); break;
@@ -929,7 +1009,7 @@ namespace C_Launcher
                 foreach (XmlNode rootxml in root.ChildNodes)
                 {
                     // Hacer algo con el nodo, por ejemplo imprimir su nombre
-                    Console.WriteLine(rootxml.Name + " | " + rootxml.InnerText);
+                    //Console.WriteLine(rootxml.Name + " | " + rootxml.InnerText);
                     switch (rootxml.Name)
                     {
                         case "FilePath": filePath = rootxml.InnerText; break;
@@ -1071,10 +1151,6 @@ namespace C_Launcher
 
         #endregion
 
-        private void administrarResolucionesToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            Resolution res = new Resolution();
-            res.ShowDialog();
-        }
+        
     }
 }

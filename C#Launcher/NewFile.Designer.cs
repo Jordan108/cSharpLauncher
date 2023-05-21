@@ -56,7 +56,7 @@
             this.buttonSearchCover = new System.Windows.Forms.Button();
             this.buttonSetColor = new System.Windows.Forms.Button();
             this.buttonSave = new System.Windows.Forms.Button();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.comboBoxResolution = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.buttonColorPickIMG = new System.Windows.Forms.Button();
             this.checkBoxImageLocation = new System.Windows.Forms.CheckBox();
@@ -361,14 +361,15 @@
             this.buttonSave.UseVisualStyleBackColor = true;
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
-            // comboBox1
+            // comboBoxResolution
             // 
-            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(28, 360);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(228, 21);
-            this.comboBox1.TabIndex = 27;
+            this.comboBoxResolution.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxResolution.FormattingEnabled = true;
+            this.comboBoxResolution.Location = new System.Drawing.Point(28, 360);
+            this.comboBoxResolution.Name = "comboBoxResolution";
+            this.comboBoxResolution.Size = new System.Drawing.Size(228, 21);
+            this.comboBoxResolution.TabIndex = 27;
+            this.comboBoxResolution.SelectedIndexChanged += new System.EventHandler(this.comboBoxResolution_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -406,7 +407,7 @@
             this.Controls.Add(this.checkBoxImageLocation);
             this.Controls.Add(this.buttonColorPickIMG);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.comboBoxResolution);
             this.Controls.Add(this.buttonSave);
             this.Controls.Add(this.buttonSetColor);
             this.Controls.Add(this.buttonSearchCover);
@@ -473,7 +474,7 @@
         private System.Windows.Forms.Button buttonSearchCover;
         private System.Windows.Forms.Button buttonSetColor;
         private System.Windows.Forms.Button buttonSave;
-        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.ComboBox comboBoxResolution;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button buttonColorPickIMG;
         private System.Windows.Forms.CheckBox checkBoxImageLocation;

@@ -8,8 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
-using System.IO
+using System.IO;
 using System.Xml.Linq;
+using System.Collections.ObjectModel;
 
 namespace C_Launcher
 {
@@ -18,7 +19,8 @@ namespace C_Launcher
         private int currentX, currentY;
         private int resizing = 0; // 0=no se esta ajustando; 1=ajustando ancho; 2=ajustando alto; 3=ajustando ambos
         private int rowSelected = -1;
-        private string xmlFilesPath = "System\\Resolutions.xml";
+        private string xmlResPath = "System\\Resolutions.xml";
+        private int maxTag = 0;
 
         public Resolution()
         {
@@ -28,7 +30,78 @@ namespace C_Launcher
             this.pictureBoxCover.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBoxCover_MouseUp);
             //Seleccionar por defecto la primera fila
             //dataGridViewResolutions.Rows[0].Selected = true;
+            //Cargar las resoluciones en el dataGrid
+            loadXMLResolutions();
         }
+
+        private void loadXMLResolutions()
+        {
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.Load(xmlResPath);
+
+            //Recoger la cantidad de elementos que existen
+            XmlNodeList resElements = xmlDoc.SelectNodes("//*[@id]");
+            int size = resElements.Count;
+
+            int resID = 1;
+            for (int i = 0; i < size; i++)
+            {
+                //Buscamos el elemento a recoger
+                string xpath = "//Launcher/resolution[@id='" + resID + "']";
+                XmlNode root = xmlDoc.SelectSingleNode(xpath);
+
+                //si no existe un elemento con esa id, sumar 1
+                while (root == null)
+                {
+
+                    resID++;
+                    xpath = "//Launcher/resolution[@id='" + resID + "']";
+                    root = xmlDoc.SelectSingleNode(xpath);
+                }
+
+                string name = root.SelectSingleNode("Name").InnerText;
+                int width = int.Parse(root.SelectSingleNode("Width").InnerText);
+                int height = int.Parse(root.SelectSingleNode("Height").InnerText);
+
+                /*
+                foreach (XmlNode rootxml in root.ChildNodes)
+                {
+                    Console.WriteLine(rootxml.Name + " | " + rootxml.InnerText);
+                    switch (rootxml.Name)
+                    {
+                        case "Name": name = rootxml.InnerText; break;
+                        case "Width": width = int.Parse(rootxml.InnerText); break;
+                        case "Height": height = int.Parse(rootxml.InnerText); break;
+                    }
+
+                }
+                */
+
+                this.dataGridViewResolutions.Rows.Add(name, width, height);
+                DataGridViewRow selectedRow = dataGridViewResolutions.Rows[i];
+                selectedRow.Tag = resID;
+
+                //Iterar al siguiente elemento
+                resID++;
+            }
+            //Establecer el tag mas grande encontrado
+            maxTag = resID-1;//le resto 1 por que al final del bucle for, para pasar al siguiente, le sumo 1
+
+            int rowCount = dataGridViewResolutions.Rows.Count;
+
+            if (rowCount > 0)
+            {
+                dataGridViewResolutions.CurrentCell = dataGridViewResolutions.Rows[0].Cells[0];
+                dataGridViewResolutions.Rows[0].Selected = true;
+
+                DataGridViewRow selectedRow = dataGridViewResolutions.Rows[0];
+
+                pictureBoxCover.Width = int.Parse(selectedRow.Cells[1].Value.ToString());
+                pictureBoxCover.Height = int.Parse(selectedRow.Cells[2].Value.ToString());
+            }
+            
+        }
+
 
         private void pictureBoxCover_MouseDown(object sender, MouseEventArgs e)
         {
@@ -114,17 +187,19 @@ namespace C_Launcher
 
         private void dataGridViewResolutions_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            Console.WriteLine("/////////");
-            Console.WriteLine(e.RowIndex);
+            Console.WriteLine("\n/////////");
+            Console.WriteLine("fila num: "+e.RowIndex);
+            
             if (e.RowIndex > -1)
             {
                 DataGridViewRow selectedRow = dataGridViewResolutions.Rows[e.RowIndex];
+                Console.WriteLine("tag de la fila: " + selectedRow.Tag);
                 rowSelected = e.RowIndex;
 
                 //string resName = "name";
                 int widthCover = 0;
                 int heightCover = 0;
-                int coverLayout = 0;
+                //int coverLayout = 0;
 
                 //if (selectedRow.Cells[0].Value != null) resName = selectedRow.Cells[0].Value.ToString();
                 if (selectedRow.Cells[1].Value != null)
@@ -195,6 +270,10 @@ namespace C_Launcher
             int rowCount = dataGridViewResolutions.Rows.Count;
             dataGridViewResolutions.CurrentCell = dataGridViewResolutions.Rows[rowCount - 1].Cells[0];
             dataGridViewResolutions.Rows[rowCount - 1].Selected = true;
+
+            maxTag++;//Sumarle 1 al tag maximo
+            dataGridViewResolutions.Rows[rowCount - 1].Tag = maxTag;//Asignar el id a la fila
+
             rowSelected = rowCount - 1;
             pictureBoxCover.Width = 100;
             pictureBoxCover.Height = 100;
@@ -216,12 +295,12 @@ namespace C_Launcher
         {
             //Como todas las resoluciones se muestran en la tabla y se pueden modificar todas, se reseteara el xml cada vez que se vaya a ocupar
             //Verificar que el archivo xml exista (y si no es asi, crearlo y formatearlo)
-            if (!File.Exists(xmlFilesPath))
+            if (!File.Exists(xmlResPath))
             {
                 XmlWriterSettings settings = new XmlWriterSettings();
                 settings.Indent = true;
 
-                using (XmlWriter writer = XmlWriter.Create(xmlFilesPath, settings))
+                using (XmlWriter writer = XmlWriter.Create(xmlResPath, settings))
                 {
                     //Crear el elemento raiz del archivo (obligatorio)
                     writer.WriteStartElement("Launcher");
@@ -229,24 +308,35 @@ namespace C_Launcher
                 }
             }
 
-            /*
+            //Despues de cargar el archivo xml, eliminar todos sus elementos
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.Load(xmlResPath);
+            XmlNode root = xmlDoc.DocumentElement;
+            root.RemoveAll();
+
             for (int i = 0; i < dataGridViewResolutions.Rows.Count; i++)
             {
-                XmlElement rowElement = xmlDocument.CreateElement("Row");
-                rootElement.AppendChild(rowElement);
+                DataGridViewRow selectedRow = dataGridViewResolutions.Rows[i];
 
-                for (int j = 0; j < dataGridView1.Columns.Count; j++)
-                {
-                    string columnName = dataGridView1.Columns[j].Name;
-                    string cellValue = dataGridView1.Rows[i].Cells[j].Value.ToString();
+                int gridTag = int.Parse(selectedRow.Tag.ToString());
+                XmlElement resolution;
+                resolution = xmlDoc.CreateElement("resolution");
+                resolution.SetAttribute("id", gridTag + "");//establecer el atributo id
 
-                    XmlElement cellElement = xmlDocument.CreateElement(columnName);
-                    cellElement.InnerText = cellValue;
-                    rowElement.AppendChild(cellElement);
-                }
+                //Añadirlo a la raiz "launcher"
+                root.AppendChild(resolution);
+
+                XmlElement resName   = xmlDoc.CreateElement("Name");    resName.InnerText   = selectedRow.Cells[0].Value.ToString(); resolution.AppendChild(resName);
+                XmlElement resWidht  = xmlDoc.CreateElement("Width");   resWidht.InnerText  = selectedRow.Cells[1].Value.ToString(); resolution.AppendChild(resWidht);
+                XmlElement resHeight = xmlDoc.CreateElement("Height");  resHeight.InnerText = selectedRow.Cells[2].Value.ToString(); resolution.AppendChild(resHeight);
+
             }
-            */
 
+            //Despues del bucle, guardar el archivo
+            xmlDoc.Save(xmlResPath);
+
+            //cerrar
+            this.Close();
         }
 
         private void buttonSearchSonCoverTest_Click(object sender, EventArgs e)

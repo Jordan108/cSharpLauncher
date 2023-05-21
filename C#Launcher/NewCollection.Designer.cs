@@ -50,7 +50,7 @@
             this.pictureBoxCoverSon = new System.Windows.Forms.PictureBox();
             this.comboBoxSonResolution = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBoxSon = new System.Windows.Forms.GroupBox();
             this.labelSonHeight = new System.Windows.Forms.Label();
             this.labelSonWidth = new System.Windows.Forms.Label();
             this.numericSonHeight = new System.Windows.Forms.NumericUpDown();
@@ -71,7 +71,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCoverCollection)).BeginInit();
             this.panelSonImageLimit.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCoverSon)).BeginInit();
-            this.groupBox1.SuspendLayout();
+            this.groupBoxSon.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericSonHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericSonWidth)).BeginInit();
             this.groupBoxSonFormat.SuspendLayout();
@@ -119,6 +119,7 @@
             this.comboBoxResolutionCol.Name = "comboBoxResolutionCol";
             this.comboBoxResolutionCol.Size = new System.Drawing.Size(200, 21);
             this.comboBoxResolutionCol.TabIndex = 4;
+            this.comboBoxResolutionCol.SelectedIndexChanged += new System.EventHandler(this.comboBoxResolutionCol_SelectedIndexChanged);
             // 
             // labelResolutionCol
             // 
@@ -308,6 +309,7 @@
             this.comboBoxSonResolution.Name = "comboBoxSonResolution";
             this.comboBoxSonResolution.Size = new System.Drawing.Size(200, 21);
             this.comboBoxSonResolution.TabIndex = 11;
+            this.comboBoxSonResolution.SelectedIndexChanged += new System.EventHandler(this.comboBoxSonResolution_SelectedIndexChanged);
             // 
             // label1
             // 
@@ -318,18 +320,18 @@
             this.label1.TabIndex = 12;
             this.label1.Text = "Resolucion hijos";
             // 
-            // groupBox1
+            // groupBoxSon
             // 
-            this.groupBox1.Controls.Add(this.labelSonHeight);
-            this.groupBox1.Controls.Add(this.labelSonWidth);
-            this.groupBox1.Controls.Add(this.numericSonHeight);
-            this.groupBox1.Controls.Add(this.numericSonWidth);
-            this.groupBox1.Location = new System.Drawing.Point(533, 192);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(200, 100);
-            this.groupBox1.TabIndex = 7;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Tamaño en pixeles (100-300)";
+            this.groupBoxSon.Controls.Add(this.labelSonHeight);
+            this.groupBoxSon.Controls.Add(this.labelSonWidth);
+            this.groupBoxSon.Controls.Add(this.numericSonHeight);
+            this.groupBoxSon.Controls.Add(this.numericSonWidth);
+            this.groupBoxSon.Location = new System.Drawing.Point(533, 192);
+            this.groupBoxSon.Name = "groupBoxSon";
+            this.groupBoxSon.Size = new System.Drawing.Size(200, 100);
+            this.groupBoxSon.TabIndex = 7;
+            this.groupBoxSon.TabStop = false;
+            this.groupBoxSon.Text = "Tamaño en pixeles (100-300)";
             // 
             // labelSonHeight
             // 
@@ -489,7 +491,7 @@
             this.Controls.Add(this.buttonBackgroundColor);
             this.Controls.Add(this.buttonSearchCover);
             this.Controls.Add(this.groupBoxSonFormat);
-            this.Controls.Add(this.groupBox1);
+            this.Controls.Add(this.groupBoxSon);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.comboBoxSonResolution);
             this.Controls.Add(this.panelSonImageLimit);
@@ -516,8 +518,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCoverCollection)).EndInit();
             this.panelSonImageLimit.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCoverSon)).EndInit();
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.groupBoxSon.ResumeLayout(false);
+            this.groupBoxSon.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericSonHeight)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericSonWidth)).EndInit();
             this.groupBoxSonFormat.ResumeLayout(false);
@@ -551,7 +553,7 @@
         private System.Windows.Forms.PictureBox pictureBoxCoverSon;
         private System.Windows.Forms.ComboBox comboBoxSonResolution;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBoxSon;
         private System.Windows.Forms.Label labelSonHeight;
         private System.Windows.Forms.Label labelSonWidth;
         private System.Windows.Forms.NumericUpDown numericSonHeight;

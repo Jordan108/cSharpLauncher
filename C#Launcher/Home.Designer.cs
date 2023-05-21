@@ -32,9 +32,6 @@
             this.btnReloadView = new System.Windows.Forms.Button();
             this.btnHomeView = new System.Windows.Forms.Button();
             this.btnBackView = new System.Windows.Forms.Button();
-            this.panelSide = new System.Windows.Forms.Panel();
-            this.flowLayoutPanelMain = new System.Windows.Forms.FlowLayoutPanel();
-            this.splitterLeft = new System.Windows.Forms.Splitter();
             this.menuStripMain = new System.Windows.Forms.MenuStrip();
             this.archivoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.verToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -42,8 +39,14 @@
             this.fechaDeCreacionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nombreToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.administrarResolucionesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.panelSide = new System.Windows.Forms.Panel();
+            this.flowLayoutPanelMain = new System.Windows.Forms.FlowLayoutPanel();
+            this.splitterLeft = new System.Windows.Forms.Splitter();
+            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panelTop.SuspendLayout();
             this.menuStripMain.SuspendLayout();
+            this.flowLayoutPanelMain.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // panelTop
@@ -89,34 +92,6 @@
             this.btnBackView.UseVisualStyleBackColor = true;
             this.btnBackView.Click += new System.EventHandler(this.btnBackView_Click);
             // 
-            // panelSide
-            // 
-            this.panelSide.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(40)))), ((int)(((byte)(47)))));
-            this.panelSide.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panelSide.Location = new System.Drawing.Point(0, 58);
-            this.panelSide.Name = "panelSide";
-            this.panelSide.Size = new System.Drawing.Size(108, 494);
-            this.panelSide.TabIndex = 1;
-            // 
-            // flowLayoutPanelMain
-            // 
-            this.flowLayoutPanelMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(40)))), ((int)(((byte)(47)))));
-            this.flowLayoutPanelMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanelMain.Location = new System.Drawing.Point(108, 58);
-            this.flowLayoutPanelMain.Name = "flowLayoutPanelMain";
-            this.flowLayoutPanelMain.Size = new System.Drawing.Size(662, 494);
-            this.flowLayoutPanelMain.TabIndex = 2;
-            // 
-            // splitterLeft
-            // 
-            this.splitterLeft.BackColor = System.Drawing.Color.Black;
-            this.splitterLeft.Location = new System.Drawing.Point(108, 58);
-            this.splitterLeft.Margin = new System.Windows.Forms.Padding(3, 3, 10, 3);
-            this.splitterLeft.Name = "splitterLeft";
-            this.splitterLeft.Size = new System.Drawing.Size(4, 494);
-            this.splitterLeft.TabIndex = 3;
-            this.splitterLeft.TabStop = false;
-            // 
             // menuStripMain
             // 
             this.menuStripMain.BackColor = System.Drawing.SystemColors.ButtonShadow;
@@ -156,13 +131,13 @@
             // fechaDeCreacionToolStripMenuItem
             // 
             this.fechaDeCreacionToolStripMenuItem.Name = "fechaDeCreacionToolStripMenuItem";
-            this.fechaDeCreacionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.fechaDeCreacionToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
             this.fechaDeCreacionToolStripMenuItem.Text = "Fecha de creacion";
             // 
             // nombreToolStripMenuItem
             // 
             this.nombreToolStripMenuItem.Name = "nombreToolStripMenuItem";
-            this.nombreToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.nombreToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
             this.nombreToolStripMenuItem.Text = "Nombre";
             // 
             // administrarResolucionesToolStripMenuItem
@@ -171,6 +146,45 @@
             this.administrarResolucionesToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
             this.administrarResolucionesToolStripMenuItem.Text = "Administrar resoluciones";
             this.administrarResolucionesToolStripMenuItem.Click += new System.EventHandler(this.administrarResolucionesToolStripMenuItem_Click);
+            // 
+            // panelSide
+            // 
+            this.panelSide.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(40)))), ((int)(((byte)(47)))));
+            this.panelSide.Dock = System.Windows.Forms.DockStyle.Left;
+            this.panelSide.Location = new System.Drawing.Point(0, 58);
+            this.panelSide.Name = "panelSide";
+            this.panelSide.Size = new System.Drawing.Size(108, 494);
+            this.panelSide.TabIndex = 1;
+            // 
+            // flowLayoutPanelMain
+            // 
+            this.flowLayoutPanelMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(40)))), ((int)(((byte)(47)))));
+            this.flowLayoutPanelMain.Controls.Add(this.pictureBox1);
+            this.flowLayoutPanelMain.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanelMain.Location = new System.Drawing.Point(108, 58);
+            this.flowLayoutPanelMain.Name = "flowLayoutPanelMain";
+            this.flowLayoutPanelMain.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
+            this.flowLayoutPanelMain.Size = new System.Drawing.Size(662, 494);
+            this.flowLayoutPanelMain.TabIndex = 2;
+            // 
+            // splitterLeft
+            // 
+            this.splitterLeft.BackColor = System.Drawing.Color.Black;
+            this.splitterLeft.Location = new System.Drawing.Point(108, 58);
+            this.splitterLeft.Margin = new System.Windows.Forms.Padding(3, 3, 10, 3);
+            this.splitterLeft.Name = "splitterLeft";
+            this.splitterLeft.Size = new System.Drawing.Size(4, 494);
+            this.splitterLeft.TabIndex = 3;
+            this.splitterLeft.TabStop = false;
+            // 
+            // pictureBox1
+            // 
+            this.pictureBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
+            this.pictureBox1.Location = new System.Drawing.Point(8, 3);
+            this.pictureBox1.Name = "pictureBox1";
+            this.pictureBox1.Size = new System.Drawing.Size(100, 50);
+            this.pictureBox1.TabIndex = 0;
+            this.pictureBox1.TabStop = false;
             // 
             // Home
             // 
@@ -189,6 +203,8 @@
             this.panelTop.PerformLayout();
             this.menuStripMain.ResumeLayout(false);
             this.menuStripMain.PerformLayout();
+            this.flowLayoutPanelMain.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -209,5 +225,6 @@
         private System.Windows.Forms.ToolStripMenuItem fechaDeCreacionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem nombreToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem administrarResolucionesToolStripMenuItem;
+        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

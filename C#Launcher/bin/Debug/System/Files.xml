@@ -113,9 +113,9 @@
     <BackgroundRed>0</BackgroundRed>
     <BackgroundGreen>0</BackgroundGreen>
     <BackgroundBlue>0</BackgroundBlue>
-    <CoverResolutionID>0</CoverResolutionID>
-    <CoverWidth>100</CoverWidth>
-    <CoverHeight>100</CoverHeight>
+    <CoverResolutionID>3</CoverResolutionID>
+    <CoverWidth>200</CoverWidth>
+    <CoverHeight>150</CoverHeight>
     <URLCheck>False</URLCheck>
     <TagsID>
       <id>1</id>

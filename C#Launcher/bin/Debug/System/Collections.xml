@@ -33,9 +33,9 @@
     <CoverResolutionID>0</CoverResolutionID>
     <CoverWidth>300</CoverWidth>
     <CoverHeight>188</CoverHeight>
-    <CoverSonResolutionID>0</CoverSonResolutionID>
-    <CoverSonWidth>242</CoverSonWidth>
-    <CoverSonHeight>213</CoverSonHeight>
+    <CoverSonResolutionID>4</CoverSonResolutionID>
+    <CoverSonWidth>300</CoverSonWidth>
+    <CoverSonHeight>300</CoverSonHeight>
     <SonImageLayout>0</SonImageLayout>
     <TagsID>
       <id>1</id>
@@ -59,6 +59,29 @@
     <CoverSonResolutionID>0</CoverSonResolutionID>
     <CoverSonWidth>100</CoverSonWidth>
     <CoverSonHeight>100</CoverSonHeight>
+    <SonImageLayout>0</SonImageLayout>
+    <TagsID>
+      <id>1</id>
+      <id>2</id>
+      <id>3</id>
+    </TagsID>
+    <Favorite>false</Favorite>
+  </collection>
+  <collection id="5">
+    <IDFather>0</IDFather>
+    <Name>testeo resoluciones</Name>
+    <Image>
+    </Image>
+    <ImageLayout>0</ImageLayout>
+    <BackgroundRed>0</BackgroundRed>
+    <BackgroundGreen>0</BackgroundGreen>
+    <BackgroundBlue>0</BackgroundBlue>
+    <CoverResolutionID>3</CoverResolutionID>
+    <CoverWidth>200</CoverWidth>
+    <CoverHeight>150</CoverHeight>
+    <CoverSonResolutionID>4</CoverSonResolutionID>
+    <CoverSonWidth>300</CoverSonWidth>
+    <CoverSonHeight>300</CoverSonHeight>
     <SonImageLayout>0</SonImageLayout>
     <TagsID>
       <id>1</id>

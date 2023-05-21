@@ -20,16 +20,30 @@ namespace C_Launcher
         private int currentSonX, currentSonY;
         private int resizingSon = 0; //mismos datos que original
         public event EventHandler<Collections> ReturnedObject;
+        //Combobox del padre
         private string xmlColPath = "System\\Collections.xml";
         private int[] combID = new int[0];
+        //Combobox de las resoluciones
+        private string xmlResPath = "System\\Resolutions.xml";//Cargar el combobox de las resoluciones
+        private int[] combResID = new int[0];//Para recoger el index
+        //private int[] combResSonID = new int[0];//Para recoger el index de los archivos
 
         //Id de la coleccion, si es nuevo, -1, si no, se establece
         private int idCollection = -1;
         private string xmlImagePath;//Lo ocupare para editar la caratula
         //Creando un archivo desde 0
-        public NewCollection()
+
+        //Datos default al crear una nueva coleccion (al editar obviamente no es necesario; no afecta a los datos de los hijos, por que esos lo tiene que editar el usuario)
+        private int defaultFather, defaultRes, defaultImageLayout = 0;
+        private int defaultWidth, defaultHeight = 100;
+        public NewCollection(int viewDepth, int ResId, int Width, int Height, int Layout)
         {
             InitializeComponent();
+            this.defaultFather = viewDepth;
+            this.defaultRes = ResId;
+            this.defaultWidth = Width;
+            this.defaultHeight = Height;
+            this.defaultImageLayout = Layout;
             CustomComponent();
         }
 
@@ -41,6 +55,19 @@ namespace C_Launcher
             idCollection = colData.ID;//Actualizar la id para editarla
             textBoxName.Text = colData.Name;
             checkBoxFavorite.Checked = colData.Favorite;
+
+            //Establecer los combobox seleccionados
+            int fatherIndex = Array.IndexOf(combID, colData.IDFather);
+            int resolutionIndex = Array.IndexOf(combResID, colData.ResolutionID);
+            int resolutionSonIndex = Array.IndexOf(combResID, colData.SonResolution);
+
+            Console.WriteLine("father index: " + fatherIndex);
+            Console.WriteLine("resolution index: " + resolutionIndex);
+            //if (fatherIndex < 0) fatherIndex = 0;
+            comboBoxFather.SelectedIndex = fatherIndex + 1;
+            //if (resolutionIndex < 0) resolutionIndex = 0;
+            comboBoxResolutionCol.SelectedIndex = resolutionIndex + 1;
+            comboBoxSonResolution.SelectedIndex = resolutionSonIndex + 1;
 
             //RGB
             //Color BackgroundCol = new Color();
@@ -83,10 +110,18 @@ namespace C_Launcher
             }
 
             //Caratula hijos
-            numericSonWidth.Value = colData.SonWidth;
-            numericSonHeight.Value = colData.SonHeight;
-            pictureBoxCoverSon.Width = colData.SonWidth;
-            pictureBoxCoverSon.Height = colData.SonHeight;
+            int w = colData.SonWidth;
+            int h = colData.SonHeight;
+
+            if (w < 100) { w = 100; }
+            if (w > 300) { w = 300; }
+            if (h < 100) { h = 100; }
+            if (h > 300) { h = 300; }
+
+            numericSonWidth.Value = w;
+            numericSonHeight.Value = h;
+            pictureBoxCoverSon.Width = w;
+            pictureBoxCoverSon.Height = h;
             if (colData.SonLayout == 1)
             {
                 radioButtonSonEstreched.Checked = true;
@@ -107,9 +142,10 @@ namespace C_Launcher
             this.pictureBoxCoverSon.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBoxCoverSon_MouseUp);
 
             #region Combobox
+            #region idFather
             //Agregando item default
             comboBoxFather.Items.Add("Ninguno");
-            comboBoxFather.SelectedIndex = 0;
+            comboBoxFather.SelectedIndex = 0; //Se seleccionara despues
 
             //Añadir las colecciones al comboBox de padres
             int colSize = LoadCollectionSize();
@@ -138,6 +174,84 @@ namespace C_Launcher
                 comboBoxFather.Items.Add(name);
                 combID[i - 1] = ColID;
                 ColID++;
+            }
+            int fatherIndex = Array.IndexOf(combID, defaultFather);
+            comboBoxFather.SelectedIndex = fatherIndex + 1;
+            #endregion
+
+            #region resolution
+            //Agregando item default
+            comboBoxResolutionCol.Items.Add("Ninguno");
+            comboBoxResolutionCol.SelectedIndex = 0; //Se selecciona despues
+
+            comboBoxSonResolution.Items.Add("Ninguno");
+            comboBoxSonResolution.SelectedIndex = 0;
+
+            //Añadir las colecciones al comboBox de padres
+            int resSize = LoadResolutionSize();
+            Array.Resize(ref combResID, resSize);
+            
+
+            Console.WriteLine("SIZE RES: " + resSize.ToString());
+
+            int resID = 1;
+            for (int i = 1; i < (resSize + 1); i++)
+            {
+                Console.WriteLine("iterando en: " + i + " sobre la id: " + resID);
+                XmlDocument doc = new XmlDocument();
+                doc.Load(xmlResPath);
+
+                string xpath = "//Launcher/resolution[@id='" + resID + "']";
+                XmlNode root = doc.SelectSingleNode(xpath);
+                while (root == null)
+                {
+                    resID++;
+                    xpath = "//Launcher/resolution[@id='" + resID + "']";
+                    root = doc.SelectSingleNode(xpath);
+                }
+
+                string name = root.SelectSingleNode("Name").InnerText;
+                string width = root.SelectSingleNode("Width").InnerText;
+                string height = root.SelectSingleNode("Height").InnerText;
+
+                comboBoxResolutionCol.Items.Add(name + " (" + width + " x" + height + ")");
+                comboBoxSonResolution.Items.Add(name + " (" + width + " x" + height + ")");
+                combResID[i - 1] = resID;
+                resID++;
+            }
+
+            //Buscar la resolucion default de esa coleccion
+            int resIndex = Array.IndexOf(combResID, defaultRes);
+            comboBoxResolutionCol.SelectedIndex = resIndex + 1;
+
+            if (resIndex + 1 > 0)
+            {
+                groupBoxCover.Enabled = false;
+            }
+            #endregion
+            #endregion
+
+            #region pictureBox size/layout de la coleccion
+            //Aqui se cargan los datos por default que fueron creados con la coleccion
+            int w = this.defaultWidth;
+            int h = this.defaultHeight;
+
+            if (this.defaultWidth < 100) { w = 100; }
+            if (this.defaultWidth > 300) { w = 300; }
+            if (this.defaultHeight < 100) { h = 100; }
+            if (this.defaultHeight > 300) { h = 300; }
+
+
+            numericColWidth.Value = w;
+            numericColHeight.Value = h;
+            pictureBoxCoverCollection.Width = w;
+            pictureBoxCoverCollection.Height = h;
+
+            //Cargar el image layout
+            if (this.defaultImageLayout == 1)
+            {
+                radioButtonColEstreched.Checked = true;
+                pictureBoxCoverCollection.BackgroundImageLayout = ImageLayout.Stretch;
             }
             #endregion
         }
@@ -170,10 +284,72 @@ namespace C_Launcher
 
             return size;
         }
+
+        private int LoadResolutionSize()
+        {
+            int size = 0;
+
+            try
+            {
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.Load(xmlResPath);
+                XmlNodeList colElements = xmlDoc.SelectNodes("//*[@id]");
+                size = colElements.Count;
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("No se encontro el fichero de las colecciones, se creara uno nuevo");
+                XmlWriterSettings settings = new XmlWriterSettings();
+                settings.Indent = true;
+
+                using (XmlWriter writer = XmlWriter.Create(xmlResPath, settings))
+                {
+                    //Crear el elemento raiz del archivo (obligatorio)
+                    writer.WriteStartElement("Launcher");
+                    writer.WriteEndElement();
+                }
+            }
+
+            return size;
+        }
         #endregion
 
-        #region Modificar ancho y alto de los coverbox
+        #region Modificar coverbox
         #region Collection Coverbox
+        //Combobox resolucion
+        private void comboBoxResolutionCol_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //Bloquear el cambio de tamaños si ajustas una resolucion
+            int cmbIndex = comboBoxResolutionCol.SelectedIndex;
+            Console.WriteLine("Valor combobox: " + cmbIndex);
+            if (cmbIndex != 0)
+            {
+                groupBoxCover.Enabled = false;
+
+                XmlDocument doc = new XmlDocument();
+                doc.Load(xmlResPath);
+
+                string xpath = "//Launcher/resolution[@id='" + combResID[cmbIndex - 1] + "']";
+                XmlNode root = doc.SelectSingleNode(xpath);
+
+                int width = int.Parse(root.SelectSingleNode("Width").InnerText);
+                int height = int.Parse(root.SelectSingleNode("Height").InnerText);
+
+                //Cambiar el tamaño con respecto a la resolucion escogida
+                pictureBoxCoverCollection.Width = width; pictureBoxCoverCollection.Height = height;
+
+            }
+            else
+            {
+                groupBoxCover.Enabled = true;
+
+                //Devolverle el tamaño a la caratula con respecto a numeric image
+                int width = Convert.ToInt32(numericColWidth.Value);
+                int height = Convert.ToInt32(numericColHeight.Value);
+                pictureBoxCoverCollection.Width = width; pictureBoxCoverCollection.Height = height;
+            }
+        }
+
         private void pictureBoxCoverCollection_MouseDown(object sender, MouseEventArgs e)
         {
             int margin = 10;
@@ -273,10 +449,44 @@ namespace C_Launcher
             pictureBoxCoverCollection.Height = height;
         }
 
-        
+
         #endregion
 
         #region Son coverbox
+        //Combobox resolucion
+        private void comboBoxSonResolution_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            //Bloquear el cambio de tamaños si ajustas una resolucion
+            int cmbIndex = comboBoxSonResolution.SelectedIndex;
+            Console.WriteLine("Valor combobox: " + cmbIndex);
+            if (cmbIndex != 0)
+            {
+                groupBoxSon.Enabled = false;
+
+                XmlDocument doc = new XmlDocument();
+                doc.Load(xmlResPath);
+
+                string xpath = "//Launcher/resolution[@id='" + combResID[cmbIndex - 1] + "']";
+                XmlNode root = doc.SelectSingleNode(xpath);
+
+                int width = int.Parse(root.SelectSingleNode("Width").InnerText);
+                int height = int.Parse(root.SelectSingleNode("Height").InnerText);
+
+                //Cambiar el tamaño con respecto a la resolucion escogida
+                pictureBoxCoverSon.Width = width; pictureBoxCoverSon.Height = height;
+
+            }
+            else
+            {
+                groupBoxSon.Enabled = true;
+
+                //Devolverle el tamaño a la caratula con respecto a numeric image
+                int width = Convert.ToInt32(numericSonWidth.Value);
+                int height = Convert.ToInt32(numericSonHeight.Value);
+                pictureBoxCoverSon.Width = width; pictureBoxCoverSon.Height = height;
+            }
+        }
+
         private void pictureBoxCoverSon_MouseDown(object sender, MouseEventArgs e)
         {
             int margin = 10;
@@ -453,6 +663,20 @@ namespace C_Launcher
 
         }
 
+        
+
+        private string returnImagePath(string outputFolder, string fileName)
+        {
+            string destinationFile = outputFolder + "\\col_" + fileName + ".png";
+            int i = 0;
+            while (File.Exists(destinationFile))
+            {
+                i++;
+                destinationFile = outputFolder + "\\col_" + fileName + "(" + i + ").png";//Se le cambia la extension a png
+            }
+            return destinationFile;
+        }
+
         //Guardar coleccion
         private void buttonSave_Click(object sender, EventArgs e)
         {
@@ -460,9 +684,21 @@ namespace C_Launcher
             int idFather = 0;
             if ((comboBoxFather.SelectedIndex - 1) > 0)
             {
-               idFather = combID[comboBoxFather.SelectedIndex - 1];
+                idFather = combID[comboBoxFather.SelectedIndex - 1];
             }
-            
+
+            int resID = 0;
+            if ((comboBoxResolutionCol.SelectedIndex - 1) > 0)
+            {
+                resID = combResID[comboBoxResolutionCol.SelectedIndex - 1];
+            }
+
+            int resSonID = 0;
+            if ((comboBoxSonResolution.SelectedIndex - 1) > 0)
+            {
+                resSonID = combResID[comboBoxSonResolution.SelectedIndex - 1];
+            }
+
             string nameCollection = textBoxName.Text;
             string imgPath = "";
 
@@ -491,11 +727,12 @@ namespace C_Launcher
                             if (xmlDir != systemCoverDir)
                             {
                                 imgPath = returnImagePath(outputFolder, textBoxName.Text);
-                            } else
+                            }
+                            else
                             {
                                 imgPath = xmlImagePath;//pictureBoxCover.Tag.ToString();
                             }
-                            
+
                         }
                         else
                         {
@@ -527,12 +764,12 @@ namespace C_Launcher
             int G = pictureBoxCoverCollection.BackColor.G;
             int B = pictureBoxCoverCollection.BackColor.B;
             //Propiedades caratula 
-            int resID = 0;
+            
             int width = pictureBoxCoverCollection.Width;
             int height = pictureBoxCoverCollection.Height;
 
             //Propiedades Hijos
-            int resSonID = 0;
+            
             int sonWidth = pictureBoxCoverSon.Width;
             int sonHeight = pictureBoxCoverSon.Height;
             int sonLayout = 0;
@@ -544,18 +781,6 @@ namespace C_Launcher
             Collections passCollection = new Collections(idCollection, idFather, nameCollection, imgPath, imgLayout, R, G, B, resID, width, height, resSonID, sonWidth, sonHeight, sonLayout, tagsArray, favorite);
             ReturnedObject?.Invoke(this, passCollection);
             this.Close();
-        }
-
-        private string returnImagePath(string outputFolder, string fileName)
-        {
-            string destinationFile = outputFolder + "\\col_" + fileName + ".png";
-            int i = 0;
-            while (File.Exists(destinationFile))
-            {
-                i++;
-                destinationFile = outputFolder + "\\col_" + fileName + "(" + i + ").png";//Se le cambia la extension a png
-            }
-            return destinationFile;
         }
     }
 }

@@ -32,13 +32,12 @@
             this.panelSonImageLimit = new System.Windows.Forms.Panel();
             this.pictureBoxCover = new System.Windows.Forms.PictureBox();
             this.dataGridViewResolutions = new System.Windows.Forms.DataGridView();
-            this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.width = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.height = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.imageLayout = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.buttonAddRow = new System.Windows.Forms.Button();
             this.buttonDeleteRow = new System.Windows.Forms.Button();
             this.buttonSaveRes = new System.Windows.Forms.Button();
+            this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.width = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.height = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panelSonImageLimit.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCover)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewResolutions)).BeginInit();
@@ -83,46 +82,14 @@
             this.dataGridViewResolutions.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.name,
             this.width,
-            this.height,
-            this.imageLayout});
-            this.dataGridViewResolutions.Location = new System.Drawing.Point(12, 41);
+            this.height});
+            this.dataGridViewResolutions.Location = new System.Drawing.Point(99, 41);
             this.dataGridViewResolutions.MultiSelect = false;
             this.dataGridViewResolutions.Name = "dataGridViewResolutions";
-            this.dataGridViewResolutions.Size = new System.Drawing.Size(445, 300);
+            this.dataGridViewResolutions.Size = new System.Drawing.Size(344, 300);
             this.dataGridViewResolutions.TabIndex = 18;
             this.dataGridViewResolutions.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewResolutions_CellClick);
             this.dataGridViewResolutions.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewResolutions_CellEndEdit);
-            // 
-            // name
-            // 
-            this.name.HeaderText = "Nombre";
-            this.name.Name = "name";
-            this.name.Width = 200;
-            // 
-            // width
-            // 
-            this.width.HeaderText = "Ancho";
-            this.width.MaxInputLength = 3;
-            this.width.Name = "width";
-            this.width.Width = 50;
-            // 
-            // height
-            // 
-            this.height.HeaderText = "Alto";
-            this.height.MaxInputLength = 3;
-            this.height.Name = "height";
-            this.height.Width = 50;
-            // 
-            // imageLayout
-            // 
-            this.imageLayout.HeaderText = "Formato";
-            this.imageLayout.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
-            "4",
-            "5"});
-            this.imageLayout.Name = "imageLayout";
             // 
             // buttonAddRow
             // 
@@ -154,6 +121,26 @@
             this.buttonSaveRes.UseVisualStyleBackColor = true;
             this.buttonSaveRes.Click += new System.EventHandler(this.buttonSaveRes_Click);
             // 
+            // name
+            // 
+            this.name.HeaderText = "Nombre";
+            this.name.Name = "name";
+            this.name.Width = 200;
+            // 
+            // width
+            // 
+            this.width.HeaderText = "Ancho";
+            this.width.MaxInputLength = 3;
+            this.width.Name = "width";
+            this.width.Width = 50;
+            // 
+            // height
+            // 
+            this.height.HeaderText = "Alto";
+            this.height.MaxInputLength = 3;
+            this.height.Name = "height";
+            this.height.Width = 50;
+            // 
             // Resolution
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -180,12 +167,11 @@
         private System.Windows.Forms.Panel panelSonImageLimit;
         private System.Windows.Forms.PictureBox pictureBoxCover;
         private System.Windows.Forms.DataGridView dataGridViewResolutions;
-        private System.Windows.Forms.DataGridViewTextBoxColumn name;
-        private System.Windows.Forms.DataGridViewTextBoxColumn width;
-        private System.Windows.Forms.DataGridViewTextBoxColumn height;
-        private System.Windows.Forms.DataGridViewComboBoxColumn imageLayout;
         private System.Windows.Forms.Button buttonAddRow;
         private System.Windows.Forms.Button buttonDeleteRow;
         private System.Windows.Forms.Button buttonSaveRes;
+        private System.Windows.Forms.DataGridViewTextBoxColumn name;
+        private System.Windows.Forms.DataGridViewTextBoxColumn width;
+        private System.Windows.Forms.DataGridViewTextBoxColumn height;
     }
 }
