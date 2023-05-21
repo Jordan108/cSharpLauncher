@@ -42,11 +42,8 @@
             this.panelSide = new System.Windows.Forms.Panel();
             this.flowLayoutPanelMain = new System.Windows.Forms.FlowLayoutPanel();
             this.splitterLeft = new System.Windows.Forms.Splitter();
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.panelTop.SuspendLayout();
             this.menuStripMain.SuspendLayout();
-            this.flowLayoutPanelMain.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.SuspendLayout();
             // 
             // panelTop
@@ -159,7 +156,6 @@
             // flowLayoutPanelMain
             // 
             this.flowLayoutPanelMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(40)))), ((int)(((byte)(47)))));
-            this.flowLayoutPanelMain.Controls.Add(this.pictureBox1);
             this.flowLayoutPanelMain.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanelMain.Location = new System.Drawing.Point(108, 58);
             this.flowLayoutPanelMain.Name = "flowLayoutPanelMain";
@@ -176,15 +172,6 @@
             this.splitterLeft.Size = new System.Drawing.Size(4, 494);
             this.splitterLeft.TabIndex = 3;
             this.splitterLeft.TabStop = false;
-            // 
-            // pictureBox1
-            // 
-            this.pictureBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(192)))));
-            this.pictureBox1.Location = new System.Drawing.Point(8, 3);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(100, 50);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
             // 
             // Home
             // 
@@ -203,8 +190,6 @@
             this.panelTop.PerformLayout();
             this.menuStripMain.ResumeLayout(false);
             this.menuStripMain.PerformLayout();
-            this.flowLayoutPanelMain.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.ResumeLayout(false);
 
         }
@@ -225,6 +210,5 @@
         private System.Windows.Forms.ToolStripMenuItem fechaDeCreacionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem nombreToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem administrarResolucionesToolStripMenuItem;
-        private System.Windows.Forms.PictureBox pictureBox1;
     }
 }

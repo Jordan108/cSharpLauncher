@@ -1,49 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Launcher>
-  <collection id="1">
-    <IDFather>0</IDFather>
-    <Name>Coleccion 1</Name>
-    <Image>D:\Bibliotecas\Imágenes\Perfil Usuario.jpg</Image>
-    <ImageLayout>0</ImageLayout>
-    <BackgroundRed>255</BackgroundRed>
-    <BackgroundGreen>128</BackgroundGreen>
-    <BackgroundBlue>128</BackgroundBlue>
-    <CoverResolutionID>0</CoverResolutionID>
-    <CoverWidth>101</CoverWidth>
-    <CoverHeight>100</CoverHeight>
-    <CoverSonResolutionID>0</CoverSonResolutionID>
-    <CoverSonWidth>100</CoverSonWidth>
-    <CoverSonHeight>100</CoverSonHeight>
-    <SonImageLayout>0</SonImageLayout>
-    <TagsID>
-      <id>1</id>
-      <id>2</id>
-      <id>3</id>
-    </TagsID>
-    <Favorite>false</Favorite>
-  </collection>
-  <collection id="3">
-    <IDFather>0</IDFather>
-    <Name>Coleccion 2</Name>
-    <Image>D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\bin\Debug\System\Covers\col_Coleccion 2.png</Image>
-    <ImageLayout>0</ImageLayout>
-    <BackgroundRed>255</BackgroundRed>
-    <BackgroundGreen>128</BackgroundGreen>
-    <BackgroundBlue>64</BackgroundBlue>
-    <CoverResolutionID>0</CoverResolutionID>
-    <CoverWidth>300</CoverWidth>
-    <CoverHeight>188</CoverHeight>
-    <CoverSonResolutionID>4</CoverSonResolutionID>
-    <CoverSonWidth>300</CoverSonWidth>
-    <CoverSonHeight>300</CoverSonHeight>
-    <SonImageLayout>0</SonImageLayout>
-    <TagsID>
-      <id>1</id>
-      <id>2</id>
-      <id>3</id>
-    </TagsID>
-    <Favorite>false</Favorite>
-  </collection>
   <collection id="4">
     <IDFather>1</IDFather>
     <Name>Coleccion prueba</Name>
@@ -59,29 +15,6 @@
     <CoverSonResolutionID>0</CoverSonResolutionID>
     <CoverSonWidth>100</CoverSonWidth>
     <CoverSonHeight>100</CoverSonHeight>
-    <SonImageLayout>0</SonImageLayout>
-    <TagsID>
-      <id>1</id>
-      <id>2</id>
-      <id>3</id>
-    </TagsID>
-    <Favorite>false</Favorite>
-  </collection>
-  <collection id="5">
-    <IDFather>0</IDFather>
-    <Name>testeo resoluciones</Name>
-    <Image>
-    </Image>
-    <ImageLayout>0</ImageLayout>
-    <BackgroundRed>0</BackgroundRed>
-    <BackgroundGreen>0</BackgroundGreen>
-    <BackgroundBlue>0</BackgroundBlue>
-    <CoverResolutionID>3</CoverResolutionID>
-    <CoverWidth>200</CoverWidth>
-    <CoverHeight>150</CoverHeight>
-    <CoverSonResolutionID>4</CoverSonResolutionID>
-    <CoverSonWidth>300</CoverSonWidth>
-    <CoverSonHeight>300</CoverSonHeight>
     <SonImageLayout>0</SonImageLayout>
     <TagsID>
       <id>1</id>

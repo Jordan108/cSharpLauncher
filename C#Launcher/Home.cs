@@ -170,13 +170,22 @@ namespace C_Launcher
         //Eliminar el picture box
         private void ToolStripDeletePictureBox_Click(object sender, EventArgs e)
         {
-            PictureBox pictureBox = (PictureBox)sender;
-            string boxType = pictureBox.AccessibleDescription;
+            //Recojer los datos del picture box
+            PictureBox pic = (PictureBox)contextMenuPictureBox.SourceControl;
+            string id = pic.Tag.ToString();
+            string boxType = pic.AccessibleDescription;
+
+            Console.WriteLine("id del context menu " + id);
+            //destroyPictureBox();
+
+            //PictureBox pictureBox = (PictureBox)sender;
             if (boxType == "file")
             {
+                deleteFile(int.Parse(id));
             }
             else if (boxType == "collection")
             {
+                deleteCollection(int.Parse(id));
             }
         }
 
@@ -1147,7 +1156,49 @@ namespace C_Launcher
             return colReturn;
         }
 
+        private void deleteFile(int fileID)
+        {
+            //Cargar el archivo XML
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.Load(xmlFilesPath);
 
+            //Buscamos el elemento a eliminar
+            string xpath = "//Launcher/file[@id='" + fileID + "']"; //Buscar un elemento que se llame "ColeccionX" que tenga en el atributo id un 1
+            XmlNode root = xmlDoc.SelectSingleNode(xpath);
+
+            if (root != null)
+            {
+                root.ParentNode.RemoveChild(root);
+            }
+
+            xmlDoc.Save(xmlFilesPath);
+
+            colSize = LoadCollectionSize();
+            fileSize = LoadFilesSize();
+            loadPictureBox(colSize, fileSize, false);
+        }
+
+        private void deleteCollection(int colID)
+        {
+            //Cargar el archivo XML
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.Load(xmlColPath);
+
+            //Buscamos el elemento a eliminar
+            string xpath = "//Launcher/collection[@id='" + colID + "']";  //Buscar un elemento que se llame "ColeccionX" que tenga en el atributo id un 1
+            XmlNode root = xmlDoc.SelectSingleNode(xpath);
+
+            if (root != null)
+            {
+                root.ParentNode.RemoveChild(root);
+            }
+
+            xmlDoc.Save(xmlColPath);
+
+            colSize = LoadCollectionSize();
+            fileSize = LoadFilesSize();
+            loadPictureBox(colSize, fileSize, false);
+        }
 
         #endregion
 

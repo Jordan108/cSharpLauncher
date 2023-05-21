@@ -1,30 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Launcher>
-  <file id="1">
-    <IDFather>0</IDFather>
-    <Name>Juan</Name>
-    <Image>
-    </Image>
-    <ImageLayout>1</ImageLayout>
-    <FilePath>D:\Bibliotecas\Juegos\Yuzu\yuzu.exe</FilePath>
-    <ProgramPath>
-    </ProgramPath>
-    <CMDLine>
-    </CMDLine>
-    <BackgroundRed>255</BackgroundRed>
-    <BackgroundGreen>0</BackgroundGreen>
-    <BackgroundBlue>0</BackgroundBlue>
-    <CoverResolutionID>0</CoverResolutionID>
-    <CoverWidth>100</CoverWidth>
-    <CoverHeight>100</CoverHeight>
-    <URLCheck>False</URLCheck>
-    <TagsID>
-      <id>1</id>
-      <id>2</id>
-      <id>3</id>
-    </TagsID>
-    <Favorite>False</Favorite>
-  </file>
   <file id="5">
     <IDFather>1</IDFather>
     <Name>Mario kart 8</Name>
@@ -67,80 +42,6 @@
     <CoverResolutionID>0</CoverResolutionID>
     <CoverWidth>100</CoverWidth>
     <CoverHeight>100</CoverHeight>
-    <URLCheck>False</URLCheck>
-    <TagsID>
-      <id>1</id>
-      <id>2</id>
-      <id>3</id>
-    </TagsID>
-    <Favorite>False</Favorite>
-  </file>
-  <file id="7">
-    <IDFather>0</IDFather>
-    <Name>chao</Name>
-    <Image>D:\Bibliotecas\Imágenes\Wallpaper.png</Image>
-    <ImageLayout>0</ImageLayout>
-    <FilePath>aaa</FilePath>
-    <ProgramPath>
-    </ProgramPath>
-    <CMDLine>
-    </CMDLine>
-    <BackgroundRed>0</BackgroundRed>
-    <BackgroundGreen>0</BackgroundGreen>
-    <BackgroundBlue>0</BackgroundBlue>
-    <CoverResolutionID>0</CoverResolutionID>
-    <CoverWidth>150</CoverWidth>
-    <CoverHeight>188</CoverHeight>
-    <URLCheck>True</URLCheck>
-    <TagsID>
-      <id>1</id>
-      <id>2</id>
-      <id>3</id>
-    </TagsID>
-    <Favorite>False</Favorite>
-  </file>
-  <file id="8">
-    <IDFather>0</IDFather>
-    <Name>abb</Name>
-    <Image>D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\bin\Debug\System\Covers\file_abb.png</Image>
-    <ImageLayout>0</ImageLayout>
-    <FilePath>
-    </FilePath>
-    <ProgramPath>
-    </ProgramPath>
-    <CMDLine>
-    </CMDLine>
-    <BackgroundRed>0</BackgroundRed>
-    <BackgroundGreen>0</BackgroundGreen>
-    <BackgroundBlue>0</BackgroundBlue>
-    <CoverResolutionID>3</CoverResolutionID>
-    <CoverWidth>200</CoverWidth>
-    <CoverHeight>150</CoverHeight>
-    <URLCheck>False</URLCheck>
-    <TagsID>
-      <id>1</id>
-      <id>2</id>
-      <id>3</id>
-    </TagsID>
-    <Favorite>False</Favorite>
-  </file>
-  <file id="9">
-    <IDFather>0</IDFather>
-    <Name>abb</Name>
-    <Image>D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\bin\Debug\System\Covers\file_abb(1).png</Image>
-    <ImageLayout>0</ImageLayout>
-    <FilePath>
-    </FilePath>
-    <ProgramPath>
-    </ProgramPath>
-    <CMDLine>
-    </CMDLine>
-    <BackgroundRed>0</BackgroundRed>
-    <BackgroundGreen>0</BackgroundGreen>
-    <BackgroundBlue>0</BackgroundBlue>
-    <CoverResolutionID>0</CoverResolutionID>
-    <CoverWidth>100</CoverWidth>
-    <CoverHeight>263</CoverHeight>
     <URLCheck>False</URLCheck>
     <TagsID>
       <id>1</id>
