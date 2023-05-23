@@ -199,12 +199,13 @@ namespace C_Launcher
             comboBoxResolution.Items.Add("Ninguno");
             comboBoxResolution.SelectedIndex = 0;//Se selecciona despues
 
-            //Añadir las colecciones al comboBox de padres
+           //Cargar el tamaño del xml de las resoluciones y adaptar el array a eso
             int resSize = LoadResolutionSize();
             Array.Resize(ref combResID, resSize);
 
             Console.WriteLine("SIZE RES: " + resSize.ToString());
 
+            //Cargar las resoluciones al combobox
             int resID = 1;
             for (int i = 1; i < (resSize + 1); i++)
             {
@@ -230,7 +231,8 @@ namespace C_Launcher
                 resID++;
             }
 
-            int resIndex = Array.IndexOf(combID, defaultRes);
+            //Buscar dentro del combobox de resoluciones el index de la resolucion
+            int resIndex = Array.IndexOf(combResID, defaultRes);
             comboBoxResolution.SelectedIndex = resIndex + 1;
 
             if (resIndex+1 > 0)
@@ -585,13 +587,13 @@ namespace C_Launcher
         {
             Console.WriteLine(comboBoxFather.SelectedIndex - 1);
             int idFather = 0;
-            if ((comboBoxFather.SelectedIndex - 1) > 0)
+            if ((comboBoxFather.SelectedIndex - 1) >= 0)
             {
                 idFather = combID[comboBoxFather.SelectedIndex - 1];
             }
 
             int resID = 0;
-            if ((comboBoxResolution.SelectedIndex - 1) > 0)
+            if ((comboBoxResolution.SelectedIndex - 1) >= 0)
             {
                 resID = combResID[comboBoxResolution.SelectedIndex - 1];
             }

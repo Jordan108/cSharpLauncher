@@ -1,18 +1,2 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Launcher>
-  <resolution id="1">
-    <Name>gamecube</Name>
-    <Width>100</Width>
-    <Height>100</Height>
-  </resolution>
-  <resolution id="3">
-    <Name>nintendo 64</Name>
-    <Width>200</Width>
-    <Height>150</Height>
-  </resolution>
-  <resolution id="4">
-    <Name>gba</Name>
-    <Width>300</Width>
-    <Height>300</Height>
-  </resolution>
-</Launcher>
+<Launcher />

@@ -1,26 +1,2 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Launcher>
-  <collection id="4">
-    <IDFather>1</IDFather>
-    <Name>Coleccion prueba</Name>
-    <Image>
-    </Image>
-    <ImageLayout>0</ImageLayout>
-    <BackgroundRed>0</BackgroundRed>
-    <BackgroundGreen>0</BackgroundGreen>
-    <BackgroundBlue>0</BackgroundBlue>
-    <CoverResolutionID>0</CoverResolutionID>
-    <CoverWidth>100</CoverWidth>
-    <CoverHeight>100</CoverHeight>
-    <CoverSonResolutionID>0</CoverSonResolutionID>
-    <CoverSonWidth>100</CoverSonWidth>
-    <CoverSonHeight>100</CoverSonHeight>
-    <SonImageLayout>0</SonImageLayout>
-    <TagsID>
-      <id>1</id>
-      <id>2</id>
-      <id>3</id>
-    </TagsID>
-    <Favorite>false</Favorite>
-  </collection>
-</Launcher>
+<Launcher />

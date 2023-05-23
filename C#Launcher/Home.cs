@@ -29,6 +29,9 @@ namespace C_Launcher
         private string xmlColPath = "System\\Collections.xml";
         private string xmlFilesPath = "System\\Files.xml";
         private string xmlResPath = "System\\Resolutions.xml";
+        //Ruta de los covers
+        private string dirCoversPath = "System\\Covers";
+
 
         //Mantener el tamaño de los archivos y colecciones
         private int colSize = 0;
@@ -40,8 +43,9 @@ namespace C_Launcher
         public Home()
         {
             InitializeComponent();
-            //Menu strip
-            
+            //Verificar el contenido de la carpeta system, si no existe, crearlo
+            verifySystemDir();
+
             //Tool strip (click derecho)
             //Layout Panel
             ContextMenuStrip  contextMenuLayoutPanel = new ContextMenuStrip();
@@ -220,7 +224,7 @@ namespace C_Launcher
             //bool url = true;
 
             //file y program se deben de formatear
-            string fileExe = "";
+            string fileExe = file;
             string fileDir = "";
             string programDir = "";
             //string cmdLine = "";//es necesario establecerlo como "", por default es null, pero si alguien escribe algo y lo borra quedara como "" y complicara las validaciones
@@ -237,11 +241,6 @@ namespace C_Launcher
                     fileExe = Path.GetFullPath(file);
                     fileDir = Path.GetDirectoryName(file);
                     if (program != "") programDir = Path.GetFullPath(program);
-
-                    //Console.WriteLine("ruta del archivo: " + fileExe);
-                    //Console.WriteLine("ruta de la carpeta: " + fileDir);
-                    //Console.WriteLine("ruta programa: " + programDir);
-                    //Console.WriteLine("cmd: " + cmdLine);
                 }
                 catch
                 {
@@ -257,6 +256,7 @@ namespace C_Launcher
                 if ((programDir == "") || (url == true))
                 {
                     Console.WriteLine("abriendo un archivo o URL");
+                    Console.WriteLine(fileExe);
 
                     ProcessStartInfo startInfo = new ProcessStartInfo(fileExe);//Ruta del archivo o URL
 
@@ -294,9 +294,13 @@ namespace C_Launcher
                 }
             }
             //En caso de errores
-            catch (Exception)
+            catch (Exception ex)
             {
-                if (url) MessageBox.Show("error abrir URL", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);//Error con URL
+                if (url)
+                {
+                    MessageBox.Show("error abrir URL", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);//Error con URL
+                    Console.WriteLine("error: " + ex);
+                }
                 else MessageBox.Show("error abrir archivo", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);//Error con archivos/programas/cmdLine
 
             }
@@ -754,7 +758,7 @@ namespace C_Launcher
         private void SaveXMLFile(Files Class)
         {
             //Verificar que el archivo xml exista (y si no es asi, crearlo y formatearlo)
-            if (!File.Exists(xmlColPath))
+            if (!File.Exists(xmlFilesPath))
             {
                 XmlWriterSettings settings = new XmlWriterSettings();
                 settings.Indent = true;
@@ -1202,6 +1206,68 @@ namespace C_Launcher
 
         #endregion
 
-        
+        #region Manejar archivos en general
+        private void verifySystemDir()
+        {
+            //Verificar la existencia de la carpeta System
+            if (!Directory.Exists("System"))
+            {
+                // Crea la carpeta si no existe
+                Directory.CreateDirectory("System");
+            }
+
+            //Verificar la existencia de la carpeta de los covers
+            if (!Directory.Exists(dirCoversPath))
+            {
+                // Crea la carpeta si no existe
+                Directory.CreateDirectory(dirCoversPath);
+            }
+
+            //Verificar la existencia del XML Files
+            if (!File.Exists(xmlFilesPath))
+            {
+                XmlWriterSettings settings = new XmlWriterSettings();
+                settings.Indent = true;
+
+                using (XmlWriter writer = XmlWriter.Create(xmlFilesPath, settings))
+                {
+                    //Crear el elemento raiz del archivo (obligatorio)
+                    writer.WriteStartElement("Launcher");
+                    writer.WriteEndElement();
+                }
+            }
+
+            //Verificar la existencia del XML Collections
+            if (!File.Exists(xmlColPath))
+            {
+                XmlWriterSettings settings = new XmlWriterSettings();
+                settings.Indent = true;
+
+                using (XmlWriter writer = XmlWriter.Create(xmlColPath, settings))
+                {
+                    //Crear el elemento raiz del archivo (obligatorio)
+                    writer.WriteStartElement("Launcher");
+                    writer.WriteEndElement();
+                }
+            }
+
+            //Verificar la existencia del XML Resolutions
+            if (!File.Exists(xmlResPath))
+            {
+                XmlWriterSettings settings = new XmlWriterSettings();
+                settings.Indent = true;
+
+                using (XmlWriter writer = XmlWriter.Create(xmlResPath, settings))
+                {
+                    //Crear el elemento raiz del archivo (obligatorio)
+                    writer.WriteStartElement("Launcher");
+                    writer.WriteEndElement();
+                }
+            }
+
+            
+
+        }
+        #endregion
     }
 }

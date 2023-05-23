@@ -682,21 +682,23 @@ namespace C_Launcher
         {
             Console.WriteLine(comboBoxFather.SelectedIndex - 1);
             int idFather = 0;
-            if ((comboBoxFather.SelectedIndex - 1) > 0)
+            if ((comboBoxFather.SelectedIndex - 1) >= 0)
             {
                 idFather = combID[comboBoxFather.SelectedIndex - 1];
             }
 
             int resID = 0;
-            if ((comboBoxResolutionCol.SelectedIndex - 1) > 0)
+            if ((comboBoxResolutionCol.SelectedIndex - 1) >= 0)
             {
                 resID = combResID[comboBoxResolutionCol.SelectedIndex - 1];
             }
 
             int resSonID = 0;
-            if ((comboBoxSonResolution.SelectedIndex - 1) > 0)
+            if ((comboBoxSonResolution.SelectedIndex - 1) >= 0)
             {
                 resSonID = combResID[comboBoxSonResolution.SelectedIndex - 1];
+                Console.WriteLine("selected indes: " + comboBoxSonResolution.SelectedIndex.ToString());
+                Console.WriteLine("res son id comb res selected: " + resSonID);
             }
 
             string nameCollection = textBoxName.Text;
@@ -777,7 +779,7 @@ namespace C_Launcher
 
             int[] tagsArray = new int[] { 1, 2, 3 };
             bool favorite = checkBoxFavorite.Checked;
-
+            //Console.WriteLine("resID: " + resSonID);
             Collections passCollection = new Collections(idCollection, idFather, nameCollection, imgPath, imgLayout, R, G, B, resID, width, height, resSonID, sonWidth, sonHeight, sonLayout, tagsArray, favorite);
             ReturnedObject?.Invoke(this, passCollection);
             this.Close();
