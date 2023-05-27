@@ -29,9 +29,8 @@ namespace C_Launcher
 
         //Datos default al crear un nuevo archivo (al editar obviamente no es necesario)
         private int defaultFather, defaultRes, defaultImageLayout = 0;
-        private int defaultWidth, defaultHeight = 100;
+        private int defaultWidth, defaultHeight = 200;
 
-        //private Image imagen;
 
         //Creando un archivo desde 0
         public NewFile(int viewDepth, int ResId, int Width, int Height, int Layout)
@@ -89,6 +88,9 @@ namespace C_Launcher
             //Picture Box
             Color BackgroundCol = Color.FromArgb(255, fileData.ColorRed, fileData.ColorGreen, fileData.ColorBlue);
             pictureBoxCover.BackColor = BackgroundCol;
+            buttonColorPickIMG.BackColor = BackgroundCol; //Definir los colores para el boton de colores
+
+
             //Caratula
             if (comboBoxResolution.SelectedIndex != 0)
             {
@@ -391,6 +393,35 @@ namespace C_Launcher
                 }
 
             }
+
+            if (resizing == 0)
+            {
+                if (pictureBoxCover.BackgroundImage != null)
+                {
+                    //Bitmap bitmap = new Bitmap(pictureBoxCover.BackgroundImage);
+                    //Color color = bitmap.GetPixel(e.X, e.Y);
+                    //bitmap.Dispose();
+
+                    // Actualiza el color en el Panel
+                    
+
+                    int Cwidth = pictureBoxCover.Width;
+                    int Cheight = pictureBoxCover.Height;
+
+                    Bitmap bitmap = new Bitmap(Cwidth, Cheight);
+
+                    Rectangle rect = new Rectangle(0, 0, Cwidth, Cheight);
+
+                    pictureBoxCover.DrawToBitmap(bitmap, rect);
+
+                    Color color = bitmap.GetPixel(e.X, e.Y);
+
+                    bitmap.Dispose();
+
+                    pictureBoxCover.BackColor = color;
+                    buttonColorPickIMG.BackColor = color;
+                }
+            }
         }
 
         private void pictureBoxCover_MouseMove(object sender, MouseEventArgs e)
@@ -426,7 +457,45 @@ namespace C_Launcher
                 // Actualizar las coordenadas actuales del mouse
                 if (resizing != 2) currentX = e.X;
                 if (resizing != 1) currentY = e.Y;
+            } else
+            {
+                //Controlando el tamaño
+                if (comboBoxResolution.SelectedIndex == 0)
+                {
+                    int margin = 10;
+
+                    //Ancho (Mouse a la derecha)
+                    if (e.X >= pictureBoxCover.Width - margin && e.Y < pictureBoxCover.Height - margin)
+                    {
+                        this.Cursor = Cursors.SizeWE;
+
+                    }
+                    //Alto (Mouse en la parte inferior)
+                    else if (e.X < pictureBoxCover.Width - margin && e.Y >= pictureBoxCover.Height - margin)
+                    {
+                        this.Cursor = Cursors.SizeNS;
+
+                    }
+                    //Ajustando ambos (mouse en esquina inferior derecha)
+                    else if (e.X >= pictureBoxCover.Width - margin && e.Y >= pictureBoxCover.Height - margin)
+                    {
+                        this.Cursor = Cursors.SizeNWSE;
+                    } else
+                    {
+                        this.Cursor = Cursors.Cross;
+                    }
+
+                } else
+                {
+                    this.Cursor = Cursors.Cross;
+                }
             }
+        }
+
+        //Cambiar el icono del mouse
+        private void pictureBoxCover_MouseLeave(object sender, EventArgs e)
+        {
+            this.Cursor = Cursors.Default;
         }
 
         private void pictureBoxCover_MouseUp(object sender, MouseEventArgs e)
@@ -527,6 +596,7 @@ namespace C_Launcher
             openFileDialog.Dispose();
         }
 
+
         //Color picker
         private void buttonSetColor_Click(object sender, EventArgs e)
         {
@@ -538,6 +608,7 @@ namespace C_Launcher
                 Color selectedColor = colorDialog.Color;
 
                 pictureBoxCover.BackColor = selectedColor;
+                buttonColorPickIMG.BackColor = selectedColor;
             }
         }
         #endregion
@@ -568,8 +639,6 @@ namespace C_Launcher
                 textBoxCMD.Enabled = true;
             }
         }
-
-        
 
         private string returnImagePath(string outputFolder, string fileName)
         {
@@ -671,6 +740,11 @@ namespace C_Launcher
             Files passFile = new Files(idFile, idFather, nameFile, imgPath, imgLayout, filePath, programPath, cmdLine, R, G, B, resID, width, height, url, tagsArray, favorite);
             ReturnedObject?.Invoke(this, passFile);
             this.Close();
+        }
+
+        private void NewFile_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (pictureBoxCover.BackgroundImage != null) pictureBoxCover.BackgroundImage.Dispose();//Dejar de utilizar la imagen de fondo en memoria
         }
     }
 }

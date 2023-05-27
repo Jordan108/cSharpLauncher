@@ -35,7 +35,7 @@ namespace C_Launcher
 
         //Datos default al crear una nueva coleccion (al editar obviamente no es necesario; no afecta a los datos de los hijos, por que esos lo tiene que editar el usuario)
         private int defaultFather, defaultRes, defaultImageLayout = 0;
-        private int defaultWidth, defaultHeight = 100;
+        private int defaultWidth, defaultHeight = 200;
         public NewCollection(int viewDepth, int ResId, int Width, int Height, int Layout)
         {
             InitializeComponent();
@@ -73,6 +73,7 @@ namespace C_Launcher
             //Color BackgroundCol = new Color();
             Color BackgroundCol = Color.FromArgb(255, colData.ColorRed, colData.ColorGreen, colData.ColorBlue);
             pictureBoxCoverCollection.BackColor = BackgroundCol;
+            buttonColorPickIMG.BackColor = BackgroundCol;
             //Caratula
             checkBoxImageLocation.Checked = true;
             numericColWidth.Value = colData.Width;
@@ -352,37 +353,62 @@ namespace C_Launcher
 
         private void pictureBoxCoverCollection_MouseDown(object sender, MouseEventArgs e)
         {
-            int margin = 10;
-
-            //Ancho (Mouse a la derecha)
-            if (e.X >= pictureBoxCoverCollection.Width - margin && e.Y < pictureBoxCoverCollection.Height - margin)
+            if (comboBoxResolutionCol.SelectedIndex == 0)
             {
-                //isResizing = true;
-                resizing = 1;
-                this.Cursor = Cursors.SizeWE;
-                currentX = e.X;
-                currentY = 0;
+                int margin = 10;
 
+                //Ancho (Mouse a la derecha)
+                if (e.X >= pictureBoxCoverCollection.Width - margin && e.Y < pictureBoxCoverCollection.Height - margin)
+                {
+                    //isResizing = true;
+                    resizing = 1;
+                    this.Cursor = Cursors.SizeWE;
+                    currentX = e.X;
+                    currentY = 0;
+
+                }
+
+                //Alto (Mouse en la parte inferior)
+                if (e.X < pictureBoxCoverCollection.Width - margin && e.Y >= pictureBoxCoverCollection.Height - margin)
+                {
+                    //isResizing = true;
+                    resizing = 2;
+                    this.Cursor = Cursors.SizeNS;
+                    currentX = 0;
+                    currentY = e.Y;
+
+                }
+
+                //Ajustando ambos (mouse en esquina inferior derecha)
+                if (e.X >= pictureBoxCoverCollection.Width - margin && e.Y >= pictureBoxCoverCollection.Height - margin)
+                {
+                    resizing = 3;
+                    this.Cursor = Cursors.SizeNWSE;
+                    currentX = e.X;
+                    currentY = e.Y;
+                }
             }
 
-            //Alto (Mouse en la parte inferior)
-            if (e.X < pictureBoxCoverCollection.Width - margin && e.Y >= pictureBoxCoverCollection.Height - margin)
+            if (resizing == 0)
             {
-                //isResizing = true;
-                resizing = 2;
-                this.Cursor = Cursors.SizeNS;
-                currentX = 0;
-                currentY = e.Y;
+                if (pictureBoxCoverCollection.BackgroundImage != null)
+                {
+                    int Cwidth = pictureBoxCoverCollection.Width;
+                    int Cheight = pictureBoxCoverCollection.Height;
 
-            }
+                    Bitmap bitmap = new Bitmap(Cwidth, Cheight);
 
-            //Ajustando ambos (mouse en esquina inferior derecha)
-            if (e.X >= pictureBoxCoverCollection.Width - margin && e.Y >= pictureBoxCoverCollection.Height - margin)
-            {
-                resizing = 3;
-                this.Cursor = Cursors.SizeNWSE;
-                currentX = e.X;
-                currentY = e.Y;
+                    Rectangle rect = new Rectangle(0, 0, Cwidth, Cheight);
+
+                    pictureBoxCoverCollection.DrawToBitmap(bitmap, rect);
+
+                    Color color = bitmap.GetPixel(e.X, e.Y);
+
+                    bitmap.Dispose();
+
+                    pictureBoxCoverCollection.BackColor = color;
+                    buttonColorPickIMG.BackColor = color;
+                }
             }
         }
 
@@ -420,6 +446,44 @@ namespace C_Launcher
                 if (resizing != 2) currentX = e.X;
                 if (resizing != 1) currentY = e.Y;
             }
+            else
+            {
+                //Controlando el tamaño
+                if (comboBoxResolutionCol.SelectedIndex == 0)
+                {
+                    int margin = 10;
+
+                    //Ancho (Mouse a la derecha)
+                    if (e.X >= pictureBoxCoverCollection.Width - margin && e.Y < pictureBoxCoverCollection.Height - margin)
+                    {
+                        this.Cursor = Cursors.SizeWE;
+
+                    }
+                    //Alto (Mouse en la parte inferior)
+                    else if (e.X < pictureBoxCoverCollection.Width - margin && e.Y >= pictureBoxCoverCollection.Height - margin)
+                    {
+                        this.Cursor = Cursors.SizeNS;
+
+                    }
+                    //Ajustando ambos (mouse en esquina inferior derecha)
+                    else if (e.X >= pictureBoxCoverCollection.Width - margin && e.Y >= pictureBoxCoverCollection.Height - margin)
+                    {
+                        this.Cursor = Cursors.SizeNWSE;
+                    }
+                    else
+                    {
+                        this.Cursor = Cursors.Cross;
+                    }
+                } else
+                {
+                    this.Cursor = Cursors.Cross;
+                }
+            }
+        }
+
+        private void pictureBoxCoverCollection_MouseLeave(object sender, EventArgs e)
+        {
+            this.Cursor = Cursors.Default;
         }
 
         private void pictureBoxCoverCollection_MouseUp(object sender, MouseEventArgs e)
@@ -489,35 +553,38 @@ namespace C_Launcher
 
         private void pictureBoxCoverSon_MouseDown(object sender, MouseEventArgs e)
         {
-            int margin = 10;
-
-            //Ancho (Mouse a la derecha)
-            if (e.X >= pictureBoxCoverSon.Width - margin && e.Y < pictureBoxCoverSon.Height - margin)
+            if (comboBoxSonResolution.SelectedIndex == 0)
             {
-                resizingSon = 1;
-                this.Cursor = Cursors.SizeWE;
-                currentSonX = e.X;
-                currentSonY = 0;
+                int margin = 10;
 
-            }
+                //Ancho (Mouse a la derecha)
+                if (e.X >= pictureBoxCoverSon.Width - margin && e.Y < pictureBoxCoverSon.Height - margin)
+                {
+                    resizingSon = 1;
+                    this.Cursor = Cursors.SizeWE;
+                    currentSonX = e.X;
+                    currentSonY = 0;
 
-            //Alto (Mouse en la parte inferior)
-            if (e.X < pictureBoxCoverSon.Width - margin && e.Y >= pictureBoxCoverSon.Height - margin)
-            {
-                resizingSon = 2;
-                this.Cursor = Cursors.SizeNS;
-                currentSonX = 0;
-                currentSonY = e.Y;
+                }
 
-            }
+                //Alto (Mouse en la parte inferior)
+                if (e.X < pictureBoxCoverSon.Width - margin && e.Y >= pictureBoxCoverSon.Height - margin)
+                {
+                    resizingSon = 2;
+                    this.Cursor = Cursors.SizeNS;
+                    currentSonX = 0;
+                    currentSonY = e.Y;
 
-            //Ajustando ambos (mouse en esquina inferior derecha)
-            if (e.X >= pictureBoxCoverSon.Width - margin && e.Y >= pictureBoxCoverSon.Height - margin)
-            {
-                resizingSon = 3;
-                this.Cursor = Cursors.SizeNWSE;
-                currentSonX = e.X;
-                currentSonY = e.Y;
+                }
+
+                //Ajustando ambos (mouse en esquina inferior derecha)
+                if (e.X >= pictureBoxCoverSon.Width - margin && e.Y >= pictureBoxCoverSon.Height - margin)
+                {
+                    resizingSon = 3;
+                    this.Cursor = Cursors.SizeNWSE;
+                    currentSonX = e.X;
+                    currentSonY = e.Y;
+                }
             }
         }
 
@@ -555,6 +622,37 @@ namespace C_Launcher
                 if (resizingSon != 2) currentSonX = e.X;
                 if (resizingSon != 1) currentSonY = e.Y;
             }
+            else
+            {
+                //Controlando el tamaño
+                if (comboBoxSonResolution.SelectedIndex == 0)
+                {
+                    int margin = 10;
+
+                    //Ancho (Mouse a la derecha)
+                    if (e.X >= pictureBoxCoverSon.Width - margin && e.Y < pictureBoxCoverSon.Height - margin)
+                    {
+                        this.Cursor = Cursors.SizeWE;
+
+                    }
+                    //Alto (Mouse en la parte inferior)
+                    else if (e.X < pictureBoxCoverSon.Width - margin && e.Y >= pictureBoxCoverSon.Height - margin)
+                    {
+                        this.Cursor = Cursors.SizeNS;
+
+                    }
+                    //Ajustando ambos (mouse en esquina inferior derecha)
+                    else if (e.X >= pictureBoxCoverSon.Width - margin && e.Y >= pictureBoxCoverSon.Height - margin)
+                    {
+                        this.Cursor = Cursors.SizeNWSE;
+                    }
+                    else
+                    {
+                        this.Cursor = Cursors.Default;
+                    }
+
+                }
+            }
         }
 
         private void pictureBoxCoverSon_MouseUp(object sender, MouseEventArgs e)
@@ -582,6 +680,11 @@ namespace C_Launcher
             if (height > 300) height = 300;
 
             pictureBoxCoverSon.Height = height;
+        }
+
+        private void pictureBoxCoverSon_MouseLeave(object sender, EventArgs e)
+        {
+            this.Cursor = Cursors.Default;
         }
         #endregion
 
@@ -640,6 +743,8 @@ namespace C_Launcher
         {
             pictureBoxCoverSon.BackgroundImageLayout = ImageLayout.Stretch;
         }
+
+        
         #endregion
 
         #endregion
@@ -655,6 +760,7 @@ namespace C_Launcher
                 Color selectedColor = colorDialog.Color;
 
                 pictureBoxCoverCollection.BackColor = selectedColor;
+                buttonColorPickIMG.BackColor = selectedColor;
             }
         }
 
@@ -783,6 +889,12 @@ namespace C_Launcher
             Collections passCollection = new Collections(idCollection, idFather, nameCollection, imgPath, imgLayout, R, G, B, resID, width, height, resSonID, sonWidth, sonHeight, sonLayout, tagsArray, favorite);
             ReturnedObject?.Invoke(this, passCollection);
             this.Close();
+        }
+
+        private void NewCollection_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (pictureBoxCoverCollection.BackgroundImage != null) pictureBoxCoverCollection.BackgroundImage.Dispose();//Dejar de utilizar la imagen de fondo en memoria
+            if (pictureBoxCoverSon.BackgroundImage != null) pictureBoxCoverSon.BackgroundImage.Dispose();//Dejar de utilizar la imagen de fondo en memoria
         }
     }
 }

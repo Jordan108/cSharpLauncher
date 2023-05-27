@@ -87,8 +87,8 @@ namespace C_Launcher
         //Crear la nueva ventana para añadir las colecciones
         private void ToolStripAddCollection_Click(object sender, EventArgs e)
         {
-            int defaultWidth = 100;
-            int defaultHeight = 100;
+            int defaultWidth = 200;
+            int defaultHeight = 200;
             int defaultRes = 0;
             int defaultImageLayout = 0;
 
@@ -115,8 +115,8 @@ namespace C_Launcher
         //Crear la nueva ventana para crear los archivos (individual)
         private void ToolStripAddFile_Click(object sender, EventArgs e)
         {
-            int defaultWidth = 100; 
-            int defaultHeight = 100;
+            int defaultWidth = 200; 
+            int defaultHeight = 200;
             int defaultRes = 0;
             int defaultImageLayout = 0;
 
@@ -376,6 +376,7 @@ namespace C_Launcher
             //remueve todos los paneles del control
             for (int i=0; i< picBoxArr.Length; i++)
             {
+                picBoxArr[i].BackgroundImage.Dispose();//Dejar de utilizar la imagen de fondo en memoria
                 flowLayoutPanelMain.Controls.Remove(picBoxArr[i]);
             }
 

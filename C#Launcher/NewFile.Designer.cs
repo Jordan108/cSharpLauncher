@@ -186,9 +186,10 @@
             this.pictureBoxCover.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.pictureBoxCover.Location = new System.Drawing.Point(0, 0);
             this.pictureBoxCover.Name = "pictureBoxCover";
-            this.pictureBoxCover.Size = new System.Drawing.Size(100, 100);
+            this.pictureBoxCover.Size = new System.Drawing.Size(200, 200);
             this.pictureBoxCover.TabIndex = 13;
             this.pictureBoxCover.TabStop = false;
+            this.pictureBoxCover.MouseLeave += new System.EventHandler(this.pictureBoxCover_MouseLeave);
             // 
             // labelWidth
             // 
@@ -269,7 +270,7 @@
             this.numericWidthImage.Size = new System.Drawing.Size(120, 20);
             this.numericWidthImage.TabIndex = 19;
             this.numericWidthImage.Value = new decimal(new int[] {
-            100,
+            200,
             0,
             0,
             0});
@@ -292,7 +293,7 @@
             this.numericHeightImage.Size = new System.Drawing.Size(120, 20);
             this.numericHeightImage.TabIndex = 20;
             this.numericHeightImage.Value = new decimal(new int[] {
-            100,
+            200,
             0,
             0,
             0});
@@ -343,7 +344,7 @@
             // 
             // buttonSetColor
             // 
-            this.buttonSetColor.Location = new System.Drawing.Point(439, 290);
+            this.buttonSetColor.Location = new System.Drawing.Point(414, 290);
             this.buttonSetColor.Name = "buttonSetColor";
             this.buttonSetColor.Size = new System.Drawing.Size(119, 23);
             this.buttonSetColor.TabIndex = 25;
@@ -382,11 +383,12 @@
             // 
             // buttonColorPickIMG
             // 
-            this.buttonColorPickIMG.Location = new System.Drawing.Point(519, 315);
+            this.buttonColorPickIMG.BackColor = System.Drawing.Color.Black;
+            this.buttonColorPickIMG.Location = new System.Drawing.Point(539, 290);
             this.buttonColorPickIMG.Name = "buttonColorPickIMG";
-            this.buttonColorPickIMG.Size = new System.Drawing.Size(39, 23);
+            this.buttonColorPickIMG.Size = new System.Drawing.Size(25, 25);
             this.buttonColorPickIMG.TabIndex = 29;
-            this.buttonColorPickIMG.UseVisualStyleBackColor = true;
+            this.buttonColorPickIMG.UseVisualStyleBackColor = false;
             // 
             // checkBoxImageLocation
             // 
@@ -431,6 +433,7 @@
             this.Controls.Add(this.textBoxName);
             this.Name = "NewFile";
             this.Text = "NewFile";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.NewFile_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCover)).EndInit();
             this.groupBoxImageFormat.ResumeLayout(false);
             this.groupBoxImageFormat.PerformLayout();

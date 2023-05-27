@@ -230,7 +230,7 @@ namespace C_Launcher
             //Identificar si se esta ajustando el ancho o el alto y atribuirlo a coverBox
             if (e.ColumnIndex == 1)//Ancho
             {
-                int width = 100;
+                int width = 200;
                 try
                 {
                     width = int.Parse(dataGridViewResolutions.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
@@ -246,7 +246,7 @@ namespace C_Launcher
 
             } else if (e.ColumnIndex == 2)//Alto
             {
-                int height = 100;
+                int height = 200;
                 try
                 {
                     height = int.Parse(dataGridViewResolutions.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
@@ -266,7 +266,7 @@ namespace C_Launcher
 
         private void buttonAddRow_Click(object sender, EventArgs e)
         {
-            this.dataGridViewResolutions.Rows.Add("", 100, 100);
+            this.dataGridViewResolutions.Rows.Add("", 200, 200);
             int rowCount = dataGridViewResolutions.Rows.Count;
             dataGridViewResolutions.CurrentCell = dataGridViewResolutions.Rows[rowCount - 1].Cells[0];
             dataGridViewResolutions.Rows[rowCount - 1].Selected = true;
@@ -275,8 +275,8 @@ namespace C_Launcher
             dataGridViewResolutions.Rows[rowCount - 1].Tag = maxTag;//Asignar el id a la fila
 
             rowSelected = rowCount - 1;
-            pictureBoxCover.Width = 100;
-            pictureBoxCover.Height = 100;
+            pictureBoxCover.Width = 200;
+            pictureBoxCover.Height = 200;
         }
 
         private void buttonDeleteRow_Click(object sender, EventArgs e)
@@ -347,6 +347,11 @@ namespace C_Launcher
             {
                 pictureBoxCover.BackgroundImage = Image.FromFile(openFileDialog.FileName);
             }
+        }
+
+        private void Resolution_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            if (pictureBoxCover.BackgroundImage != null) pictureBoxCover.BackgroundImage.Dispose();//Dejar de utilizar la imagen de fondo en memoria
         }
     }
 }

@@ -178,7 +178,7 @@
             this.numericColHeight.Size = new System.Drawing.Size(120, 20);
             this.numericColHeight.TabIndex = 1;
             this.numericColHeight.Value = new decimal(new int[] {
-            100,
+            200,
             0,
             0,
             0});
@@ -201,7 +201,7 @@
             this.numericColWidth.Size = new System.Drawing.Size(120, 20);
             this.numericColWidth.TabIndex = 0;
             this.numericColWidth.Value = new decimal(new int[] {
-            100,
+            200,
             0,
             0,
             0});
@@ -267,9 +267,10 @@
             this.pictureBoxCoverCollection.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.pictureBoxCoverCollection.Location = new System.Drawing.Point(0, 0);
             this.pictureBoxCoverCollection.Name = "pictureBoxCoverCollection";
-            this.pictureBoxCoverCollection.Size = new System.Drawing.Size(100, 100);
+            this.pictureBoxCoverCollection.Size = new System.Drawing.Size(200, 200);
             this.pictureBoxCoverCollection.TabIndex = 0;
             this.pictureBoxCoverCollection.TabStop = false;
+            this.pictureBoxCoverCollection.MouseLeave += new System.EventHandler(this.pictureBoxCoverCollection_MouseLeave);
             // 
             // checkBoxFavorite
             // 
@@ -297,9 +298,10 @@
             this.pictureBoxCoverSon.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.pictureBoxCoverSon.Location = new System.Drawing.Point(0, 0);
             this.pictureBoxCoverSon.Name = "pictureBoxCoverSon";
-            this.pictureBoxCoverSon.Size = new System.Drawing.Size(100, 100);
+            this.pictureBoxCoverSon.Size = new System.Drawing.Size(200, 200);
             this.pictureBoxCoverSon.TabIndex = 0;
             this.pictureBoxCoverSon.TabStop = false;
+            this.pictureBoxCoverSon.MouseLeave += new System.EventHandler(this.pictureBoxCoverSon_MouseLeave);
             // 
             // comboBoxSonResolution
             // 
@@ -368,7 +370,7 @@
             this.numericSonHeight.Size = new System.Drawing.Size(120, 20);
             this.numericSonHeight.TabIndex = 1;
             this.numericSonHeight.Value = new decimal(new int[] {
-            100,
+            200,
             0,
             0,
             0});
@@ -391,7 +393,7 @@
             this.numericSonWidth.Size = new System.Drawing.Size(120, 20);
             this.numericSonWidth.TabIndex = 0;
             this.numericSonWidth.Value = new decimal(new int[] {
-            100,
+            200,
             0,
             0,
             0});
@@ -464,11 +466,12 @@
             // 
             // buttonColorPickIMG
             // 
-            this.buttonColorPickIMG.Location = new System.Drawing.Point(480, 109);
+            this.buttonColorPickIMG.BackColor = System.Drawing.Color.Black;
+            this.buttonColorPickIMG.Location = new System.Drawing.Point(466, 109);
             this.buttonColorPickIMG.Name = "buttonColorPickIMG";
-            this.buttonColorPickIMG.Size = new System.Drawing.Size(38, 23);
+            this.buttonColorPickIMG.Size = new System.Drawing.Size(25, 25);
             this.buttonColorPickIMG.TabIndex = 16;
-            this.buttonColorPickIMG.UseVisualStyleBackColor = true;
+            this.buttonColorPickIMG.UseVisualStyleBackColor = false;
             // 
             // checkBoxImageLocation
             // 
@@ -508,6 +511,7 @@
             this.Controls.Add(this.textBoxName);
             this.Name = "NewCollection";
             this.Text = "NewCollection";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.NewCollection_FormClosed);
             this.groupBoxCover.ResumeLayout(false);
             this.groupBoxCover.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericColHeight)).EndInit();

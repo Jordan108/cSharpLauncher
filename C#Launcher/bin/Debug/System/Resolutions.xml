@@ -1,2 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Launcher />
+<Launcher>
+  <resolution id="1">
+    <Name>test</Name>
+    <Width>200</Width>
+    <Height>200</Height>
+  </resolution>
+</Launcher>

@@ -32,12 +32,12 @@
             this.panelSonImageLimit = new System.Windows.Forms.Panel();
             this.pictureBoxCover = new System.Windows.Forms.PictureBox();
             this.dataGridViewResolutions = new System.Windows.Forms.DataGridView();
-            this.buttonAddRow = new System.Windows.Forms.Button();
-            this.buttonDeleteRow = new System.Windows.Forms.Button();
-            this.buttonSaveRes = new System.Windows.Forms.Button();
             this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.width = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.height = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.buttonAddRow = new System.Windows.Forms.Button();
+            this.buttonDeleteRow = new System.Windows.Forms.Button();
+            this.buttonSaveRes = new System.Windows.Forms.Button();
             this.panelSonImageLimit.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCover)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewResolutions)).BeginInit();
@@ -68,7 +68,7 @@
             this.pictureBoxCover.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.pictureBoxCover.Location = new System.Drawing.Point(0, 0);
             this.pictureBoxCover.Name = "pictureBoxCover";
-            this.pictureBoxCover.Size = new System.Drawing.Size(100, 100);
+            this.pictureBoxCover.Size = new System.Drawing.Size(200, 200);
             this.pictureBoxCover.TabIndex = 0;
             this.pictureBoxCover.TabStop = false;
             // 
@@ -90,6 +90,26 @@
             this.dataGridViewResolutions.TabIndex = 18;
             this.dataGridViewResolutions.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewResolutions_CellClick);
             this.dataGridViewResolutions.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewResolutions_CellEndEdit);
+            // 
+            // name
+            // 
+            this.name.HeaderText = "Nombre";
+            this.name.Name = "name";
+            this.name.Width = 200;
+            // 
+            // width
+            // 
+            this.width.HeaderText = "Ancho";
+            this.width.MaxInputLength = 3;
+            this.width.Name = "width";
+            this.width.Width = 50;
+            // 
+            // height
+            // 
+            this.height.HeaderText = "Alto";
+            this.height.MaxInputLength = 3;
+            this.height.Name = "height";
+            this.height.Width = 50;
             // 
             // buttonAddRow
             // 
@@ -121,26 +141,6 @@
             this.buttonSaveRes.UseVisualStyleBackColor = true;
             this.buttonSaveRes.Click += new System.EventHandler(this.buttonSaveRes_Click);
             // 
-            // name
-            // 
-            this.name.HeaderText = "Nombre";
-            this.name.Name = "name";
-            this.name.Width = 200;
-            // 
-            // width
-            // 
-            this.width.HeaderText = "Ancho";
-            this.width.MaxInputLength = 3;
-            this.width.Name = "width";
-            this.width.Width = 50;
-            // 
-            // height
-            // 
-            this.height.HeaderText = "Alto";
-            this.height.MaxInputLength = 3;
-            this.height.Name = "height";
-            this.height.Width = 50;
-            // 
             // Resolution
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -154,6 +154,7 @@
             this.Controls.Add(this.panelSonImageLimit);
             this.Name = "Resolution";
             this.Text = "Resolutions";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Resolution_FormClosed);
             this.panelSonImageLimit.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCover)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewResolutions)).EndInit();
