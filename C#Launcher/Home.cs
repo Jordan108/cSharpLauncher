@@ -24,18 +24,25 @@ namespace C_Launcher
         private PictureBox[] picBoxArr = new PictureBox[0];//Crear el array de picBox que se mantendra en memoria
         //Crea el array de las colecciones y los archivos (solo contendran las colecciones que se mostraran en en la vista)
 
+        //Valores de settings
+        private int WinWidht, WinHeight = 900;
+        private int orderPanels = 0;
+        private int formState = 1;
         private int viewDepth = 0;
+
         //Rutas de los archivos XML
         private string xmlColPath = "System\\Collections.xml";
         private string xmlFilesPath = "System\\Files.xml";
         private string xmlResPath = "System\\Resolutions.xml";
+        private string xmlSettingsPath = "System\\Settings.xml";
         //Ruta de los covers
         private string dirCoversPath = "System\\Covers";
 
-
         //Mantener el tamaño de los archivos y colecciones
-        private int colSize = 0;
-        private int fileSize = 0;
+        private int colSize, fileSize = 0;
+        
+        
+
         //ToolStrip
         //Se define aqui para poder referenciarlo en la creacion de los paneles
         private ContextMenuStrip contextMenuPictureBox = new ContextMenuStrip();
@@ -45,6 +52,8 @@ namespace C_Launcher
             InitializeComponent();
             //Verificar el contenido de la carpeta system, si no existe, crearlo
             verifySystemDir();
+            //Cargar las opciones
+            loadSettingXML();
 
             //Tool strip (click derecho)
             //Layout Panel
@@ -84,6 +93,7 @@ namespace C_Launcher
         }
 
         #region ToolStrip
+        #region panel ToolStrip
         //Crear la nueva ventana para añadir las colecciones
         private void ToolStripAddCollection_Click(object sender, EventArgs e)
         {
@@ -192,13 +202,61 @@ namespace C_Launcher
                 deleteCollection(int.Parse(id));
             }
         }
+        #endregion
 
+        #region navbar ToolStrip
         //Administrar las resoluciones
         private void administrarResolucionesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Resolution res = new Resolution();
             res.ShowDialog();
         }
+
+        private void abrirLaCarpetaSystemToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                //Verificar la existencia de la carpeta System
+                if (!Directory.Exists("System"))
+                {
+                    // Crea la carpeta si no existe
+                    Directory.CreateDirectory("System");
+                }
+
+                string systemDir = Directory.GetCurrentDirectory() + "\\System";
+                Process.Start("explorer.exe", systemDir);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine("Error al abrir la carpeta: " + ex.Message);
+            }
+        }
+
+        //Ordenar paneles
+        //Ordenarlos por ID (orderPanels 0)
+        private void fechaDeCreacionToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!fechaDeCreacionToolStripMenuItem.Checked)
+            {
+                fechaDeCreacionToolStripMenuItem.Checked = true;
+                nombreToolStripMenuItem.Checked = false;
+                orderPanels = 0;
+                loadPictureBox(colSize, fileSize, false);
+            }
+        }
+
+        //ordenarlos por nombre (orderPanels 1)
+        private void nombreToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!nombreToolStripMenuItem.Checked) {
+                nombreToolStripMenuItem.Checked = true;
+                fechaDeCreacionToolStripMenuItem.Checked = false;
+                orderPanels = 1;
+                loadPictureBox(colSize, fileSize, false);
+            }
+            
+        }
+        #endregion
         #endregion
 
         #region Manejar interaccion entre ventanas
@@ -376,7 +434,7 @@ namespace C_Launcher
             //remueve todos los paneles del control
             for (int i=0; i< picBoxArr.Length; i++)
             {
-                picBoxArr[i].BackgroundImage.Dispose();//Dejar de utilizar la imagen de fondo en memoria
+                if (picBoxArr[i].BackgroundImage != null) picBoxArr[i].BackgroundImage.Dispose();//Dejar de utilizar la imagen de fondo en memoria
                 flowLayoutPanelMain.Controls.Remove(picBoxArr[i]);
             }
 
@@ -473,7 +531,8 @@ namespace C_Launcher
 
                     picBoxArr[pL].ContextMenuStrip = contextMenuPictureBox;
 
-                    flowLayoutPanelMain.Controls.Add(picBoxArr[pL]);
+                    //Se integraran despues de ordenarlos
+                    //flowLayoutPanelMain.Controls.Add(picBoxArr[pL]);
 
                     pL++;//iterar en el array de paneles
                 }
@@ -564,8 +623,9 @@ namespace C_Launcher
                     picBoxArr[pL].MouseLeave += new System.EventHandler(this.pictureBox_MouseLeave);
                     picBoxArr[pL].Click += new System.EventHandler(this.pictureBox_Click);
                     picBoxArr[pL].ContextMenuStrip = contextMenuPictureBox;
-                    
-                    flowLayoutPanelMain.Controls.Add(picBoxArr[pL]);
+
+                    //Se integraran despues de ordenarlos
+                    //flowLayoutPanelMain.Controls.Add(picBoxArr[pL]);
                     pL++;//iterar en el array de paneles
                 }
             }
@@ -574,7 +634,49 @@ namespace C_Launcher
             //Optimizar el tamaño del array
             Array.Resize(ref picBoxArr, pL);
 
+            //Ordenar los paneles por orden alfabetico
+            if (orderPanels == 1)
+            {
+                picBoxArr = orderPBoxName(picBoxArr);
+            }
+
+
+            //Insertar los paneles ya ordenados
+            for (int i = 0; i < picBoxArr.Length; i++)
+            {
+                //pan[i]->BackgroundImage->HorizontalResolution ; Obtener el tamaño de la imagen dentro del panel
+                flowLayoutPanelMain.Controls.Add(picBoxArr[i]);
+            }
+
             flowLayoutPanelMain.ResumeLayout();
+        }
+
+        //Funcion que ordena el array de los paneles por orden alfabetico (Ordenamiento por Inserción)
+        private PictureBox[] orderPBoxName(PictureBox[] pArray)
+        {
+            int i, pos;// pos es la posicion actual que se esta iterando
+            PictureBox aux;//auxiliar para ayudar al intercambio de las posiciones
+
+            //String::Compare verifica el orden alfabetico de strings
+            //<0 si la primera cadena es menor que la segunda
+            //0 si son iguales
+            //>0 si la primera es mayor que la segunda
+
+            //Ordenamiento por Inserción
+            for (i = 0; i < pArray.Length; i++)
+            {
+                pos = i;
+                aux = pArray[i];//Pasar el panel actual al auxiliar para hacer el intercambio
+
+                while ((pos > 0) && (String.Compare(pArray[pos - 1].Name, aux.Name) > 0))
+                {
+                    //Si la cadena izq, es mayor que la derecha, cambiar
+                    pArray[pos] = pArray[pos - 1];
+                    pos--;
+                }
+                pArray[pos] = aux;//Refrescar en cada iteracion
+            }
+            return pArray;
         }
 
         private void btnBackView_Click(object sender, EventArgs e)
@@ -1003,6 +1105,93 @@ namespace C_Launcher
             return fileData;
         }
 
+        //Cargar las configuraciones de settings
+        private void loadSettingXML()
+        {
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.Load(xmlSettingsPath);
+
+            string xpath = "//Launcher/settings";
+            string winpath = "//Launcher/settings/WindowSize";
+            XmlNode root = xmlDoc.SelectSingleNode(xpath);
+            XmlNode rootWin = xmlDoc.SelectSingleNode(winpath);
+
+            //Cargar la ultima profundidad utilizada
+            viewDepth   = int.Parse(root.SelectSingleNode("LastDepth").InnerText);
+            //Cargar el orden de los paneles
+            orderPanels = int.Parse(root.SelectSingleNode("PanelOrder").InnerText);
+
+            //Cargar las opciones de la ventana (estan en un sub nodo)
+            WinWidht = int.Parse(rootWin.SelectSingleNode("Width").InnerText);
+            WinHeight = int.Parse(rootWin.SelectSingleNode("Height").InnerText);
+            formState = int.Parse(rootWin.SelectSingleNode("MxScreen").InnerText);
+
+            //Verificar los datos y establecerlos
+            if (viewDepth < 0) viewDepth = 0;
+            if (orderPanels < 0) orderPanels = 0;
+            if (WinWidht < 300) WinWidht = 300; Width = WinWidht;
+            if (WinHeight < 300) WinHeight = 300; Height = WinHeight;
+            if (formState == 0) WindowState =  FormWindowState.Normal; else WindowState = FormWindowState.Maximized;
+        }
+
+        //Guardar las configuraciones de settings
+        private void saveSettingsXML()
+        {
+            //Verificar que el archivo xml exista (y si no es asi, crearlo y formatearlo)
+            if (!File.Exists(xmlSettingsPath))
+            {
+                XmlWriterSettings settings = new XmlWriterSettings();
+                settings.Indent = true;
+
+                using (XmlWriter writer = XmlWriter.Create(xmlSettingsPath, settings))
+                {
+                    //Crear el elemento raiz del archivo (obligatorio)
+                    writer.WriteStartElement("Launcher");
+                    writer.WriteEndElement();
+                }
+            }
+
+            //Cargar el archivo XML
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.Load(xmlSettingsPath);
+            XmlNode root = xmlDoc.DocumentElement;
+            root.RemoveAll();
+
+            XmlElement set;
+
+            //Crea una coleccion/archivo nueva
+            set = xmlDoc.CreateElement("settings");
+            xmlDoc.DocumentElement.AppendChild(set);//agrega la coleccion al documento
+
+            //Ultima profundidad/coleccion abierta
+            XmlElement lDepth = xmlDoc.CreateElement("LastDepth"); lDepth.InnerText = viewDepth.ToString(); set.AppendChild(lDepth);
+
+            //Guardar la resolucion (ancho, alto, Pantalla completa)
+            XmlElement winSize = xmlDoc.CreateElement("WindowSize"); set.AppendChild(winSize);
+
+            WinWidht = Width;
+            WinHeight = Height;
+            if (WindowState == FormWindowState.Minimized)
+            {
+                //Restaura el tamaño de la ventana antes de ser minimizada
+                WinWidht = RestoreBounds.Width;
+                WinHeight = RestoreBounds.Height;
+            }
+
+            XmlElement winWidth = xmlDoc.CreateElement("Width"); winWidth.InnerText = WinWidht.ToString(); winSize.AppendChild(winWidth);
+            XmlElement winHeight = xmlDoc.CreateElement("Height"); winHeight.InnerText = WinHeight.ToString(); winSize.AppendChild(winHeight);
+
+            int mx = 1;
+            if (WindowState == FormWindowState.Normal) mx = 0;
+            XmlElement winScreen = xmlDoc.CreateElement("MxScreen"); winScreen.InnerText = mx.ToString(); winSize.AppendChild(winScreen);
+
+
+            //Guardar como se ordenan los paneles
+            XmlElement pOrder = xmlDoc.CreateElement("PanelOrder"); pOrder.InnerText = orderPanels.ToString(); set.AppendChild(pOrder);
+
+            xmlDoc.Save(xmlSettingsPath);
+        }
+
         //Cargar los datos de un archivo especifico
         private void searchFileProcess(int fileID)
         {
@@ -1171,6 +1360,30 @@ namespace C_Launcher
             string xpath = "//Launcher/file[@id='" + fileID + "']"; //Buscar un elemento que se llame "ColeccionX" que tenga en el atributo id un 1
             XmlNode root = xmlDoc.SelectSingleNode(xpath);
 
+            //Eliminar la caratula solo si está ubicada en la carpeta "System"
+
+            string imgDir = root.SelectSingleNode("Image").InnerText;
+            string folder = Path.GetDirectoryName(imgDir);
+            string workFolder = Directory.GetCurrentDirectory() + "\\"+ dirCoversPath;
+            
+            //Si la carpeta donde se ubica la imagen es System//Covers, eliminar el archivo
+            if (folder == workFolder)
+            {
+                try
+                {
+                    //Solo eliminara el archivo si existe
+                    if (File.Exists(imgDir))
+                    {
+                        // Eliminar el archivo
+                        File.Delete(imgDir);
+                    }
+                }
+                catch (IOException ex)
+                {
+                    Console.WriteLine("Error al eliminar el archivo: " + ex.Message);
+                }
+            }
+
             if (root != null)
             {
                 root.ParentNode.RemoveChild(root);
@@ -1266,9 +1479,53 @@ namespace C_Launcher
                 }
             }
 
+            //Verificar la existencia del xml settings
+            if (!File.Exists(xmlSettingsPath))
+            {
+                XmlWriterSettings settings = new XmlWriterSettings();
+                settings.Indent = true;
+
+                using (XmlWriter writer = XmlWriter.Create(xmlSettingsPath, settings))
+                {
+                    //Crear el elemento raiz del archivo (obligatorio)
+                    writer.WriteStartElement("Launcher");
+                    writer.WriteEndElement();
+                }
+
+                //Cargar el archivo XML
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.Load(xmlSettingsPath);
+
+                XmlElement set;
+
+                //Crea una coleccion/archivo nueva
+                set = xmlDoc.CreateElement("settings");
+                xmlDoc.DocumentElement.AppendChild(set);//agrega la coleccion al documento
+
+                //Ultima profundidad/coleccion abierta
+                XmlElement lDepth = xmlDoc.CreateElement("LastDepth"); lDepth.InnerText = "0"; set.AppendChild(lDepth);
+
+               //Guardar la resolucion (ancho, alto, Pantalla completa)
+                XmlElement winSize = xmlDoc.CreateElement("WindowSize"); set.AppendChild(winSize);
+                    XmlElement winWidth = xmlDoc.CreateElement("Width"); winWidth.InnerText = WinWidht.ToString();  winSize.AppendChild(winWidth);
+                    XmlElement winHeight = xmlDoc.CreateElement("Height"); winHeight.InnerText = WinHeight.ToString();  winSize.AppendChild(winHeight);
+                    XmlElement winScreen = xmlDoc.CreateElement("MxScreen"); winScreen.InnerText = "1";  winSize.AppendChild(winScreen);
+
+
+                //Guardar como se ordenan los paneles
+                XmlElement pOrder = xmlDoc.CreateElement("PanelOrder"); pOrder.InnerText = "0"; set.AppendChild(pOrder);
+
+                xmlDoc.Save(xmlSettingsPath);
+            }
+
             
 
         }
         #endregion
+
+        private void Home_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            saveSettingsXML();
+        }
     }
 }

@@ -34,6 +34,7 @@
             this.btnBackView = new System.Windows.Forms.Button();
             this.menuStripMain = new System.Windows.Forms.MenuStrip();
             this.archivoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.abrirLaCarpetaSystemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.verToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ordenarPanelesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fechaDeCreacionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -56,7 +57,7 @@
             this.panelTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTop.Location = new System.Drawing.Point(0, 0);
             this.panelTop.Name = "panelTop";
-            this.panelTop.Size = new System.Drawing.Size(770, 58);
+            this.panelTop.Size = new System.Drawing.Size(793, 58);
             this.panelTop.TabIndex = 0;
             // 
             // btnReloadView
@@ -97,15 +98,24 @@
             this.verToolStripMenuItem});
             this.menuStripMain.Location = new System.Drawing.Point(0, 0);
             this.menuStripMain.Name = "menuStripMain";
-            this.menuStripMain.Size = new System.Drawing.Size(770, 24);
+            this.menuStripMain.Size = new System.Drawing.Size(793, 24);
             this.menuStripMain.TabIndex = 3;
             this.menuStripMain.Text = "menuStrip1";
             // 
             // archivoToolStripMenuItem
             // 
+            this.archivoToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.abrirLaCarpetaSystemToolStripMenuItem});
             this.archivoToolStripMenuItem.Name = "archivoToolStripMenuItem";
             this.archivoToolStripMenuItem.Size = new System.Drawing.Size(60, 20);
             this.archivoToolStripMenuItem.Text = "Archivo";
+            // 
+            // abrirLaCarpetaSystemToolStripMenuItem
+            // 
+            this.abrirLaCarpetaSystemToolStripMenuItem.Name = "abrirLaCarpetaSystemToolStripMenuItem";
+            this.abrirLaCarpetaSystemToolStripMenuItem.Size = new System.Drawing.Size(195, 22);
+            this.abrirLaCarpetaSystemToolStripMenuItem.Text = "Abrir la carpeta System";
+            this.abrirLaCarpetaSystemToolStripMenuItem.Click += new System.EventHandler(this.abrirLaCarpetaSystemToolStripMenuItem_Click);
             // 
             // verToolStripMenuItem
             // 
@@ -127,15 +137,19 @@
             // 
             // fechaDeCreacionToolStripMenuItem
             // 
+            this.fechaDeCreacionToolStripMenuItem.Checked = true;
+            this.fechaDeCreacionToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.fechaDeCreacionToolStripMenuItem.Name = "fechaDeCreacionToolStripMenuItem";
-            this.fechaDeCreacionToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.fechaDeCreacionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.fechaDeCreacionToolStripMenuItem.Text = "Fecha de creacion";
+            this.fechaDeCreacionToolStripMenuItem.Click += new System.EventHandler(this.fechaDeCreacionToolStripMenuItem_Click);
             // 
             // nombreToolStripMenuItem
             // 
             this.nombreToolStripMenuItem.Name = "nombreToolStripMenuItem";
-            this.nombreToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.nombreToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.nombreToolStripMenuItem.Text = "Nombre";
+            this.nombreToolStripMenuItem.Click += new System.EventHandler(this.nombreToolStripMenuItem_Click);
             // 
             // administrarResolucionesToolStripMenuItem
             // 
@@ -150,7 +164,7 @@
             this.panelSide.Dock = System.Windows.Forms.DockStyle.Left;
             this.panelSide.Location = new System.Drawing.Point(0, 58);
             this.panelSide.Name = "panelSide";
-            this.panelSide.Size = new System.Drawing.Size(108, 494);
+            this.panelSide.Size = new System.Drawing.Size(108, 412);
             this.panelSide.TabIndex = 1;
             // 
             // flowLayoutPanelMain
@@ -160,7 +174,7 @@
             this.flowLayoutPanelMain.Location = new System.Drawing.Point(108, 58);
             this.flowLayoutPanelMain.Name = "flowLayoutPanelMain";
             this.flowLayoutPanelMain.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
-            this.flowLayoutPanelMain.Size = new System.Drawing.Size(662, 494);
+            this.flowLayoutPanelMain.Size = new System.Drawing.Size(685, 412);
             this.flowLayoutPanelMain.TabIndex = 2;
             // 
             // splitterLeft
@@ -169,7 +183,7 @@
             this.splitterLeft.Location = new System.Drawing.Point(108, 58);
             this.splitterLeft.Margin = new System.Windows.Forms.Padding(3, 3, 10, 3);
             this.splitterLeft.Name = "splitterLeft";
-            this.splitterLeft.Size = new System.Drawing.Size(4, 494);
+            this.splitterLeft.Size = new System.Drawing.Size(4, 412);
             this.splitterLeft.TabIndex = 3;
             this.splitterLeft.TabStop = false;
             // 
@@ -177,14 +191,17 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(770, 552);
+            this.ClientSize = new System.Drawing.Size(793, 470);
             this.Controls.Add(this.splitterLeft);
             this.Controls.Add(this.flowLayoutPanelMain);
             this.Controls.Add(this.panelSide);
             this.Controls.Add(this.panelTop);
             this.MainMenuStrip = this.menuStripMain;
+            this.MinimumSize = new System.Drawing.Size(300, 300);
             this.Name = "Home";
             this.Text = "Home";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Home_FormClosed);
             this.Load += new System.EventHandler(this.Home_Load);
             this.panelTop.ResumeLayout(false);
             this.panelTop.PerformLayout();
@@ -210,5 +227,6 @@
         private System.Windows.Forms.ToolStripMenuItem fechaDeCreacionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem nombreToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem administrarResolucionesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem abrirLaCarpetaSystemToolStripMenuItem;
     }
 }

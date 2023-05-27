@@ -1,2 +1,26 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Launcher />
+<Launcher>
+  <collection id="1">
+    <IDFather>0</IDFather>
+    <Name>testeo depth</Name>
+    <Image>
+    </Image>
+    <ImageLayout>0</ImageLayout>
+    <BackgroundRed>0</BackgroundRed>
+    <BackgroundGreen>0</BackgroundGreen>
+    <BackgroundBlue>0</BackgroundBlue>
+    <CoverResolutionID>0</CoverResolutionID>
+    <CoverWidth>200</CoverWidth>
+    <CoverHeight>200</CoverHeight>
+    <CoverSonResolutionID>0</CoverSonResolutionID>
+    <CoverSonWidth>200</CoverSonWidth>
+    <CoverSonHeight>200</CoverSonHeight>
+    <SonImageLayout>0</SonImageLayout>
+    <TagsID>
+      <id>1</id>
+      <id>2</id>
+      <id>3</id>
+    </TagsID>
+    <Favorite>false</Favorite>
+  </collection>
+</Launcher>

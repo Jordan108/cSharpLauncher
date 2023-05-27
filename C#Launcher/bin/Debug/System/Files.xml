@@ -2,8 +2,9 @@
 <Launcher>
   <file id="1">
     <IDFather>0</IDFather>
-    <Name>testeando peso a</Name>
-    <Image>D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\bin\Debug\System\Covers\file_testeando peso a.png</Image>
+    <Name>b</Name>
+    <Image>
+    </Image>
     <ImageLayout>0</ImageLayout>
     <FilePath>
     </FilePath>
@@ -15,8 +16,8 @@
     <BackgroundGreen>0</BackgroundGreen>
     <BackgroundBlue>0</BackgroundBlue>
     <CoverResolutionID>0</CoverResolutionID>
-    <CoverWidth>243</CoverWidth>
-    <CoverHeight>241</CoverHeight>
+    <CoverWidth>200</CoverWidth>
+    <CoverHeight>200</CoverHeight>
     <URLCheck>False</URLCheck>
     <TagsID>
       <id>1</id>
@@ -27,8 +28,9 @@
   </file>
   <file id="2">
     <IDFather>0</IDFather>
-    <Name>testeando peso b</Name>
-    <Image>D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\bin\Debug\System\Covers\file_testeando peso b.png</Image>
+    <Name>c</Name>
+    <Image>
+    </Image>
     <ImageLayout>0</ImageLayout>
     <FilePath>
     </FilePath>
@@ -40,8 +42,8 @@
     <BackgroundGreen>0</BackgroundGreen>
     <BackgroundBlue>0</BackgroundBlue>
     <CoverResolutionID>0</CoverResolutionID>
-    <CoverWidth>174</CoverWidth>
-    <CoverHeight>121</CoverHeight>
+    <CoverWidth>200</CoverWidth>
+    <CoverHeight>200</CoverHeight>
     <URLCheck>False</URLCheck>
     <TagsID>
       <id>1</id>
@@ -52,8 +54,9 @@
   </file>
   <file id="3">
     <IDFather>0</IDFather>
-    <Name>testeando peso c</Name>
-    <Image>D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\bin\Debug\System\Covers\file_testeando peso c.png</Image>
+    <Name>a</Name>
+    <Image>
+    </Image>
     <ImageLayout>0</ImageLayout>
     <FilePath>
     </FilePath>
@@ -65,8 +68,8 @@
     <BackgroundGreen>0</BackgroundGreen>
     <BackgroundBlue>0</BackgroundBlue>
     <CoverResolutionID>0</CoverResolutionID>
-    <CoverWidth>265</CoverWidth>
-    <CoverHeight>155</CoverHeight>
+    <CoverWidth>200</CoverWidth>
+    <CoverHeight>200</CoverHeight>
     <URLCheck>False</URLCheck>
     <TagsID>
       <id>1</id>
