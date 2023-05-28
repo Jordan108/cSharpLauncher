@@ -1479,7 +1479,7 @@ namespace C_Launcher
             formState = int.Parse(rootWin.SelectSingleNode("MxScreen").InnerText);
 
             //Verificar los datos y establecerlos
-            if (viewDepth < 0) viewDepth = 0;
+            if (viewDepth < -1) viewDepth = 0;//Si es menor a -1(favoritos) dejarlo en 0
             if (orderPanels < 0) orderPanels = 0;
             if (WinWidht < 300) WinWidht = 300; Width = WinWidht;
             if (WinHeight < 300) WinHeight = 300; Height = WinHeight;
