@@ -40,9 +40,9 @@
             this.fechaDeCreacionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nombreToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.administrarResolucionesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.panelSide = new System.Windows.Forms.Panel();
             this.flowLayoutPanelMain = new System.Windows.Forms.FlowLayoutPanel();
-            this.splitterLeft = new System.Windows.Forms.Splitter();
+            this.treeViewMain = new System.Windows.Forms.TreeView();
+            this.splitter1 = new System.Windows.Forms.Splitter();
             this.panelTop.SuspendLayout();
             this.menuStripMain.SuspendLayout();
             this.SuspendLayout();
@@ -140,14 +140,14 @@
             this.fechaDeCreacionToolStripMenuItem.Checked = true;
             this.fechaDeCreacionToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.fechaDeCreacionToolStripMenuItem.Name = "fechaDeCreacionToolStripMenuItem";
-            this.fechaDeCreacionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.fechaDeCreacionToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
             this.fechaDeCreacionToolStripMenuItem.Text = "Fecha de creacion";
             this.fechaDeCreacionToolStripMenuItem.Click += new System.EventHandler(this.fechaDeCreacionToolStripMenuItem_Click);
             // 
             // nombreToolStripMenuItem
             // 
             this.nombreToolStripMenuItem.Name = "nombreToolStripMenuItem";
-            this.nombreToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.nombreToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
             this.nombreToolStripMenuItem.Text = "Nombre";
             this.nombreToolStripMenuItem.Click += new System.EventHandler(this.nombreToolStripMenuItem_Click);
             // 
@@ -158,43 +158,45 @@
             this.administrarResolucionesToolStripMenuItem.Text = "Administrar resoluciones";
             this.administrarResolucionesToolStripMenuItem.Click += new System.EventHandler(this.administrarResolucionesToolStripMenuItem_Click);
             // 
-            // panelSide
-            // 
-            this.panelSide.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(40)))), ((int)(((byte)(47)))));
-            this.panelSide.Dock = System.Windows.Forms.DockStyle.Left;
-            this.panelSide.Location = new System.Drawing.Point(0, 58);
-            this.panelSide.Name = "panelSide";
-            this.panelSide.Size = new System.Drawing.Size(108, 412);
-            this.panelSide.TabIndex = 1;
-            // 
             // flowLayoutPanelMain
             // 
             this.flowLayoutPanelMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(40)))), ((int)(((byte)(47)))));
             this.flowLayoutPanelMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanelMain.Location = new System.Drawing.Point(108, 58);
+            this.flowLayoutPanelMain.Location = new System.Drawing.Point(102, 58);
             this.flowLayoutPanelMain.Name = "flowLayoutPanelMain";
             this.flowLayoutPanelMain.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
-            this.flowLayoutPanelMain.Size = new System.Drawing.Size(685, 412);
+            this.flowLayoutPanelMain.Size = new System.Drawing.Size(691, 412);
             this.flowLayoutPanelMain.TabIndex = 2;
             // 
-            // splitterLeft
+            // treeViewMain
             // 
-            this.splitterLeft.BackColor = System.Drawing.Color.Black;
-            this.splitterLeft.Location = new System.Drawing.Point(108, 58);
-            this.splitterLeft.Margin = new System.Windows.Forms.Padding(3, 3, 10, 3);
-            this.splitterLeft.Name = "splitterLeft";
-            this.splitterLeft.Size = new System.Drawing.Size(4, 412);
-            this.splitterLeft.TabIndex = 3;
-            this.splitterLeft.TabStop = false;
+            this.treeViewMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
+            this.treeViewMain.Dock = System.Windows.Forms.DockStyle.Left;
+            this.treeViewMain.ForeColor = System.Drawing.Color.Black;
+            this.treeViewMain.Location = new System.Drawing.Point(0, 58);
+            this.treeViewMain.MinimumSize = new System.Drawing.Size(97, 4);
+            this.treeViewMain.Name = "treeViewMain";
+            this.treeViewMain.Size = new System.Drawing.Size(97, 412);
+            this.treeViewMain.TabIndex = 0;
+            this.treeViewMain.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeViewMain_NodeMouseClick);
+            // 
+            // splitter1
+            // 
+            this.splitter1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(72)))), ((int)(((byte)(85)))));
+            this.splitter1.Location = new System.Drawing.Point(97, 58);
+            this.splitter1.Name = "splitter1";
+            this.splitter1.Size = new System.Drawing.Size(5, 412);
+            this.splitter1.TabIndex = 3;
+            this.splitter1.TabStop = false;
             // 
             // Home
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(793, 470);
-            this.Controls.Add(this.splitterLeft);
             this.Controls.Add(this.flowLayoutPanelMain);
-            this.Controls.Add(this.panelSide);
+            this.Controls.Add(this.splitter1);
+            this.Controls.Add(this.treeViewMain);
             this.Controls.Add(this.panelTop);
             this.MainMenuStrip = this.menuStripMain;
             this.MinimumSize = new System.Drawing.Size(300, 300);
@@ -214,9 +216,7 @@
         #endregion
 
         private System.Windows.Forms.Panel panelTop;
-        private System.Windows.Forms.Panel panelSide;
         private System.Windows.Forms.FlowLayoutPanel flowLayoutPanelMain;
-        private System.Windows.Forms.Splitter splitterLeft;
         private System.Windows.Forms.Button btnBackView;
         private System.Windows.Forms.Button btnHomeView;
         private System.Windows.Forms.Button btnReloadView;
@@ -228,5 +228,7 @@
         private System.Windows.Forms.ToolStripMenuItem nombreToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem administrarResolucionesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem abrirLaCarpetaSystemToolStripMenuItem;
+        private System.Windows.Forms.TreeView treeViewMain;
+        private System.Windows.Forms.Splitter splitter1;
     }
 }

@@ -2,7 +2,76 @@
 <Launcher>
   <collection id="1">
     <IDFather>0</IDFather>
-    <Name>testeo depth</Name>
+    <Name>col 1</Name>
+    <Image>
+    </Image>
+    <ImageLayout>0</ImageLayout>
+    <BackgroundRed>0</BackgroundRed>
+    <BackgroundGreen>0</BackgroundGreen>
+    <BackgroundBlue>0</BackgroundBlue>
+    <CoverResolutionID>0</CoverResolutionID>
+    <CoverWidth>100</CoverWidth>
+    <CoverHeight>200</CoverHeight>
+    <CoverSonResolutionID>0</CoverSonResolutionID>
+    <CoverSonWidth>200</CoverSonWidth>
+    <CoverSonHeight>200</CoverSonHeight>
+    <SonImageLayout>0</SonImageLayout>
+    <TagsID>
+      <id>1</id>
+      <id>2</id>
+      <id>3</id>
+    </TagsID>
+    <Favorite>True</Favorite>
+  </collection>
+  <collection id="2">
+    <IDFather>1</IDFather>
+    <Name>col sub 1</Name>
+    <Image>
+    </Image>
+    <ImageLayout>0</ImageLayout>
+    <BackgroundRed>0</BackgroundRed>
+    <BackgroundGreen>0</BackgroundGreen>
+    <BackgroundBlue>0</BackgroundBlue>
+    <CoverResolutionID>0</CoverResolutionID>
+    <CoverWidth>200</CoverWidth>
+    <CoverHeight>200</CoverHeight>
+    <CoverSonResolutionID>0</CoverSonResolutionID>
+    <CoverSonWidth>200</CoverSonWidth>
+    <CoverSonHeight>200</CoverSonHeight>
+    <SonImageLayout>0</SonImageLayout>
+    <TagsID>
+      <id>1</id>
+      <id>2</id>
+      <id>3</id>
+    </TagsID>
+    <Favorite>false</Favorite>
+  </collection>
+  <collection id="3">
+    <IDFather>1</IDFather>
+    <Name>col sub 2</Name>
+    <Image>
+    </Image>
+    <ImageLayout>0</ImageLayout>
+    <BackgroundRed>0</BackgroundRed>
+    <BackgroundGreen>0</BackgroundGreen>
+    <BackgroundBlue>0</BackgroundBlue>
+    <CoverResolutionID>0</CoverResolutionID>
+    <CoverWidth>200</CoverWidth>
+    <CoverHeight>200</CoverHeight>
+    <CoverSonResolutionID>0</CoverSonResolutionID>
+    <CoverSonWidth>200</CoverSonWidth>
+    <CoverSonHeight>200</CoverSonHeight>
+    <SonImageLayout>0</SonImageLayout>
+    <TagsID>
+      <id>1</id>
+      <id>2</id>
+      <id>3</id>
+    </TagsID>
+    <Favorite>false</Favorite>
+  </collection>
+  <collection id="4">
+    <IDFather>2</IDFather>
+    <Name>col sub sub 1</Name>
     <Image>
     </Image>
     <ImageLayout>0</ImageLayout>

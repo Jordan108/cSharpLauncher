@@ -28,6 +28,8 @@ namespace C_Launcher
         private int[] combResID = new int[0];//Para recoger el index
         //private int[] combResSonID = new int[0];//Para recoger el index de los archivos
 
+        private string coverPath = "System\\Covers";
+
         //Id de la coleccion, si es nuevo, -1, si no, se establece
         private int idCollection = -1;
         private string xmlImagePath;//Lo ocupare para editar la caratula
@@ -75,7 +77,7 @@ namespace C_Launcher
             pictureBoxCoverCollection.BackColor = BackgroundCol;
             buttonColorPickIMG.BackColor = BackgroundCol;
             //Caratula
-            checkBoxImageLocation.Checked = true;
+            //checkBoxImageLocation.Checked = true;
             numericColWidth.Value = colData.Width;
             numericColHeight.Value = colData.Height;
             pictureBoxCoverCollection.Width = colData.Width;
@@ -818,7 +820,8 @@ namespace C_Launcher
                 }
                 else
                 {
-                    string outputFolder = System.Environment.CurrentDirectory + "\\System\\Covers";
+                    //string outputFolder = System.Environment.CurrentDirectory + "\\System\\Covers";
+                    string outputFolder = coverPath;
 
                     //Si estas creando un nuevo archivo, verificar si no existe un archivo con el mismo nombre, y si es asi, ponerle un iterador
                     if (idCollection == -1)
@@ -830,7 +833,8 @@ namespace C_Launcher
                         //Si estas editando un archivo, ocupar la misma direccion que en el xml, pues el nombre se decidio al crearlo (arriba)
                         if (xmlImagePath != null)
                         {
-                            string systemCoverDir = System.Environment.CurrentDirectory + "\\System\\Covers";
+                            //string systemCoverDir = System.Environment.CurrentDirectory + "\\System\\Covers";
+                            string systemCoverDir = coverPath;
                             string xmlDir = Path.GetDirectoryName(xmlImagePath);
                             if (xmlDir != systemCoverDir)
                             {

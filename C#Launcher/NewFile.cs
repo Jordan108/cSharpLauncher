@@ -24,6 +24,8 @@ namespace C_Launcher
         private string xmlResPath = "System\\Resolutions.xml";//Cargar el combobox de las resoluciones
         private int[] combResID = new int[0];//Para recoger el index
 
+        private string coverPath = "System\\Covers";
+
         private int idFile = -1;//Si es un archivo nuevo -1, si no, se actualiza con el segundo constructor
         private string xmlImagePath;//Lo ocupare para editar la caratula
 
@@ -112,7 +114,7 @@ namespace C_Launcher
                 pictureBoxCover.Height = fileData.Height;
             }
 
-            checkBoxImageLocation.Checked = true;
+            //checkBoxImageLocation.Checked = true;
             numericWidthImage.Value = fileData.Width;
             numericHeightImage.Value = fileData.Height;
             
@@ -677,7 +679,8 @@ namespace C_Launcher
                     imgPath = pictureBoxCover.Tag.ToString();
                 } else
                 {
-                    string outputFolder = System.Environment.CurrentDirectory + "\\System\\Covers";
+                    //string outputFolder = System.Environment.CurrentDirectory + "\\System\\Covers";
+                    string outputFolder = coverPath;
 
                     //Si estas creando un nuevo archivo, verificar si no existe un archivo con el mismo nombre, y si es asi, ponerle un iterador
                     if (idFile == -1)
@@ -688,7 +691,8 @@ namespace C_Launcher
                         //Si estas editando un archivo, ocupar la misma direccion que en el xml, pues el nombre se decidio al crearlo (arriba)
                         if (xmlImagePath != null)
                         {
-                            string systemCoverDir = System.Environment.CurrentDirectory + "\\System\\Covers";
+                            //string systemCoverDir = System.Environment.CurrentDirectory + "\\System\\Covers";
+                            string systemCoverDir = coverPath;
                             string xmlDir = Path.GetDirectoryName(xmlImagePath);
                             if (xmlDir != systemCoverDir)
                             {
@@ -742,6 +746,7 @@ namespace C_Launcher
             this.Close();
         }
 
+        //Liberar memoria de la caratula al cerrar el formulario
         private void NewFile_FormClosed(object sender, FormClosedEventArgs e)
         {
             if (pictureBoxCover.BackgroundImage != null) pictureBoxCover.BackgroundImage.Dispose();//Dejar de utilizar la imagen de fondo en memoria
