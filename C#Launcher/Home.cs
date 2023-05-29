@@ -58,14 +58,17 @@ namespace C_Launcher
 
             //Tool strip (click derecho)
             //Layout Panel
-            ContextMenuStrip  contextMenuLayoutPanel = new ContextMenuStrip();
-            ToolStripMenuItem ToolStripAddCollection = new ToolStripMenuItem();
-            ToolStripMenuItem ToolStripAddFile       = new ToolStripMenuItem();
-            ToolStripAddCollection.Text = "crear coleccion";
+            ContextMenuStrip  contextMenuLayoutPanel   = new ContextMenuStrip();
+            ToolStripMenuItem ToolStripAddCollection   = new ToolStripMenuItem();
+            ToolStripMenuItem ToolStripAddFile         = new ToolStripMenuItem();
+            ToolStripMenuItem ToolStripAddMultipleFile = new ToolStripMenuItem();
+            ToolStripAddCollection.Text = "Crear coleccion";
             ToolStripAddCollection.Click += new EventHandler(ToolStripAddCollection_Click);
-            ToolStripAddFile.Text = "crear archivo";
+            ToolStripAddFile.Text = "Crear archivo";
             ToolStripAddFile.Click += new EventHandler(ToolStripAddFile_Click);
-            contextMenuLayoutPanel.Items.AddRange(new ToolStripItem[] { ToolStripAddCollection, ToolStripAddFile });
+            ToolStripAddMultipleFile.Text = "Crear multiples archivos";
+            ToolStripAddMultipleFile.Click += new EventHandler(ToolStripAddMultipleFiles_Click);
+            contextMenuLayoutPanel.Items.AddRange(new ToolStripItem[] { ToolStripAddCollection, ToolStripAddFile, ToolStripAddMultipleFile });
             //Agregar al layout panel
             flowLayoutPanelMain.ContextMenuStrip = contextMenuLayoutPanel;
 
@@ -96,6 +99,36 @@ namespace C_Launcher
 
         #region ToolStrip
         #region panel ToolStrip
+
+        //Crear una ventana para añadir varios archivos a la vez
+        private void ToolStripAddMultipleFiles_Click(object sender, EventArgs e)
+        {
+            int defaultWidth = 200;
+            int defaultHeight = 200;
+            int defaultRes = 0;
+            int defaultImageLayout = 0;
+
+            //Si la profundidad es mayor a 0, buscar la coleccion con esa id en especifico y extraerle los valores default
+            if (viewDepth > 0)
+            {
+                XmlDocument doc = new XmlDocument();
+                doc.Load(xmlColPath);
+
+                string xpath = "//Launcher/collection[@id='" + viewDepth + "']";
+                XmlNode root = doc.SelectSingleNode(xpath);
+
+                defaultRes = int.Parse(root.SelectSingleNode("CoverSonResolutionID").InnerText);
+                defaultWidth = int.Parse(root.SelectSingleNode("CoverSonWidth").InnerText);
+                defaultHeight = int.Parse(root.SelectSingleNode("CoverSonHeight").InnerText);
+                defaultImageLayout = int.Parse(root.SelectSingleNode("SonImageLayout").InnerText);
+            }
+
+
+            NewMultipleFiles newMultFiles = new NewMultipleFiles(viewDepth, defaultRes, defaultWidth, defaultHeight, defaultImageLayout);
+            newMultFiles.ReturnedObject += NewFile_ReturnedObject;
+            newMultFiles.ShowDialog();
+        }
+
         //Crear la nueva ventana para añadir las colecciones
         private void ToolStripAddCollection_Click(object sender, EventArgs e)
         {
