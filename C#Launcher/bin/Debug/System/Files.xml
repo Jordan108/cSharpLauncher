@@ -128,4 +128,52 @@
     </TagsID>
     <Favorite>False</Favorite>
   </file>
+  <file id="6">
+    <IDFather>0</IDFather>
+    <Name>TestFile1</Name>
+    <Image>System\Covers\file_TestFile1.png</Image>
+    <ImageLayout>0</ImageLayout>
+    <FilePath>C:\Users\Duoc\Documents\Juegos\Dolphin-x64\Dolphin.exe</FilePath>
+    <ProgramPath>
+    </ProgramPath>
+    <CMDLine>
+    </CMDLine>
+    <BackgroundRed>0</BackgroundRed>
+    <BackgroundGreen>0</BackgroundGreen>
+    <BackgroundBlue>0</BackgroundBlue>
+    <CoverResolutionID>0</CoverResolutionID>
+    <CoverWidth>200</CoverWidth>
+    <CoverHeight>200</CoverHeight>
+    <URLCheck>False</URLCheck>
+    <TagsID>
+      <id>1</id>
+      <id>2</id>
+      <id>3</id>
+    </TagsID>
+    <Favorite>False</Favorite>
+  </file>
+  <file id="7">
+    <IDFather>0</IDFather>
+    <Name>TestFile2</Name>
+    <Image>System\Covers\file_TestFile2.png</Image>
+    <ImageLayout>0</ImageLayout>
+    <FilePath>C:\Users\Duoc\Documents\Juegos\Project64 2.1\Project64.exe</FilePath>
+    <ProgramPath>
+    </ProgramPath>
+    <CMDLine>
+    </CMDLine>
+    <BackgroundRed>0</BackgroundRed>
+    <BackgroundGreen>0</BackgroundGreen>
+    <BackgroundBlue>0</BackgroundBlue>
+    <CoverResolutionID>0</CoverResolutionID>
+    <CoverWidth>200</CoverWidth>
+    <CoverHeight>200</CoverHeight>
+    <URLCheck>False</URLCheck>
+    <TagsID>
+      <id>1</id>
+      <id>2</id>
+      <id>3</id>
+    </TagsID>
+    <Favorite>False</Favorite>
+  </file>
 </Launcher>

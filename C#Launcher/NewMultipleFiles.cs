@@ -17,7 +17,7 @@ namespace C_Launcher
     {
         private int currentX, currentY;
         private int resizing = 0; // 0=no se esta ajustando; 1=ajustando ancho; 2=ajustando alto; 3=ajustando ambos
-        public event EventHandler<Files> ReturnedObject;
+        public event EventHandler<Files[]> ReturnedObject;
         private string xmlColPath = "System\\Collections.xml";//Para cargar el comboBox de las colecciones
         private int[] combID = new int[0];//Para recoger el index
         private string xmlResPath = "System\\Resolutions.xml";//Cargar el combobox de las resoluciones
@@ -25,8 +25,8 @@ namespace C_Launcher
         private int rowSelected = -1;
         private string coverPath = "System\\Covers";
 
-        private int idFile = -1;//Si es un archivo nuevo -1, si no, se actualiza con el segundo constructor
-        private string xmlImagePath;//Lo ocupare para editar la caratula
+        //private int idFile = -1;//Si es un archivo nuevo -1, si no, se actualiza con el segundo constructor
+        //private string xmlImagePath;//Lo ocupare para editar la caratula
 
         //Datos default al crear un nuevo archivo (al editar obviamente no es necesario)
         private int defaultFather, defaultRes, defaultImageLayout = 0;
@@ -147,7 +147,7 @@ namespace C_Launcher
             this.dataGridViewFiles.Rows.Add("", false, "","","",200,200, null, "");
             int rowCount = dataGridViewFiles.Rows.Count;
             dataGridViewFiles.CurrentCell = dataGridViewFiles.Rows[rowCount - 1].Cells[0];
-            dataGridViewFiles.Rows[rowCount - 1].Cells[7].Value = "Ninguno";
+            dataGridViewFiles.Rows[rowCount - 1].Cells[7].Value = (dataGridViewFiles.Rows[rowCount - 1].Cells[7] as DataGridViewComboBoxCell).Items[0];
             dataGridViewFiles.Rows[rowCount - 1].Selected = true;
 
             //maxTag++;//Sumarle 1 al tag maximo
@@ -176,8 +176,45 @@ namespace C_Launcher
             if (e.RowIndex > -1)
             {
                 DataGridViewRow selectedRow = dataGridViewFiles.Rows[e.RowIndex];
+
                 Console.WriteLine("tag de la fila: " + selectedRow.Tag);
                 rowSelected = e.RowIndex;
+
+                switch (e.ColumnIndex)
+                {
+                    case 2:
+                        //MessageBox.Show("estas seleccionando ruta de archivo");
+                        //Buscar un archivo
+                        //No tiene filtro
+                        OpenFileDialog openFileDialog = new OpenFileDialog();
+                        if (openFileDialog.ShowDialog() == DialogResult.OK)
+                        {
+                            dataGridViewFiles.Rows[e.RowIndex].Cells[2].Value = openFileDialog.FileName;
+                        }
+                        openFileDialog.Dispose();
+                        break;
+                    case 3:
+                        //MessageBox.Show("estas seleccionando ruta de lanzador");
+                        //Buscar el programa
+                        OpenFileDialog openProgramDialog = new OpenFileDialog();
+                        if (openProgramDialog.ShowDialog() == DialogResult.OK)
+                        {
+                            dataGridViewFiles.Rows[e.RowIndex].Cells[3].Value = openProgramDialog.FileName;
+                        }
+                        openProgramDialog.Dispose();
+                        break;
+                    case 8:
+                        //MessageBox.Show("estas seleccionando caratula");
+                        //Busca la caratula
+                        OpenFileDialog openDialog = new OpenFileDialog();
+                        openDialog.Filter = "Archivos de imagen (*.png;*.jpg;*.jpeg;)|*.png;*.jpg;*.jpeg;";
+                        if (openDialog.ShowDialog() == DialogResult.OK)
+                        {
+                            dataGridViewFiles.Rows[e.RowIndex].Cells[8].Value = openDialog.FileName;
+                        }
+                        openDialog.Dispose();
+                        break;
+                }
             }
         }
 
@@ -251,9 +288,90 @@ namespace C_Launcher
             return destinationFile;
         }
 
+
         private void buttonSave_Click(object sender, EventArgs e)
         {
+            Console.WriteLine(comboBoxFather.SelectedIndex - 1);
 
+            //Referencia al datagridview
+
+            int idFather = 0;
+            int rowCount = dataGridViewFiles.RowCount;
+
+            if ((comboBoxFather.SelectedIndex - 1) >= 0)
+            {
+                idFather = combID[comboBoxFather.SelectedIndex - 1];
+            }
+
+            Files[] passFile = new Files[rowCount];
+            for (int i = 0; i < rowCount; i++)
+            {
+                
+                //Id de la resolucion
+                int resID = 0;
+                int selectedIndex = comboBoxResolution.Items.IndexOf(dataGridViewFiles.Rows[i].Cells[7].Value);
+                if (selectedIndex > 0)
+                {
+                    resID = combResID[selectedIndex - 1];
+                }
+                
+
+                string nameFile = dataGridViewFiles.Rows[i].Cells[0].Value.ToString();
+                string cellImgPath = dataGridViewFiles.Rows[i].Cells[8].Value.ToString();
+                string imgPath = "";
+
+                if (cellImgPath != null)
+                {
+                    /*if (checkBoxImageLocation.Checked == true)
+                    {
+                        imgPath = pictureBoxCover.Tag.ToString();
+                    }
+                    else
+                    {*/
+                        //string outputFolder = System.Environment.CurrentDirectory + "\\System\\Covers";
+                        string outputFolder = coverPath;
+
+                        imgPath = returnImagePath(outputFolder, nameFile);
+
+                        if (!Directory.Exists(outputFolder))
+                        {
+                            // Crea la carpeta si no existe
+                            Directory.CreateDirectory(outputFolder);
+                        }
+
+                        string source = cellImgPath;
+                        //Solo reemplazar una imagen si esta existe o si la imagen de origen no es la misma que el destino
+                        if ((imgPath != "") && (imgPath != null) && (source != imgPath))
+                        {
+                            System.IO.File.Copy(source, imgPath, true);
+                        }
+                   // }
+                }
+
+                //Image layout
+                int imgLayout = 0;
+                //if (radioButtonEstreched.Checked == true) imgLayout = 1;
+
+                string filePath = dataGridViewFiles.Rows[i].Cells[2].Value.ToString();
+                string programPath = dataGridViewFiles.Rows[i].Cells[3].Value.ToString();
+                string cmdLine = dataGridViewFiles.Rows[i].Cells[4].Value.ToString();
+                int R = 0;
+                int G = 0;
+                int B = 0;
+                int width = int.Parse(dataGridViewFiles.Rows[i].Cells[5].Value.ToString());
+                int height = int.Parse(dataGridViewFiles.Rows[i].Cells[6].Value.ToString());
+                bool url = bool.Parse(dataGridViewFiles.Rows[i].Cells[1].Value.ToString());
+                int[] tagsArray = new int[] { 1, 2, 3 };
+                bool favorite = false;
+
+
+                Files tempFile = new Files(-1, idFather, nameFile, imgPath, imgLayout, filePath, programPath, cmdLine, R, G, B, resID, width, height, url, tagsArray, favorite);
+                passFile[i] = tempFile;
+
+                //Files passFile = new Files(idFile, idFather, nameFile, imgPath, imgLayout, filePath, programPath, cmdLine, R, G, B, resID, width, height, url, tagsArray, favorite);
+            }
+            ReturnedObject?.Invoke(this, passFile);
+            this.Close();
         }
     }
 }

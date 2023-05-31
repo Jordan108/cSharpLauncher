@@ -125,7 +125,7 @@ namespace C_Launcher
 
 
             NewMultipleFiles newMultFiles = new NewMultipleFiles(viewDepth, defaultRes, defaultWidth, defaultHeight, defaultImageLayout);
-            newMultFiles.ReturnedObject += NewFile_ReturnedObject;
+            newMultFiles.ReturnedObject += NewMultFiles_ReturnedObject;
             newMultFiles.ShowDialog();
         }
 
@@ -305,6 +305,17 @@ namespace C_Launcher
         {
             //Guarda los archivos XML
             SaveXMLFile(e);
+            //Carga de nuevo el flow layout
+            loadView(colSize, fileSize);
+        }
+
+        private void NewMultFiles_ReturnedObject(object sender, Files[] e)
+        {
+            for (int i = 0; i < e.Length; i++)
+            {
+                //Guarda 1x1 los archivos
+                SaveXMLFile(e[i]);
+            }
             //Carga de nuevo el flow layout
             loadView(colSize, fileSize);
         }
