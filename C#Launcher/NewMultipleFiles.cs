@@ -151,54 +151,35 @@ namespace C_Launcher
                 //Establecer el combobox de las resoluciones
                 ((DataGridViewComboBoxColumn)dataGridViewFiles.Columns["ColumnRes"]).DataSource = CmbRes.Items;
 
-
-                //Console.WriteLine(archivosSeleccionados[0]);
-                // Iterar sobre los archivos seleccionados y agregarlos al DataGridView
-                //foreach (string archivo in archivosSeleccionados)
                 for (int i = 0; i < archivosSeleccionados.Length; i++)
                 {
                     string texto = archivosSeleccionados[i];
                     Console.WriteLine(texto);
-                    // Crear una nueva fila para el DataGridView
-                    //DataGridViewRow fila = //new DataGridViewRow();
+
+
+                    //Extraer el nombre del open file dialog (nombre archivo)
                     string fileName = Path.GetFileNameWithoutExtension(texto);
 
+                    // Crear una nueva fila para el DataGridView
                     this.dataGridViewFiles.Rows.Add(fileName, false, texto, "", "", 200, 200, null, "");
 
+                    //Optimizar el combobox para que la opcion default sea "ninguno"
                     int rowCount = dataGridViewFiles.Rows.Count;
                     dataGridViewFiles.CurrentCell = dataGridViewFiles.Rows[rowCount - 1].Cells[0];
                     dataGridViewFiles.Rows[rowCount - 1].Cells[7].Value = (dataGridViewFiles.Rows[rowCount - 1].Cells[7] as DataGridViewComboBoxCell).Items[0];
                     dataGridViewFiles.Rows[rowCount - 1].Selected = true;
 
-                    //maxTag++;//Sumarle 1 al tag maximo
-                    //dataGridViewFiles.Rows[rowCount - 1].Tag = maxTag;//Asignar el id a la fila
-
                     rowSelected = rowCount - 1;
                 }
             }
             openFiles.Dispose();
-
-            //((DataGridViewComboBoxColumn)dataGridViewFiles.Columns["ColumnRes"]).DataSource = CmbRes.Items;
-
-            //this.dataGridViewFiles.Rows.Add("", false, "","","",200,200, null, "");
-            //int rowCount = dataGridViewFiles.Rows.Count;
-            //dataGridViewFiles.CurrentCell = dataGridViewFiles.Rows[rowCount - 1].Cells[0];
-            //dataGridViewFiles.Rows[rowCount - 1].Cells[7].Value = (dataGridViewFiles.Rows[rowCount - 1].Cells[7] as DataGridViewComboBoxCell).Items[0];
-            //dataGridViewFiles.Rows[rowCount - 1].Selected = true;
-
-            //maxTag++;//Sumarle 1 al tag maximo
-            //dataGridViewFiles.Rows[rowCount - 1].Tag = maxTag;//Asignar el id a la fila
-
-            //rowSelected = rowCount - 1;
         }
+
 
         private void buttonDeleteRow_Click(object sender, EventArgs e)
         {
             if (rowSelected != -1)
             {
-                //int rowIndex = dataGridViewResolutions.CurrentRow.Index;
-                //DataGridViewRow selectedRow = dataGridViewResolutions.Rows[rowIndex];
-                //rowSelected = rowIndex - 1;
                 this.dataGridViewFiles.Rows.RemoveAt(rowSelected);
                 if (rowSelected > dataGridViewFiles.Rows.Count - 1) rowSelected--;
             }
@@ -251,6 +232,14 @@ namespace C_Launcher
                         openDialog.Dispose();
                         break;
                 }
+            }
+        }
+
+        private void buttonGlobalResolution_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < dataGridViewFiles.RowCount; i++)
+            {
+                dataGridViewFiles.Rows[i].Cells[7].Value = (dataGridViewFiles.Rows[i].Cells[7] as DataGridViewComboBoxCell).Items[comboBoxResolution.SelectedIndex];
             }
         }
 
