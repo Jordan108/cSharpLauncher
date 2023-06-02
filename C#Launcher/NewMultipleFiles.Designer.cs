@@ -210,12 +210,12 @@
             // 
             // buttonAddRow
             // 
-            this.buttonAddRow.Location = new System.Drawing.Point(441, 103);
+            this.buttonAddRow.Location = new System.Drawing.Point(315, 103);
             this.buttonAddRow.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.buttonAddRow.Name = "buttonAddRow";
-            this.buttonAddRow.Size = new System.Drawing.Size(112, 35);
+            this.buttonAddRow.Size = new System.Drawing.Size(149, 35);
             this.buttonAddRow.TabIndex = 31;
-            this.buttonAddRow.Text = "Añadir";
+            this.buttonAddRow.Text = "Añadir archivos";
             this.buttonAddRow.UseVisualStyleBackColor = true;
             this.buttonAddRow.Click += new System.EventHandler(this.buttonAddRow_Click);
             // 

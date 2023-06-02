@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Windows.Forms.VisualStyles;
 using System.Xml;
 
 namespace C_Launcher
@@ -140,15 +141,50 @@ namespace C_Launcher
 
         private void buttonAddRow_Click(object sender, EventArgs e)
         {
-            //76
+            OpenFileDialog openFiles = new OpenFileDialog();
+            openFiles.Multiselect = true;
 
-            ((DataGridViewComboBoxColumn)dataGridViewFiles.Columns["ColumnRes"]).DataSource = CmbRes.Items;
+            if (openFiles.ShowDialog() == DialogResult.OK)
+            {
+                // Obtener la lista de archivos seleccionados
+                string[] archivosSeleccionados = openFiles.FileNames;
+                //Establecer el combobox de las resoluciones
+                ((DataGridViewComboBoxColumn)dataGridViewFiles.Columns["ColumnRes"]).DataSource = CmbRes.Items;
 
-            this.dataGridViewFiles.Rows.Add("", false, "","","",200,200, null, "");
-            int rowCount = dataGridViewFiles.Rows.Count;
-            dataGridViewFiles.CurrentCell = dataGridViewFiles.Rows[rowCount - 1].Cells[0];
-            dataGridViewFiles.Rows[rowCount - 1].Cells[7].Value = (dataGridViewFiles.Rows[rowCount - 1].Cells[7] as DataGridViewComboBoxCell).Items[0];
-            dataGridViewFiles.Rows[rowCount - 1].Selected = true;
+
+                //Console.WriteLine(archivosSeleccionados[0]);
+                // Iterar sobre los archivos seleccionados y agregarlos al DataGridView
+                //foreach (string archivo in archivosSeleccionados)
+                for (int i = 0; i < archivosSeleccionados.Length; i++)
+                {
+                    string texto = archivosSeleccionados[i];
+                    Console.WriteLine(texto);
+                    // Crear una nueva fila para el DataGridView
+                    //DataGridViewRow fila = //new DataGridViewRow();
+                    string fileName = Path.GetFileNameWithoutExtension(texto);
+
+                    this.dataGridViewFiles.Rows.Add(fileName, false, texto, "", "", 200, 200, null, "");
+
+                    int rowCount = dataGridViewFiles.Rows.Count;
+                    dataGridViewFiles.CurrentCell = dataGridViewFiles.Rows[rowCount - 1].Cells[0];
+                    dataGridViewFiles.Rows[rowCount - 1].Cells[7].Value = (dataGridViewFiles.Rows[rowCount - 1].Cells[7] as DataGridViewComboBoxCell).Items[0];
+                    dataGridViewFiles.Rows[rowCount - 1].Selected = true;
+
+                    //maxTag++;//Sumarle 1 al tag maximo
+                    //dataGridViewFiles.Rows[rowCount - 1].Tag = maxTag;//Asignar el id a la fila
+
+                    rowSelected = rowCount - 1;
+                }
+            }
+            openFiles.Dispose();
+
+            //((DataGridViewComboBoxColumn)dataGridViewFiles.Columns["ColumnRes"]).DataSource = CmbRes.Items;
+
+            //this.dataGridViewFiles.Rows.Add("", false, "","","",200,200, null, "");
+            //int rowCount = dataGridViewFiles.Rows.Count;
+            //dataGridViewFiles.CurrentCell = dataGridViewFiles.Rows[rowCount - 1].Cells[0];
+            //dataGridViewFiles.Rows[rowCount - 1].Cells[7].Value = (dataGridViewFiles.Rows[rowCount - 1].Cells[7] as DataGridViewComboBoxCell).Items[0];
+            //dataGridViewFiles.Rows[rowCount - 1].Selected = true;
 
             //maxTag++;//Sumarle 1 al tag maximo
             //dataGridViewFiles.Rows[rowCount - 1].Tag = maxTag;//Asignar el id a la fila
@@ -320,7 +356,7 @@ namespace C_Launcher
                 string cellImgPath = dataGridViewFiles.Rows[i].Cells[8].Value.ToString();
                 string imgPath = "";
 
-                if (cellImgPath != null)
+                if (cellImgPath != "")
                 {
                     /*if (checkBoxImageLocation.Checked == true)
                     {

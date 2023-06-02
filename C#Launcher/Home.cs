@@ -1165,26 +1165,30 @@ namespace C_Launcher
             //Eliminar la caratula solo si está ubicada en la carpeta "System"
 
             string imgDir = root.SelectSingleNode("Image").InnerText;
-            string folder = Path.GetDirectoryName(imgDir);
-            string workFolder = Directory.GetCurrentDirectory() + "\\" + dirCoversPath;
-
-            //Si la carpeta donde se ubica la imagen es System//Covers, eliminar el archivo
-            if (folder == workFolder)
+            if (imgDir != "")
             {
-                try
+                string folder = Path.GetDirectoryName(imgDir);
+                string workFolder = Directory.GetCurrentDirectory() + "\\" + dirCoversPath;
+
+                //Si la carpeta donde se ubica la imagen es System//Covers, eliminar el archivo
+                if (folder == workFolder)
                 {
-                    //Solo eliminara el archivo si existe
-                    if (File.Exists(imgDir))
+                    try
                     {
-                        // Eliminar el archivo
-                        File.Delete(imgDir);
+                        //Solo eliminara el archivo si existe
+                        if (File.Exists(imgDir))
+                        {
+                            // Eliminar el archivo
+                            File.Delete(imgDir);
+                        }
+                    }
+                    catch (IOException ex)
+                    {
+                        Console.WriteLine("Error al eliminar el archivo: " + ex.Message);
                     }
                 }
-                catch (IOException ex)
-                {
-                    Console.WriteLine("Error al eliminar el archivo: " + ex.Message);
-                }
             }
+            
 
             if (root != null)
             {
