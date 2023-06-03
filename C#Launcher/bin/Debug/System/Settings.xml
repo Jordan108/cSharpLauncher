@@ -3,10 +3,11 @@
   <settings>
     <LastDepth>0</LastDepth>
     <WindowSize>
-      <Width>1296</Width>
-      <Height>696</Height>
+      <Width>1936</Width>
+      <Height>1056</Height>
       <MxScreen>0</MxScreen>
     </WindowSize>
-    <PanelOrder>0</PanelOrder>
+    <TreeWidth>100</TreeWidth>
+    <PanelOrder>1</PanelOrder>
   </settings>
 </Launcher>

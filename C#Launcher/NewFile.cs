@@ -1,16 +1,10 @@
 ﻿using C_Launcher.Clases;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
-using System.Xml.Linq;
 
 namespace C_Launcher
 {
@@ -66,8 +60,6 @@ namespace C_Launcher
             //if (resolutionIndex < 0) resolutionIndex = 0;
             comboBoxResolution.SelectedIndex = resolutionIndex+1;
 
-            
-
             //Archivos
             checkBoxURL.Checked = fileData.URLCheck;
             if (checkBoxURL.Checked == true)
@@ -103,20 +95,24 @@ namespace C_Launcher
                 doc.Load(xmlResPath);
                 string xpath = "//Launcher/resolution[@id='" + fileData.ResolutionID + "']";
                 XmlNode root = doc.SelectSingleNode(xpath);
+                int resWidth = int.Parse(root.SelectSingleNode("Width").InnerText);
+                int resHeight = int.Parse(root.SelectSingleNode("Height").InnerText);
 
-
-                pictureBoxCover.Width = int.Parse(root.SelectSingleNode("Width").InnerText);
-                pictureBoxCover.Height = int.Parse(root.SelectSingleNode("Height").InnerText);
+                pictureBoxCover.Width = resWidth;
+                pictureBoxCover.Height = resHeight;
+                numericWidthImage.Value = resWidth;
+                numericHeightImage.Value = resHeight;
             }
             else
             {
                 pictureBoxCover.Width = fileData.Width;
                 pictureBoxCover.Height = fileData.Height;
+                //checkBoxImageLocation.Checked = true;
+                numericWidthImage.Value = fileData.Width;
+                numericHeightImage.Value = fileData.Height;
             }
 
-            //checkBoxImageLocation.Checked = true;
-            numericWidthImage.Value = fileData.Width;
-            numericHeightImage.Value = fileData.Height;
+            
             
             if (fileData.ImagePath != "")
             {

@@ -15,9 +15,9 @@
     <BackgroundRed>0</BackgroundRed>
     <BackgroundGreen>0</BackgroundGreen>
     <BackgroundBlue>0</BackgroundBlue>
-    <CoverResolutionID>0</CoverResolutionID>
-    <CoverWidth>200</CoverWidth>
-    <CoverHeight>200</CoverHeight>
+    <CoverResolutionID>2</CoverResolutionID>
+    <CoverWidth>300</CoverWidth>
+    <CoverHeight>300</CoverHeight>
     <URLCheck>False</URLCheck>
     <TagsID>
       <id>1</id>
@@ -67,9 +67,9 @@
     <BackgroundRed>0</BackgroundRed>
     <BackgroundGreen>0</BackgroundGreen>
     <BackgroundBlue>0</BackgroundBlue>
-    <CoverResolutionID>0</CoverResolutionID>
-    <CoverWidth>200</CoverWidth>
-    <CoverHeight>200</CoverHeight>
+    <CoverResolutionID>2</CoverResolutionID>
+    <CoverWidth>50</CoverWidth>
+    <CoverHeight>50</CoverHeight>
     <URLCheck>False</URLCheck>
     <TagsID>
       <id>1</id>

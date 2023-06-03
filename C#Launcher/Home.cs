@@ -1,22 +1,11 @@
 ﻿using C_Launcher.Clases;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Data;
 using System.Diagnostics;
 using System.Drawing;
-using System.Drawing.Text;
 using System.IO;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
-using System.Xml.Linq;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
-//using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace C_Launcher
 {
@@ -244,6 +233,7 @@ namespace C_Launcher
         private void administrarResolucionesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Resolution res = new Resolution();
+            res.ReturnedObject += Resolution_ReturnedObject;
             res.ShowDialog();
         }
 
@@ -299,6 +289,14 @@ namespace C_Launcher
         {
             SaveXMLCollection(e);
             loadView(colSize, fileSize);
+        }
+
+        private void Resolution_ReturnedObject(object sender, bool e)
+        {
+            if (e == true)
+            {
+                loadView(colSize, fileSize);
+            }
         }
 
         private void NewFile_ReturnedObject(object sender, Files e)
@@ -1517,14 +1515,44 @@ namespace C_Launcher
             XmlNode rootWin = xmlDoc.SelectSingleNode(winpath);
 
             //Cargar la ultima profundidad utilizada
-            viewDepth   = int.Parse(root.SelectSingleNode("LastDepth").InnerText);
+            int ldepth = 0;
+            try { if (root.SelectSingleNode("LastDepth") != null) ldepth = int.Parse(root.SelectSingleNode("LastDepth").InnerText); }
+            finally { viewDepth = ldepth; }
+
+            //Cargar el ancho del treenode
+            int tWidth = 100;
+            try { if (root.SelectSingleNode("TreeWidth") != null) tWidth = int.Parse(root.SelectSingleNode("TreeWidth").InnerText); }
+            finally { treeViewMain.Width = tWidth; }
+
             //Cargar el orden de los paneles
-            orderPanels = int.Parse(root.SelectSingleNode("PanelOrder").InnerText);
+            int pOrder = 0;
+            try { if (root.SelectSingleNode("PanelOrder") != null) pOrder = int.Parse(root.SelectSingleNode("PanelOrder").InnerText); }
+            finally {
+                if (pOrder == 1)
+                {
+                    nombreToolStripMenuItem.Checked = true;
+                    fechaDeCreacionToolStripMenuItem.Checked = false;
+                }
+                orderPanels = pOrder; 
+            }
 
             //Cargar las opciones de la ventana (estan en un sub nodo)
-            WinWidht = int.Parse(rootWin.SelectSingleNode("Width").InnerText);
-            WinHeight = int.Parse(rootWin.SelectSingleNode("Height").InnerText);
-            formState = int.Parse(rootWin.SelectSingleNode("MxScreen").InnerText);
+            //Ancho de la ventana
+            int wWidth = 688;
+            try { if (rootWin.SelectSingleNode("Width") != null) wWidth = int.Parse(rootWin.SelectSingleNode("Width").InnerText); }
+            finally { WinWidht = wWidth; }
+            //Alto de la ventana
+            int wHeight = 412;
+            try { if (rootWin.SelectSingleNode("Height") != null) wHeight = int.Parse(rootWin.SelectSingleNode("Height").InnerText); }
+            finally { WinHeight = wHeight; }
+            //Si esta o no maximizado
+            int wMax = 0;
+            try { if (rootWin.SelectSingleNode("MxScreen") != null)  wMax = int.Parse(rootWin.SelectSingleNode("MxScreen").InnerText); }
+            finally {
+                if (wMax < 0 || wMax > 1) wMax = 1;
+                formState = wMax; 
+            }
+
 
             //Verificar los datos y establecerlos
             if (viewDepth < -1) viewDepth = 0;//Si es menor a -1(favoritos) dejarlo en 0
@@ -1585,16 +1613,15 @@ namespace C_Launcher
             if (WindowState == FormWindowState.Normal) mx = 0;
             XmlElement winScreen = xmlDoc.CreateElement("MxScreen"); winScreen.InnerText = mx.ToString(); winSize.AppendChild(winScreen);
 
+            //Guardar tamaño de treenode
+            XmlElement treeWidth = xmlDoc.CreateElement("TreeWidth"); treeWidth.InnerText = treeViewMain.Width.ToString(); set.AppendChild(treeWidth);
+
 
             //Guardar como se ordenan los paneles
             XmlElement pOrder = xmlDoc.CreateElement("PanelOrder"); pOrder.InnerText = orderPanels.ToString(); set.AppendChild(pOrder);
 
             xmlDoc.Save(xmlSettingsPath);
         }
-
-        
-
-
         #endregion
 
         #endregion
@@ -1690,6 +1717,8 @@ namespace C_Launcher
                     XmlElement winHeight = xmlDoc.CreateElement("Height"); winHeight.InnerText = WinHeight.ToString();  winSize.AppendChild(winHeight);
                     XmlElement winScreen = xmlDoc.CreateElement("MxScreen"); winScreen.InnerText = "1";  winSize.AppendChild(winScreen);
 
+                //Guardar tamaño de treenode
+                XmlElement treeWidth = xmlDoc.CreateElement("TreeWidth"); treeWidth.InnerText = "100"; set.AppendChild(treeWidth);
 
                 //Guardar como se ordenan los paneles
                 XmlElement pOrder = xmlDoc.CreateElement("PanelOrder"); pOrder.InnerText = "0"; set.AppendChild(pOrder);

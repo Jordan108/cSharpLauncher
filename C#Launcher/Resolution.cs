@@ -1,16 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 using System.IO;
-using System.Xml.Linq;
-using System.Collections.ObjectModel;
 
 namespace C_Launcher
 {
@@ -18,6 +10,7 @@ namespace C_Launcher
     {
         private int currentX, currentY;
         private int resizing = 0; // 0=no se esta ajustando; 1=ajustando ancho; 2=ajustando alto; 3=ajustando ambos
+        public event EventHandler<bool> ReturnedObject;
         private int rowSelected = -1;
         private string xmlResPath = "System\\Resolutions.xml";
         private int maxTag = 0;
@@ -234,6 +227,8 @@ namespace C_Launcher
                 try
                 {
                     width = int.Parse(dataGridViewResolutions.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
+                    if (width < 100) { width = 100; dataGridViewResolutions.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = "100"; }
+                    if (width > 300) { width = 300; dataGridViewResolutions.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = "300"; }
                     pictureBoxCover.Width = width;
                 }
                 catch 
@@ -250,6 +245,8 @@ namespace C_Launcher
                 try
                 {
                     height = int.Parse(dataGridViewResolutions.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
+                    if (height < 100) { height = 100; dataGridViewResolutions.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = "100"; }
+                    if (height > 300) { height = 300; dataGridViewResolutions.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = "300"; }
                     pictureBoxCover.Height = height;
                 }
                 catch
@@ -336,6 +333,7 @@ namespace C_Launcher
             xmlDoc.Save(xmlResPath);
 
             //cerrar
+            ReturnedObject?.Invoke(this, true);
             this.Close();
         }
 

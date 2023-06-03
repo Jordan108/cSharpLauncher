@@ -80,6 +80,7 @@
             this.dataGridViewFiles.Size = new System.Drawing.Size(1164, 521);
             this.dataGridViewFiles.TabIndex = 0;
             this.dataGridViewFiles.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewFiles_CellClick);
+            this.dataGridViewFiles.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewFiles_CellEndEdit);
             // 
             // ColumnName
             // 

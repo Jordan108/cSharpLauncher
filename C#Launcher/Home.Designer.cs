@@ -162,10 +162,10 @@
             // 
             this.flowLayoutPanelMain.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(40)))), ((int)(((byte)(47)))));
             this.flowLayoutPanelMain.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.flowLayoutPanelMain.Location = new System.Drawing.Point(102, 58);
+            this.flowLayoutPanelMain.Location = new System.Drawing.Point(105, 58);
             this.flowLayoutPanelMain.Name = "flowLayoutPanelMain";
             this.flowLayoutPanelMain.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
-            this.flowLayoutPanelMain.Size = new System.Drawing.Size(691, 412);
+            this.flowLayoutPanelMain.Size = new System.Drawing.Size(688, 412);
             this.flowLayoutPanelMain.TabIndex = 2;
             // 
             // treeViewMain
@@ -176,14 +176,14 @@
             this.treeViewMain.Location = new System.Drawing.Point(0, 58);
             this.treeViewMain.MinimumSize = new System.Drawing.Size(97, 4);
             this.treeViewMain.Name = "treeViewMain";
-            this.treeViewMain.Size = new System.Drawing.Size(97, 412);
+            this.treeViewMain.Size = new System.Drawing.Size(100, 412);
             this.treeViewMain.TabIndex = 0;
             this.treeViewMain.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeViewMain_NodeMouseClick);
             // 
             // splitter1
             // 
             this.splitter1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(72)))), ((int)(((byte)(85)))));
-            this.splitter1.Location = new System.Drawing.Point(97, 58);
+            this.splitter1.Location = new System.Drawing.Point(100, 58);
             this.splitter1.Name = "splitter1";
             this.splitter1.Size = new System.Drawing.Size(5, 412);
             this.splitter1.TabIndex = 3;

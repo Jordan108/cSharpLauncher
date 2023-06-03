@@ -1,15 +1,8 @@
 ﻿using C_Launcher.Clases;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using System.Windows.Forms.VisualStyles;
 using System.Xml;
 
 namespace C_Launcher
@@ -230,6 +223,43 @@ namespace C_Launcher
                         }
                         openDialog.Dispose();
                         break;
+                }
+            }
+        }
+
+        private void dataGridViewFiles_CellEndEdit(object sender, DataGridViewCellEventArgs e)
+        {
+            //Identificar si se esta ajustando el ancho o el alto
+            if (e.ColumnIndex == 5)//Ancho
+            {
+                int width = 200;
+                try
+                {
+                    width = int.Parse(dataGridViewFiles.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
+                    if (width < 100) { width = 100; dataGridViewFiles.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = "100"; }
+                    if (width > 300) { width = 300; dataGridViewFiles.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = "300"; }
+                }
+                catch
+                {
+                    //Si da un error, es por que no se pudo transformar el contenido puesto a int, transformarlo
+                    dataGridViewFiles.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = width;
+                }
+
+
+            }
+            else if (e.ColumnIndex == 6)//Alto
+            {
+                int height = 200;
+                try
+                {
+                    height = int.Parse(dataGridViewFiles.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
+                    if (height < 100) { height = 100; dataGridViewFiles.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = "100"; }
+                    if (height > 300) { height = 300; dataGridViewFiles.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = "300"; }
+                }
+                catch
+                {
+                    //Si da un error, es por que no se pudo transformar el contenido puesto a int, transformarlo
+                    dataGridViewFiles.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = height;
                 }
             }
         }
