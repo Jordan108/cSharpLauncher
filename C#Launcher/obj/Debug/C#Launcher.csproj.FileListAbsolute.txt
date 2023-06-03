@@ -41,3 +41,4 @@ C:\Users\Duoc\Documents\GitHub\cSharpLauncher\C#Launcher\obj\Debug\C#Launcher.cs
 C:\Users\Duoc\Documents\GitHub\cSharpLauncher\C#Launcher\obj\Debug\C#Launcher.csproj.CoreCompileInputs.cache
 C:\Users\Duoc\Documents\GitHub\cSharpLauncher\C#Launcher\obj\Debug\C#Launcher.exe
 C:\Users\Duoc\Documents\GitHub\cSharpLauncher\C#Launcher\obj\Debug\C#Launcher.pdb
+D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\obj\Debug\C_Launcher.NewMultipleFiles.resources

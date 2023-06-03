@@ -670,6 +670,8 @@ namespace C_Launcher
             }
 
             string nameFile = textBoxName.Text;
+            //Evitar que se guarde la imagen con caracteres invalidos
+            string cleanName = Path.GetInvalidFileNameChars().Aggregate(textBoxName.Text, (current, c) => current.Replace(c.ToString(), string.Empty));
             string imgPath = "";
 
             if (pictureBoxCover.Tag != null)
@@ -685,7 +687,7 @@ namespace C_Launcher
                     //Si estas creando un nuevo archivo, verificar si no existe un archivo con el mismo nombre, y si es asi, ponerle un iterador
                     if (idFile == -1)
                     {
-                        imgPath = returnImagePath(outputFolder, textBoxName.Text);
+                        imgPath = returnImagePath(outputFolder, cleanName);
                     } else
                     {
                         //Si estas editando un archivo, ocupar la misma direccion que en el xml, pues el nombre se decidio al crearlo (arriba)
@@ -696,7 +698,7 @@ namespace C_Launcher
                             string xmlDir = Path.GetDirectoryName(xmlImagePath);
                             if (xmlDir != systemCoverDir)
                             {
-                                imgPath = returnImagePath(outputFolder, textBoxName.Text);
+                                imgPath = returnImagePath(outputFolder, cleanName);
                             }
                             else
                             {
@@ -704,7 +706,7 @@ namespace C_Launcher
                             }
                         } else
                         {
-                            imgPath = returnImagePath(outputFolder, textBoxName.Text);
+                            imgPath = returnImagePath(outputFolder, cleanName);
                         }
                         
                     }
@@ -719,6 +721,7 @@ namespace C_Launcher
                     //Solo reemplazar una imagen si esta existe o si la imagen de origen no es la misma que el destino
                     if ((imgPath != "") && (imgPath != null) && (source != imgPath))
                     {
+                        
                         System.IO.File.Copy(source, imgPath, true);
                     }
                 }

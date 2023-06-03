@@ -48,10 +48,11 @@
             this.buttonDeleteRow = new System.Windows.Forms.Button();
             this.textBoxGlobalLauncher = new System.Windows.Forms.TextBox();
             this.labelGlobalLauncher = new System.Windows.Forms.Label();
-            this.buttonGlobalLauncher = new System.Windows.Forms.Button();
+            this.buttonDeleteGlobalLauncher = new System.Windows.Forms.Button();
             this.buttonGlobalCMD = new System.Windows.Forms.Button();
             this.labelGlobalCMD = new System.Windows.Forms.Label();
             this.textBoxGlobalCMD = new System.Windows.Forms.TextBox();
+            this.buttonGlobalLauncher = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFiles)).BeginInit();
             this.SuspendLayout();
             // 
@@ -71,11 +72,12 @@
             this.ColumnHeight,
             this.ColumnRes,
             this.ColumnCover});
-            this.dataGridViewFiles.Location = new System.Drawing.Point(11, 148);
+            this.dataGridViewFiles.Location = new System.Drawing.Point(7, 96);
+            this.dataGridViewFiles.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridViewFiles.Name = "dataGridViewFiles";
             this.dataGridViewFiles.RowHeadersWidth = 62;
             this.dataGridViewFiles.RowTemplate.Height = 28;
-            this.dataGridViewFiles.Size = new System.Drawing.Size(1202, 343);
+            this.dataGridViewFiles.Size = new System.Drawing.Size(1164, 521);
             this.dataGridViewFiles.TabIndex = 0;
             this.dataGridViewFiles.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewFiles_CellClick);
             // 
@@ -157,10 +159,9 @@
             // labelFather
             // 
             this.labelFather.AutoSize = true;
-            this.labelFather.Location = new System.Drawing.Point(105, 40);
-            this.labelFather.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelFather.Location = new System.Drawing.Point(70, 26);
             this.labelFather.Name = "labelFather";
-            this.labelFather.Size = new System.Drawing.Size(105, 20);
+            this.labelFather.Size = new System.Drawing.Size(73, 13);
             this.labelFather.TabIndex = 4;
             this.labelFather.Text = "Padre archivo";
             // 
@@ -168,18 +169,16 @@
             // 
             this.comboBoxFather.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxFather.FormattingEnabled = true;
-            this.comboBoxFather.Location = new System.Drawing.Point(25, 65);
-            this.comboBoxFather.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.comboBoxFather.Location = new System.Drawing.Point(17, 42);
             this.comboBoxFather.Name = "comboBoxFather";
-            this.comboBoxFather.Size = new System.Drawing.Size(261, 28);
+            this.comboBoxFather.Size = new System.Drawing.Size(175, 21);
             this.comboBoxFather.TabIndex = 5;
             // 
             // buttonSave
             // 
-            this.buttonSave.Location = new System.Drawing.Point(25, 527);
-            this.buttonSave.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.buttonSave.Location = new System.Drawing.Point(7, 622);
             this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(112, 35);
+            this.buttonSave.Size = new System.Drawing.Size(75, 23);
             this.buttonSave.TabIndex = 27;
             this.buttonSave.Text = "Guardar";
             this.buttonSave.UseVisualStyleBackColor = true;
@@ -189,27 +188,26 @@
             // 
             this.comboBoxResolution.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxResolution.FormattingEnabled = true;
-            this.comboBoxResolution.Location = new System.Drawing.Point(301, 65);
-            this.comboBoxResolution.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.comboBoxResolution.Location = new System.Drawing.Point(201, 42);
             this.comboBoxResolution.Name = "comboBoxResolution";
-            this.comboBoxResolution.Size = new System.Drawing.Size(202, 28);
+            this.comboBoxResolution.Size = new System.Drawing.Size(136, 21);
             this.comboBoxResolution.TabIndex = 28;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(344, 40);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(229, 26);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(134, 20);
+            this.label1.Size = new System.Drawing.Size(91, 13);
             this.label1.TabIndex = 29;
             this.label1.Text = "Resolucion global";
             // 
             // buttonGlobalResolution
             // 
-            this.buttonGlobalResolution.Location = new System.Drawing.Point(337, 101);
+            this.buttonGlobalResolution.Location = new System.Drawing.Point(225, 66);
+            this.buttonGlobalResolution.Margin = new System.Windows.Forms.Padding(2);
             this.buttonGlobalResolution.Name = "buttonGlobalResolution";
-            this.buttonGlobalResolution.Size = new System.Drawing.Size(109, 37);
+            this.buttonGlobalResolution.Size = new System.Drawing.Size(73, 24);
             this.buttonGlobalResolution.TabIndex = 30;
             this.buttonGlobalResolution.Text = "Establecer";
             this.buttonGlobalResolution.UseVisualStyleBackColor = true;
@@ -217,10 +215,9 @@
             // 
             // buttonAddRow
             // 
-            this.buttonAddRow.Location = new System.Drawing.Point(25, 105);
-            this.buttonAddRow.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.buttonAddRow.Location = new System.Drawing.Point(17, 68);
             this.buttonAddRow.Name = "buttonAddRow";
-            this.buttonAddRow.Size = new System.Drawing.Size(125, 35);
+            this.buttonAddRow.Size = new System.Drawing.Size(93, 23);
             this.buttonAddRow.TabIndex = 31;
             this.buttonAddRow.Text = "Añadir archivos";
             this.buttonAddRow.UseVisualStyleBackColor = true;
@@ -228,10 +225,9 @@
             // 
             // buttonDeleteRow
             // 
-            this.buttonDeleteRow.Location = new System.Drawing.Point(158, 105);
-            this.buttonDeleteRow.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.buttonDeleteRow.Location = new System.Drawing.Point(116, 67);
             this.buttonDeleteRow.Name = "buttonDeleteRow";
-            this.buttonDeleteRow.Size = new System.Drawing.Size(128, 35);
+            this.buttonDeleteRow.Size = new System.Drawing.Size(76, 23);
             this.buttonDeleteRow.TabIndex = 32;
             this.buttonDeleteRow.Text = "Eliminar fila";
             this.buttonDeleteRow.UseVisualStyleBackColor = true;
@@ -239,63 +235,85 @@
             // 
             // textBoxGlobalLauncher
             // 
-            this.textBoxGlobalLauncher.Location = new System.Drawing.Point(544, 67);
+            this.textBoxGlobalLauncher.Location = new System.Drawing.Point(353, 44);
+            this.textBoxGlobalLauncher.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxGlobalLauncher.Name = "textBoxGlobalLauncher";
-            this.textBoxGlobalLauncher.Size = new System.Drawing.Size(176, 26);
+            this.textBoxGlobalLauncher.ReadOnly = true;
+            this.textBoxGlobalLauncher.Size = new System.Drawing.Size(129, 20);
             this.textBoxGlobalLauncher.TabIndex = 33;
+            this.textBoxGlobalLauncher.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.textBoxGlobalLauncher.MouseClick += new System.Windows.Forms.MouseEventHandler(this.textBoxGlobalLauncher_MouseClick);
             // 
             // labelGlobalLauncher
             // 
             this.labelGlobalLauncher.AutoSize = true;
-            this.labelGlobalLauncher.Location = new System.Drawing.Point(540, 40);
+            this.labelGlobalLauncher.Location = new System.Drawing.Point(361, 26);
+            this.labelGlobalLauncher.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelGlobalLauncher.Name = "labelGlobalLauncher";
-            this.labelGlobalLauncher.Size = new System.Drawing.Size(180, 20);
+            this.labelGlobalLauncher.Size = new System.Drawing.Size(121, 13);
             this.labelGlobalLauncher.TabIndex = 34;
             this.labelGlobalLauncher.Text = "Ruta del lanzador global";
             // 
-            // buttonGlobalLauncher
+            // buttonDeleteGlobalLauncher
             // 
-            this.buttonGlobalLauncher.Location = new System.Drawing.Point(582, 99);
-            this.buttonGlobalLauncher.Name = "buttonGlobalLauncher";
-            this.buttonGlobalLauncher.Size = new System.Drawing.Size(102, 37);
-            this.buttonGlobalLauncher.TabIndex = 35;
-            this.buttonGlobalLauncher.Text = "Establecer";
-            this.buttonGlobalLauncher.UseVisualStyleBackColor = true;
+            this.buttonDeleteGlobalLauncher.Location = new System.Drawing.Point(433, 68);
+            this.buttonDeleteGlobalLauncher.Margin = new System.Windows.Forms.Padding(2);
+            this.buttonDeleteGlobalLauncher.Name = "buttonDeleteGlobalLauncher";
+            this.buttonDeleteGlobalLauncher.Size = new System.Drawing.Size(49, 24);
+            this.buttonDeleteGlobalLauncher.TabIndex = 35;
+            this.buttonDeleteGlobalLauncher.Text = "Borrar";
+            this.buttonDeleteGlobalLauncher.UseVisualStyleBackColor = true;
+            this.buttonDeleteGlobalLauncher.Click += new System.EventHandler(this.buttonDeleteGlobalLauncher_Click);
             // 
             // buttonGlobalCMD
             // 
-            this.buttonGlobalCMD.Location = new System.Drawing.Point(790, 99);
+            this.buttonGlobalCMD.Location = new System.Drawing.Point(527, 69);
+            this.buttonGlobalCMD.Margin = new System.Windows.Forms.Padding(2);
             this.buttonGlobalCMD.Name = "buttonGlobalCMD";
-            this.buttonGlobalCMD.Size = new System.Drawing.Size(101, 35);
+            this.buttonGlobalCMD.Size = new System.Drawing.Size(67, 23);
             this.buttonGlobalCMD.TabIndex = 36;
             this.buttonGlobalCMD.Text = "Establecer";
             this.buttonGlobalCMD.UseVisualStyleBackColor = true;
+            this.buttonGlobalCMD.Click += new System.EventHandler(this.buttonGlobalCMD_Click);
             // 
             // labelGlobalCMD
             // 
             this.labelGlobalCMD.AutoSize = true;
-            this.labelGlobalCMD.Location = new System.Drawing.Point(739, 40);
+            this.labelGlobalCMD.Location = new System.Drawing.Point(493, 26);
+            this.labelGlobalCMD.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelGlobalCMD.Name = "labelGlobalCMD";
-            this.labelGlobalCMD.Size = new System.Drawing.Size(195, 20);
+            this.labelGlobalCMD.Size = new System.Drawing.Size(131, 13);
             this.labelGlobalCMD.TabIndex = 37;
             this.labelGlobalCMD.Text = "Argumento de inicio global";
             // 
             // textBoxGlobalCMD
             // 
-            this.textBoxGlobalCMD.Location = new System.Drawing.Point(743, 67);
+            this.textBoxGlobalCMD.Location = new System.Drawing.Point(495, 44);
+            this.textBoxGlobalCMD.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxGlobalCMD.Name = "textBoxGlobalCMD";
-            this.textBoxGlobalCMD.Size = new System.Drawing.Size(191, 26);
+            this.textBoxGlobalCMD.Size = new System.Drawing.Size(129, 20);
             this.textBoxGlobalCMD.TabIndex = 38;
+            // 
+            // buttonGlobalLauncher
+            // 
+            this.buttonGlobalLauncher.Location = new System.Drawing.Point(353, 68);
+            this.buttonGlobalLauncher.Name = "buttonGlobalLauncher";
+            this.buttonGlobalLauncher.Size = new System.Drawing.Size(75, 23);
+            this.buttonGlobalLauncher.TabIndex = 39;
+            this.buttonGlobalLauncher.Text = "Establecer";
+            this.buttonGlobalLauncher.UseVisualStyleBackColor = true;
+            this.buttonGlobalLauncher.Click += new System.EventHandler(this.buttonGlobalLauncher_Click);
             // 
             // NewMultipleFiles
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1225, 600);
+            this.ClientSize = new System.Drawing.Size(1174, 657);
+            this.Controls.Add(this.buttonGlobalLauncher);
             this.Controls.Add(this.textBoxGlobalCMD);
             this.Controls.Add(this.labelGlobalCMD);
             this.Controls.Add(this.buttonGlobalCMD);
-            this.Controls.Add(this.buttonGlobalLauncher);
+            this.Controls.Add(this.buttonDeleteGlobalLauncher);
             this.Controls.Add(this.labelGlobalLauncher);
             this.Controls.Add(this.textBoxGlobalLauncher);
             this.Controls.Add(this.buttonDeleteRow);
@@ -307,6 +325,7 @@
             this.Controls.Add(this.comboBoxFather);
             this.Controls.Add(this.labelFather);
             this.Controls.Add(this.dataGridViewFiles);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "NewMultipleFiles";
             this.Text = "NewMultipleFiles";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFiles)).EndInit();
@@ -337,9 +356,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnCover;
         private System.Windows.Forms.TextBox textBoxGlobalLauncher;
         private System.Windows.Forms.Label labelGlobalLauncher;
-        private System.Windows.Forms.Button buttonGlobalLauncher;
+        private System.Windows.Forms.Button buttonDeleteGlobalLauncher;
         private System.Windows.Forms.Button buttonGlobalCMD;
         private System.Windows.Forms.Label labelGlobalCMD;
         private System.Windows.Forms.TextBox textBoxGlobalCMD;
+        private System.Windows.Forms.Button buttonGlobalLauncher;
     }
 }

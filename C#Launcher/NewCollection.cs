@@ -810,6 +810,8 @@ namespace C_Launcher
             }
 
             string nameCollection = textBoxName.Text;
+            //Evitar que se guarde la imagen con caracteres invalidos
+            string cleanName = Path.GetInvalidFileNameChars().Aggregate(textBoxName.Text, (current, c) => current.Replace(c.ToString(), string.Empty));
             string imgPath = "";
 
             if (pictureBoxCoverCollection.Tag != null)
@@ -826,7 +828,7 @@ namespace C_Launcher
                     //Si estas creando un nuevo archivo, verificar si no existe un archivo con el mismo nombre, y si es asi, ponerle un iterador
                     if (idCollection == -1)
                     {
-                        imgPath = returnImagePath(outputFolder, textBoxName.Text);
+                        imgPath = returnImagePath(outputFolder, cleanName);
                     }
                     else
                     {
@@ -838,7 +840,7 @@ namespace C_Launcher
                             string xmlDir = Path.GetDirectoryName(xmlImagePath);
                             if (xmlDir != systemCoverDir)
                             {
-                                imgPath = returnImagePath(outputFolder, textBoxName.Text);
+                                imgPath = returnImagePath(outputFolder, cleanName);
                             }
                             else
                             {
@@ -848,7 +850,7 @@ namespace C_Launcher
                         }
                         else
                         {
-                            imgPath = returnImagePath(outputFolder, textBoxName.Text);
+                            imgPath = returnImagePath(outputFolder, cleanName);
                         }
 
                     }

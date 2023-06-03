@@ -139,6 +139,8 @@ namespace C_Launcher
             #endregion
         }
 
+        #region Manejar dataGridView
+        //Añadir archivo/archivos
         private void buttonAddRow_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFiles = new OpenFileDialog();
@@ -161,7 +163,8 @@ namespace C_Launcher
                     string fileName = Path.GetFileNameWithoutExtension(texto);
 
                     // Crear una nueva fila para el DataGridView
-                    this.dataGridViewFiles.Rows.Add(fileName, false, texto, "", "", 200, 200, null, "");
+                    //nombre, checkbox url, ruta archivo, ruta lanzador, cmd, ancho, alto, resolucion, ruta caratula
+                    this.dataGridViewFiles.Rows.Add(fileName, false, texto, textBoxGlobalLauncher.Text, "", 200, 200, null, "");
 
                     //Optimizar el combobox para que la opcion default sea "ninguno"
                     int rowCount = dataGridViewFiles.Rows.Count;
@@ -174,7 +177,6 @@ namespace C_Launcher
             }
             openFiles.Dispose();
         }
-
 
         private void buttonDeleteRow_Click(object sender, EventArgs e)
         {
@@ -200,7 +202,6 @@ namespace C_Launcher
                 switch (e.ColumnIndex)
                 {
                     case 2:
-                        //MessageBox.Show("estas seleccionando ruta de archivo");
                         //Buscar un archivo
                         //No tiene filtro
                         OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -211,7 +212,6 @@ namespace C_Launcher
                         openFileDialog.Dispose();
                         break;
                     case 3:
-                        //MessageBox.Show("estas seleccionando ruta de lanzador");
                         //Buscar el programa
                         OpenFileDialog openProgramDialog = new OpenFileDialog();
                         if (openProgramDialog.ShowDialog() == DialogResult.OK)
@@ -221,7 +221,6 @@ namespace C_Launcher
                         openProgramDialog.Dispose();
                         break;
                     case 8:
-                        //MessageBox.Show("estas seleccionando caratula");
                         //Busca la caratula
                         OpenFileDialog openDialog = new OpenFileDialog();
                         openDialog.Filter = "Archivos de imagen (*.png;*.jpg;*.jpeg;)|*.png;*.jpg;*.jpeg;";
@@ -234,7 +233,9 @@ namespace C_Launcher
                 }
             }
         }
+        #endregion
 
+        #region Opciones globales
         private void buttonGlobalResolution_Click(object sender, EventArgs e)
         {
             for (int i = 0; i < dataGridViewFiles.RowCount; i++)
@@ -242,6 +243,46 @@ namespace C_Launcher
                 dataGridViewFiles.Rows[i].Cells[7].Value = (dataGridViewFiles.Rows[i].Cells[7] as DataGridViewComboBoxCell).Items[comboBoxResolution.SelectedIndex];
             }
         }
+
+        //Establecer el lanzador global
+        private void textBoxGlobalLauncher_MouseClick(object sender, MouseEventArgs e)
+        {
+            OpenFileDialog openProgramDialog = new OpenFileDialog();
+            if (openProgramDialog.ShowDialog() == DialogResult.OK)
+            {
+                textBoxGlobalLauncher.Text = openProgramDialog.FileName;
+            }
+            openProgramDialog.Dispose();
+        }
+
+        //Establecer el lanzador global en todas las filas
+        private void buttonGlobalLauncher_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < dataGridViewFiles.RowCount; i++)
+            {
+                dataGridViewFiles.Rows[i].Cells[3].Value = textBoxGlobalLauncher.Text;
+            }
+        }
+
+        //Eliminar el lanzador global
+        private void buttonDeleteGlobalLauncher_Click(object sender, EventArgs e)
+        {
+            textBoxGlobalLauncher.Text = "";
+        }
+
+        //Establecer el argumento de inicio en todas las filas
+        private void buttonGlobalCMD_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < dataGridViewFiles.RowCount; i++)
+            {
+                dataGridViewFiles.Rows[i].Cells[4].Value = textBoxGlobalCMD.Text;
+            }
+        }
+
+
+
+
+        #endregion
 
         #region Manejar archivos XML
         private int LoadCollectionSize()
@@ -343,6 +384,8 @@ namespace C_Launcher
 
                 string nameFile = dataGridViewFiles.Rows[i].Cells[0].Value.ToString();
                 string cellImgPath = dataGridViewFiles.Rows[i].Cells[8].Value.ToString();
+                //Evitar que se guarde la imagen con caracteres invalidos
+                string cleanName = Path.GetInvalidFileNameChars().Aggregate(nameFile, (current, c) => current.Replace(c.ToString(), string.Empty));
                 string imgPath = "";
 
                 if (cellImgPath != "")
@@ -356,7 +399,7 @@ namespace C_Launcher
                         //string outputFolder = System.Environment.CurrentDirectory + "\\System\\Covers";
                         string outputFolder = coverPath;
 
-                        imgPath = returnImagePath(outputFolder, nameFile);
+                        imgPath = returnImagePath(outputFolder, cleanName);
 
                         if (!Directory.Exists(outputFolder))
                         {

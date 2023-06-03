@@ -651,4 +651,29 @@
     </TagsID>
     <Favorite>False</Favorite>
   </file>
+  <file id="27">
+    <IDFather>0</IDFather>
+    <Name>:</Name>
+    <Image>System\Covers\file_.png</Image>
+    <ImageLayout>0</ImageLayout>
+    <FilePath>
+    </FilePath>
+    <ProgramPath>
+    </ProgramPath>
+    <CMDLine>
+    </CMDLine>
+    <BackgroundRed>0</BackgroundRed>
+    <BackgroundGreen>0</BackgroundGreen>
+    <BackgroundBlue>0</BackgroundBlue>
+    <CoverResolutionID>0</CoverResolutionID>
+    <CoverWidth>200</CoverWidth>
+    <CoverHeight>200</CoverHeight>
+    <URLCheck>False</URLCheck>
+    <TagsID>
+      <id>1</id>
+      <id>2</id>
+      <id>3</id>
+    </TagsID>
+    <Favorite>False</Favorite>
+  </file>
 </Launcher>
