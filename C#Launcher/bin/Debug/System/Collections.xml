@@ -3,8 +3,7 @@
   <collection id="1">
     <IDFather>0</IDFather>
     <Name>col 1</Name>
-    <Image>
-    </Image>
+    <Image>D:\Bibliotecas\Descargas\ztbad1qj8vdjqe0p.jpg</Image>
     <ImageLayout>0</ImageLayout>
     <BackgroundRed>0</BackgroundRed>
     <BackgroundGreen>0</BackgroundGreen>
@@ -21,7 +20,7 @@
       <id>2</id>
       <id>3</id>
     </TagsID>
-    <Favorite>True</Favorite>
+    <Favorite>False</Favorite>
   </collection>
   <collection id="2">
     <IDFather>1</IDFather>
@@ -44,7 +43,7 @@
       <id>2</id>
       <id>3</id>
     </TagsID>
-    <Favorite>false</Favorite>
+    <Favorite>True</Favorite>
   </collection>
   <collection id="3">
     <IDFather>1</IDFather>

@@ -3,8 +3,7 @@
   <file id="1">
     <IDFather>0</IDFather>
     <Name>archivo b</Name>
-    <Image>
-    </Image>
+    <Image>D:\Bibliotecas\Descargas\ztbad1qj8vdjqe0p.jpg</Image>
     <ImageLayout>0</ImageLayout>
     <FilePath>
     </FilePath>
@@ -16,21 +15,20 @@
     <BackgroundGreen>0</BackgroundGreen>
     <BackgroundBlue>0</BackgroundBlue>
     <CoverResolutionID>2</CoverResolutionID>
-    <CoverWidth>300</CoverWidth>
-    <CoverHeight>300</CoverHeight>
+    <CoverWidth>100</CoverWidth>
+    <CoverHeight>100</CoverHeight>
     <URLCheck>False</URLCheck>
     <TagsID>
       <id>1</id>
       <id>2</id>
       <id>3</id>
     </TagsID>
-    <Favorite>True</Favorite>
+    <Favorite>False</Favorite>
   </file>
   <file id="2">
     <IDFather>0</IDFather>
     <Name>archivo c</Name>
-    <Image>
-    </Image>
+    <Image>D:\Bibliotecas\Descargas\ztbad1qj8vdjqe0p.jpg</Image>
     <ImageLayout>0</ImageLayout>
     <FilePath>
     </FilePath>
@@ -55,8 +53,7 @@
   <file id="3">
     <IDFather>0</IDFather>
     <Name>archivo a</Name>
-    <Image>
-    </Image>
+    <Image>D:\Bibliotecas\Descargas\ztbad1qj8vdjqe0p.jpg</Image>
     <ImageLayout>0</ImageLayout>
     <FilePath>
     </FilePath>
@@ -68,8 +65,8 @@
     <BackgroundGreen>0</BackgroundGreen>
     <BackgroundBlue>0</BackgroundBlue>
     <CoverResolutionID>2</CoverResolutionID>
-    <CoverWidth>50</CoverWidth>
-    <CoverHeight>50</CoverHeight>
+    <CoverWidth>100</CoverWidth>
+    <CoverHeight>100</CoverHeight>
     <URLCheck>False</URLCheck>
     <TagsID>
       <id>1</id>
@@ -668,6 +665,102 @@
     <CoverResolutionID>0</CoverResolutionID>
     <CoverWidth>200</CoverWidth>
     <CoverHeight>200</CoverHeight>
+    <URLCheck>False</URLCheck>
+    <TagsID>
+      <id>1</id>
+      <id>2</id>
+      <id>3</id>
+    </TagsID>
+    <Favorite>False</Favorite>
+  </file>
+  <file id="28">
+    <IDFather>0</IDFather>
+    <Name>Shin Megami Tensei - Devil Survivor (Español)</Name>
+    <Image>System\Covers\file_Shin Megami Tensei - Devil Survivor (Español).png</Image>
+    <ImageLayout>0</ImageLayout>
+    <FilePath>D:\Bibliotecas\Descargas\Shin Megami Tensei - Devil Survivor (Español).nds</FilePath>
+    <ProgramPath>
+    </ProgramPath>
+    <CMDLine>
+    </CMDLine>
+    <BackgroundRed>0</BackgroundRed>
+    <BackgroundGreen>0</BackgroundGreen>
+    <BackgroundBlue>0</BackgroundBlue>
+    <CoverResolutionID>0</CoverResolutionID>
+    <CoverWidth>100</CoverWidth>
+    <CoverHeight>300</CoverHeight>
+    <URLCheck>False</URLCheck>
+    <TagsID>
+      <id>1</id>
+      <id>2</id>
+      <id>3</id>
+    </TagsID>
+    <Favorite>False</Favorite>
+  </file>
+  <file id="29">
+    <IDFather>0</IDFather>
+    <Name>Shin Megami Tensei - Devil Survivor 2 (Español)</Name>
+    <Image>System\Covers\file_Shin Megami Tensei - Devil Survivor 2 (Español).png</Image>
+    <ImageLayout>0</ImageLayout>
+    <FilePath>D:\Bibliotecas\Descargas\Shin Megami Tensei - Devil Survivor 2 (Español).nds</FilePath>
+    <ProgramPath>
+    </ProgramPath>
+    <CMDLine>
+    </CMDLine>
+    <BackgroundRed>0</BackgroundRed>
+    <BackgroundGreen>0</BackgroundGreen>
+    <BackgroundBlue>0</BackgroundBlue>
+    <CoverResolutionID>0</CoverResolutionID>
+    <CoverWidth>100</CoverWidth>
+    <CoverHeight>300</CoverHeight>
+    <URLCheck>False</URLCheck>
+    <TagsID>
+      <id>1</id>
+      <id>2</id>
+      <id>3</id>
+    </TagsID>
+    <Favorite>False</Favorite>
+  </file>
+  <file id="30">
+    <IDFather>0</IDFather>
+    <Name>mi mii</Name>
+    <Image>System\Covers\file_mi mii.png</Image>
+    <ImageLayout>1</ImageLayout>
+    <FilePath>D:\Bibliotecas\Imágenes\mi mii.png</FilePath>
+    <ProgramPath>
+    </ProgramPath>
+    <CMDLine>
+    </CMDLine>
+    <BackgroundRed>0</BackgroundRed>
+    <BackgroundGreen>0</BackgroundGreen>
+    <BackgroundBlue>0</BackgroundBlue>
+    <CoverResolutionID>0</CoverResolutionID>
+    <CoverWidth>300</CoverWidth>
+    <CoverHeight>100</CoverHeight>
+    <URLCheck>False</URLCheck>
+    <TagsID>
+      <id>1</id>
+      <id>2</id>
+      <id>3</id>
+    </TagsID>
+    <Favorite>False</Favorite>
+  </file>
+  <file id="31">
+    <IDFather>0</IDFather>
+    <Name>Perfil Usuario</Name>
+    <Image>System\Covers\file_Perfil Usuario.png</Image>
+    <ImageLayout>1</ImageLayout>
+    <FilePath>D:\Bibliotecas\Imágenes\Perfil Usuario.jpg</FilePath>
+    <ProgramPath>
+    </ProgramPath>
+    <CMDLine>
+    </CMDLine>
+    <BackgroundRed>0</BackgroundRed>
+    <BackgroundGreen>0</BackgroundGreen>
+    <BackgroundBlue>0</BackgroundBlue>
+    <CoverResolutionID>0</CoverResolutionID>
+    <CoverWidth>300</CoverWidth>
+    <CoverHeight>100</CoverHeight>
     <URLCheck>False</URLCheck>
     <TagsID>
       <id>1</id>

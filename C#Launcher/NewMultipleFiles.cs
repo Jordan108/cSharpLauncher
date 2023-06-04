@@ -28,6 +28,8 @@ namespace C_Launcher
 
         //Combobox de las resoluciones
         private ComboBox CmbRes = new ComboBox();
+        //Combobox del formato de la imagen (zoom-estirado)
+        private ComboBox CmbImageFormat = new ComboBox();
         public NewMultipleFiles(int viewDepth, int ResId, int Width, int Height, int Layout)
         {
             InitializeComponent();
@@ -123,12 +125,35 @@ namespace C_Launcher
             int resIndex = Array.IndexOf(combResID, defaultRes);
             comboBoxResolution.DataSource = CmbRes.Items;
             comboBoxResolution.SelectedIndex = resIndex + 1;
-
-            /*if (resIndex + 1 > 0)
-            {
-                groupBoxSize.Enabled = false;
-            }*/
             #endregion
+
+            #region formato de la imagen
+            CmbImageFormat.Items.Add("Mantener escala");
+            CmbImageFormat.Items.Add("Estirar");
+            CmbImageFormat.SelectedIndex = 0;
+            int defaultImage = 0;
+
+            if (defaultFather > 0)
+            {
+                XmlDocument docF = new XmlDocument();
+                docF.Load(xmlColPath);
+
+                string xpathF = "//Launcher/collection[@id='" + defaultFather + "']";
+                XmlNode rootF = docF.SelectSingleNode(xpathF);
+                if (rootF.SelectSingleNode("SonImageLayout") != null)
+                {
+                    defaultImage = int.Parse(rootF.SelectSingleNode("SonImageLayout").InnerText);
+                    if (defaultImage < 0) defaultImage = 0;
+                    if (defaultImage > 1) defaultImage = 1;
+                }
+            }
+            
+            
+
+            comboBoxImageFormat.DataSource = CmbImageFormat.Items;
+            comboBoxImageFormat.SelectedIndex = defaultImage;
+            #endregion
+
             #endregion
         }
 
@@ -145,6 +170,7 @@ namespace C_Launcher
                 string[] archivosSeleccionados = openFiles.FileNames;
                 //Establecer el combobox de las resoluciones
                 ((DataGridViewComboBoxColumn)dataGridViewFiles.Columns["ColumnRes"]).DataSource = CmbRes.Items;
+                ((DataGridViewComboBoxColumn)dataGridViewFiles.Columns["ColumnFormat"]).DataSource = CmbImageFormat.Items;
 
                 for (int i = 0; i < archivosSeleccionados.Length; i++)
                 {
@@ -157,14 +183,17 @@ namespace C_Launcher
 
                     // Crear una nueva fila para el DataGridView
                     //nombre, checkbox url, ruta archivo, ruta lanzador, cmd, ancho, alto, resolucion, ruta caratula
-                    this.dataGridViewFiles.Rows.Add(fileName, false, texto, textBoxGlobalLauncher.Text, "", 200, 200, null, "");
+                    this.dataGridViewFiles.Rows.Add(fileName, false, texto, textBoxGlobalLauncher.Text, "", 200, 200, null, "", null);
 
                     //Optimizar el combobox para que la opcion default sea "ninguno"
                     int rowCount = dataGridViewFiles.Rows.Count;
                     dataGridViewFiles.CurrentCell = dataGridViewFiles.Rows[rowCount - 1].Cells[0];
+                    //Combobox de las resoluciones
                     dataGridViewFiles.Rows[rowCount - 1].Cells[7].Value = (dataGridViewFiles.Rows[rowCount - 1].Cells[7] as DataGridViewComboBoxCell).Items[0];
+                    //Combobox del formato de imagen
+                    dataGridViewFiles.Rows[rowCount - 1].Cells[9].Value = (dataGridViewFiles.Rows[rowCount - 1].Cells[9] as DataGridViewComboBoxCell).Items[0];
+                    
                     dataGridViewFiles.Rows[rowCount - 1].Selected = true;
-
                     rowSelected = rowCount - 1;
                 }
             }
@@ -274,6 +303,14 @@ namespace C_Launcher
             }
         }
 
+        private void buttonGlobalImageFormat_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < dataGridViewFiles.RowCount; i++)
+            {
+                dataGridViewFiles.Rows[i].Cells[9].Value = (dataGridViewFiles.Rows[i].Cells[9] as DataGridViewComboBoxCell).Items[comboBoxImageFormat.SelectedIndex];
+            }
+        }
+
         //Establecer el lanzador global
         private void textBoxGlobalLauncher_MouseClick(object sender, MouseEventArgs e)
         {
@@ -308,6 +345,8 @@ namespace C_Launcher
                 dataGridViewFiles.Rows[i].Cells[4].Value = textBoxGlobalCMD.Text;
             }
         }
+
+        
 
 
 
@@ -448,6 +487,11 @@ namespace C_Launcher
 
                 //Image layout
                 int imgLayout = 0;
+                int selectedLayoutIndex = comboBoxImageFormat.Items.IndexOf(dataGridViewFiles.Rows[i].Cells[9].Value);
+                if (selectedLayoutIndex > 0)
+                {
+                    imgLayout = selectedLayoutIndex;
+                }
                 //if (radioButtonEstreched.Checked == true) imgLayout = 1;
 
                 string filePath = dataGridViewFiles.Rows[i].Cells[2].Value.ToString();

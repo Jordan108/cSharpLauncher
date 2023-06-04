@@ -64,12 +64,17 @@ namespace C_Launcher
             //Picture Box
             ToolStripMenuItem ToolStripEdit = new ToolStripMenuItem();
             ToolStripMenuItem ToolStripDelete = new ToolStripMenuItem();
+            ToolStripMenuItem ToolStripFav = new ToolStripMenuItem();
             ToolStripEdit.Text = "Editar";
             ToolStripEdit.Click += new EventHandler(ToolStripEditPictureBox_Click);
             ToolStripDelete.Text = "Eliminar";
             ToolStripDelete.Click += new EventHandler(ToolStripDeletePictureBox_Click);
-            contextMenuPictureBox.Items.AddRange(new ToolStripItem[] { ToolStripEdit, ToolStripDelete });
+            ToolStripFav.Text = "Agregar a Favoritos";
+            ToolStripFav.Click += new EventHandler(ToolStripFavSetPictureBox_Click);
+
             //Se agregan cuando se crean
+            contextMenuPictureBox.Items.AddRange(new ToolStripItem[] { ToolStripFav, ToolStripEdit, ToolStripDelete });
+            
 
             //Carga la cantidad de colecciones y archivos existentes
             colSize = LoadCollectionSize();
@@ -224,6 +229,27 @@ namespace C_Launcher
             else if (boxType == "collection")
             {
                 deleteCollection(int.Parse(id));
+            }
+        }
+
+        //Cambiar el fav de un picture box
+        private void ToolStripFavSetPictureBox_Click(object sender, EventArgs e)
+        {
+            PictureBox pic = (PictureBox)contextMenuPictureBox.SourceControl;
+            int idBox = int.Parse(pic.Tag.ToString());//no se puede transformar un objeto a int, pero si a un string
+            string boxType = pic.AccessibleDescription;//Recoje el tipo de picture box para buscar en el array especifico (col/file)
+
+            if (boxType == "file")
+            {
+                setFileFav(idBox);
+                Console.WriteLine("set fav " + boxType + " | " + idBox);
+                if (viewDepth == -1) loadView(colSize, fileSize);
+            }
+            else if (boxType == "collection")
+            {
+                setColeFav(idBox);
+                Console.WriteLine("set fav " + boxType + " | " + idBox);
+                if (viewDepth == -1) loadView(colSize, fileSize);
             }
         }
         #endregion
@@ -470,6 +496,46 @@ namespace C_Launcher
                 loadPictureBox(colSize,fileSize,false);
             }
         }
+
+        //Intervenir en el contextMenu
+        private void pictureBox_MouseUp(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                PictureBox pictureBox = (PictureBox)sender;
+                int idBox = int.Parse(pictureBox.Tag.ToString());//no se puede transformar un objeto a int, pero si a un string
+                string boxType = pictureBox.AccessibleDescription;//Recoje el tipo de picture box para buscar en el array especifico (col/file)
+                bool fav = false;
+
+                if (boxType == "file")
+                {
+                    //Dentro de la funcion se buscara los procesos asociados al archivo y llamara a start process
+                    fav = getFileFav(idBox);
+                }
+                else if (boxType == "collection")
+                {
+                    fav = getColeFav(idBox);
+                }
+
+                ContextMenuStrip contextMenuStrip = pictureBox.ContextMenuStrip;
+
+                // Accede al ToolStripMenuItem dentro del ContextMenuStrip
+                ToolStripMenuItem toolStripMenuItem = (ToolStripMenuItem)contextMenuStrip.Items[0];//depende del orden establecido en la linea 75
+
+                // Cambia el atributo "Text" del ToolStripMenuItem según el valor del "Tag" del PictureBox
+                if (fav == false)
+                {
+                    toolStripMenuItem.Text = "Agregar a favoritos";
+                }
+                else if (fav == true)
+                {
+                    toolStripMenuItem.Text = "Quitar de favoritos";
+                }
+
+                // Muestra el ContextMenuStrip
+                contextMenuStrip.Show(pictureBox, e.Location);
+            }
+        }
         #endregion
 
         #region Controlar vista
@@ -577,6 +643,7 @@ namespace C_Launcher
                     picBoxArr[pL].MouseEnter += new System.EventHandler(this.pictureBox_MouseEnter);
                     picBoxArr[pL].MouseLeave += new System.EventHandler(this.pictureBox_MouseLeave);
                     picBoxArr[pL].Click += new System.EventHandler(this.pictureBox_Click);
+                    picBoxArr[pL].MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseUp);
 
 
                     picBoxArr[pL].ContextMenuStrip = contextMenuPictureBox;
@@ -672,6 +739,7 @@ namespace C_Launcher
                     picBoxArr[pL].MouseEnter += new System.EventHandler(this.pictureBox_MouseEnter);
                     picBoxArr[pL].MouseLeave += new System.EventHandler(this.pictureBox_MouseLeave);
                     picBoxArr[pL].Click += new System.EventHandler(this.pictureBox_Click);
+                    picBoxArr[pL].MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseUp);
                     picBoxArr[pL].ContextMenuStrip = contextMenuPictureBox;
 
                     //Se integraran despues de ordenarlos
@@ -681,6 +749,7 @@ namespace C_Launcher
             }
             #endregion
 
+            #region Ordenar el array
             //Optimizar el tamaño del array
             Array.Resize(ref picBoxArr, pL);
 
@@ -697,6 +766,7 @@ namespace C_Launcher
                 //pan[i]->BackgroundImage->HorizontalResolution ; Obtener el tamaño de la imagen dentro del panel
                 flowLayoutPanelMain.Controls.Add(picBoxArr[i]);
             }
+            #endregion
 
             flowLayoutPanelMain.ResumeLayout();
         }
@@ -1081,6 +1151,44 @@ namespace C_Launcher
 
             //return fileData;
         }
+        
+        private bool getFileFav(int fileID)
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.Load(xmlFilesPath);
+
+            string xpath = "//Launcher/file[@id='" + fileID + "']";
+            XmlNode root = doc.SelectSingleNode(xpath);
+
+            bool returnFav = false;
+
+            if (root != null)
+            {
+                returnFav = bool.Parse(root.SelectSingleNode("Favorite").InnerText);
+            }
+
+            //Llamar a la funcion para que empiece el proceso
+            return returnFav;
+        }
+
+        private void setFileFav(int fileID)
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.Load(xmlFilesPath);
+
+            string xpath = "//Launcher/file[@id='" + fileID + "']";
+            XmlNode root = doc.SelectSingleNode(xpath);
+
+            if (root != null)
+            {
+                bool returnFav = bool.Parse(root.SelectSingleNode("Favorite").InnerText);
+
+                if (returnFav == false) { root.SelectSingleNode("Favorite").InnerText = "True"; }
+                else { root.SelectSingleNode("Favorite").InnerText = "False"; }
+
+                doc.Save(xmlFilesPath);
+            }
+        }
 
         private Files searchFileData(int fileID)
         {
@@ -1229,6 +1337,44 @@ namespace C_Launcher
             }
 
             return size;
+        }
+
+        private bool getColeFav(int colID)
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.Load(xmlColPath);
+
+            string xpath = "//Launcher/collection[@id='" + colID + "']";
+            XmlNode root = doc.SelectSingleNode(xpath);
+
+            bool returnFav = false;
+
+            if (root != null)
+            {
+                returnFav = bool.Parse(root.SelectSingleNode("Favorite").InnerText);
+            }
+
+            //Llamar a la funcion para que empiece el proceso
+            return returnFav;
+        }
+
+        private void setColeFav(int colID)
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.Load(xmlColPath);
+
+            string xpath = "//Launcher/collection[@id='" + colID + "']";
+            XmlNode root = doc.SelectSingleNode(xpath);
+
+            if (root != null)
+            {
+                bool returnFav = bool.Parse(root.SelectSingleNode("Favorite").InnerText);
+
+                if (returnFav == false) { root.SelectSingleNode("Favorite").InnerText = "True"; }
+                else { root.SelectSingleNode("Favorite").InnerText = "False"; }
+
+                doc.Save(xmlColPath);
+            }
         }
 
         private void SaveXMLCollection(Collections Class)
@@ -1621,6 +1767,11 @@ namespace C_Launcher
             XmlElement pOrder = xmlDoc.CreateElement("PanelOrder"); pOrder.InnerText = orderPanels.ToString(); set.AppendChild(pOrder);
 
             xmlDoc.Save(xmlSettingsPath);
+        }
+
+        private void labelTest_Click(object sender, EventArgs e)
+        {
+
         }
         #endregion
 
