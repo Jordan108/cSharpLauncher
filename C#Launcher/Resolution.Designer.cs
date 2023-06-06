@@ -45,7 +45,7 @@
             // 
             // buttonSearchSonCoverTest
             // 
-            this.buttonSearchSonCoverTest.Location = new System.Drawing.Point(556, 12);
+            this.buttonSearchSonCoverTest.Location = new System.Drawing.Point(448, 12);
             this.buttonSearchSonCoverTest.Name = "buttonSearchSonCoverTest";
             this.buttonSearchSonCoverTest.Size = new System.Drawing.Size(170, 23);
             this.buttonSearchSonCoverTest.TabIndex = 17;
@@ -55,9 +55,9 @@
             // 
             // panelSonImageLimit
             // 
-            this.panelSonImageLimit.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.panelSonImageLimit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(40)))), ((int)(((byte)(47)))));
             this.panelSonImageLimit.Controls.Add(this.pictureBoxCover);
-            this.panelSonImageLimit.Location = new System.Drawing.Point(488, 41);
+            this.panelSonImageLimit.Location = new System.Drawing.Point(371, 41);
             this.panelSonImageLimit.Name = "panelSonImageLimit";
             this.panelSonImageLimit.Size = new System.Drawing.Size(300, 300);
             this.panelSonImageLimit.TabIndex = 16;
@@ -78,12 +78,13 @@
             this.dataGridViewResolutions.AllowUserToDeleteRows = false;
             this.dataGridViewResolutions.AllowUserToResizeColumns = false;
             this.dataGridViewResolutions.AllowUserToResizeRows = false;
+            this.dataGridViewResolutions.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(40)))), ((int)(((byte)(47)))));
             this.dataGridViewResolutions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewResolutions.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.name,
             this.width,
             this.height});
-            this.dataGridViewResolutions.Location = new System.Drawing.Point(99, 41);
+            this.dataGridViewResolutions.Location = new System.Drawing.Point(12, 41);
             this.dataGridViewResolutions.MultiSelect = false;
             this.dataGridViewResolutions.Name = "dataGridViewResolutions";
             this.dataGridViewResolutions.Size = new System.Drawing.Size(344, 300);
@@ -113,7 +114,7 @@
             // 
             // buttonAddRow
             // 
-            this.buttonAddRow.Location = new System.Drawing.Point(294, 12);
+            this.buttonAddRow.Location = new System.Drawing.Point(12, 12);
             this.buttonAddRow.Name = "buttonAddRow";
             this.buttonAddRow.Size = new System.Drawing.Size(75, 23);
             this.buttonAddRow.TabIndex = 19;
@@ -123,7 +124,7 @@
             // 
             // buttonDeleteRow
             // 
-            this.buttonDeleteRow.Location = new System.Drawing.Point(382, 12);
+            this.buttonDeleteRow.Location = new System.Drawing.Point(93, 12);
             this.buttonDeleteRow.Name = "buttonDeleteRow";
             this.buttonDeleteRow.Size = new System.Drawing.Size(75, 23);
             this.buttonDeleteRow.TabIndex = 20;
@@ -133,7 +134,7 @@
             // 
             // buttonSaveRes
             // 
-            this.buttonSaveRes.Location = new System.Drawing.Point(382, 349);
+            this.buttonSaveRes.Location = new System.Drawing.Point(12, 349);
             this.buttonSaveRes.Name = "buttonSaveRes";
             this.buttonSaveRes.Size = new System.Drawing.Size(75, 23);
             this.buttonSaveRes.TabIndex = 21;
@@ -145,13 +146,15 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 384);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
+            this.ClientSize = new System.Drawing.Size(677, 380);
             this.Controls.Add(this.buttonSaveRes);
             this.Controls.Add(this.buttonDeleteRow);
             this.Controls.Add(this.buttonAddRow);
             this.Controls.Add(this.dataGridViewResolutions);
             this.Controls.Add(this.buttonSearchSonCoverTest);
             this.Controls.Add(this.panelSonImageLimit);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "Resolution";
             this.Text = "Resolutions";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Resolution_FormClosed);

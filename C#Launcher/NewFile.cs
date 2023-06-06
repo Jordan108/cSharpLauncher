@@ -335,6 +335,11 @@ namespace C_Launcher
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 textBoxFilePath.Text = openFileDialog.FileName;
+
+                if (textBoxName.Text == "")
+                {
+                    textBoxName.Text = Path.GetFileNameWithoutExtension(openFileDialog.FileName);
+                }
             }
         }
 

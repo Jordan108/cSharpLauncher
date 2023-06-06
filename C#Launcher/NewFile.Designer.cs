@@ -70,7 +70,7 @@
             // 
             // textBoxName
             // 
-            this.textBoxName.Location = new System.Drawing.Point(142, 32);
+            this.textBoxName.Location = new System.Drawing.Point(142, 9);
             this.textBoxName.Name = "textBoxName";
             this.textBoxName.Size = new System.Drawing.Size(242, 20);
             this.textBoxName.TabIndex = 0;
@@ -78,7 +78,7 @@
             // labelName
             // 
             this.labelName.AutoSize = true;
-            this.labelName.Location = new System.Drawing.Point(42, 35);
+            this.labelName.Location = new System.Drawing.Point(40, 9);
             this.labelName.Name = "labelName";
             this.labelName.Size = new System.Drawing.Size(82, 13);
             this.labelName.TabIndex = 1;
@@ -88,7 +88,7 @@
             // 
             this.comboBoxFather.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxFather.FormattingEnabled = true;
-            this.comboBoxFather.Location = new System.Drawing.Point(142, 58);
+            this.comboBoxFather.Location = new System.Drawing.Point(142, 35);
             this.comboBoxFather.Name = "comboBoxFather";
             this.comboBoxFather.Size = new System.Drawing.Size(242, 21);
             this.comboBoxFather.TabIndex = 2;
@@ -96,7 +96,7 @@
             // labelFather
             // 
             this.labelFather.AutoSize = true;
-            this.labelFather.Location = new System.Drawing.Point(51, 60);
+            this.labelFather.Location = new System.Drawing.Point(49, 38);
             this.labelFather.Name = "labelFather";
             this.labelFather.Size = new System.Drawing.Size(73, 13);
             this.labelFather.TabIndex = 3;
@@ -105,7 +105,7 @@
             // checkBoxURL
             // 
             this.checkBoxURL.AutoSize = true;
-            this.checkBoxURL.Location = new System.Drawing.Point(142, 138);
+            this.checkBoxURL.Location = new System.Drawing.Point(142, 82);
             this.checkBoxURL.Name = "checkBoxURL";
             this.checkBoxURL.Size = new System.Drawing.Size(250, 17);
             this.checkBoxURL.TabIndex = 4;
@@ -116,7 +116,7 @@
             // labelFilePath
             // 
             this.labelFilePath.AutoSize = true;
-            this.labelFilePath.Location = new System.Drawing.Point(45, 163);
+            this.labelFilePath.Location = new System.Drawing.Point(45, 103);
             this.labelFilePath.Name = "labelFilePath";
             this.labelFilePath.Size = new System.Drawing.Size(85, 13);
             this.labelFilePath.TabIndex = 5;
@@ -125,7 +125,7 @@
             // labelProgramPath
             // 
             this.labelProgramPath.AutoSize = true;
-            this.labelProgramPath.Location = new System.Drawing.Point(40, 208);
+            this.labelProgramPath.Location = new System.Drawing.Point(40, 142);
             this.labelProgramPath.Name = "labelProgramPath";
             this.labelProgramPath.Size = new System.Drawing.Size(90, 13);
             this.labelProgramPath.TabIndex = 6;
@@ -134,7 +134,7 @@
             // labelCMD
             // 
             this.labelCMD.AutoSize = true;
-            this.labelCMD.Location = new System.Drawing.Point(25, 237);
+            this.labelCMD.Location = new System.Drawing.Point(22, 168);
             this.labelCMD.Name = "labelCMD";
             this.labelCMD.Size = new System.Drawing.Size(105, 13);
             this.labelCMD.TabIndex = 7;
@@ -143,7 +143,7 @@
             // labelOptional
             // 
             this.labelOptional.AutoSize = true;
-            this.labelOptional.Location = new System.Drawing.Point(256, 192);
+            this.labelOptional.Location = new System.Drawing.Point(248, 123);
             this.labelOptional.Name = "labelOptional";
             this.labelOptional.Size = new System.Drawing.Size(49, 13);
             this.labelOptional.TabIndex = 8;
@@ -151,21 +151,21 @@
             // 
             // textBoxFilePath
             // 
-            this.textBoxFilePath.Location = new System.Drawing.Point(133, 161);
+            this.textBoxFilePath.Location = new System.Drawing.Point(133, 100);
             this.textBoxFilePath.Name = "textBoxFilePath";
             this.textBoxFilePath.Size = new System.Drawing.Size(287, 20);
             this.textBoxFilePath.TabIndex = 9;
             // 
             // textBoxProgramPath
             // 
-            this.textBoxProgramPath.Location = new System.Drawing.Point(133, 208);
+            this.textBoxProgramPath.Location = new System.Drawing.Point(133, 139);
             this.textBoxProgramPath.Name = "textBoxProgramPath";
             this.textBoxProgramPath.Size = new System.Drawing.Size(287, 20);
             this.textBoxProgramPath.TabIndex = 10;
             // 
             // textBoxCMD
             // 
-            this.textBoxCMD.Location = new System.Drawing.Point(133, 234);
+            this.textBoxCMD.Location = new System.Drawing.Point(133, 165);
             this.textBoxCMD.Name = "textBoxCMD";
             this.textBoxCMD.Size = new System.Drawing.Size(287, 20);
             this.textBoxCMD.TabIndex = 11;
@@ -173,7 +173,7 @@
             // checkBoxFavorite
             // 
             this.checkBoxFavorite.AutoSize = true;
-            this.checkBoxFavorite.Location = new System.Drawing.Point(404, 32);
+            this.checkBoxFavorite.Location = new System.Drawing.Point(402, 12);
             this.checkBoxFavorite.Name = "checkBoxFavorite";
             this.checkBoxFavorite.Size = new System.Drawing.Size(64, 17);
             this.checkBoxFavorite.TabIndex = 12;
@@ -213,7 +213,7 @@
             // 
             this.groupBoxImageFormat.Controls.Add(this.radioButtonEstreched);
             this.groupBoxImageFormat.Controls.Add(this.radioButtonZoom);
-            this.groupBoxImageFormat.Location = new System.Drawing.Point(28, 530);
+            this.groupBoxImageFormat.Location = new System.Drawing.Point(52, 442);
             this.groupBoxImageFormat.Name = "groupBoxImageFormat";
             this.groupBoxImageFormat.Size = new System.Drawing.Size(162, 71);
             this.groupBoxImageFormat.TabIndex = 16;
@@ -246,9 +246,9 @@
             // 
             // panelImageLimit
             // 
-            this.panelImageLimit.BackColor = System.Drawing.SystemColors.ActiveBorder;
+            this.panelImageLimit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(40)))), ((int)(((byte)(47)))));
             this.panelImageLimit.Controls.Add(this.pictureBoxCover);
-            this.panelImageLimit.Location = new System.Drawing.Point(280, 344);
+            this.panelImageLimit.Location = new System.Drawing.Point(280, 255);
             this.panelImageLimit.Name = "panelImageLimit";
             this.panelImageLimit.Size = new System.Drawing.Size(300, 300);
             this.panelImageLimit.TabIndex = 17;
@@ -305,7 +305,7 @@
             this.groupBoxSize.Controls.Add(this.numericHeightImage);
             this.groupBoxSize.Controls.Add(this.numericWidthImage);
             this.groupBoxSize.Controls.Add(this.labelHeight);
-            this.groupBoxSize.Location = new System.Drawing.Point(28, 402);
+            this.groupBoxSize.Location = new System.Drawing.Point(25, 318);
             this.groupBoxSize.Name = "groupBoxSize";
             this.groupBoxSize.Size = new System.Drawing.Size(228, 100);
             this.groupBoxSize.TabIndex = 21;
@@ -314,7 +314,7 @@
             // 
             // buttonSearchFile
             // 
-            this.buttonSearchFile.Location = new System.Drawing.Point(426, 158);
+            this.buttonSearchFile.Location = new System.Drawing.Point(426, 98);
             this.buttonSearchFile.Name = "buttonSearchFile";
             this.buttonSearchFile.Size = new System.Drawing.Size(75, 23);
             this.buttonSearchFile.TabIndex = 22;
@@ -324,7 +324,7 @@
             // 
             // buttonSearchProgram
             // 
-            this.buttonSearchProgram.Location = new System.Drawing.Point(426, 206);
+            this.buttonSearchProgram.Location = new System.Drawing.Point(426, 139);
             this.buttonSearchProgram.Name = "buttonSearchProgram";
             this.buttonSearchProgram.Size = new System.Drawing.Size(75, 23);
             this.buttonSearchProgram.TabIndex = 23;
@@ -334,7 +334,7 @@
             // 
             // buttonSearchCover
             // 
-            this.buttonSearchCover.Location = new System.Drawing.Point(280, 290);
+            this.buttonSearchCover.Location = new System.Drawing.Point(280, 203);
             this.buttonSearchCover.Name = "buttonSearchCover";
             this.buttonSearchCover.Size = new System.Drawing.Size(115, 23);
             this.buttonSearchCover.TabIndex = 24;
@@ -344,7 +344,7 @@
             // 
             // buttonSetColor
             // 
-            this.buttonSetColor.Location = new System.Drawing.Point(414, 290);
+            this.buttonSetColor.Location = new System.Drawing.Point(402, 203);
             this.buttonSetColor.Name = "buttonSetColor";
             this.buttonSetColor.Size = new System.Drawing.Size(119, 23);
             this.buttonSetColor.TabIndex = 25;
@@ -354,7 +354,7 @@
             // 
             // buttonSave
             // 
-            this.buttonSave.Location = new System.Drawing.Point(78, 621);
+            this.buttonSave.Location = new System.Drawing.Point(87, 519);
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(75, 23);
             this.buttonSave.TabIndex = 26;
@@ -366,7 +366,7 @@
             // 
             this.comboBoxResolution.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.comboBoxResolution.FormattingEnabled = true;
-            this.comboBoxResolution.Location = new System.Drawing.Point(28, 360);
+            this.comboBoxResolution.Location = new System.Drawing.Point(34, 271);
             this.comboBoxResolution.Name = "comboBoxResolution";
             this.comboBoxResolution.Size = new System.Drawing.Size(228, 21);
             this.comboBoxResolution.TabIndex = 27;
@@ -375,7 +375,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(107, 344);
+            this.label1.Location = new System.Drawing.Point(106, 255);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(60, 13);
             this.label1.TabIndex = 28;
@@ -384,7 +384,7 @@
             // buttonColorPickIMG
             // 
             this.buttonColorPickIMG.BackColor = System.Drawing.Color.Black;
-            this.buttonColorPickIMG.Location = new System.Drawing.Point(539, 290);
+            this.buttonColorPickIMG.Location = new System.Drawing.Point(527, 203);
             this.buttonColorPickIMG.Name = "buttonColorPickIMG";
             this.buttonColorPickIMG.Size = new System.Drawing.Size(25, 25);
             this.buttonColorPickIMG.TabIndex = 29;
@@ -393,7 +393,7 @@
             // checkBoxImageLocation
             // 
             this.checkBoxImageLocation.AutoSize = true;
-            this.checkBoxImageLocation.Location = new System.Drawing.Point(280, 319);
+            this.checkBoxImageLocation.Location = new System.Drawing.Point(280, 232);
             this.checkBoxImageLocation.Name = "checkBoxImageLocation";
             this.checkBoxImageLocation.Size = new System.Drawing.Size(215, 17);
             this.checkBoxImageLocation.TabIndex = 30;
@@ -404,8 +404,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.White;
-            this.ClientSize = new System.Drawing.Size(592, 654);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
+            this.ClientSize = new System.Drawing.Size(588, 564);
             this.Controls.Add(this.checkBoxImageLocation);
             this.Controls.Add(this.buttonColorPickIMG);
             this.Controls.Add(this.label1);
@@ -431,6 +431,7 @@
             this.Controls.Add(this.comboBoxFather);
             this.Controls.Add(this.labelName);
             this.Controls.Add(this.textBoxName);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Name = "NewFile";
             this.Text = "NewFile";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.NewFile_FormClosed);
