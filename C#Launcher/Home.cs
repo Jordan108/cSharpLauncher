@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Windows.Forms;
 using System.Xml;
 
@@ -74,7 +75,15 @@ namespace C_Launcher
 
             //Se agregan cuando se crean
             contextMenuPictureBox.Items.AddRange(new ToolStripItem[] { ToolStripFav, ToolStripEdit, ToolStripDelete });
-            
+
+            //Establecer barra de busqueda
+            textBoxSearch.Text = "Buscar...";
+            textBoxSearch.ForeColor = System.Drawing.Color.Gray;
+            textBoxSearch.KeyDown += new KeyEventHandler(SearchBarEnter);
+            textBoxSearch.GotFocus += new EventHandler(SearchBarRemoveText);
+            textBoxSearch.LostFocus += new EventHandler(SearchBarAddText);
+
+
 
             //Carga la cantidad de colecciones y archivos existentes
             colSize = LoadCollectionSize();
@@ -539,6 +548,37 @@ namespace C_Launcher
         #endregion
 
         #region Controlar vista
+        #region Barra de busqueda
+        //Quitar el placeholder cuando se quiere buscar algo
+        public void SearchBarRemoveText(object sender, EventArgs e)
+        {
+            if (textBoxSearch.Text == "Buscar...")
+            {
+                textBoxSearch.Text = "";
+                textBoxSearch.ForeColor = System.Drawing.Color.Black;
+            }
+        }
+
+        //Colocar el placeholder si es que no hay nada escrito y se pierde el foco
+        public void SearchBarAddText(object sender, EventArgs e)
+        {
+            if (textBoxSearch.Text.Length  == 0)
+            {
+                textBoxSearch.Text = "Buscar...";
+                textBoxSearch.ForeColor = System.Drawing.Color.Gray;
+            }
+        }
+
+        //Buscar al hacer enter
+        private void SearchBarEnter(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                loadPictureBox(colSize, fileSize, true);
+            }
+            
+        }
+        #endregion
         private void destroyPictureBox()
         {
             //remueve todos los paneles del control
@@ -590,8 +630,23 @@ namespace C_Launcher
             //Recorrer todos el array de las colecciones
             for (int i = 0; i < colls.Length; i++)
             {
+                bool addCollection = false;//Me permite añadir varias condicionales dentro de un mismo if
+
+                if (filter)
+                {
+                    //Verifica si el nombre de la coleccion contiene alguno de los elementos del textbox
+                    string nom = colls[i].Name.ToLower();
+                    string search = textBoxSearch.Text.ToLower();
+
+                    if (nom.Contains(search) && (viewDepth == colls[i].IDFather) || (viewDepth == -1 && colls[i].Favorite == true)) addCollection = true;
+
+                } else
+                {
+                    if ((viewDepth == colls[i].IDFather) || (viewDepth == -1 && colls[i].Favorite == true)) addCollection = true;
+                }
+
                 //Solo agregar las colecciones que coincidan con la profundidad actual o que sea la profundidad de favoritos (-1) y tengan el bool
-                if ((viewDepth == colls[i].IDFather) || (viewDepth == -1 && colls[i].Favorite == true))
+                if (addCollection)
                 {
                     //Image imagen = Image.FromFile(colls[i].ImagePath);
                     //Definir el picture box
@@ -661,8 +716,24 @@ namespace C_Launcher
             //Recorrer todo el array de los files
             for (int f = 0; f < files.Length; f++)
             {
+                bool addFile = false;//Me permite añadir varias condicionales dentro de un mismo if
+
+                if (filter)
+                {
+                    //Verifica si el nombre de la coleccion contiene alguno de los elementos del textbox
+                    string nom = files[f].Name.ToLower();
+                    string search = textBoxSearch.Text.ToLower();
+
+                    if (nom.Contains(search) && (viewDepth == files[f].IDFather) || (viewDepth == -1 && files[f].Favorite == true)) addFile = true;
+
+                }
+                else
+                {
+                    if ((viewDepth == files[f].IDFather) || (viewDepth == -1 && files[f].Favorite == true)) addFile = true;
+                }
+
                 //Solo agregar las colecciones que coincidan con la profundidad actual o que si estamos en favoritos (-1) tengan el bool en true
-                if ((viewDepth == files[f].IDFather) || (viewDepth == -1 && files[f].Favorite == true))
+                if (addFile)
                 {
                     int fileW = 100;
                     int fileH = 100;

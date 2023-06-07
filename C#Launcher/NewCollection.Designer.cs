@@ -254,7 +254,7 @@
             // 
             // panelImageLimit
             // 
-            this.panelImageLimit.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.panelImageLimit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(40)))), ((int)(((byte)(47)))));
             this.panelImageLimit.Controls.Add(this.pictureBoxCoverCollection);
             this.panelImageLimit.Location = new System.Drawing.Point(218, 165);
             this.panelImageLimit.Name = "panelImageLimit";
@@ -284,7 +284,7 @@
             // 
             // panelSonImageLimit
             // 
-            this.panelSonImageLimit.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.panelSonImageLimit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(40)))), ((int)(((byte)(47)))));
             this.panelSonImageLimit.Controls.Add(this.pictureBoxCoverSon);
             this.panelSonImageLimit.Location = new System.Drawing.Point(739, 165);
             this.panelSonImageLimit.Name = "panelSonImageLimit";
@@ -487,6 +487,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
             this.ClientSize = new System.Drawing.Size(1065, 483);
             this.Controls.Add(this.checkBoxImageLocation);
             this.Controls.Add(this.buttonColorPickIMG);

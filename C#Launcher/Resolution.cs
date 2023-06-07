@@ -21,8 +21,6 @@ namespace C_Launcher
             this.pictureBoxCover.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBoxCover_MouseDown);
             this.pictureBoxCover.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBoxCover_MouseMove);
             this.pictureBoxCover.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBoxCover_MouseUp);
-            //Seleccionar por defecto la primera fila
-            //dataGridViewResolutions.Rows[0].Selected = true;
             //Cargar las resoluciones en el dataGrid
             loadXMLResolutions();
         }
@@ -84,8 +82,10 @@ namespace C_Launcher
 
             if (rowCount > 0)
             {
+                //Seleccionar por defecto la primera fila
                 dataGridViewResolutions.CurrentCell = dataGridViewResolutions.Rows[0].Cells[0];
                 dataGridViewResolutions.Rows[0].Selected = true;
+                rowSelected = 0;
 
                 DataGridViewRow selectedRow = dataGridViewResolutions.Rows[0];
 
@@ -96,6 +96,7 @@ namespace C_Launcher
         }
 
 
+        #region Picture Box
         private void pictureBoxCover_MouseDown(object sender, MouseEventArgs e)
         {
             int margin = 10;
@@ -134,41 +135,77 @@ namespace C_Launcher
 
         private void pictureBoxCover_MouseMove(object sender, MouseEventArgs e)
         {
-            // Verifique si estamos cambiando el tamaño
-            if ((resizing > 0) && (rowSelected > -1))
+            if (rowSelected > -1)
             {
-                // Calcule el nuevo ancho y alto del PictureBox
-                int newWidth = pictureBoxCover.Width + (e.X - currentX);
-                int newHeight = pictureBoxCover.Height + (e.Y - currentY);
-
-                //Ajustar los limites de ancho y alto
-                if (newWidth < 100) newWidth = 100;
-                if (newWidth > 300) newWidth = 300;
-                if (newHeight < 100) newHeight = 100;
-                if (newHeight > 300) newHeight = 300;
-
-
-                // Establecer el nuevo ancho y alto del PictureBox
-                if (resizing != 2)//No ajustar el ancho si solo estamos cambiando el alto
+                // Verifique si estamos cambiando el tamaño
+                if (resizing > 0)
                 {
-                    pictureBoxCover.Width = newWidth;
-                    dataGridViewResolutions.Rows[rowSelected].Cells[1].Value = pictureBoxCover.Width;
-                    dataGridViewResolutions.Rows[rowSelected].Cells[2].Value = pictureBoxCover.Height;
-                    //numericColWidth.Value = newWidth;
-                }
-                if (resizing != 1)
-                {
-                    //No ajustar el alto si solo estamos cambiando el ancho
-                    pictureBoxCover.Height = newHeight;
-                    dataGridViewResolutions.Rows[rowSelected].Cells[1].Value = pictureBoxCover.Width;
-                    dataGridViewResolutions.Rows[rowSelected].Cells[2].Value = pictureBoxCover.Height;
-                    //numericColHeight.Value = newHeight;
-                }
+                    // Calcule el nuevo ancho y alto del PictureBox
+                    int newWidth = pictureBoxCover.Width + (e.X - currentX);
+                    int newHeight = pictureBoxCover.Height + (e.Y - currentY);
 
-                // Actualizar las coordenadas actuales del mouse
-                if (resizing != 2) currentX = e.X;
-                if (resizing != 1) currentY = e.Y;
+                    //Ajustar los limites de ancho y alto
+                    if (newWidth < 100) newWidth = 100;
+                    if (newWidth > 300) newWidth = 300;
+                    if (newHeight < 100) newHeight = 100;
+                    if (newHeight > 300) newHeight = 300;
+
+
+                    // Establecer el nuevo ancho y alto del PictureBox
+                    if (resizing != 2)//No ajustar el ancho si solo estamos cambiando el alto
+                    {
+                        pictureBoxCover.Width = newWidth;
+                        dataGridViewResolutions.Rows[rowSelected].Cells[1].Value = pictureBoxCover.Width;
+                        dataGridViewResolutions.Rows[rowSelected].Cells[2].Value = pictureBoxCover.Height;
+                        //numericColWidth.Value = newWidth;
+                    }
+                    if (resizing != 1)
+                    {
+                        //No ajustar el alto si solo estamos cambiando el ancho
+                        pictureBoxCover.Height = newHeight;
+                        dataGridViewResolutions.Rows[rowSelected].Cells[1].Value = pictureBoxCover.Width;
+                        dataGridViewResolutions.Rows[rowSelected].Cells[2].Value = pictureBoxCover.Height;
+                        //numericColHeight.Value = newHeight;
+                    }
+
+                    // Actualizar las coordenadas actuales del mouse
+                    if (resizing != 2) currentX = e.X;
+                    if (resizing != 1) currentY = e.Y;
+                }
+                else
+                {
+                    int margin = 10;
+
+                    //Ancho (Mouse a la derecha)
+                    if (e.X >= pictureBoxCover.Width - margin && e.Y < pictureBoxCover.Height - margin)
+                    {
+                        this.Cursor = Cursors.SizeWE;
+
+                    }
+                    //Alto (Mouse en la parte inferior)
+                    else if (e.X < pictureBoxCover.Width - margin && e.Y >= pictureBoxCover.Height - margin)
+                    {
+                        this.Cursor = Cursors.SizeNS;
+
+                    }
+                    //Ajustando ambos (mouse en esquina inferior derecha)
+                    else if (e.X >= pictureBoxCover.Width - margin && e.Y >= pictureBoxCover.Height - margin)
+                    {
+                        this.Cursor = Cursors.SizeNWSE;
+                    }
+                    else
+                    {
+                        this.Cursor = Cursors.Default;
+                    }
+                }
             }
+            
+        }
+
+        //Cambiar el icono del mouse
+        private void pictureBoxCover_MouseLeave(object sender, EventArgs e)
+        {
+            this.Cursor = Cursors.Default;
         }
 
         private void pictureBoxCover_MouseUp(object sender, MouseEventArgs e)
@@ -177,6 +214,7 @@ namespace C_Launcher
             resizing = 0;
             this.Cursor = Cursors.Arrow;
         }
+        #endregion
 
         private void dataGridViewResolutions_CellClick(object sender, DataGridViewCellEventArgs e)
         {

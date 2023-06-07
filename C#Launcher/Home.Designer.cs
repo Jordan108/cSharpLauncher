@@ -43,6 +43,7 @@
             this.flowLayoutPanelMain = new System.Windows.Forms.FlowLayoutPanel();
             this.treeViewMain = new System.Windows.Forms.TreeView();
             this.splitter1 = new System.Windows.Forms.Splitter();
+            this.textBoxSearch = new System.Windows.Forms.TextBox();
             this.panelTop.SuspendLayout();
             this.menuStripMain.SuspendLayout();
             this.SuspendLayout();
@@ -50,6 +51,7 @@
             // panelTop
             // 
             this.panelTop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(29)))), ((int)(((byte)(37)))));
+            this.panelTop.Controls.Add(this.textBoxSearch);
             this.panelTop.Controls.Add(this.btnReloadView);
             this.panelTop.Controls.Add(this.btnHomeView);
             this.panelTop.Controls.Add(this.btnBackView);
@@ -57,7 +59,7 @@
             this.panelTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTop.Location = new System.Drawing.Point(0, 0);
             this.panelTop.Name = "panelTop";
-            this.panelTop.Size = new System.Drawing.Size(793, 58);
+            this.panelTop.Size = new System.Drawing.Size(716, 58);
             this.panelTop.TabIndex = 0;
             // 
             // btnReloadView
@@ -98,7 +100,7 @@
             this.verToolStripMenuItem});
             this.menuStripMain.Location = new System.Drawing.Point(0, 0);
             this.menuStripMain.Name = "menuStripMain";
-            this.menuStripMain.Size = new System.Drawing.Size(793, 24);
+            this.menuStripMain.Size = new System.Drawing.Size(716, 24);
             this.menuStripMain.TabIndex = 3;
             this.menuStripMain.Text = "menuStrip1";
             // 
@@ -166,7 +168,7 @@
             this.flowLayoutPanelMain.Location = new System.Drawing.Point(105, 58);
             this.flowLayoutPanelMain.Name = "flowLayoutPanelMain";
             this.flowLayoutPanelMain.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
-            this.flowLayoutPanelMain.Size = new System.Drawing.Size(688, 412);
+            this.flowLayoutPanelMain.Size = new System.Drawing.Size(611, 412);
             this.flowLayoutPanelMain.TabIndex = 2;
             // 
             // treeViewMain
@@ -190,11 +192,19 @@
             this.splitter1.TabIndex = 3;
             this.splitter1.TabStop = false;
             // 
+            // textBoxSearch
+            // 
+            this.textBoxSearch.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.textBoxSearch.Location = new System.Drawing.Point(569, 31);
+            this.textBoxSearch.Name = "textBoxSearch";
+            this.textBoxSearch.Size = new System.Drawing.Size(139, 20);
+            this.textBoxSearch.TabIndex = 4;
+            // 
             // Home
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(793, 470);
+            this.ClientSize = new System.Drawing.Size(716, 470);
             this.Controls.Add(this.flowLayoutPanelMain);
             this.Controls.Add(this.splitter1);
             this.Controls.Add(this.treeViewMain);
@@ -231,5 +241,6 @@
         private System.Windows.Forms.ToolStripMenuItem abrirLaCarpetaSystemToolStripMenuItem;
         private System.Windows.Forms.TreeView treeViewMain;
         private System.Windows.Forms.Splitter splitter1;
+        private System.Windows.Forms.TextBox textBoxSearch;
     }
 }

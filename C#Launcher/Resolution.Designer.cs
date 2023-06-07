@@ -71,6 +71,7 @@
             this.pictureBoxCover.Size = new System.Drawing.Size(200, 200);
             this.pictureBoxCover.TabIndex = 0;
             this.pictureBoxCover.TabStop = false;
+            this.pictureBoxCover.MouseLeave += new System.EventHandler(this.pictureBoxCover_MouseLeave);
             // 
             // dataGridViewResolutions
             // 
