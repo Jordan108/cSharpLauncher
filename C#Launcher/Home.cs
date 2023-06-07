@@ -638,7 +638,7 @@ namespace C_Launcher
                     string nom = colls[i].Name.ToLower();
                     string search = textBoxSearch.Text.ToLower();
 
-                    if (nom.Contains(search) && (viewDepth == colls[i].IDFather) || (viewDepth == -1 && colls[i].Favorite == true)) addCollection = true;
+                    if (nom.Contains(search) && ((viewDepth == colls[i].IDFather) || (viewDepth == -1 && colls[i].Favorite == true))) addCollection = true;
 
                 } else
                 {
@@ -724,7 +724,7 @@ namespace C_Launcher
                     string nom = files[f].Name.ToLower();
                     string search = textBoxSearch.Text.ToLower();
 
-                    if (nom.Contains(search) && (viewDepth == files[f].IDFather) || (viewDepth == -1 && files[f].Favorite == true)) addFile = true;
+                    if (nom.Contains(search) && ((viewDepth == files[f].IDFather) || (viewDepth == -1 && files[f].Favorite == true))) addFile = true;
 
                 }
                 else

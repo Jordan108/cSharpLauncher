@@ -769,4 +769,30 @@
     </TagsID>
     <Favorite>False</Favorite>
   </file>
+  <file id="32">
+    <IDFather>0</IDFather>
+    <Name>testeo fav bar</Name>
+    <Image>
+    </Image>
+    <ImageLayout>0</ImageLayout>
+    <FilePath>
+    </FilePath>
+    <ProgramPath>
+    </ProgramPath>
+    <CMDLine>
+    </CMDLine>
+    <BackgroundRed>0</BackgroundRed>
+    <BackgroundGreen>128</BackgroundGreen>
+    <BackgroundBlue>128</BackgroundBlue>
+    <CoverResolutionID>0</CoverResolutionID>
+    <CoverWidth>100</CoverWidth>
+    <CoverHeight>100</CoverHeight>
+    <URLCheck>False</URLCheck>
+    <TagsID>
+      <id>1</id>
+      <id>2</id>
+      <id>3</id>
+    </TagsID>
+    <Favorite>True</Favorite>
+  </file>
 </Launcher>
