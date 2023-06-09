@@ -54,19 +54,6 @@ namespace C_Launcher
                 int width = int.Parse(root.SelectSingleNode("Width").InnerText);
                 int height = int.Parse(root.SelectSingleNode("Height").InnerText);
 
-                /*
-                foreach (XmlNode rootxml in root.ChildNodes)
-                {
-                    Console.WriteLine(rootxml.Name + " | " + rootxml.InnerText);
-                    switch (rootxml.Name)
-                    {
-                        case "Name": name = rootxml.InnerText; break;
-                        case "Width": width = int.Parse(rootxml.InnerText); break;
-                        case "Height": height = int.Parse(rootxml.InnerText); break;
-                    }
-
-                }
-                */
 
                 this.dataGridViewResolutions.Rows.Add(name, width, height);
                 DataGridViewRow selectedRow = dataGridViewResolutions.Rows[i];

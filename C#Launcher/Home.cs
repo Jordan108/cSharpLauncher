@@ -4,7 +4,6 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Security.Cryptography;
 using System.Windows.Forms;
 using System.Xml;
 
@@ -32,8 +31,6 @@ namespace C_Launcher
         //Mantener el tamaño de los archivos y colecciones
         private int colSize, fileSize = 0;
         
-        
-
         //ToolStrip
         //Se define aqui para poder referenciarlo en la creacion de los paneles
         private ContextMenuStrip contextMenuPictureBox = new ContextMenuStrip();
@@ -62,19 +59,8 @@ namespace C_Launcher
             //Agregar al layout panel
             flowLayoutPanelMain.ContextMenuStrip = contextMenuLayoutPanel;
 
-            //Picture Box
-            ToolStripMenuItem ToolStripEdit = new ToolStripMenuItem();
-            ToolStripMenuItem ToolStripDelete = new ToolStripMenuItem();
-            ToolStripMenuItem ToolStripFav = new ToolStripMenuItem();
-            ToolStripEdit.Text = "Editar";
-            ToolStripEdit.Click += new EventHandler(ToolStripEditPictureBox_Click);
-            ToolStripDelete.Text = "Eliminar";
-            ToolStripDelete.Click += new EventHandler(ToolStripDeletePictureBox_Click);
-            ToolStripFav.Text = "Agregar a Favoritos";
-            ToolStripFav.Click += new EventHandler(ToolStripFavSetPictureBox_Click);
-
             //Se agregan cuando se crean
-            contextMenuPictureBox.Items.AddRange(new ToolStripItem[] { ToolStripFav, ToolStripEdit, ToolStripDelete });
+            //contextMenuPictureBox.Items.AddRange(new ToolStripItem[] { ToolStripFav, ToolStripEdit, ToolStripDelete });
 
             //Establecer barra de busqueda
             textBoxSearch.Text = "Buscar...";
@@ -82,8 +68,6 @@ namespace C_Launcher
             textBoxSearch.KeyDown += new KeyEventHandler(SearchBarEnter);
             textBoxSearch.GotFocus += new EventHandler(SearchBarRemoveText);
             textBoxSearch.LostFocus += new EventHandler(SearchBarAddText);
-
-
 
             //Carga la cantidad de colecciones y archivos existentes
             colSize = LoadCollectionSize();
@@ -231,14 +215,20 @@ namespace C_Launcher
             //destroyPictureBox();
 
             //PictureBox pictureBox = (PictureBox)sender;
-            if (boxType == "file")
+            var result = MessageBox.Show("Estas seguro de querer eliminar "+pic.Name.ToString(),"Eliminar", MessageBoxButtons.YesNo);
+            if (result == DialogResult.Yes)
             {
-                deleteFile(int.Parse(id));
+                if (boxType == "file")
+                {
+                    deleteFile(int.Parse(id));
+                }
+                else if (boxType == "collection")
+                {
+                    deleteCollection(int.Parse(id));
+                }
             }
-            else if (boxType == "collection")
-            {
-                deleteCollection(int.Parse(id));
-            }
+
+            
         }
 
         //Cambiar el fav de un picture box
@@ -481,29 +471,33 @@ namespace C_Launcher
         }
 
         //Clickear para ejecutar el archivo o entrar en la coleccion
-        private void pictureBox_Click(object sender, EventArgs e)
+        private void pictureBox_Click(object sender, MouseEventArgs e)
         {
-            PictureBox pictureBox = (PictureBox)sender;
-            int idBox = int.Parse(pictureBox.Tag.ToString());//no se puede transformar un objeto a int, pero si a un string
-            string boxType = pictureBox.AccessibleDescription;//Recoje el tipo de picture box para buscar en el array especifico (col/file)
-
-            //Console.WriteLine("boxtype: " + boxType);
-            Console.WriteLine("boxtype: " + boxType);
-
-            if (boxType == "file")
+            if (e.Button == MouseButtons.Left)
             {
-                //Dentro de la funcion se buscara los procesos asociados al archivo y llamara a start process
-                Console.WriteLine("Buscar id: " + idBox);
-                searchFileProcess(idBox);
+                PictureBox pictureBox = (PictureBox)sender;
+                int idBox = int.Parse(pictureBox.Tag.ToString());//no se puede transformar un objeto a int, pero si a un string
+                string boxType = pictureBox.AccessibleDescription;//Recoje el tipo de picture box para buscar en el array especifico (col/file)
 
+                //Console.WriteLine("boxtype: " + boxType);
+                Console.WriteLine("boxtype: " + boxType);
+
+                if (boxType == "file")
+                {
+                    //Dentro de la funcion se buscara los procesos asociados al archivo y llamara a start process
+                    Console.WriteLine("Buscar id: " + idBox);
+                    searchFileProcess(idBox);
+
+                }
+                else if (boxType == "collection")
+                {
+                    //Cambiar la profundidad
+                    viewDepth = idBox;
+                    Console.WriteLine("new view depth: " + idBox);
+                    loadPictureBox(colSize, fileSize, false);
+                }
             }
-            else if (boxType == "collection")
-            {
-                //Cambiar la profundidad
-                viewDepth = idBox;
-                Console.WriteLine("new view depth: " + idBox);
-                loadPictureBox(colSize,fileSize,false);
-            }
+                
         }
 
         //Intervenir en el contextMenu
@@ -516,6 +510,21 @@ namespace C_Launcher
                 string boxType = pictureBox.AccessibleDescription;//Recoje el tipo de picture box para buscar en el array especifico (col/file)
                 bool fav = false;
 
+                //Picture Box
+                ToolStripMenuItem ToolStripEdit = new ToolStripMenuItem();
+                ToolStripMenuItem ToolStripDelete = new ToolStripMenuItem();
+                ToolStripMenuItem ToolStripFav = new ToolStripMenuItem();
+                ToolStripEdit.Text = "Editar";
+                ToolStripEdit.Click += new EventHandler(ToolStripEditPictureBox_Click);
+                ToolStripDelete.Text = "Eliminar";
+                ToolStripDelete.Click += new EventHandler(ToolStripDeletePictureBox_Click);
+                ToolStripFav.Text = "Agregar a Favoritos";
+                ToolStripFav.Click += new EventHandler(ToolStripFavSetPictureBox_Click);
+
+                //Crear un contextMenu local para modificarlo a gusto
+                ContextMenuStrip contextMenuStrip = new ContextMenuStrip();//pictureBox.ContextMenuStrip;
+                contextMenuStrip.Items.AddRange(new ToolStripItem[] { ToolStripFav, ToolStripEdit, ToolStripDelete });
+
                 if (boxType == "file")
                 {
                     //Dentro de la funcion se buscara los procesos asociados al archivo y llamara a start process
@@ -523,10 +532,15 @@ namespace C_Launcher
                 }
                 else if (boxType == "collection")
                 {
+                    ToolStripMenuItem ToolStripEditAll = new ToolStripMenuItem();
+                    ToolStripEditAll.Text = "Editar todos los archivos de la coleccion";
+                    ToolStripEditAll.Click += new EventHandler(ToolStripEditPictureBox_Click);
+
                     fav = getColeFav(idBox);
+                    contextMenuStrip.Items.Add(ToolStripEditAll);
                 }
 
-                ContextMenuStrip contextMenuStrip = pictureBox.ContextMenuStrip;
+                
 
                 // Accede al ToolStripMenuItem dentro del ContextMenuStrip
                 ToolStripMenuItem toolStripMenuItem = (ToolStripMenuItem)contextMenuStrip.Items[0];//depende del orden establecido en la linea 75
@@ -697,7 +711,7 @@ namespace C_Launcher
                     //picBoxArr[pL].Click +=
                     picBoxArr[pL].MouseEnter += new System.EventHandler(this.pictureBox_MouseEnter);
                     picBoxArr[pL].MouseLeave += new System.EventHandler(this.pictureBox_MouseLeave);
-                    picBoxArr[pL].Click += new System.EventHandler(this.pictureBox_Click);
+                    picBoxArr[pL].MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox_Click);
                     picBoxArr[pL].MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseUp);
 
 
@@ -809,7 +823,7 @@ namespace C_Launcher
                     //agregar la funcionalidad
                     picBoxArr[pL].MouseEnter += new System.EventHandler(this.pictureBox_MouseEnter);
                     picBoxArr[pL].MouseLeave += new System.EventHandler(this.pictureBox_MouseLeave);
-                    picBoxArr[pL].Click += new System.EventHandler(this.pictureBox_Click);
+                    picBoxArr[pL].MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox_Click);
                     picBoxArr[pL].MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseUp);
                     picBoxArr[pL].ContextMenuStrip = contextMenuPictureBox;
 
