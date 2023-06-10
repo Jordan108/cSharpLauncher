@@ -1,5 +1,6 @@
 ﻿using C_Launcher.Clases;
 using System;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -30,6 +31,8 @@ namespace C_Launcher
         private ComboBox CmbRes = new ComboBox();
         //Combobox del formato de la imagen (zoom-estirado)
         private ComboBox CmbImageFormat = new ComboBox();
+
+        //Crear nuevos archivos desde 0
         public NewMultipleFiles(int viewDepth, int ResId, int Width, int Height, int Layout)
         {
             InitializeComponent();
@@ -39,6 +42,49 @@ namespace C_Launcher
             this.defaultHeight = Height;
             this.defaultImageLayout = Layout;
             CustomComponent();
+        }
+
+        //Editar los archivos de una coleccion
+        public NewMultipleFiles(Files[] files, int viewDepth, int ResId, int Width, int Height, int Layout)
+        {
+            InitializeComponent();
+            this.defaultFather = viewDepth;
+            this.defaultRes = ResId;
+            this.defaultWidth = Width;
+            this.defaultHeight = Height;
+            this.defaultImageLayout = Layout;
+            CustomComponent();
+
+            //No permitir poder agregar archivos cuando estas editando (no deberia dar problemas, pero por si acaso)
+            this.buttonAddRow.Enabled = false;
+            this.buttonAddRow.Visible = false;
+
+            //Para agregarlo en el combobox
+            ((DataGridViewComboBoxColumn)dataGridViewFiles.Columns["ColumnRes"]).DataSource = CmbRes.Items;
+            ((DataGridViewComboBoxColumn)dataGridViewFiles.Columns["ColumnFormat"]).DataSource = CmbImageFormat.Items;
+            //Iterar sobre los archivos a editar y añadirlos a la tabla
+            for (int i = 0; i < files.Length; i++)
+            {
+                // Crear una nueva fila para el DataGridView
+                //nombre, checkbox url, ruta archivo, ruta lanzador, cmd, ancho, alto, resolucion, ruta caratula, Formato imagen, Color de fondo
+                this.dataGridViewFiles.Rows.Add(files[i].Name, files[i].URLCheck, files[i].FilePath, files[i].ProgramPath, files[i].CMDLine, files[i].Width, files[i].Height, null, files[i].ImagePath, null, null);
+
+                //Optimizar el combobox para que la opcion default sea "ninguno"
+                int rowCount = dataGridViewFiles.Rows.Count;
+                dataGridViewFiles.CurrentCell = dataGridViewFiles.Rows[rowCount - 1].Cells[0];
+                //Combobox de las resoluciones
+                dataGridViewFiles.Rows[rowCount - 1].Cells[7].Value = (dataGridViewFiles.Rows[rowCount - 1].Cells[7] as DataGridViewComboBoxCell).Items[files[i].ResolutionID];
+                //Combobox del formato de imagen
+                dataGridViewFiles.Rows[rowCount - 1].Cells[9].Value = (dataGridViewFiles.Rows[rowCount - 1].Cells[9] as DataGridViewComboBoxCell).Items[files[i].ImageLayout];
+                //Color del boton
+                DataGridViewCellStyle CellStyle = new DataGridViewCellStyle();
+                CellStyle.BackColor = Color.FromArgb(255, files[i].ColorRed, files[i].ColorGreen, files[i].ColorBlue); ;
+                dataGridViewFiles.Rows[rowCount - 1].Cells[10].Style = CellStyle;
+
+                dataGridViewFiles.Rows[rowCount - 1].Tag = files[i].ID;//Para declarar que estos archivos son nuevos
+                dataGridViewFiles.Rows[rowCount - 1].Selected = true;
+                rowSelected = rowCount - 1;
+            }
         }
 
         private void CustomComponent()
@@ -182,8 +228,8 @@ namespace C_Launcher
                     string fileName = Path.GetFileNameWithoutExtension(texto);
 
                     // Crear una nueva fila para el DataGridView
-                    //nombre, checkbox url, ruta archivo, ruta lanzador, cmd, ancho, alto, resolucion, ruta caratula
-                    this.dataGridViewFiles.Rows.Add(fileName, false, texto, textBoxGlobalLauncher.Text, "", 200, 200, null, "", null);
+                    //nombre, checkbox url, ruta archivo, ruta lanzador, cmd, ancho, alto, resolucion, ruta caratula, Formato imagen, Color de fondo
+                    this.dataGridViewFiles.Rows.Add(fileName, false, texto, textBoxGlobalLauncher.Text, "", 200, 200, null, "", null, null);
 
                     //Optimizar el combobox para que la opcion default sea "ninguno"
                     int rowCount = dataGridViewFiles.Rows.Count;
@@ -192,7 +238,15 @@ namespace C_Launcher
                     dataGridViewFiles.Rows[rowCount - 1].Cells[7].Value = (dataGridViewFiles.Rows[rowCount - 1].Cells[7] as DataGridViewComboBoxCell).Items[0];
                     //Combobox del formato de imagen
                     dataGridViewFiles.Rows[rowCount - 1].Cells[9].Value = (dataGridViewFiles.Rows[rowCount - 1].Cells[9] as DataGridViewComboBoxCell).Items[0];
-                    
+                    //Color del boton
+                    DataGridViewCellStyle CellStyle = new DataGridViewCellStyle();
+                    CellStyle.BackColor = Color.FromArgb(255, 0, 0, 0); ;
+                    dataGridViewFiles.Rows[rowCount - 1].Cells[10].Style = CellStyle;
+
+
+
+
+                    dataGridViewFiles.Rows[rowCount - 1].Tag = -1;//Para declarar que estos archivos son nuevos
                     dataGridViewFiles.Rows[rowCount - 1].Selected = true;
                     rowSelected = rowCount - 1;
                 }
@@ -251,6 +305,20 @@ namespace C_Launcher
                             dataGridViewFiles.Rows[e.RowIndex].Cells[8].Value = openDialog.FileName;
                         }
                         openDialog.Dispose();
+                        break;
+                    case 10:
+                        //Cambiar el color de fondo
+                        ColorDialog colorDialog = new ColorDialog();
+
+                        if (colorDialog.ShowDialog() == DialogResult.OK)
+                        {
+                            // Aquí obtienes el color seleccionado
+                            Color selectedColor = colorDialog.Color;
+
+                            dataGridViewFiles.Rows[e.RowIndex].Cells[10].Style.BackColor = selectedColor;
+                            //Para poder ver el color
+                            this.dataGridViewFiles.CurrentCell.Selected = false;
+                        }
                         break;
                 }
             }
@@ -441,7 +509,8 @@ namespace C_Launcher
             Files[] passFile = new Files[rowCount];
             for (int i = 0; i < rowCount; i++)
             {
-                
+                int fileID = int.Parse(dataGridViewFiles.Rows[i].Tag.ToString());
+
                 //Id de la resolucion
                 int resID = 0;
                 int selectedIndex = comboBoxResolution.Items.IndexOf(dataGridViewFiles.Rows[i].Cells[7].Value);
@@ -497,9 +566,9 @@ namespace C_Launcher
                 string filePath = dataGridViewFiles.Rows[i].Cells[2].Value.ToString();
                 string programPath = dataGridViewFiles.Rows[i].Cells[3].Value.ToString();
                 string cmdLine = dataGridViewFiles.Rows[i].Cells[4].Value.ToString();
-                int R = 0;
-                int G = 0;
-                int B = 0;
+                int R = dataGridViewFiles.Rows[i].Cells[10].Style.BackColor.R;
+                int G = dataGridViewFiles.Rows[i].Cells[10].Style.BackColor.G;
+                int B = dataGridViewFiles.Rows[i].Cells[10].Style.BackColor.B;
                 int width = int.Parse(dataGridViewFiles.Rows[i].Cells[5].Value.ToString());
                 int height = int.Parse(dataGridViewFiles.Rows[i].Cells[6].Value.ToString());
                 bool url = bool.Parse(dataGridViewFiles.Rows[i].Cells[1].Value.ToString());
@@ -507,7 +576,7 @@ namespace C_Launcher
                 bool favorite = false;
 
 
-                Files tempFile = new Files(-1, idFather, nameFile, imgPath, imgLayout, filePath, programPath, cmdLine, R, G, B, resID, width, height, url, tagsArray, favorite);
+                Files tempFile = new Files(fileID, idFather, nameFile, imgPath, imgLayout, filePath, programPath, cmdLine, R, G, B, resID, width, height, url, tagsArray, favorite);
                 passFile[i] = tempFile;
 
                 //Files passFile = new Files(idFile, idFather, nameFile, imgPath, imgLayout, filePath, programPath, cmdLine, R, G, B, resID, width, height, url, tagsArray, favorite);

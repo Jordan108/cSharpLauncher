@@ -203,6 +203,53 @@ namespace C_Launcher
             }
         }
 
+        //Editar los archivos de esa coleccion picture box
+        private void ToolStripEditMultiplePictureBox_Click(object sender, EventArgs e)
+        {
+            //Recojer los datos del picture box
+            PictureBox pic = (PictureBox)contextMenuPictureBox.SourceControl;
+            string id = pic.Tag.ToString();
+            string boxType = pic.AccessibleDescription;
+
+            //Lo hago solo por si acaso
+            if (boxType == "collection")
+            {
+                int defaultWidth = 200;
+                int defaultHeight = 200;
+                int defaultRes = 0;
+                int defaultImageLayout = 0;
+
+                //Si la profundidad es mayor a 0, buscar la coleccion con esa id en especifico y extraerle los valores default
+                if (viewDepth > 0)
+                {
+                    XmlDocument doc = new XmlDocument();
+                    doc.Load(xmlColPath);
+
+                    string xpath = "//Launcher/collection[@id='" + id + "']";
+                    XmlNode root = doc.SelectSingleNode(xpath);
+
+                    defaultRes = int.Parse(root.SelectSingleNode("CoverSonResolutionID").InnerText);
+                    defaultWidth = int.Parse(root.SelectSingleNode("CoverSonWidth").InnerText);
+                    defaultHeight = int.Parse(root.SelectSingleNode("CoverSonHeight").InnerText);
+                    defaultImageLayout = int.Parse(root.SelectSingleNode("SonImageLayout").InnerText);
+                }
+
+                Files[] files = searchFilesInCollection(int.Parse(id));
+
+                if (files.Length <= 0)
+                {
+                    MessageBox.Show("Esta coleccion no tiene archivos para editar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                } 
+                NewMultipleFiles editFilesCollection = new NewMultipleFiles(files, int.Parse(id), defaultRes, defaultWidth, defaultHeight, defaultImageLayout);
+                editFilesCollection.ReturnedObject += NewMultFiles_ReturnedObject;
+                editFilesCollection.ShowDialog();
+            } else
+            {
+                MessageBox.Show("No se puede editar los archivos de algo que no es una coleccion", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
         //Eliminar el picture box
         private void ToolStripDeletePictureBox_Click(object sender, EventArgs e)
         {
@@ -534,7 +581,7 @@ namespace C_Launcher
                 {
                     ToolStripMenuItem ToolStripEditAll = new ToolStripMenuItem();
                     ToolStripEditAll.Text = "Editar todos los archivos de la coleccion";
-                    ToolStripEditAll.Click += new EventHandler(ToolStripEditPictureBox_Click);
+                    ToolStripEditAll.Click += new EventHandler(ToolStripEditMultiplePictureBox_Click);
 
                     fav = getColeFav(idBox);
                     contextMenuStrip.Items.Add(ToolStripEditAll);
@@ -1028,7 +1075,6 @@ namespace C_Launcher
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load(xmlFilesPath);
 
-
             int fileID = 1;
             for (int i = 0; i < arraySize; i++)
             {
@@ -1068,38 +1114,6 @@ namespace C_Launcher
                 }
                 bool fav = bool.Parse(root.SelectSingleNode("Favorite").InnerText);
 
-                //Navegar entre todos los elementos que contenga el elemento base del xml
-                /*foreach (XmlNode rootxml in root.ChildNodes)
-                {
-                    //Console.WriteLine(rootxml.Name + " | " + rootxml.InnerText);
-                    switch (rootxml.Name)
-                    {
-                        case "IDFather": idFather = int.Parse(rootxml.InnerText); break;
-                        case "Name": name = rootxml.InnerText; break;
-                        case "Image": imgPath = rootxml.InnerText; break;
-                        case "ImageLayout": imgLayout = int.Parse(rootxml.InnerText); break;
-                        case "FilePath": filePath = rootxml.InnerText; break;
-                        case "ProgramPath": programPath = rootxml.InnerText; break;
-                        case "CMDLine": cmdLine = rootxml.InnerText; break;
-                        case "BackgroundRed": red = int.Parse(rootxml.InnerText); break;
-                        case "BackgroundGreen": green = int.Parse(rootxml.InnerText); break;
-                        case "BackgroundBlue": blue = int.Parse(rootxml.InnerText); break;
-                        case "CoverResolutionID": resolution = int.Parse(rootxml.InnerText); break;
-                        case "CoverWidth": width = int.Parse(rootxml.InnerText); break;
-                        case "CoverHeight": height = int.Parse(rootxml.InnerText); break;
-                        case "URLCheck": urlCheck = bool.Parse(rootxml.InnerText); break;
-                        case "TagsID":
-                            //leer los tags dentro del elemento
-                            foreach (XmlNode tagid in rootxml)
-                            {
-                                //hacer un append al array
-                                tagsArray = tagsArray.Append(int.Parse(tagid.InnerText)).ToArray();
-                            }
-                            break;
-                        case "Favorite": fav = bool.Parse(rootxml.InnerText); break;
-                    }
-                }*/
-
                 fileData[i] = new Files(fileID, idFather, name, imgPath, imgLayout, filePath, programPath, cmdLine, red, green, blue, resolution, width, height, urlCheck, tagsArray, fav);
 
                 fileID++;
@@ -1129,6 +1143,7 @@ namespace C_Launcher
             xmlDoc.Load(xmlFilesPath);
 
             XmlElement file;
+            //Creando un archivo totalmente nuevo
             if (Class.ID == -1)
             {
                 XmlNodeList nodeList = xmlDoc.SelectNodes("//Launcher/file");
@@ -1194,6 +1209,7 @@ namespace C_Launcher
 
             //Actualizar la cantidad de archivos
             fileSize = LoadFilesSize();
+            viewDepth = Class.IDFather;
         }
 
         //Cargar los datos de un archivo especifico
@@ -1668,46 +1684,77 @@ namespace C_Launcher
             int[] tagsArray = { };
             foreach (XmlNode tagid in rootTag)
             {
-                //string[] strArray = rootxml.InnerText.Split(' ');
-                //tagsArray = strArray.Select(s => int.Parse(s)).ToArray();
-                //break;
-                //hacer un append al array
                 tagsArray = tagsArray.Append(int.Parse(tagid.InnerText)).ToArray();
             }
             bool fav = bool.Parse(root.SelectSingleNode("Favorite").InnerText);
 
-            //"1, 3, 4, 5, 6, 9, 10, 14, 23"
-            //Navegar entre todos los elementos que contenga el elemento base del xml
-            /*foreach (XmlNode rootxml in root.ChildNodes)
-            {
-                Console.WriteLine(rootxml.Name + " | " + rootxml.InnerText);
-                switch (rootxml.Name)
-                {
-                    case "IDFather": idFather = int.Parse(rootxml.InnerText); break;
-                    case "Name": name = rootxml.InnerText; break;
-                    case "Image": imgPath = rootxml.InnerText; break;
-                    case "ImageLayout": imgLayout = int.Parse(rootxml.InnerText); break;
-                    case "BackgroundRed": red = int.Parse(rootxml.InnerText); break;
-                    case "BackgroundGreen": green = int.Parse(rootxml.InnerText); break;
-                    case "BackgroundBlue": blue = int.Parse(rootxml.InnerText); break;
-                    case "CoverResolutionID": resolution = int.Parse(rootxml.InnerText); break;
-                    case "CoverWidth": width = int.Parse(rootxml.InnerText); break;
-                    case "CoverHeight": height = int.Parse(rootxml.InnerText); break;
-                    case "CoverSonResolutionID": sonRes = int.Parse(rootxml.InnerText); break;
-                    case "CoverSonWidth": sonWidth = int.Parse(rootxml.InnerText); break;
-                    case "CoverSonHeight": sonHeight = int.Parse(rootxml.InnerText); break;
-                    case "SonImageLayout": sonLayout = int.Parse(rootxml.InnerText); break;
-                    case "TagsID":
-                        string[] strArray = rootxml.InnerText.Split(' ');
-                        tagsArray = strArray.Select(s => int.Parse(s)).ToArray();
-                        break;
-                    case "Favorite": fav = bool.Parse(rootxml.InnerText); break;
-                }
-            }*/
 
             Collections colReturn = new Collections(colID, idFather, name, imgPath, imgLayout, red, green, blue, resolution, width, height, sonRes, sonWidth, sonHeight, sonLayout, tagsArray, fav);
 
             return colReturn;
+        }
+
+        private Files[] searchFilesInCollection(int colID)
+        {
+            Files[] fileData = new Files[fileSize];
+
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.Load(xmlFilesPath);
+
+            int fileID = 1;
+            for (int i = 0; i < fileSize; i++)
+            {
+                //Buscamos el elemento a modificar
+                string xpath = "//Launcher/file[@id='" + fileID + "']";
+                string tagpath = "//Launcher/file/TagsID";
+                XmlNode root = xmlDoc.SelectSingleNode(xpath);
+                XmlNode rootTag = xmlDoc.SelectSingleNode(tagpath);
+
+                //si no existe un elemento con esa id, sumar 1
+                while (root == null)
+                {
+                    fileID++;
+                    xpath = "//Launcher/file[@id='" + fileID + "']";
+                    root = xmlDoc.SelectSingleNode(xpath);
+                }
+
+                //Solo iterar sobre los archivos que tengan de padre a la coleccion a editar
+                int idFather = int.Parse(root.SelectSingleNode("IDFather").InnerText);
+                if (idFather != colID)
+                {
+                    fileID++;
+                    continue;
+                }
+                
+                string name = root.SelectSingleNode("Name").InnerText;
+                string imgPath = root.SelectSingleNode("Image").InnerText;
+                int imgLayout = int.Parse(root.SelectSingleNode("ImageLayout").InnerText);
+                string filePath = root.SelectSingleNode("FilePath").InnerText;
+                string programPath = root.SelectSingleNode("ProgramPath").InnerText;
+                string cmdLine = root.SelectSingleNode("CMDLine").InnerText;
+                int red = int.Parse(root.SelectSingleNode("BackgroundRed").InnerText);
+                int green = int.Parse(root.SelectSingleNode("BackgroundGreen").InnerText);
+                int blue = int.Parse(root.SelectSingleNode("BackgroundBlue").InnerText);
+                int resolution = int.Parse(root.SelectSingleNode("CoverResolutionID").InnerText);
+                int width = int.Parse(root.SelectSingleNode("CoverWidth").InnerText);
+                int height = int.Parse(root.SelectSingleNode("CoverHeight").InnerText);
+                bool urlCheck = bool.Parse(root.SelectSingleNode("URLCheck").InnerText);
+                int[] tagsArray = new int[] { };
+                foreach (XmlNode tagid in rootTag)
+                {
+                    //hacer un append al array
+                    tagsArray = tagsArray.Append(int.Parse(tagid.InnerText)).ToArray();
+                }
+                bool fav = bool.Parse(root.SelectSingleNode("Favorite").InnerText);
+
+                fileData[i] = new Files(fileID, idFather, name, imgPath, imgLayout, filePath, programPath, cmdLine, red, green, blue, resolution, width, height, urlCheck, tagsArray, fav);
+
+                fileID++;
+            }
+
+            Files[] arrangedFiles = fileData.Where(elemento => elemento != null).ToArray();
+
+            return arrangedFiles;
         }
 
         private void deleteCollection(int colID)
