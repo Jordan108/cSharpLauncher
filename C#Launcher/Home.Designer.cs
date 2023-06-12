@@ -28,7 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Home));
             this.panelTop = new System.Windows.Forms.Panel();
+            this.textBoxSearch = new System.Windows.Forms.TextBox();
             this.btnReloadView = new System.Windows.Forms.Button();
             this.btnHomeView = new System.Windows.Forms.Button();
             this.btnBackView = new System.Windows.Forms.Button();
@@ -43,7 +45,6 @@
             this.flowLayoutPanelMain = new System.Windows.Forms.FlowLayoutPanel();
             this.treeViewMain = new System.Windows.Forms.TreeView();
             this.splitter1 = new System.Windows.Forms.Splitter();
-            this.textBoxSearch = new System.Windows.Forms.TextBox();
             this.panelTop.SuspendLayout();
             this.menuStripMain.SuspendLayout();
             this.SuspendLayout();
@@ -61,6 +62,14 @@
             this.panelTop.Name = "panelTop";
             this.panelTop.Size = new System.Drawing.Size(716, 58);
             this.panelTop.TabIndex = 0;
+            // 
+            // textBoxSearch
+            // 
+            this.textBoxSearch.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.textBoxSearch.Location = new System.Drawing.Point(569, 31);
+            this.textBoxSearch.Name = "textBoxSearch";
+            this.textBoxSearch.Size = new System.Drawing.Size(139, 20);
+            this.textBoxSearch.TabIndex = 4;
             // 
             // btnReloadView
             // 
@@ -192,14 +201,6 @@
             this.splitter1.TabIndex = 3;
             this.splitter1.TabStop = false;
             // 
-            // textBoxSearch
-            // 
-            this.textBoxSearch.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.textBoxSearch.Location = new System.Drawing.Point(569, 31);
-            this.textBoxSearch.Name = "textBoxSearch";
-            this.textBoxSearch.Size = new System.Drawing.Size(139, 20);
-            this.textBoxSearch.TabIndex = 4;
-            // 
             // Home
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -209,6 +210,7 @@
             this.Controls.Add(this.splitter1);
             this.Controls.Add(this.treeViewMain);
             this.Controls.Add(this.panelTop);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStripMain;
             this.MinimumSize = new System.Drawing.Size(300, 300);
             this.Name = "Home";
