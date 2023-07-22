@@ -6,6 +6,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace C_Launcher
 {
@@ -911,6 +912,7 @@ namespace C_Launcher
             treeViewMain.Nodes.Clear();//Limpiar todo el treeview
             //Crear el nodo de favoritos
             TreeNode fvNode = new TreeNode("Favoritos");  fvNode.Tag = -1; treeViewMain.Nodes.Add(fvNode);
+
             for (int i = 0; i < colls.Length; i++)
             {
                 //Cargar sub nodos
@@ -937,10 +939,20 @@ namespace C_Launcher
 
                     // Asignar una etiqueta al nodo
                     node.Tag = colls[i].ID;
+                    //si la id del nodo coincide con la profundidad, seleccionarlo
+                    if (colls[i].ID == viewDepth)
+                    {
+                        treeViewMain.SelectedNode = node;
+                    }
 
                     // Agregar el nodo al TreeView
                     treeViewMain.Nodes.Add(node);
                 }
+            }
+            //Verificar que, si la vista esta en favoritos (-1; seleccionar automaticamente el primer nodo)
+            if (viewDepth == -1)
+            {
+                treeViewMain.SelectedNode = treeViewMain.Nodes[0];
             }
             //Expandir el tree view para ver todos los nodos
             treeViewMain.ExpandAll();
