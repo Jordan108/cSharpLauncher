@@ -1,4 +1,10 @@
-/bin/Debug/System/Covers/
-/.vs
-.vs/C\#Launcher/FileContentIndex/fa80f07d-0ae9-4537-9a12-9bb66e8cc2e8.vsidx
-C\#Launcher/bin/Debug/System/Covers/descargar.png
+
+##Ignorar cosas de Visual Studio
+.vs/
+
+##Ignorar apartados personales del proyecto
+C\#Launcher/bin/Debug/System/Covers/
+C\#Launcher/bin/Debug/System/Collections.xml
+C\#Launcher/bin/Debug/System/Files.xml
+C\#Launcher/bin/Debug/System/Resolutions.xml
+C\#Launcher/bin/Debug/System/Settings.xml
