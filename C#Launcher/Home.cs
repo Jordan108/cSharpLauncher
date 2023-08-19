@@ -1,4 +1,5 @@
 ﻿using C_Launcher.Clases;
+//using C_Launcher.Properties;
 using System;
 using System.Diagnostics;
 using System.Drawing;
@@ -6,6 +7,7 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
+//using static System.Net.Mime.MediaTypeNames;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace C_Launcher
@@ -28,6 +30,8 @@ namespace C_Launcher
         private string xmlSettingsPath = "System\\Settings.xml";
         //Ruta de los covers
         private string dirCoversPath = "System\\Covers";
+        //Ruta de los elementos del sistema (iconos y demas)
+        private string imgCollIconPath = "System\\Resources\\CollectionIcon.png";
 
         //Mantener el tamaño de los archivos y colecciones
         private int colSize, fileSize = 0;
@@ -482,11 +486,12 @@ namespace C_Launcher
 
         }
 
-        //Mostrar el nombre del panel al pasar el mouse por encima
+        //Mostrar graficos de un picture box (nombre/iconos)
         private void pictureBox_MouseEnter(object sender, EventArgs e)
         {
             PictureBox pictureBox = (PictureBox)sender;
             string picName = pictureBox.Name;
+            string boxType = pictureBox.AccessibleDescription;
 
             Graphics g = pictureBox.CreateGraphics();//Crear graphics
 
@@ -508,10 +513,20 @@ namespace C_Launcher
 
             FontBrush.Dispose();
             RectBrush.Dispose();//Dejar de ocupar pincel
+
+
+            //Dibujar un icono para indicar que algo es una coleccion
+            if (boxType == "collection")
+            {
+                Bitmap bpm = new Bitmap(imgCollIconPath);
+                g.DrawImage(bpm, 5, 5);
+                bpm.Dispose();
+            }
+
             g.Dispose();//Dejar de ocupar graphics
         }
 
-        //Dejar de mostrar el nombre
+        //Dejar de mostrar graficos de un picture box
         private void pictureBox_MouseLeave(object sender, EventArgs e)
         {
             PictureBox pictureBox = (PictureBox)sender;
@@ -641,6 +656,48 @@ namespace C_Launcher
             
         }
         #endregion
+
+        //Para reducir el tamaño de las imagenes del picture box
+        private Image loadImage(string imagePath)
+        {
+           // Image image = null;
+
+            // Carga la imagen original.
+            Image originalImage = Image.FromFile(imagePath);
+
+            // Calcula el nuevo tamaño manteniendo la relación de aspecto.
+            int maxWidth = 300;
+            int maxHeight = 300;
+            int newWidth, newHeight;
+
+            //Ajusta el tamaño de la imagen acordando un maximo entre 300x300 manteniendo una relacion de aspecto
+            if (originalImage.Width > maxWidth || originalImage.Height > maxHeight)
+            {
+                double widthRatio = (double)maxWidth / originalImage.Width;
+                double heightRatio = (double)maxHeight / originalImage.Height;
+                double ratio = Math.Min(widthRatio, heightRatio);
+
+                newWidth = (int)(originalImage.Width * ratio);
+                newHeight = (int)(originalImage.Height * ratio);
+            }
+            else
+            {
+                newWidth = originalImage.Width;
+                newHeight = originalImage.Height;
+            }
+
+            // Crea una nueva imagen con el tamaño ajustado.
+            Image resizedImage = new Bitmap(newWidth, newHeight);
+
+            // Dibuja la imagen original en la nueva imagen ajustandole el tamaño
+            using (Graphics graphics = Graphics.FromImage(resizedImage))
+            {
+                graphics.DrawImage(originalImage, 0, 0, newWidth, newHeight);
+            }
+
+            return resizedImage;
+        }
+
         private void destroyPictureBox()
         {
             //remueve todos los paneles del control
@@ -727,10 +784,11 @@ namespace C_Launcher
                         try
                         {
                             Image image;
-                            using (Stream stream = File.OpenRead(colls[i].ImagePath))
+                            image = loadImage(colls[i].ImagePath);
+                            /*using (Stream stream = File.OpenRead(colls[i].ImagePath))
                             {
                                 image = System.Drawing.Image.FromStream(stream);
-                            }
+                            }*/
                             picBoxArr[pL].BackgroundImage = image;
                             image = null;
 
@@ -843,10 +901,11 @@ namespace C_Launcher
                         try
                         {
                             Image image;
-                            using (Stream stream = File.OpenRead(files[f].ImagePath))
+                            image = loadImage(files[f].ImagePath);
+                            /*using (Stream stream = File.OpenRead(files[f].ImagePath))
                             {
                                 image = System.Drawing.Image.FromStream(stream);
-                            }
+                            }*/
                             picBoxArr[pL].BackgroundImage = image;
                             image = null;
                             //Image imagen = Image.FromFile(files[f].ImagePath);

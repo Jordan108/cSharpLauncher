@@ -119,10 +119,11 @@ namespace C_Launcher
                 try
                 {
                     Image image;
-                    using (Stream stream = File.OpenRead(fileData.ImagePath))
+                    image = loadImage(fileData.ImagePath);
+                    /*using (Stream stream = File.OpenRead(fileData.ImagePath))
                     {
                         image = System.Drawing.Image.FromStream(stream);
-                    }
+                    }*/
                     pictureBoxCover.BackgroundImage = image;
                     pictureBoxCover.Tag = fileData.ImagePath;
                     xmlImagePath = fileData.ImagePath;//Para editar la imagen
@@ -266,6 +267,47 @@ namespace C_Launcher
                 pictureBoxCover.BackgroundImageLayout = ImageLayout.Stretch;
             }
             #endregion
+        }
+
+        //Para reducir el tamaño de las imagenes del picture box
+        private Image loadImage(string imagePath)
+        {
+            // Image image = null;
+
+            // Carga la imagen original.
+            Image originalImage = Image.FromFile(imagePath);
+
+            // Calcula el nuevo tamaño manteniendo la relación de aspecto.
+            int maxWidth = 300;
+            int maxHeight = 300;
+            int newWidth, newHeight;
+
+            //Ajusta el tamaño de la imagen acordando un maximo entre 300x300 manteniendo una relacion de aspecto
+            if (originalImage.Width > maxWidth || originalImage.Height > maxHeight)
+            {
+                double widthRatio = (double)maxWidth / originalImage.Width;
+                double heightRatio = (double)maxHeight / originalImage.Height;
+                double ratio = Math.Min(widthRatio, heightRatio);
+
+                newWidth = (int)(originalImage.Width * ratio);
+                newHeight = (int)(originalImage.Height * ratio);
+            }
+            else
+            {
+                newWidth = originalImage.Width;
+                newHeight = originalImage.Height;
+            }
+
+            // Crea una nueva imagen con el tamaño ajustado.
+            Image resizedImage = new Bitmap(newWidth, newHeight);
+
+            // Dibuja la imagen original en la nueva imagen ajustandole el tamaño
+            using (Graphics graphics = Graphics.FromImage(resizedImage))
+            {
+                graphics.DrawImage(originalImage, 0, 0, newWidth, newHeight);
+            }
+
+            return resizedImage;
         }
 
         #region Manejar archivos XML
@@ -584,10 +626,7 @@ namespace C_Launcher
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 Image image;
-                using (Stream stream = File.OpenRead(openFileDialog.FileName))
-                {
-                    image = System.Drawing.Image.FromStream(stream);
-                }
+                image = loadImage(openFileDialog.FileName);
                 pictureBoxCover.BackgroundImage = image;
                 pictureBoxCover.Tag = openFileDialog.FileName;
                 image = null;
@@ -621,7 +660,7 @@ namespace C_Launcher
             if (checkBoxURL.Checked == true)
             {
                 labelFilePath.Text = "URL";
-                labelFilePath.Location = new Point(98, 164);
+                labelFilePath.Location = new Point(98, 103);
                 buttonSearchFile.Enabled = false;
                 labelOptional.Enabled = false;
                 labelProgramPath.Enabled = false;
@@ -632,7 +671,7 @@ namespace C_Launcher
             } else
             {
                 labelFilePath.Text = "Ruta del archivo";
-                labelFilePath.Location = new Point(45, 164);
+                labelFilePath.Location = new Point(45, 103);
                 buttonSearchFile.Enabled = true;
                 labelOptional.Enabled = true;
                 labelProgramPath.Enabled = true;

@@ -87,10 +87,11 @@ namespace C_Launcher
                 try
                 {
                     Image image;
-                    using (Stream stream = File.OpenRead(colData.ImagePath))
+                    image = loadImage(colData.ImagePath);
+                    /*using (Stream stream = File.OpenRead(colData.ImagePath))
                     {
                         image = System.Drawing.Image.FromStream(stream);
-                    }
+                    }*/
                     pictureBoxCoverCollection.BackgroundImage = image;
                     pictureBoxCoverCollection.Tag = colData.ImagePath;
                     xmlImagePath = colData.ImagePath;//Para editar la imagen
@@ -132,6 +133,46 @@ namespace C_Launcher
             }
         }
 
+        //Para reducir el tamaño de las imagenes del picture box
+        private Image loadImage(string imagePath)
+        {
+            // Image image = null;
+
+            // Carga la imagen original.
+            Image originalImage = Image.FromFile(imagePath);
+
+            // Calcula el nuevo tamaño manteniendo la relación de aspecto.
+            int maxWidth = 300;
+            int maxHeight = 300;
+            int newWidth, newHeight;
+
+            //Ajusta el tamaño de la imagen acordando un maximo entre 300x300 manteniendo una relacion de aspecto
+            if (originalImage.Width > maxWidth || originalImage.Height > maxHeight)
+            {
+                double widthRatio = (double)maxWidth / originalImage.Width;
+                double heightRatio = (double)maxHeight / originalImage.Height;
+                double ratio = Math.Min(widthRatio, heightRatio);
+
+                newWidth = (int)(originalImage.Width * ratio);
+                newHeight = (int)(originalImage.Height * ratio);
+            }
+            else
+            {
+                newWidth = originalImage.Width;
+                newHeight = originalImage.Height;
+            }
+
+            // Crea una nueva imagen con el tamaño ajustado.
+            Image resizedImage = new Bitmap(newWidth, newHeight);
+
+            // Dibuja la imagen original en la nueva imagen ajustandole el tamaño
+            using (Graphics graphics = Graphics.FromImage(resizedImage))
+            {
+                graphics.DrawImage(originalImage, 0, 0, newWidth, newHeight);
+            }
+
+            return resizedImage;
+        }
         private void CustomComponent()
         {
             //Manejar coverBox de la coleccion
@@ -701,16 +742,10 @@ namespace C_Launcher
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 Image image;
-                using (Stream stream = File.OpenRead(openFileDialog.FileName))
-                {
-                    image = System.Drawing.Image.FromStream(stream);
-                }
+                image = loadImage(openFileDialog.FileName);
                 pictureBoxCoverCollection.BackgroundImage = image;
                 pictureBoxCoverCollection.Tag = openFileDialog.FileName;
                 image = null;
-
-                //pictureBoxCoverCollection.BackgroundImage = Image.FromFile(openFileDialog.FileName);
-                //pictureBoxCoverCollection.Tag = openFileDialog.FileName;//Establecer la ruta de la imagen
             }
         }
        
@@ -721,7 +756,10 @@ namespace C_Launcher
             openFileDialog.Filter = "Archivos de imagen (*.png;*.jpg;*.jpeg;)|*.png;*.jpg;*.jpeg;";
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                pictureBoxCoverSon.BackgroundImage = Image.FromFile(openFileDialog.FileName);
+                Image image;
+                image = loadImage(openFileDialog.FileName);
+                pictureBoxCoverSon.BackgroundImage = image;
+                image = null;
             }
         }
 
@@ -770,8 +808,6 @@ namespace C_Launcher
         {
 
         }
-
-        
 
         private string returnImagePath(string outputFolder, string fileName)
         {
