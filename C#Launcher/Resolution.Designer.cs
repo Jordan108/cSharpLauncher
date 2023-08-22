@@ -45,9 +45,10 @@
             // 
             // buttonSearchSonCoverTest
             // 
-            this.buttonSearchSonCoverTest.Location = new System.Drawing.Point(448, 12);
+            this.buttonSearchSonCoverTest.Location = new System.Drawing.Point(672, 18);
+            this.buttonSearchSonCoverTest.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.buttonSearchSonCoverTest.Name = "buttonSearchSonCoverTest";
-            this.buttonSearchSonCoverTest.Size = new System.Drawing.Size(170, 23);
+            this.buttonSearchSonCoverTest.Size = new System.Drawing.Size(255, 35);
             this.buttonSearchSonCoverTest.TabIndex = 17;
             this.buttonSearchSonCoverTest.Text = "Seleccionar Caratula de prueba";
             this.buttonSearchSonCoverTest.UseVisualStyleBackColor = true;
@@ -57,9 +58,10 @@
             // 
             this.panelSonImageLimit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(40)))), ((int)(((byte)(47)))));
             this.panelSonImageLimit.Controls.Add(this.pictureBoxCover);
-            this.panelSonImageLimit.Location = new System.Drawing.Point(371, 41);
+            this.panelSonImageLimit.Location = new System.Drawing.Point(556, 63);
+            this.panelSonImageLimit.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.panelSonImageLimit.Name = "panelSonImageLimit";
-            this.panelSonImageLimit.Size = new System.Drawing.Size(300, 300);
+            this.panelSonImageLimit.Size = new System.Drawing.Size(450, 462);
             this.panelSonImageLimit.TabIndex = 16;
             // 
             // pictureBoxCover
@@ -67,8 +69,9 @@
             this.pictureBoxCover.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.pictureBoxCover.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.pictureBoxCover.Location = new System.Drawing.Point(0, 0);
+            this.pictureBoxCover.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.pictureBoxCover.Name = "pictureBoxCover";
-            this.pictureBoxCover.Size = new System.Drawing.Size(200, 200);
+            this.pictureBoxCover.Size = new System.Drawing.Size(300, 308);
             this.pictureBoxCover.TabIndex = 0;
             this.pictureBoxCover.TabStop = false;
             this.pictureBoxCover.MouseLeave += new System.EventHandler(this.pictureBoxCover_MouseLeave);
@@ -85,17 +88,21 @@
             this.name,
             this.width,
             this.height});
-            this.dataGridViewResolutions.Location = new System.Drawing.Point(12, 41);
+            this.dataGridViewResolutions.Location = new System.Drawing.Point(18, 63);
+            this.dataGridViewResolutions.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.dataGridViewResolutions.MultiSelect = false;
             this.dataGridViewResolutions.Name = "dataGridViewResolutions";
-            this.dataGridViewResolutions.Size = new System.Drawing.Size(344, 300);
+            this.dataGridViewResolutions.RowHeadersWidth = 62;
+            this.dataGridViewResolutions.Size = new System.Drawing.Size(516, 462);
             this.dataGridViewResolutions.TabIndex = 18;
             this.dataGridViewResolutions.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewResolutions_CellClick);
+            this.dataGridViewResolutions.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewResolutions_CellContentClick);
             this.dataGridViewResolutions.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewResolutions_CellEndEdit);
             // 
             // name
             // 
             this.name.HeaderText = "Nombre";
+            this.name.MinimumWidth = 8;
             this.name.Name = "name";
             this.name.Width = 200;
             // 
@@ -103,6 +110,7 @@
             // 
             this.width.HeaderText = "Ancho";
             this.width.MaxInputLength = 3;
+            this.width.MinimumWidth = 8;
             this.width.Name = "width";
             this.width.Width = 50;
             // 
@@ -110,14 +118,16 @@
             // 
             this.height.HeaderText = "Alto";
             this.height.MaxInputLength = 3;
+            this.height.MinimumWidth = 8;
             this.height.Name = "height";
             this.height.Width = 50;
             // 
             // buttonAddRow
             // 
-            this.buttonAddRow.Location = new System.Drawing.Point(12, 12);
+            this.buttonAddRow.Location = new System.Drawing.Point(18, 18);
+            this.buttonAddRow.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.buttonAddRow.Name = "buttonAddRow";
-            this.buttonAddRow.Size = new System.Drawing.Size(75, 23);
+            this.buttonAddRow.Size = new System.Drawing.Size(112, 35);
             this.buttonAddRow.TabIndex = 19;
             this.buttonAddRow.Text = "Añadir";
             this.buttonAddRow.UseVisualStyleBackColor = true;
@@ -125,9 +135,10 @@
             // 
             // buttonDeleteRow
             // 
-            this.buttonDeleteRow.Location = new System.Drawing.Point(93, 12);
+            this.buttonDeleteRow.Location = new System.Drawing.Point(140, 18);
+            this.buttonDeleteRow.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.buttonDeleteRow.Name = "buttonDeleteRow";
-            this.buttonDeleteRow.Size = new System.Drawing.Size(75, 23);
+            this.buttonDeleteRow.Size = new System.Drawing.Size(112, 35);
             this.buttonDeleteRow.TabIndex = 20;
             this.buttonDeleteRow.Text = "Eliminar";
             this.buttonDeleteRow.UseVisualStyleBackColor = true;
@@ -135,9 +146,10 @@
             // 
             // buttonSaveRes
             // 
-            this.buttonSaveRes.Location = new System.Drawing.Point(12, 349);
+            this.buttonSaveRes.Location = new System.Drawing.Point(18, 537);
+            this.buttonSaveRes.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.buttonSaveRes.Name = "buttonSaveRes";
-            this.buttonSaveRes.Size = new System.Drawing.Size(75, 23);
+            this.buttonSaveRes.Size = new System.Drawing.Size(112, 35);
             this.buttonSaveRes.TabIndex = 21;
             this.buttonSaveRes.Text = "Guardar";
             this.buttonSaveRes.UseVisualStyleBackColor = true;
@@ -145,10 +157,10 @@
             // 
             // Resolution
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
-            this.ClientSize = new System.Drawing.Size(677, 380);
+            this.ClientSize = new System.Drawing.Size(1016, 585);
             this.Controls.Add(this.buttonSaveRes);
             this.Controls.Add(this.buttonDeleteRow);
             this.Controls.Add(this.buttonAddRow);
@@ -156,8 +168,9 @@
             this.Controls.Add(this.buttonSearchSonCoverTest);
             this.Controls.Add(this.panelSonImageLimit);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "Resolution";
-            this.Text = "Resolutions";
+            this.Text = "Resoluciones";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Resolution_FormClosed);
             this.panelSonImageLimit.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCover)).EndInit();

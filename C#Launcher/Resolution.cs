@@ -372,6 +372,11 @@ namespace C_Launcher
             }
         }
 
+        private void dataGridViewResolutions_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+
+        }
+
         private void Resolution_FormClosed(object sender, FormClosedEventArgs e)
         {
             if (pictureBoxCover.BackgroundImage != null) pictureBoxCover.BackgroundImage.Dispose();//Dejar de utilizar la imagen de fondo en memoria

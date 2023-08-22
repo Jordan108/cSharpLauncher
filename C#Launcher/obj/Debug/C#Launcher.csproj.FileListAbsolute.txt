@@ -29,7 +29,6 @@ C:\Users\Duoc\Documents\GitHub\cSharpLauncher\C#Launcher\bin\Debug\C#Launcher.ex
 C:\Users\Duoc\Documents\GitHub\cSharpLauncher\C#Launcher\bin\Debug\C#Launcher.exe
 C:\Users\Duoc\Documents\GitHub\cSharpLauncher\C#Launcher\bin\Debug\C#Launcher.pdb
 C:\Users\Duoc\Documents\GitHub\cSharpLauncher\C#Launcher\obj\Debug\C#Launcher.csproj.AssemblyReference.cache
-C:\Users\Duoc\Documents\GitHub\cSharpLauncher\C#Launcher\obj\Debug\C#Launcher.csproj.SuggestedBindingRedirects.cache
 C:\Users\Duoc\Documents\GitHub\cSharpLauncher\C#Launcher\obj\Debug\C_Launcher.Form1.resources
 C:\Users\Duoc\Documents\GitHub\cSharpLauncher\C#Launcher\obj\Debug\C_Launcher.Home.resources
 C:\Users\Duoc\Documents\GitHub\cSharpLauncher\C#Launcher\obj\Debug\C_Launcher.NewCollection.resources

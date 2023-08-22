@@ -655,6 +655,70 @@ namespace C_Launcher
         }
         #endregion
 
+        private void addResolution_Click(object sender, EventArgs e)
+        {
+            Resolution res = new Resolution();
+            res.ReturnedObject += Resolution_ReturnedObject; //Este script actualiza las resoluciones
+            res.ShowDialog();
+
+        }
+
+        private void Resolution_ReturnedObject(object sender, bool e)
+        {
+            if (e == true)
+            {
+                //Actualizar las resoluciones despues de administrarlas
+                #region Actualizar Resoluciones despues de administrarlas
+                //Limpiar todo del combobox
+                comboBoxResolution.Items.Clear();
+                //Agregando item default
+                comboBoxResolution.Items.Add("Ninguno");
+                comboBoxResolution.SelectedIndex = 0;//Se selecciona despues
+
+                //Cargar el tamaño del xml de las resoluciones y adaptar el array a eso
+                int resSize = LoadResolutionSize();
+                Array.Resize(ref combResID, resSize);
+
+                Console.WriteLine("SIZE RES: " + resSize.ToString());
+
+                //Cargar las resoluciones al combobox
+                int resID = 1;
+                for (int i = 1; i < (resSize + 1); i++)
+                {
+                    Console.WriteLine("iterando en: " + i + " sobre la id: " + resID);
+                    XmlDocument doc = new XmlDocument();
+                    doc.Load(xmlResPath);
+
+                    string xpath = "//Launcher/resolution[@id='" + resID + "']";
+                    XmlNode root = doc.SelectSingleNode(xpath);
+                    while (root == null)
+                    {
+                        resID++;
+                        xpath = "//Launcher/resolution[@id='" + resID + "']";
+                        root = doc.SelectSingleNode(xpath);
+                    }
+
+                    string name = root.SelectSingleNode("Name").InnerText;
+                    string width = root.SelectSingleNode("Width").InnerText;
+                    string height = root.SelectSingleNode("Height").InnerText;
+
+                    comboBoxResolution.Items.Add(name + " (" + width + " x" + height + ")");
+                    combResID[i - 1] = resID;
+                    resID++;
+                }
+
+                //Buscar dentro del combobox de resoluciones el index de la resolucion
+                int resIndex = Array.IndexOf(combResID, defaultRes);
+                comboBoxResolution.SelectedIndex = resIndex + 1;
+
+                if (resIndex + 1 > 0)
+                {
+                    groupBoxSize.Enabled = false;
+                }
+                #endregion
+            }
+        }
+
         private void checkBoxURL_CheckedChanged(object sender, EventArgs e)
         {
             if (checkBoxURL.Checked == true)
