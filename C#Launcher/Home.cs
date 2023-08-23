@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Windows.Forms;
 using System.Xml;
 //using static System.Net.Mime.MediaTypeNames;
@@ -21,7 +22,7 @@ namespace C_Launcher
         private int WinWidht, WinHeight = 900;
         private int orderPanels = 0;
         private int formState = 1;
-        private int viewDepth = 0;
+        private int viewDepth = 0;//-1 = favoritos | 0 = inicio
 
         //Rutas de los archivos XML
         private string xmlColPath = "System\\Collections.xml";
@@ -726,6 +727,23 @@ namespace C_Launcher
             loadTreeView(colSize);
         }
 
+        private void loadDepthName(int Father, Collections[] colls)
+        {
+            for (int i = 0; i < colls.Length; i++)
+            {
+                if (colls[i].ID == Father)
+                {
+                    labelDepth.Text = colls[i].Name+"/"+labelDepth.Text;
+
+                    if (colls[i].IDFather != 0)
+                    {
+                        loadDepthName(colls[i].IDFather, colls);
+                    }
+                    break;
+                }
+            }
+        }
+
         private void loadPictureBox(int colSize, int fileSize, bool filter)
         {
             flowLayoutPanelMain.SuspendLayout();
@@ -744,6 +762,41 @@ namespace C_Launcher
             Array.Resize(ref picBoxArr, colSize + fileSize);
 
             int pL = 0;//largo de los pictureBox de esa profundidad
+
+            #region Texto "ruta"
+            //Cambiar el texto de la "ruta"
+            if (viewDepth == -1)
+            {
+                labelDepth.Text = "Favoritos";
+            }
+            else if (viewDepth == 0)
+            {
+                labelDepth.Text = "Inicio";
+            }
+            else
+            {
+                for(int i=0; i< colls.Length; i++)
+                {
+                    if (colls[i].ID == viewDepth)
+                    {
+                        labelDepth.Text = colls[i].Name;
+
+                        if (colls[i].IDFather != 0)
+                        {
+                            loadDepthName(colls[i].IDFather, colls);
+                        }
+                        break;
+                    }
+                    
+                }
+                
+            }
+
+            //Ajustar el texto en el centro
+            int centerX = (this.ClientSize.Width - labelDepth.Width) / 2;
+            labelDepth.Location = new Point(centerX, labelDepth.Location.Y);
+            //140+180
+            #endregion
 
             #region Colecciones
             //Recorrer todos el array de las colecciones
@@ -959,6 +1012,8 @@ namespace C_Launcher
                 flowLayoutPanelMain.Controls.Add(picBoxArr[i]);
             }
             #endregion
+
+            
 
             flowLayoutPanelMain.ResumeLayout();
         }
@@ -1973,6 +2028,11 @@ namespace C_Launcher
         }
 
         private void labelTest_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void labelDepth_Click(object sender, EventArgs e)
         {
 
         }
