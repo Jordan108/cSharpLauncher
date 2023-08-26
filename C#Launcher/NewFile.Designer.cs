@@ -481,7 +481,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "NewFile";
-            this.Text = "Nuevo Archivo";
+            this.Text = "Nuevo Elemento";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.NewFile_FormClosed);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCover)).EndInit();
             this.groupBoxImageFormat.ResumeLayout(false);

@@ -400,7 +400,7 @@
             this.Controls.Add(this.dataGridViewFiles);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
             this.Name = "NewMultipleFiles";
-            this.Text = "Nuevos Archivos";
+            this.Text = "Nuevos Elementos";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFiles)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
