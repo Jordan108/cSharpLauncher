@@ -1902,7 +1902,10 @@ namespace C_Launcher
 
             colSize = LoadCollectionSize();
             fileSize = LoadFilesSize();
-            loadPictureBox(colSize, fileSize, false);
+
+            loadView(colSize, fileSize);
+            //loadTreeView(colSize);
+            //loadPictureBox(colSize, fileSize, false);
         }
         #endregion
 
