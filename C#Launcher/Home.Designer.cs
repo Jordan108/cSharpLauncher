@@ -30,11 +30,10 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Home));
             this.panelTop = new System.Windows.Forms.Panel();
-            this.labelDepth = new System.Windows.Forms.Label();
-            this.textBoxSearch = new System.Windows.Forms.TextBox();
-            this.btnReloadView = new System.Windows.Forms.Button();
-            this.btnHomeView = new System.Windows.Forms.Button();
             this.btnBackView = new System.Windows.Forms.Button();
+            this.btnHomeView = new System.Windows.Forms.Button();
+            this.btnReloadView = new System.Windows.Forms.Button();
+            this.textBoxSearch = new System.Windows.Forms.TextBox();
             this.menuStripMain = new System.Windows.Forms.MenuStrip();
             this.archivoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.abrirLaCarpetaSystemToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -43,6 +42,7 @@
             this.fechaDeCreacionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nombreToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.administrarResolucionesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.labelDepth = new System.Windows.Forms.Label();
             this.flowLayoutPanelMain = new System.Windows.Forms.FlowLayoutPanel();
             this.treeViewMain = new System.Windows.Forms.TreeView();
             this.splitter1 = new System.Windows.Forms.Splitter();
@@ -65,57 +65,56 @@
             this.panelTop.Size = new System.Drawing.Size(395, 58);
             this.panelTop.TabIndex = 0;
             // 
-            // labelDepth
-            // 
-            this.labelDepth.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.labelDepth.AutoSize = true;
-            this.labelDepth.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelDepth.ForeColor = System.Drawing.Color.White;
-            this.labelDepth.Location = new System.Drawing.Point(181, 29);
-            this.labelDepth.Name = "labelDepth";
-            this.labelDepth.Size = new System.Drawing.Size(68, 25);
-            this.labelDepth.TabIndex = 5;
-            this.labelDepth.Text = "Inicio";
-            this.labelDepth.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.labelDepth.Click += new System.EventHandler(this.labelDepth_Click);
-            // 
-            // textBoxSearch
-            // 
-            this.textBoxSearch.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.textBoxSearch.Location = new System.Drawing.Point(249, 31);
-            this.textBoxSearch.Name = "textBoxSearch";
-            this.textBoxSearch.Size = new System.Drawing.Size(139, 20);
-            this.textBoxSearch.TabIndex = 4;
-            // 
-            // btnReloadView
-            // 
-            this.btnReloadView.Location = new System.Drawing.Point(120, 29);
-            this.btnReloadView.Name = "btnReloadView";
-            this.btnReloadView.Size = new System.Drawing.Size(60, 23);
-            this.btnReloadView.TabIndex = 2;
-            this.btnReloadView.Text = "Recargar";
-            this.btnReloadView.UseVisualStyleBackColor = true;
-            this.btnReloadView.Click += new System.EventHandler(this.btnReloadView_Click);
-            // 
-            // btnHomeView
-            // 
-            this.btnHomeView.Location = new System.Drawing.Point(66, 29);
-            this.btnHomeView.Name = "btnHomeView";
-            this.btnHomeView.Size = new System.Drawing.Size(48, 23);
-            this.btnHomeView.TabIndex = 1;
-            this.btnHomeView.Text = "Inicio";
-            this.btnHomeView.UseVisualStyleBackColor = true;
-            this.btnHomeView.Click += new System.EventHandler(this.btnHomeView_Click);
-            // 
             // btnBackView
             // 
+            this.btnBackView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
+            this.btnBackView.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnBackView.ForeColor = System.Drawing.SystemColors.Window;
             this.btnBackView.Location = new System.Drawing.Point(12, 29);
             this.btnBackView.Name = "btnBackView";
             this.btnBackView.Size = new System.Drawing.Size(48, 23);
             this.btnBackView.TabIndex = 0;
             this.btnBackView.Text = "Volver";
-            this.btnBackView.UseVisualStyleBackColor = true;
+            this.btnBackView.UseVisualStyleBackColor = false;
             this.btnBackView.Click += new System.EventHandler(this.btnBackView_Click);
+            // 
+            // btnHomeView
+            // 
+            this.btnHomeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
+            this.btnHomeView.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnHomeView.ForeColor = System.Drawing.SystemColors.Window;
+            this.btnHomeView.Location = new System.Drawing.Point(66, 29);
+            this.btnHomeView.Name = "btnHomeView";
+            this.btnHomeView.Size = new System.Drawing.Size(48, 23);
+            this.btnHomeView.TabIndex = 1;
+            this.btnHomeView.Text = "Inicio";
+            this.btnHomeView.UseVisualStyleBackColor = false;
+            this.btnHomeView.Click += new System.EventHandler(this.btnHomeView_Click);
+            // 
+            // btnReloadView
+            // 
+            this.btnReloadView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
+            this.btnReloadView.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btnReloadView.ForeColor = System.Drawing.SystemColors.Window;
+            this.btnReloadView.Location = new System.Drawing.Point(120, 29);
+            this.btnReloadView.Name = "btnReloadView";
+            this.btnReloadView.Size = new System.Drawing.Size(60, 23);
+            this.btnReloadView.TabIndex = 2;
+            this.btnReloadView.Text = "Recargar";
+            this.btnReloadView.UseVisualStyleBackColor = false;
+            this.btnReloadView.Click += new System.EventHandler(this.btnReloadView_Click);
+            // 
+            // textBoxSearch
+            // 
+            this.textBoxSearch.Anchor = System.Windows.Forms.AnchorStyles.Right;
+            this.textBoxSearch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(40)))), ((int)(((byte)(47)))));
+            this.textBoxSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBoxSearch.ForeColor = System.Drawing.SystemColors.Window;
+            this.textBoxSearch.Location = new System.Drawing.Point(249, 31);
+            this.textBoxSearch.Name = "textBoxSearch";
+            this.textBoxSearch.Size = new System.Drawing.Size(139, 20);
+            this.textBoxSearch.TabIndex = 4;
+            this.textBoxSearch.TextChanged += new System.EventHandler(this.textBoxSearch_TextChanged);
             // 
             // menuStripMain
             // 
@@ -186,6 +185,20 @@
             this.administrarResolucionesToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
             this.administrarResolucionesToolStripMenuItem.Text = "Administrar resoluciones";
             this.administrarResolucionesToolStripMenuItem.Click += new System.EventHandler(this.administrarResolucionesToolStripMenuItem_Click);
+            // 
+            // labelDepth
+            // 
+            this.labelDepth.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.labelDepth.AutoSize = true;
+            this.labelDepth.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelDepth.ForeColor = System.Drawing.Color.White;
+            this.labelDepth.Location = new System.Drawing.Point(181, 29);
+            this.labelDepth.Name = "labelDepth";
+            this.labelDepth.Size = new System.Drawing.Size(68, 25);
+            this.labelDepth.TabIndex = 5;
+            this.labelDepth.Text = "Inicio";
+            this.labelDepth.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            this.labelDepth.Click += new System.EventHandler(this.labelDepth_Click);
             // 
             // flowLayoutPanelMain
             // 

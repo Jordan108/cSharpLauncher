@@ -80,6 +80,9 @@
             // 
             // textBoxName
             // 
+            this.textBoxName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(40)))), ((int)(((byte)(47)))));
+            this.textBoxName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBoxName.ForeColor = System.Drawing.SystemColors.Window;
             this.textBoxName.Location = new System.Drawing.Point(145, 35);
             this.textBoxName.Name = "textBoxName";
             this.textBoxName.Size = new System.Drawing.Size(245, 20);
@@ -88,6 +91,7 @@
             // labelName
             // 
             this.labelName.AutoSize = true;
+            this.labelName.ForeColor = System.Drawing.SystemColors.Window;
             this.labelName.Location = new System.Drawing.Point(31, 38);
             this.labelName.Name = "labelName";
             this.labelName.Size = new System.Drawing.Size(96, 13);
@@ -96,7 +100,10 @@
             // 
             // comboBoxFather
             // 
+            this.comboBoxFather.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
             this.comboBoxFather.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxFather.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.comboBoxFather.ForeColor = System.Drawing.SystemColors.Window;
             this.comboBoxFather.FormattingEnabled = true;
             this.comboBoxFather.Location = new System.Drawing.Point(145, 62);
             this.comboBoxFather.Name = "comboBoxFather";
@@ -106,6 +113,7 @@
             // labelFather
             // 
             this.labelFather.AutoSize = true;
+            this.labelFather.ForeColor = System.Drawing.SystemColors.Window;
             this.labelFather.Location = new System.Drawing.Point(40, 65);
             this.labelFather.Name = "labelFather";
             this.labelFather.Size = new System.Drawing.Size(87, 13);
@@ -114,7 +122,10 @@
             // 
             // comboBoxResolutionCol
             // 
+            this.comboBoxResolutionCol.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
             this.comboBoxResolutionCol.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxResolutionCol.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.comboBoxResolutionCol.ForeColor = System.Drawing.SystemColors.Window;
             this.comboBoxResolutionCol.FormattingEnabled = true;
             this.comboBoxResolutionCol.Location = new System.Drawing.Point(12, 165);
             this.comboBoxResolutionCol.Name = "comboBoxResolutionCol";
@@ -125,6 +136,7 @@
             // labelResolutionCol
             // 
             this.labelResolutionCol.AutoSize = true;
+            this.labelResolutionCol.ForeColor = System.Drawing.SystemColors.Window;
             this.labelResolutionCol.Location = new System.Drawing.Point(40, 149);
             this.labelResolutionCol.Name = "labelResolutionCol";
             this.labelResolutionCol.Size = new System.Drawing.Size(109, 13);
@@ -137,6 +149,7 @@
             this.groupBoxCover.Controls.Add(this.labelColWidth);
             this.groupBoxCover.Controls.Add(this.numericColHeight);
             this.groupBoxCover.Controls.Add(this.numericColWidth);
+            this.groupBoxCover.ForeColor = System.Drawing.SystemColors.Window;
             this.groupBoxCover.Location = new System.Drawing.Point(12, 203);
             this.groupBoxCover.Name = "groupBoxCover";
             this.groupBoxCover.Size = new System.Drawing.Size(200, 100);
@@ -164,6 +177,9 @@
             // 
             // numericColHeight
             // 
+            this.numericColHeight.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(40)))), ((int)(((byte)(47)))));
+            this.numericColHeight.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.numericColHeight.ForeColor = System.Drawing.SystemColors.Window;
             this.numericColHeight.Location = new System.Drawing.Point(55, 59);
             this.numericColHeight.Maximum = new decimal(new int[] {
             300,
@@ -187,6 +203,9 @@
             // 
             // numericColWidth
             // 
+            this.numericColWidth.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(40)))), ((int)(((byte)(47)))));
+            this.numericColWidth.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.numericColWidth.ForeColor = System.Drawing.SystemColors.Window;
             this.numericColWidth.Location = new System.Drawing.Point(55, 32);
             this.numericColWidth.Maximum = new decimal(new int[] {
             300,
@@ -212,6 +231,7 @@
             // 
             this.groupBoxImageFormat.Controls.Add(this.radioButtonColEstreched);
             this.groupBoxImageFormat.Controls.Add(this.radioButtonColZoom);
+            this.groupBoxImageFormat.ForeColor = System.Drawing.SystemColors.Window;
             this.groupBoxImageFormat.Location = new System.Drawing.Point(12, 309);
             this.groupBoxImageFormat.Name = "groupBoxImageFormat";
             this.groupBoxImageFormat.Size = new System.Drawing.Size(200, 69);
@@ -245,12 +265,15 @@
             // 
             // buttonSave
             // 
+            this.buttonSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
+            this.buttonSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonSave.ForeColor = System.Drawing.SystemColors.Window;
             this.buttonSave.Location = new System.Drawing.Point(52, 448);
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(75, 23);
             this.buttonSave.TabIndex = 8;
             this.buttonSave.Text = "Guardar";
-            this.buttonSave.UseVisualStyleBackColor = true;
+            this.buttonSave.UseVisualStyleBackColor = false;
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
             // panelImageLimit
@@ -276,9 +299,11 @@
             // checkBoxFavorite
             // 
             this.checkBoxFavorite.AutoSize = true;
+            this.checkBoxFavorite.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.checkBoxFavorite.ForeColor = System.Drawing.SystemColors.Window;
             this.checkBoxFavorite.Location = new System.Drawing.Point(396, 34);
             this.checkBoxFavorite.Name = "checkBoxFavorite";
-            this.checkBoxFavorite.Size = new System.Drawing.Size(64, 17);
+            this.checkBoxFavorite.Size = new System.Drawing.Size(61, 17);
             this.checkBoxFavorite.TabIndex = 10;
             this.checkBoxFavorite.Text = "Favorito";
             this.checkBoxFavorite.UseVisualStyleBackColor = true;
@@ -306,7 +331,10 @@
             // 
             // comboBoxSonResolution
             // 
+            this.comboBoxSonResolution.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
             this.comboBoxSonResolution.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxSonResolution.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.comboBoxSonResolution.ForeColor = System.Drawing.SystemColors.Window;
             this.comboBoxSonResolution.FormattingEnabled = true;
             this.comboBoxSonResolution.Location = new System.Drawing.Point(533, 165);
             this.comboBoxSonResolution.Name = "comboBoxSonResolution";
@@ -317,6 +345,7 @@
             // label1
             // 
             this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.SystemColors.Window;
             this.label1.Location = new System.Drawing.Point(585, 149);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(84, 13);
@@ -329,6 +358,7 @@
             this.groupBoxSon.Controls.Add(this.labelSonWidth);
             this.groupBoxSon.Controls.Add(this.numericSonHeight);
             this.groupBoxSon.Controls.Add(this.numericSonWidth);
+            this.groupBoxSon.ForeColor = System.Drawing.SystemColors.Window;
             this.groupBoxSon.Location = new System.Drawing.Point(533, 192);
             this.groupBoxSon.Name = "groupBoxSon";
             this.groupBoxSon.Size = new System.Drawing.Size(200, 100);
@@ -356,6 +386,9 @@
             // 
             // numericSonHeight
             // 
+            this.numericSonHeight.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(40)))), ((int)(((byte)(47)))));
+            this.numericSonHeight.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.numericSonHeight.ForeColor = System.Drawing.SystemColors.Window;
             this.numericSonHeight.Location = new System.Drawing.Point(55, 59);
             this.numericSonHeight.Maximum = new decimal(new int[] {
             300,
@@ -379,6 +412,9 @@
             // 
             // numericSonWidth
             // 
+            this.numericSonWidth.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(40)))), ((int)(((byte)(47)))));
+            this.numericSonWidth.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.numericSonWidth.ForeColor = System.Drawing.SystemColors.Window;
             this.numericSonWidth.Location = new System.Drawing.Point(55, 32);
             this.numericSonWidth.Maximum = new decimal(new int[] {
             300,
@@ -404,6 +440,7 @@
             // 
             this.groupBoxSonFormat.Controls.Add(this.radioButtonSonEstreched);
             this.groupBoxSonFormat.Controls.Add(this.radioButtonSonZoom);
+            this.groupBoxSonFormat.ForeColor = System.Drawing.SystemColors.Window;
             this.groupBoxSonFormat.Location = new System.Drawing.Point(533, 309);
             this.groupBoxSonFormat.Name = "groupBoxSonFormat";
             this.groupBoxSonFormat.Size = new System.Drawing.Size(200, 69);
@@ -437,37 +474,48 @@
             // 
             // buttonSearchCover
             // 
+            this.buttonSearchCover.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
+            this.buttonSearchCover.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonSearchCover.ForeColor = System.Drawing.SystemColors.Window;
             this.buttonSearchCover.Location = new System.Drawing.Point(218, 109);
             this.buttonSearchCover.Name = "buttonSearchCover";
             this.buttonSearchCover.Size = new System.Drawing.Size(128, 23);
             this.buttonSearchCover.TabIndex = 13;
             this.buttonSearchCover.Text = "Seleccionar Caratula";
-            this.buttonSearchCover.UseVisualStyleBackColor = true;
+            this.buttonSearchCover.UseVisualStyleBackColor = false;
             this.buttonSearchCover.Click += new System.EventHandler(this.buttonSearchCover_Click);
             // 
             // buttonBackgroundColor
             // 
+            this.buttonBackgroundColor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
+            this.buttonBackgroundColor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonBackgroundColor.ForeColor = System.Drawing.SystemColors.Window;
             this.buttonBackgroundColor.Location = new System.Drawing.Point(361, 109);
             this.buttonBackgroundColor.Name = "buttonBackgroundColor";
             this.buttonBackgroundColor.Size = new System.Drawing.Size(99, 23);
             this.buttonBackgroundColor.TabIndex = 14;
             this.buttonBackgroundColor.Text = "Color de fondo";
-            this.buttonBackgroundColor.UseVisualStyleBackColor = true;
+            this.buttonBackgroundColor.UseVisualStyleBackColor = false;
             this.buttonBackgroundColor.Click += new System.EventHandler(this.buttonBackgroundColor_Click);
             // 
             // buttonSearchSonCoverTest
             // 
+            this.buttonSearchSonCoverTest.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
+            this.buttonSearchSonCoverTest.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonSearchSonCoverTest.ForeColor = System.Drawing.SystemColors.Window;
             this.buttonSearchSonCoverTest.Location = new System.Drawing.Point(802, 136);
             this.buttonSearchSonCoverTest.Name = "buttonSearchSonCoverTest";
             this.buttonSearchSonCoverTest.Size = new System.Drawing.Size(170, 23);
             this.buttonSearchSonCoverTest.TabIndex = 15;
             this.buttonSearchSonCoverTest.Text = "Seleccionar Caratula de prueba";
-            this.buttonSearchSonCoverTest.UseVisualStyleBackColor = true;
+            this.buttonSearchSonCoverTest.UseVisualStyleBackColor = false;
             this.buttonSearchSonCoverTest.Click += new System.EventHandler(this.buttonSearchSonCoverTest_Click);
             // 
             // buttonColorPickIMG
             // 
             this.buttonColorPickIMG.BackColor = System.Drawing.Color.Black;
+            this.buttonColorPickIMG.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonColorPickIMG.ForeColor = System.Drawing.SystemColors.Window;
             this.buttonColorPickIMG.Location = new System.Drawing.Point(466, 109);
             this.buttonColorPickIMG.Name = "buttonColorPickIMG";
             this.buttonColorPickIMG.Size = new System.Drawing.Size(25, 25);
@@ -477,9 +525,11 @@
             // checkBoxImageLocation
             // 
             this.checkBoxImageLocation.AutoSize = true;
+            this.checkBoxImageLocation.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.checkBoxImageLocation.ForeColor = System.Drawing.SystemColors.Window;
             this.checkBoxImageLocation.Location = new System.Drawing.Point(218, 140);
             this.checkBoxImageLocation.Name = "checkBoxImageLocation";
-            this.checkBoxImageLocation.Size = new System.Drawing.Size(215, 17);
+            this.checkBoxImageLocation.Size = new System.Drawing.Size(212, 17);
             this.checkBoxImageLocation.TabIndex = 17;
             this.checkBoxImageLocation.Text = "Utilizar la imagen en su ubicacion actual";
             this.checkBoxImageLocation.UseVisualStyleBackColor = true;
@@ -488,7 +538,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(61)))), ((int)(((byte)(72)))));
             this.ClientSize = new System.Drawing.Size(1065, 483);
             this.Controls.Add(this.checkBoxImageLocation);
             this.Controls.Add(this.buttonColorPickIMG);

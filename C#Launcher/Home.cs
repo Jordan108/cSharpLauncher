@@ -5,11 +5,11 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Reflection.Emit;
+//using System.Reflection.Emit;
 using System.Windows.Forms;
 using System.Xml;
 //using static System.Net.Mime.MediaTypeNames;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+//using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace C_Launcher
 {
@@ -26,7 +26,7 @@ namespace C_Launcher
 
         //Rutas de los archivos XML
         private string xmlColPath = "System\\Collections.xml";
-        private string xmlFilesPath = "System\\Files.xml";
+        private string xmlFilesPath = "System\\Elements.xml";
         private string xmlResPath = "System\\Resolutions.xml";
         private string xmlSettingsPath = "System\\Settings.xml";
         //Ruta de los covers
@@ -57,9 +57,9 @@ namespace C_Launcher
             ToolStripMenuItem ToolStripAddMultipleFile = new ToolStripMenuItem();
             ToolStripAddCollection.Text = "Crear coleccion";
             ToolStripAddCollection.Click += new EventHandler(ToolStripAddCollection_Click);
-            ToolStripAddFile.Text = "Crear archivo";
+            ToolStripAddFile.Text = "Crear elemento";
             ToolStripAddFile.Click += new EventHandler(ToolStripAddFile_Click);
-            ToolStripAddMultipleFile.Text = "Crear multiples archivos";
+            ToolStripAddMultipleFile.Text = "Crear multiples elementos";
             ToolStripAddMultipleFile.Click += new EventHandler(ToolStripAddMultipleFiles_Click);
             contextMenuLayoutPanel.Items.AddRange(new ToolStripItem[] { ToolStripAddCollection, ToolStripAddFile, ToolStripAddMultipleFile });
             //Agregar al layout panel
@@ -633,7 +633,7 @@ namespace C_Launcher
             if (textBoxSearch.Text == "Buscar...")
             {
                 textBoxSearch.Text = "";
-                textBoxSearch.ForeColor = System.Drawing.Color.Black;
+                textBoxSearch.ForeColor = System.Drawing.Color.White;
             }
         }
 
@@ -2033,6 +2033,11 @@ namespace C_Launcher
         }
 
         private void labelDepth_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBoxSearch_TextChanged(object sender, EventArgs e)
         {
 
         }

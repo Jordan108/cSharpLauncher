@@ -81,11 +81,12 @@
             this.ColumnCover,
             this.ColumnFormat,
             this.ColumnColor});
-            this.dataGridViewFiles.Location = new System.Drawing.Point(12, 118);
+            this.dataGridViewFiles.Location = new System.Drawing.Point(8, 77);
+            this.dataGridViewFiles.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.dataGridViewFiles.Name = "dataGridViewFiles";
             this.dataGridViewFiles.RowHeadersWidth = 62;
             this.dataGridViewFiles.RowTemplate.Height = 28;
-            this.dataGridViewFiles.Size = new System.Drawing.Size(1822, 802);
+            this.dataGridViewFiles.Size = new System.Drawing.Size(1215, 521);
             this.dataGridViewFiles.TabIndex = 0;
             this.dataGridViewFiles.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewFiles_CellClick);
             this.dataGridViewFiles.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewFiles_CellEndEdit);
@@ -184,92 +185,110 @@
             // labelFather
             // 
             this.labelFather.AutoSize = true;
-            this.labelFather.Location = new System.Drawing.Point(88, 14);
-            this.labelFather.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelFather.ForeColor = System.Drawing.SystemColors.Window;
+            this.labelFather.Location = new System.Drawing.Point(59, 9);
             this.labelFather.Name = "labelFather";
-            this.labelFather.Size = new System.Drawing.Size(105, 20);
+            this.labelFather.Size = new System.Drawing.Size(73, 13);
             this.labelFather.TabIndex = 4;
             this.labelFather.Text = "Padre archivo";
             // 
             // comboBoxFather
             // 
+            this.comboBoxFather.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
             this.comboBoxFather.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxFather.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.comboBoxFather.ForeColor = System.Drawing.SystemColors.Window;
             this.comboBoxFather.FormattingEnabled = true;
-            this.comboBoxFather.Location = new System.Drawing.Point(26, 34);
-            this.comboBoxFather.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.comboBoxFather.Location = new System.Drawing.Point(17, 22);
             this.comboBoxFather.Name = "comboBoxFather";
-            this.comboBoxFather.Size = new System.Drawing.Size(260, 28);
+            this.comboBoxFather.Size = new System.Drawing.Size(175, 21);
             this.comboBoxFather.TabIndex = 5;
             // 
             // buttonSave
             // 
-            this.buttonSave.Location = new System.Drawing.Point(12, 928);
-            this.buttonSave.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.buttonSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
+            this.buttonSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonSave.ForeColor = System.Drawing.SystemColors.Window;
+            this.buttonSave.Location = new System.Drawing.Point(8, 603);
             this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(112, 35);
+            this.buttonSave.Size = new System.Drawing.Size(75, 23);
             this.buttonSave.TabIndex = 27;
             this.buttonSave.Text = "Guardar";
-            this.buttonSave.UseVisualStyleBackColor = true;
+            this.buttonSave.UseVisualStyleBackColor = false;
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
             // comboBoxResolution
             // 
+            this.comboBoxResolution.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
             this.comboBoxResolution.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxResolution.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.comboBoxResolution.ForeColor = System.Drawing.SystemColors.Window;
             this.comboBoxResolution.FormattingEnabled = true;
-            this.comboBoxResolution.Location = new System.Drawing.Point(300, 34);
-            this.comboBoxResolution.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.comboBoxResolution.Location = new System.Drawing.Point(200, 22);
             this.comboBoxResolution.Name = "comboBoxResolution";
-            this.comboBoxResolution.Size = new System.Drawing.Size(202, 28);
+            this.comboBoxResolution.Size = new System.Drawing.Size(136, 21);
             this.comboBoxResolution.TabIndex = 28;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(344, 14);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.ForeColor = System.Drawing.SystemColors.Window;
+            this.label1.Location = new System.Drawing.Point(229, 9);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(134, 20);
+            this.label1.Size = new System.Drawing.Size(91, 13);
             this.label1.TabIndex = 29;
             this.label1.Text = "Resolucion global";
             // 
             // buttonGlobalResolution
             // 
-            this.buttonGlobalResolution.Location = new System.Drawing.Point(394, 75);
+            this.buttonGlobalResolution.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
+            this.buttonGlobalResolution.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonGlobalResolution.ForeColor = System.Drawing.SystemColors.Window;
+            this.buttonGlobalResolution.Location = new System.Drawing.Point(263, 49);
+            this.buttonGlobalResolution.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonGlobalResolution.Name = "buttonGlobalResolution";
-            this.buttonGlobalResolution.Size = new System.Drawing.Size(110, 37);
+            this.buttonGlobalResolution.Size = new System.Drawing.Size(73, 24);
             this.buttonGlobalResolution.TabIndex = 30;
             this.buttonGlobalResolution.Text = "Establecer";
-            this.buttonGlobalResolution.UseVisualStyleBackColor = true;
+            this.buttonGlobalResolution.UseVisualStyleBackColor = false;
             this.buttonGlobalResolution.Click += new System.EventHandler(this.buttonGlobalResolution_Click);
             // 
             // buttonAddRow
             // 
-            this.buttonAddRow.Location = new System.Drawing.Point(26, 75);
-            this.buttonAddRow.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.buttonAddRow.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
+            this.buttonAddRow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonAddRow.ForeColor = System.Drawing.SystemColors.Window;
+            this.buttonAddRow.Location = new System.Drawing.Point(17, 49);
             this.buttonAddRow.Name = "buttonAddRow";
-            this.buttonAddRow.Size = new System.Drawing.Size(140, 37);
+            this.buttonAddRow.Size = new System.Drawing.Size(93, 24);
             this.buttonAddRow.TabIndex = 31;
             this.buttonAddRow.Text = "Añadir archivos";
-            this.buttonAddRow.UseVisualStyleBackColor = true;
+            this.buttonAddRow.UseVisualStyleBackColor = false;
             this.buttonAddRow.Click += new System.EventHandler(this.buttonAddRow_Click);
             // 
             // buttonDeleteRow
             // 
-            this.buttonDeleteRow.Location = new System.Drawing.Point(174, 75);
-            this.buttonDeleteRow.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.buttonDeleteRow.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
+            this.buttonDeleteRow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonDeleteRow.ForeColor = System.Drawing.SystemColors.Window;
+            this.buttonDeleteRow.Location = new System.Drawing.Point(116, 49);
             this.buttonDeleteRow.Name = "buttonDeleteRow";
-            this.buttonDeleteRow.Size = new System.Drawing.Size(114, 37);
+            this.buttonDeleteRow.Size = new System.Drawing.Size(76, 24);
             this.buttonDeleteRow.TabIndex = 32;
             this.buttonDeleteRow.Text = "Eliminar fila";
-            this.buttonDeleteRow.UseVisualStyleBackColor = true;
+            this.buttonDeleteRow.UseVisualStyleBackColor = false;
             this.buttonDeleteRow.Click += new System.EventHandler(this.buttonDeleteRow_Click);
             // 
             // textBoxGlobalLauncher
             // 
-            this.textBoxGlobalLauncher.Location = new System.Drawing.Point(706, 34);
+            this.textBoxGlobalLauncher.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(40)))), ((int)(((byte)(47)))));
+            this.textBoxGlobalLauncher.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBoxGlobalLauncher.ForeColor = System.Drawing.SystemColors.Window;
+            this.textBoxGlobalLauncher.Location = new System.Drawing.Point(471, 22);
+            this.textBoxGlobalLauncher.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.textBoxGlobalLauncher.Name = "textBoxGlobalLauncher";
             this.textBoxGlobalLauncher.ReadOnly = true;
-            this.textBoxGlobalLauncher.Size = new System.Drawing.Size(192, 26);
+            this.textBoxGlobalLauncher.Size = new System.Drawing.Size(129, 20);
             this.textBoxGlobalLauncher.TabIndex = 33;
             this.textBoxGlobalLauncher.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.textBoxGlobalLauncher.MouseClick += new System.Windows.Forms.MouseEventHandler(this.textBoxGlobalLauncher_MouseClick);
@@ -277,107 +296,133 @@
             // labelGlobalLauncher
             // 
             this.labelGlobalLauncher.AutoSize = true;
-            this.labelGlobalLauncher.Location = new System.Drawing.Point(714, 14);
+            this.labelGlobalLauncher.ForeColor = System.Drawing.SystemColors.Window;
+            this.labelGlobalLauncher.Location = new System.Drawing.Point(476, 9);
+            this.labelGlobalLauncher.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelGlobalLauncher.Name = "labelGlobalLauncher";
-            this.labelGlobalLauncher.Size = new System.Drawing.Size(180, 20);
+            this.labelGlobalLauncher.Size = new System.Drawing.Size(121, 13);
             this.labelGlobalLauncher.TabIndex = 34;
             this.labelGlobalLauncher.Text = "Ruta del lanzador global";
             // 
             // buttonDeleteGlobalLauncher
             // 
-            this.buttonDeleteGlobalLauncher.Location = new System.Drawing.Point(822, 75);
+            this.buttonDeleteGlobalLauncher.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
+            this.buttonDeleteGlobalLauncher.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonDeleteGlobalLauncher.ForeColor = System.Drawing.SystemColors.Window;
+            this.buttonDeleteGlobalLauncher.Location = new System.Drawing.Point(548, 49);
+            this.buttonDeleteGlobalLauncher.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonDeleteGlobalLauncher.Name = "buttonDeleteGlobalLauncher";
-            this.buttonDeleteGlobalLauncher.Size = new System.Drawing.Size(74, 37);
+            this.buttonDeleteGlobalLauncher.Size = new System.Drawing.Size(49, 24);
             this.buttonDeleteGlobalLauncher.TabIndex = 35;
             this.buttonDeleteGlobalLauncher.Text = "Borrar";
-            this.buttonDeleteGlobalLauncher.UseVisualStyleBackColor = true;
+            this.buttonDeleteGlobalLauncher.UseVisualStyleBackColor = false;
             this.buttonDeleteGlobalLauncher.Click += new System.EventHandler(this.buttonDeleteGlobalLauncher_Click);
             // 
             // buttonGlobalCMD
             // 
-            this.buttonGlobalCMD.Location = new System.Drawing.Point(948, 75);
+            this.buttonGlobalCMD.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
+            this.buttonGlobalCMD.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonGlobalCMD.ForeColor = System.Drawing.SystemColors.Window;
+            this.buttonGlobalCMD.Location = new System.Drawing.Point(632, 49);
+            this.buttonGlobalCMD.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.buttonGlobalCMD.Name = "buttonGlobalCMD";
-            this.buttonGlobalCMD.Size = new System.Drawing.Size(100, 37);
+            this.buttonGlobalCMD.Size = new System.Drawing.Size(67, 24);
             this.buttonGlobalCMD.TabIndex = 36;
             this.buttonGlobalCMD.Text = "Establecer";
-            this.buttonGlobalCMD.UseVisualStyleBackColor = true;
+            this.buttonGlobalCMD.UseVisualStyleBackColor = false;
             this.buttonGlobalCMD.Click += new System.EventHandler(this.buttonGlobalCMD_Click);
             // 
             // labelGlobalCMD
             // 
             this.labelGlobalCMD.AutoSize = true;
-            this.labelGlobalCMD.Location = new System.Drawing.Point(902, 14);
+            this.labelGlobalCMD.ForeColor = System.Drawing.SystemColors.Window;
+            this.labelGlobalCMD.Location = new System.Drawing.Point(601, 9);
+            this.labelGlobalCMD.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelGlobalCMD.Name = "labelGlobalCMD";
-            this.labelGlobalCMD.Size = new System.Drawing.Size(195, 20);
+            this.labelGlobalCMD.Size = new System.Drawing.Size(131, 13);
             this.labelGlobalCMD.TabIndex = 37;
             this.labelGlobalCMD.Text = "Argumento de inicio global";
             // 
             // textBoxGlobalCMD
             // 
-            this.textBoxGlobalCMD.Location = new System.Drawing.Point(904, 34);
+            this.textBoxGlobalCMD.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(40)))), ((int)(((byte)(47)))));
+            this.textBoxGlobalCMD.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBoxGlobalCMD.ForeColor = System.Drawing.SystemColors.Window;
+            this.textBoxGlobalCMD.Location = new System.Drawing.Point(603, 22);
+            this.textBoxGlobalCMD.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.textBoxGlobalCMD.Name = "textBoxGlobalCMD";
-            this.textBoxGlobalCMD.Size = new System.Drawing.Size(192, 26);
+            this.textBoxGlobalCMD.Size = new System.Drawing.Size(129, 20);
             this.textBoxGlobalCMD.TabIndex = 38;
             // 
             // buttonGlobalLauncher
             // 
-            this.buttonGlobalLauncher.Location = new System.Drawing.Point(704, 75);
-            this.buttonGlobalLauncher.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.buttonGlobalLauncher.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
+            this.buttonGlobalLauncher.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonGlobalLauncher.ForeColor = System.Drawing.SystemColors.Window;
+            this.buttonGlobalLauncher.Location = new System.Drawing.Point(469, 49);
             this.buttonGlobalLauncher.Name = "buttonGlobalLauncher";
-            this.buttonGlobalLauncher.Size = new System.Drawing.Size(112, 37);
+            this.buttonGlobalLauncher.Size = new System.Drawing.Size(75, 24);
             this.buttonGlobalLauncher.TabIndex = 39;
             this.buttonGlobalLauncher.Text = "Establecer";
-            this.buttonGlobalLauncher.UseVisualStyleBackColor = true;
+            this.buttonGlobalLauncher.UseVisualStyleBackColor = false;
             this.buttonGlobalLauncher.Click += new System.EventHandler(this.buttonGlobalLauncher_Click);
             // 
             // comboBoxImageFormat
             // 
+            this.comboBoxImageFormat.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
             this.comboBoxImageFormat.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxImageFormat.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.comboBoxImageFormat.ForeColor = System.Drawing.SystemColors.Window;
             this.comboBoxImageFormat.FormattingEnabled = true;
-            this.comboBoxImageFormat.Location = new System.Drawing.Point(514, 34);
-            this.comboBoxImageFormat.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.comboBoxImageFormat.Location = new System.Drawing.Point(343, 22);
             this.comboBoxImageFormat.Name = "comboBoxImageFormat";
-            this.comboBoxImageFormat.Size = new System.Drawing.Size(180, 28);
+            this.comboBoxImageFormat.Size = new System.Drawing.Size(121, 21);
             this.comboBoxImageFormat.TabIndex = 40;
             // 
             // labelGlobalImageFormat
             // 
             this.labelGlobalImageFormat.AutoSize = true;
-            this.labelGlobalImageFormat.Location = new System.Drawing.Point(510, 14);
-            this.labelGlobalImageFormat.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelGlobalImageFormat.ForeColor = System.Drawing.SystemColors.Window;
+            this.labelGlobalImageFormat.Location = new System.Drawing.Point(340, 9);
             this.labelGlobalImageFormat.Name = "labelGlobalImageFormat";
-            this.labelGlobalImageFormat.Size = new System.Drawing.Size(193, 20);
+            this.labelGlobalImageFormat.Size = new System.Drawing.Size(128, 13);
             this.labelGlobalImageFormat.TabIndex = 41;
             this.labelGlobalImageFormat.Text = "Formato de imagen global";
             // 
             // buttonGlobalImageFormat
             // 
-            this.buttonGlobalImageFormat.Location = new System.Drawing.Point(547, 75);
-            this.buttonGlobalImageFormat.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.buttonGlobalImageFormat.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
+            this.buttonGlobalImageFormat.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonGlobalImageFormat.ForeColor = System.Drawing.SystemColors.Window;
+            this.buttonGlobalImageFormat.Location = new System.Drawing.Point(365, 49);
             this.buttonGlobalImageFormat.Name = "buttonGlobalImageFormat";
-            this.buttonGlobalImageFormat.Size = new System.Drawing.Size(112, 37);
+            this.buttonGlobalImageFormat.Size = new System.Drawing.Size(75, 24);
             this.buttonGlobalImageFormat.TabIndex = 42;
             this.buttonGlobalImageFormat.Text = "Establecer";
-            this.buttonGlobalImageFormat.UseVisualStyleBackColor = true;
+            this.buttonGlobalImageFormat.UseVisualStyleBackColor = false;
             this.buttonGlobalImageFormat.Click += new System.EventHandler(this.buttonGlobalImageFormat_Click);
             // 
             // addResolution
             // 
-            this.addResolution.Location = new System.Drawing.Point(302, 75);
+            this.addResolution.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
+            this.addResolution.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.addResolution.ForeColor = System.Drawing.SystemColors.Window;
+            this.addResolution.Location = new System.Drawing.Point(201, 49);
+            this.addResolution.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.addResolution.Name = "addResolution";
-            this.addResolution.Size = new System.Drawing.Size(75, 37);
+            this.addResolution.Size = new System.Drawing.Size(50, 24);
             this.addResolution.TabIndex = 43;
             this.addResolution.Text = "Añadir";
-            this.addResolution.UseVisualStyleBackColor = true;
+            this.addResolution.UseVisualStyleBackColor = false;
             this.addResolution.Click += new System.EventHandler(this.addResolution_Click);
             // 
             // NewMultipleFiles
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
-            this.ClientSize = new System.Drawing.Size(1454, 971);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(61)))), ((int)(((byte)(72)))));
+            this.ClientSize = new System.Drawing.Size(1256, 631);
             this.Controls.Add(this.addResolution);
             this.Controls.Add(this.buttonGlobalImageFormat);
             this.Controls.Add(this.labelGlobalImageFormat);
@@ -399,6 +444,7 @@
             this.Controls.Add(this.labelFather);
             this.Controls.Add(this.dataGridViewFiles);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.Name = "NewMultipleFiles";
             this.Text = "Nuevos Elementos";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFiles)).EndInit();

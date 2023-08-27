@@ -45,23 +45,24 @@
             // 
             // buttonSearchSonCoverTest
             // 
-            this.buttonSearchSonCoverTest.Location = new System.Drawing.Point(672, 18);
-            this.buttonSearchSonCoverTest.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.buttonSearchSonCoverTest.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
+            this.buttonSearchSonCoverTest.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonSearchSonCoverTest.ForeColor = System.Drawing.SystemColors.Window;
+            this.buttonSearchSonCoverTest.Location = new System.Drawing.Point(448, 12);
             this.buttonSearchSonCoverTest.Name = "buttonSearchSonCoverTest";
-            this.buttonSearchSonCoverTest.Size = new System.Drawing.Size(255, 35);
+            this.buttonSearchSonCoverTest.Size = new System.Drawing.Size(170, 23);
             this.buttonSearchSonCoverTest.TabIndex = 17;
             this.buttonSearchSonCoverTest.Text = "Seleccionar Caratula de prueba";
-            this.buttonSearchSonCoverTest.UseVisualStyleBackColor = true;
+            this.buttonSearchSonCoverTest.UseVisualStyleBackColor = false;
             this.buttonSearchSonCoverTest.Click += new System.EventHandler(this.buttonSearchSonCoverTest_Click);
             // 
             // panelSonImageLimit
             // 
             this.panelSonImageLimit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(40)))), ((int)(((byte)(47)))));
             this.panelSonImageLimit.Controls.Add(this.pictureBoxCover);
-            this.panelSonImageLimit.Location = new System.Drawing.Point(556, 63);
-            this.panelSonImageLimit.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.panelSonImageLimit.Location = new System.Drawing.Point(371, 41);
             this.panelSonImageLimit.Name = "panelSonImageLimit";
-            this.panelSonImageLimit.Size = new System.Drawing.Size(450, 462);
+            this.panelSonImageLimit.Size = new System.Drawing.Size(300, 300);
             this.panelSonImageLimit.TabIndex = 16;
             // 
             // pictureBoxCover
@@ -69,9 +70,8 @@
             this.pictureBoxCover.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
             this.pictureBoxCover.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
             this.pictureBoxCover.Location = new System.Drawing.Point(0, 0);
-            this.pictureBoxCover.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.pictureBoxCover.Name = "pictureBoxCover";
-            this.pictureBoxCover.Size = new System.Drawing.Size(300, 308);
+            this.pictureBoxCover.Size = new System.Drawing.Size(200, 200);
             this.pictureBoxCover.TabIndex = 0;
             this.pictureBoxCover.TabStop = false;
             this.pictureBoxCover.MouseLeave += new System.EventHandler(this.pictureBoxCover_MouseLeave);
@@ -88,12 +88,11 @@
             this.name,
             this.width,
             this.height});
-            this.dataGridViewResolutions.Location = new System.Drawing.Point(18, 63);
-            this.dataGridViewResolutions.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.dataGridViewResolutions.Location = new System.Drawing.Point(12, 41);
             this.dataGridViewResolutions.MultiSelect = false;
             this.dataGridViewResolutions.Name = "dataGridViewResolutions";
             this.dataGridViewResolutions.RowHeadersWidth = 62;
-            this.dataGridViewResolutions.Size = new System.Drawing.Size(516, 462);
+            this.dataGridViewResolutions.Size = new System.Drawing.Size(344, 300);
             this.dataGridViewResolutions.TabIndex = 18;
             this.dataGridViewResolutions.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewResolutions_CellClick);
             this.dataGridViewResolutions.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewResolutions_CellContentClick);
@@ -124,43 +123,49 @@
             // 
             // buttonAddRow
             // 
-            this.buttonAddRow.Location = new System.Drawing.Point(18, 18);
-            this.buttonAddRow.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.buttonAddRow.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
+            this.buttonAddRow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonAddRow.ForeColor = System.Drawing.SystemColors.Window;
+            this.buttonAddRow.Location = new System.Drawing.Point(12, 12);
             this.buttonAddRow.Name = "buttonAddRow";
-            this.buttonAddRow.Size = new System.Drawing.Size(112, 35);
+            this.buttonAddRow.Size = new System.Drawing.Size(75, 23);
             this.buttonAddRow.TabIndex = 19;
             this.buttonAddRow.Text = "Añadir";
-            this.buttonAddRow.UseVisualStyleBackColor = true;
+            this.buttonAddRow.UseVisualStyleBackColor = false;
             this.buttonAddRow.Click += new System.EventHandler(this.buttonAddRow_Click);
             // 
             // buttonDeleteRow
             // 
-            this.buttonDeleteRow.Location = new System.Drawing.Point(140, 18);
-            this.buttonDeleteRow.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.buttonDeleteRow.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
+            this.buttonDeleteRow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonDeleteRow.ForeColor = System.Drawing.SystemColors.Window;
+            this.buttonDeleteRow.Location = new System.Drawing.Point(93, 12);
             this.buttonDeleteRow.Name = "buttonDeleteRow";
-            this.buttonDeleteRow.Size = new System.Drawing.Size(112, 35);
+            this.buttonDeleteRow.Size = new System.Drawing.Size(75, 23);
             this.buttonDeleteRow.TabIndex = 20;
             this.buttonDeleteRow.Text = "Eliminar";
-            this.buttonDeleteRow.UseVisualStyleBackColor = true;
+            this.buttonDeleteRow.UseVisualStyleBackColor = false;
             this.buttonDeleteRow.Click += new System.EventHandler(this.buttonDeleteRow_Click);
             // 
             // buttonSaveRes
             // 
-            this.buttonSaveRes.Location = new System.Drawing.Point(18, 537);
-            this.buttonSaveRes.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.buttonSaveRes.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
+            this.buttonSaveRes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonSaveRes.ForeColor = System.Drawing.SystemColors.Window;
+            this.buttonSaveRes.Location = new System.Drawing.Point(12, 349);
             this.buttonSaveRes.Name = "buttonSaveRes";
-            this.buttonSaveRes.Size = new System.Drawing.Size(112, 35);
+            this.buttonSaveRes.Size = new System.Drawing.Size(75, 23);
             this.buttonSaveRes.TabIndex = 21;
             this.buttonSaveRes.Text = "Guardar";
-            this.buttonSaveRes.UseVisualStyleBackColor = true;
+            this.buttonSaveRes.UseVisualStyleBackColor = false;
             this.buttonSaveRes.Click += new System.EventHandler(this.buttonSaveRes_Click);
             // 
             // Resolution
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
-            this.ClientSize = new System.Drawing.Size(1016, 585);
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(61)))), ((int)(((byte)(72)))));
+            this.ClientSize = new System.Drawing.Size(677, 380);
             this.Controls.Add(this.buttonSaveRes);
             this.Controls.Add(this.buttonDeleteRow);
             this.Controls.Add(this.buttonAddRow);
@@ -168,7 +173,6 @@
             this.Controls.Add(this.buttonSearchSonCoverTest);
             this.Controls.Add(this.panelSonImageLimit);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "Resolution";
             this.Text = "Resoluciones";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Resolution_FormClosed);

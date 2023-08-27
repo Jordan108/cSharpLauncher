@@ -732,6 +732,9 @@ namespace C_Launcher
                 buttonSearchProgram.Enabled = false;
                 labelCMD.Enabled = false;
                 textBoxCMD.Enabled = false;
+                //Cambiar los colores de los inputs
+                textBoxProgramPath.BackColor = Color.FromArgb(55, 61, 72);
+                textBoxCMD.BackColor = Color.FromArgb(55, 61, 72);
             } else
             {
                 labelFilePath.Text = "Ruta del archivo";
@@ -743,6 +746,9 @@ namespace C_Launcher
                 buttonSearchProgram.Enabled = true;
                 labelCMD.Enabled = true;
                 textBoxCMD.Enabled = true;
+                //Cambiar los colores de los inputs
+                textBoxProgramPath.BackColor = Color.FromArgb(36, 40, 47);
+                textBoxCMD.BackColor = Color.FromArgb(36, 40, 47);
             }
         }
 
