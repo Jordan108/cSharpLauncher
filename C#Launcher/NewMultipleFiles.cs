@@ -67,7 +67,7 @@ namespace C_Launcher
             {
                 // Crear una nueva fila para el DataGridView
                 //nombre, checkbox url, ruta archivo, ruta lanzador, cmd, ancho, alto, resolucion, ruta caratula, Formato imagen, Color de fondo
-                this.dataGridViewFiles.Rows.Add(files[i].Name, files[i].URLCheck, files[i].FilePath, files[i].ProgramPath, files[i].CMDLine, files[i].Width, files[i].Height, null, files[i].ImagePath, null, null);
+                this.dataGridViewFiles.Rows.Add(files[i].Name, files[i].URLCheck, files[i].FilePath, files[i].ProgramPath, files[i].CMDLine, files[i].Width, files[i].Height, null, files[i].ImagePath, null, files[i].Background, null);
 
                 //Optimizar el combobox para que la opcion default sea "ninguno"
                 int rowCount = dataGridViewFiles.Rows.Count;
@@ -79,7 +79,7 @@ namespace C_Launcher
                 //Color del boton
                 DataGridViewCellStyle CellStyle = new DataGridViewCellStyle();
                 CellStyle.BackColor = Color.FromArgb(255, files[i].ColorRed, files[i].ColorGreen, files[i].ColorBlue); ;
-                dataGridViewFiles.Rows[rowCount - 1].Cells[10].Style = CellStyle;
+                dataGridViewFiles.Rows[rowCount - 1].Cells[11].Style = CellStyle;
 
                 dataGridViewFiles.Rows[rowCount - 1].Tag = files[i].ID;//Para declarar que estos archivos son nuevos
                 dataGridViewFiles.Rows[rowCount - 1].Selected = true;
@@ -241,7 +241,7 @@ namespace C_Launcher
                     //Color del boton
                     DataGridViewCellStyle CellStyle = new DataGridViewCellStyle();
                     CellStyle.BackColor = Color.FromArgb(255, 0, 0, 0); ;
-                    dataGridViewFiles.Rows[rowCount - 1].Cells[10].Style = CellStyle;
+                    dataGridViewFiles.Rows[rowCount - 1].Cells[11].Style = CellStyle;
 
 
 
@@ -622,9 +622,10 @@ namespace C_Launcher
                 string filePath = dataGridViewFiles.Rows[i].Cells[2].Value.ToString();
                 string programPath = dataGridViewFiles.Rows[i].Cells[3].Value.ToString();
                 string cmdLine = dataGridViewFiles.Rows[i].Cells[4].Value.ToString();
-                int R = dataGridViewFiles.Rows[i].Cells[10].Style.BackColor.R;
-                int G = dataGridViewFiles.Rows[i].Cells[10].Style.BackColor.G;
-                int B = dataGridViewFiles.Rows[i].Cells[10].Style.BackColor.B;
+                bool background = bool.Parse(dataGridViewFiles.Rows[i].Cells[10].Value.ToString());
+                int R = dataGridViewFiles.Rows[i].Cells[11].Style.BackColor.R;
+                int G = dataGridViewFiles.Rows[i].Cells[11].Style.BackColor.G;
+                int B = dataGridViewFiles.Rows[i].Cells[11].Style.BackColor.B;
                 int width = int.Parse(dataGridViewFiles.Rows[i].Cells[5].Value.ToString());
                 int height = int.Parse(dataGridViewFiles.Rows[i].Cells[6].Value.ToString());
                 bool url = bool.Parse(dataGridViewFiles.Rows[i].Cells[1].Value.ToString());
@@ -632,7 +633,7 @@ namespace C_Launcher
                 bool favorite = false;
 
 
-                Files tempFile = new Files(fileID, idFather, nameFile, imgPath, imgLayout, filePath, programPath, cmdLine, R, G, B, resID, width, height, url, tagsArray, favorite);
+                Files tempFile = new Files(fileID, idFather, nameFile, imgPath, imgLayout, filePath, programPath, cmdLine, background, R, G, B, resID, width, height, url, tagsArray, favorite);
                 passFile[i] = tempFile;
 
                 //Files passFile = new Files(idFile, idFather, nameFile, imgPath, imgLayout, filePath, programPath, cmdLine, R, G, B, resID, width, height, url, tagsArray, favorite);

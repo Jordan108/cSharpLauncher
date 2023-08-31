@@ -248,7 +248,6 @@
             this.Text = "C# Launcher";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Home_FormClosed);
-            this.Load += new System.EventHandler(this.Home_Load);
             this.panelTop.ResumeLayout(false);
             this.panelTop.PerformLayout();
             this.menuStripMain.ResumeLayout(false);

@@ -71,6 +71,9 @@ namespace C_Launcher
             comboBoxResolutionCol.SelectedIndex = resolutionIndex + 1;
             comboBoxSonResolution.SelectedIndex = resolutionSonIndex + 1;
 
+            //Verificar el check del fondo
+            BackgroundColorCheck.Checked = colData.Background;
+            
             //RGB
             //Color BackgroundCol = new Color();
             Color BackgroundCol = Color.FromArgb(255, colData.ColorRed, colData.ColorGreen, colData.ColorBlue);
@@ -910,6 +913,7 @@ namespace C_Launcher
             int imgLayout = 0;
             if (radioButtonColEstreched.Checked == true) imgLayout = 1;
 
+            bool background = BackgroundColorCheck.Checked;
             int R = pictureBoxCoverCollection.BackColor.R;
             int G = pictureBoxCoverCollection.BackColor.G;
             int B = pictureBoxCoverCollection.BackColor.B;
@@ -928,7 +932,7 @@ namespace C_Launcher
             int[] tagsArray = new int[] { 1, 2, 3 };
             bool favorite = checkBoxFavorite.Checked;
             //Console.WriteLine("resID: " + resSonID);
-            Collections passCollection = new Collections(idCollection, idFather, nameCollection, imgPath, imgLayout, R, G, B, resID, width, height, resSonID, sonWidth, sonHeight, sonLayout, tagsArray, favorite);
+            Collections passCollection = new Collections(idCollection, idFather, nameCollection, imgPath, imgLayout, background, R, G, B, resID, width, height, resSonID, sonWidth, sonHeight, sonLayout, tagsArray, favorite);
             ReturnedObject?.Invoke(this, passCollection);
             this.Close();
         }

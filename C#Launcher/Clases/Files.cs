@@ -20,6 +20,7 @@ namespace C_Launcher.Clases
         private string imagePath;
         private int imageLayout;
         //Color de fondo del picture box
+        private bool noBackground;
         private int colRed;
         private int colGreen;
         private int colBlue;
@@ -32,7 +33,7 @@ namespace C_Launcher.Clases
         private bool favorite;
 
         //Constructor
-        public Files(int _id, int _idFather, string _name, string _imgPath, int _layout, string _filePath, string _programPath, string _cmd, int _r, int _g, int _b, int _res, int _w, int _h, bool _url, int[] _tag, bool _fav)
+        public Files(int _id, int _idFather, string _name, string _imgPath, int _layout, string _filePath, string _programPath, string _cmd, bool _nBg, int _r, int _g, int _b, int _res, int _w, int _h, bool _url, int[] _tag, bool _fav)
         {
             id = _id;
             idFather = _idFather;
@@ -42,6 +43,7 @@ namespace C_Launcher.Clases
             filePath = _filePath;
             programPath = _programPath;
             cmdLine = _cmd;
+            noBackground = _nBg;
             colRed = _r;
             colGreen = _g;
             colBlue = _b;
@@ -92,6 +94,11 @@ namespace C_Launcher.Clases
         {
             set { cmdLine = value; }
             get { return cmdLine; }
+        }
+        public bool Background
+        {
+            set { noBackground = value; }
+            get { return noBackground; }
         }
         public int ColorRed
         {

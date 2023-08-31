@@ -78,7 +78,9 @@ namespace C_Launcher
             textBoxProgramPath.Text = fileData.ProgramPath;
             textBoxCMD.Text = fileData.CMDLine;
 
-            
+            //Verificar el check del fondo
+            BackgroundColorCheck.Checked = fileData.Background;
+
             //Picture Box
             Color BackgroundCol = Color.FromArgb(255, fileData.ColorRed, fileData.ColorGreen, fileData.ColorBlue);
             pictureBoxCover.BackColor = BackgroundCol;
@@ -129,9 +131,6 @@ namespace C_Launcher
                     xmlImagePath = fileData.ImagePath;//Para editar la imagen
                     image = null;
 
-                    //imagen = Image.FromFile(fileData.ImagePath);
-                    //pictureBoxCover.BackgroundImage = imagen;
-                    //pictureBoxCover.Tag = fileData.ImagePath;
                     Console.WriteLine("/////////////////Imagen " + fileData.ImagePath + " establecida//////////////////////");
                 }
                 catch //(Exception ex)
@@ -844,6 +843,7 @@ namespace C_Launcher
             string filePath = textBoxFilePath.Text;
             string programPath = textBoxProgramPath.Text;
             string cmdLine = textBoxCMD.Text;
+            bool background = BackgroundColorCheck.Checked;
             int R = pictureBoxCover.BackColor.R;
             int G = pictureBoxCover.BackColor.G;
             int B = pictureBoxCover.BackColor.B;
@@ -854,7 +854,7 @@ namespace C_Launcher
             bool favorite = checkBoxFavorite.Checked;
 
 
-            Files passFile = new Files(idFile, idFather, nameFile, imgPath, imgLayout, filePath, programPath, cmdLine, R, G, B, resID, width, height, url, tagsArray, favorite);
+            Files passFile = new Files(idFile, idFather, nameFile, imgPath, imgLayout, filePath, programPath, cmdLine, background, R, G, B, resID, width, height, url, tagsArray, favorite);
             ReturnedObject?.Invoke(this, passFile);
             this.Close();
         }

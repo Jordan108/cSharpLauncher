@@ -2,14 +2,14 @@
 //using C_Launcher.Properties;
 using System;
 using System.Diagnostics;
+using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.IO;
 using System.Linq;
+using System.Runtime.Remoting.Metadata.W3cXsd2001;
 //using System.Reflection.Emit;
 using System.Windows.Forms;
 using System.Xml;
-//using static System.Net.Mime.MediaTypeNames;
-//using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace C_Launcher
 {
@@ -82,12 +82,6 @@ namespace C_Launcher
             loadTreeView(colSize);
             Console.WriteLine("tamaño col: " +  colSize);
             loadPictureBox(colSize, fileSize, false);
-        }
-
-        //Cuando la vista cargue
-        private void Home_Load(object sender, EventArgs e)
-        {
-            
         }
 
         #region ToolStrip
@@ -822,12 +816,27 @@ namespace C_Launcher
                 {
                     //Image imagen = Image.FromFile(colls[i].ImagePath);
                     //Definir el picture box
+                    int red = 255;
+                    int green = 255;
+                    int blue = 255;
+
+                    if (colls[i].Background == true)
+                    {
+                        red = flowLayoutPanelMain.BackColor.R;
+                        green = flowLayoutPanelMain.BackColor.G;
+                        blue = flowLayoutPanelMain.BackColor.B;
+                    } else
+                    {
+                        red = colls[i].ColorRed;
+                        green = colls[i].ColorGreen;
+                        blue = colls[i].ColorBlue;
+                    }
                     picBoxArr[pL] = new PictureBox
                     {
                         AccessibleDescription = "collection",//Aqui se indica que tipo de picture box es (coleccion / archivo)
                         Name = colls[i].Name,//Aqui se guarda el nombre de la coleccion
                         Size = new Size(colls[i].Width, colls[i].Height),
-                        BackColor = Color.FromArgb(colls[i].ColorRed, colls[i].ColorGreen, colls[i].ColorBlue),
+                        BackColor = Color.FromArgb(red, green, blue),
                         Tag = colls[i].ID,//Aqui se guarda en que espacio del array estamos buscando//colls[i].ID,
                     };
 
@@ -935,12 +944,28 @@ namespace C_Launcher
                     }
 
                     //Definir el picture box
+                    int red = 255;
+                    int green = 255;
+                    int blue = 255;
+
+                    if (files[f].Background == true)
+                    {
+                        red = flowLayoutPanelMain.BackColor.R;
+                        green = flowLayoutPanelMain.BackColor.G;
+                        blue = flowLayoutPanelMain.BackColor.B;
+                    }
+                    else
+                    {
+                        red = files[f].ColorRed;
+                        green = files[f].ColorGreen;
+                        blue = files[f].ColorBlue;
+                    }
                     picBoxArr[pL] = new PictureBox
                     {
                         AccessibleDescription = "file",//Aqui se indica que tipo de picture box es (coleccion / archivo)//,
                         Name = files[f].Name,
                         Size = new Size(fileW, fileH),
-                        BackColor = Color.FromArgb(files[f].ColorRed, files[f].ColorGreen, files[f].ColorBlue),
+                        BackColor = Color.FromArgb(red, green, blue),
                         /*
                         BackgroundImage = imagen,
                         */
@@ -1163,6 +1188,15 @@ namespace C_Launcher
         #endregion
 
         #region Manejar datos XML
+        private string XMLDefaultReturn(XmlNode node,string singleNode, string defaultValue)
+        {
+            XmlNode selectedNode = node.SelectSingleNode(singleNode);
+            if (selectedNode != null)
+            {
+                return selectedNode.InnerText;
+            }
+            return defaultValue;
+        }
         #region Archivos
         //Cargar el tamaño de elementos con id que existen en el xml de archivos
         private int LoadFilesSize()
@@ -1225,6 +1259,7 @@ namespace C_Launcher
                 string filePath = root.SelectSingleNode("FilePath").InnerText;
                 string programPath = root.SelectSingleNode("ProgramPath").InnerText;
                 string cmdLine = root.SelectSingleNode("CMDLine").InnerText;
+                bool background = bool.Parse(XMLDefaultReturn(root, "WithoutBackground", "false"));
                 int red = int.Parse(root.SelectSingleNode("BackgroundRed").InnerText);
                 int green = int.Parse(root.SelectSingleNode("BackgroundGreen").InnerText);
                 int blue = int.Parse(root.SelectSingleNode("BackgroundBlue").InnerText);
@@ -1240,7 +1275,7 @@ namespace C_Launcher
                 }
                 bool fav = bool.Parse(root.SelectSingleNode("Favorite").InnerText);
 
-                fileData[i] = new Files(fileID, idFather, name, imgPath, imgLayout, filePath, programPath, cmdLine, red, green, blue, resolution, width, height, urlCheck, tagsArray, fav);
+                fileData[i] = new Files(fileID, idFather, name, imgPath, imgLayout, filePath, programPath, cmdLine, background, red, green, blue, resolution, width, height, urlCheck, tagsArray, fav);
 
                 fileID++;
             }
@@ -1312,6 +1347,7 @@ namespace C_Launcher
             XmlElement filePath = xmlDoc.CreateElement("FilePath"); filePath.InnerText = Class.FilePath; file.AppendChild(filePath);
             XmlElement fileProgram = xmlDoc.CreateElement("ProgramPath"); fileProgram.InnerText = Class.ProgramPath; file.AppendChild(fileProgram);
             XmlElement filecmd = xmlDoc.CreateElement("CMDLine"); filecmd.InnerText = Class.CMDLine; file.AppendChild(filecmd);
+            XmlElement fileBg = xmlDoc.CreateElement("WithoutBackground"); fileBg.InnerText = Class.Background.ToString(); file.AppendChild(fileBg);
             XmlElement fileBgRed = xmlDoc.CreateElement("BackgroundRed"); fileBgRed.InnerText = Class.ColorRed.ToString(); file.AppendChild(fileBgRed);
             XmlElement fileBgGreen = xmlDoc.CreateElement("BackgroundGreen"); fileBgGreen.InnerText = Class.ColorGreen.ToString(); file.AppendChild(fileBgGreen);
             XmlElement fileBgBlue = xmlDoc.CreateElement("BackgroundBlue"); fileBgBlue.InnerText = Class.ColorBlue.ToString(); file.AppendChild(fileBgBlue);
@@ -1435,6 +1471,7 @@ namespace C_Launcher
             string filePath = root.SelectSingleNode("FilePath").InnerText;
             string programPath = root.SelectSingleNode("ProgramPath").InnerText;
             string cmdLine = root.SelectSingleNode("CMDLine").InnerText;
+            bool background = bool.Parse(root.SelectSingleNode("Background").InnerText);
             int red = int.Parse(root.SelectSingleNode("BackgroundRed").InnerText);
             int green = int.Parse(root.SelectSingleNode("BackgroundGreen").InnerText);
             int blue = int.Parse(root.SelectSingleNode("BackgroundBlue").InnerText);
@@ -1450,37 +1487,7 @@ namespace C_Launcher
             }
             bool fav = bool.Parse(root.SelectSingleNode("Favorite").InnerText);
 
-            /*foreach (XmlNode rootxml in root.ChildNodes)
-            {
-                switch (rootxml.Name)
-                {
-                    case "IDFather": idFather = int.Parse(rootxml.InnerText); break;
-                    case "Name": name = rootxml.InnerText; break;
-                    case "Image": imgPath = rootxml.InnerText; break;
-                    case "ImageLayout": imgLayout = int.Parse(rootxml.InnerText); break;
-                    case "FilePath": filePath = rootxml.InnerText; break;
-                    case "ProgramPath": programPath = rootxml.InnerText; break;
-                    case "CMDLine": cmdLine = rootxml.InnerText; break;
-                    case "BackgroundRed": red = int.Parse(rootxml.InnerText); break;
-                    case "BackgroundGreen": green = int.Parse(rootxml.InnerText); break;
-                    case "BackgroundBlue": blue = int.Parse(rootxml.InnerText); break;
-                    case "CoverResolutionID": resolution = int.Parse(rootxml.InnerText); break;
-                    case "CoverWidth": width = int.Parse(rootxml.InnerText); break;
-                    case "CoverHeight": height = int.Parse(rootxml.InnerText); break;
-                    case "URLCheck": urlCheck = bool.Parse(rootxml.InnerText); break;
-                    case "TagsID":
-                        //leer los tags dentro del elemento
-                        foreach (XmlNode tagid in rootxml)
-                        {
-                            //hacer un append al array
-                            tagsArray = tagsArray.Append(int.Parse(tagid.InnerText)).ToArray();
-                        }
-                        break;
-                    case "Favorite": fav = bool.Parse(rootxml.InnerText); break;
-                }
-            }*/
-
-            Files FileReturn = new Files(fileID, idFather, name, imgPath, imgLayout, filePath, programPath, cmdLine, red, green, blue, resolution, width, height, urlCheck, tagsArray, fav);
+            Files FileReturn = new Files(fileID, idFather, name, imgPath, imgLayout, filePath, programPath, cmdLine, background,red, green, blue, resolution, width, height, urlCheck, tagsArray, fav);
 
             return FileReturn;
         }
@@ -1665,6 +1672,7 @@ namespace C_Launcher
             XmlElement colName = xmlDoc.CreateElement("Name"); colName.InnerText = Class.Name; coleccion.AppendChild(colName);
             XmlElement colImage = xmlDoc.CreateElement("Image"); colImage.InnerText = Class.ImagePath; coleccion.AppendChild(colImage);
             XmlElement colLayout = xmlDoc.CreateElement("ImageLayout"); colLayout.InnerText = Class.ImageLayout.ToString(); coleccion.AppendChild(colLayout);
+            XmlElement colBg = xmlDoc.CreateElement("WithoutBackground"); colBg.InnerText = Class.Background.ToString(); coleccion.AppendChild(colBg);
             XmlElement colBgRed = xmlDoc.CreateElement("BackgroundRed"); colBgRed.InnerText = Class.ColorRed.ToString(); coleccion.AppendChild(colBgRed);
             XmlElement colBgGreen = xmlDoc.CreateElement("BackgroundGreen"); colBgGreen.InnerText = Class.ColorGreen.ToString(); coleccion.AppendChild(colBgGreen);
             XmlElement colBgBlue = xmlDoc.CreateElement("BackgroundBlue"); colBgBlue.InnerText = Class.ColorBlue.ToString(); coleccion.AppendChild(colBgBlue);
@@ -1724,6 +1732,7 @@ namespace C_Launcher
                 string name = root.SelectSingleNode("Name").InnerText;
                 string imgPath = root.SelectSingleNode("Image").InnerText;
                 int imgLayout = int.Parse(root.SelectSingleNode("ImageLayout").InnerText);
+                bool background = bool.Parse(XMLDefaultReturn(root, "WithoutBackground", "false"));
                 int red = int.Parse(root.SelectSingleNode("BackgroundRed").InnerText);
                 int green = int.Parse(root.SelectSingleNode("BackgroundGreen").InnerText);
                 int blue = int.Parse(root.SelectSingleNode("BackgroundBlue").InnerText);
@@ -1745,39 +1754,10 @@ namespace C_Launcher
                 }
                 bool fav = bool.Parse(root.SelectSingleNode("Favorite").InnerText);
 
-                //"1, 3, 4, 5, 6, 9, 10, 14, 23"
-                //Navegar entre todos los elementos que contenga el elemento base del xml
-                /*foreach (XmlNode rootxml in root.ChildNodes)
-                {
-                    //Console.WriteLine(rootxml.Name + " | " + rootxml.InnerText);
-                    switch (rootxml.Name)
-                    {
-                        case "IDFather": idFather = int.Parse(rootxml.InnerText); break;
-                        case "Name": name = rootxml.InnerText; break;
-                        case "Image": imgPath = rootxml.InnerText; break;
-                        case "ImageLayout": imgLayout = int.Parse(rootxml.InnerText); break;
-                        case "BackgroundRed": red = int.Parse(rootxml.InnerText); break;
-                        case "BackgroundGreen": green = int.Parse(rootxml.InnerText); break;
-                        case "BackgroundBlue": blue = int.Parse(rootxml.InnerText); break;
-                        case "CoverResolutionID": resolution = int.Parse(rootxml.InnerText); break;
-                        case "CoverWidth": width = int.Parse(rootxml.InnerText); break;
-                        case "CoverHeight": height = int.Parse(rootxml.InnerText); break;
-                        case "CoverSonResolutionID": sonRes = int.Parse(rootxml.InnerText); break;
-                        case "CoverSonWidth": sonWidth = int.Parse(rootxml.InnerText); break;
-                        case "CoverSonHeight": sonHeight = int.Parse(rootxml.InnerText); break;
-                        case "SonImageLayout": sonLayout = int.Parse(rootxml.InnerText); break;
-                        case "TagsID":
-                            string[] strArray = rootxml.InnerText.Split(' ');
-                            tagsArray = strArray.Select(s => int.Parse(s)).ToArray();
-                            break;
-                        case "Favorite": fav = bool.Parse(rootxml.InnerText); break;
-                    }
-                }*/
-
-                colData[i] = new Collections(fileID, idFather, name, imgPath, imgLayout, red, green, blue, resolution, width, height, sonRes, sonWidth, sonHeight, sonLayout, tagsArray, fav);
+                colData[i] = new Collections(fileID, idFather, name, imgPath, imgLayout, background, red, green, blue, resolution, width, height, sonRes, sonWidth, sonHeight, sonLayout, tagsArray, fav);
 
                 fileID++;
-            }
+                }
 
             return colData;
         }
@@ -1797,6 +1777,7 @@ namespace C_Launcher
             string name = root.SelectSingleNode("Name").InnerText;
             string imgPath = root.SelectSingleNode("Image").InnerText;
             int imgLayout = int.Parse(root.SelectSingleNode("ImageLayout").InnerText);
+            bool background = bool.Parse(root.SelectSingleNode("Background").InnerText);
             int red = int.Parse(root.SelectSingleNode("BackgroundRed").InnerText);
             int green = int.Parse(root.SelectSingleNode("BackgroundGreen").InnerText);
             int blue = int.Parse(root.SelectSingleNode("BackgroundBlue").InnerText);
@@ -1815,7 +1796,7 @@ namespace C_Launcher
             bool fav = bool.Parse(root.SelectSingleNode("Favorite").InnerText);
 
 
-            Collections colReturn = new Collections(colID, idFather, name, imgPath, imgLayout, red, green, blue, resolution, width, height, sonRes, sonWidth, sonHeight, sonLayout, tagsArray, fav);
+            Collections colReturn = new Collections(colID, idFather, name, imgPath, imgLayout, background, red, green, blue, resolution, width, height, sonRes, sonWidth, sonHeight, sonLayout, tagsArray, fav);
 
             return colReturn;
         }
@@ -1858,6 +1839,7 @@ namespace C_Launcher
                 string filePath = root.SelectSingleNode("FilePath").InnerText;
                 string programPath = root.SelectSingleNode("ProgramPath").InnerText;
                 string cmdLine = root.SelectSingleNode("CMDLine").InnerText;
+                bool background = bool.Parse(root.SelectSingleNode("Background").InnerText);
                 int red = int.Parse(root.SelectSingleNode("BackgroundRed").InnerText);
                 int green = int.Parse(root.SelectSingleNode("BackgroundGreen").InnerText);
                 int blue = int.Parse(root.SelectSingleNode("BackgroundBlue").InnerText);
@@ -1873,7 +1855,7 @@ namespace C_Launcher
                 }
                 bool fav = bool.Parse(root.SelectSingleNode("Favorite").InnerText);
 
-                fileData[i] = new Files(fileID, idFather, name, imgPath, imgLayout, filePath, programPath, cmdLine, red, green, blue, resolution, width, height, urlCheck, tagsArray, fav);
+                fileData[i] = new Files(fileID, idFather, name, imgPath, imgLayout, filePath, programPath, cmdLine, background, red, green, blue, resolution, width, height, urlCheck, tagsArray, fav);
 
                 fileID++;
             }

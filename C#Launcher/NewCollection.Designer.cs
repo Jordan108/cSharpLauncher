@@ -64,6 +64,7 @@
             this.buttonSearchSonCoverTest = new System.Windows.Forms.Button();
             this.buttonColorPickIMG = new System.Windows.Forms.Button();
             this.checkBoxImageLocation = new System.Windows.Forms.CheckBox();
+            this.BackgroundColorCheck = new System.Windows.Forms.CheckBox();
             this.groupBoxCover.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericColHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericColWidth)).BeginInit();
@@ -83,7 +84,7 @@
             this.textBoxName.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(40)))), ((int)(((byte)(47)))));
             this.textBoxName.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBoxName.ForeColor = System.Drawing.SystemColors.Window;
-            this.textBoxName.Location = new System.Drawing.Point(145, 35);
+            this.textBoxName.Location = new System.Drawing.Point(145, 21);
             this.textBoxName.Name = "textBoxName";
             this.textBoxName.Size = new System.Drawing.Size(245, 20);
             this.textBoxName.TabIndex = 0;
@@ -92,7 +93,7 @@
             // 
             this.labelName.AutoSize = true;
             this.labelName.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelName.Location = new System.Drawing.Point(31, 38);
+            this.labelName.Location = new System.Drawing.Point(40, 26);
             this.labelName.Name = "labelName";
             this.labelName.Size = new System.Drawing.Size(96, 13);
             this.labelName.TabIndex = 1;
@@ -105,16 +106,16 @@
             this.comboBoxFather.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.comboBoxFather.ForeColor = System.Drawing.SystemColors.Window;
             this.comboBoxFather.FormattingEnabled = true;
-            this.comboBoxFather.Location = new System.Drawing.Point(145, 62);
+            this.comboBoxFather.Location = new System.Drawing.Point(145, 47);
             this.comboBoxFather.Name = "comboBoxFather";
-            this.comboBoxFather.Size = new System.Drawing.Size(245, 21);
+            this.comboBoxFather.Size = new System.Drawing.Size(263, 21);
             this.comboBoxFather.TabIndex = 2;
             // 
             // labelFather
             // 
             this.labelFather.AutoSize = true;
             this.labelFather.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelFather.Location = new System.Drawing.Point(40, 65);
+            this.labelFather.Location = new System.Drawing.Point(49, 50);
             this.labelFather.Name = "labelFather";
             this.labelFather.Size = new System.Drawing.Size(87, 13);
             this.labelFather.TabIndex = 3;
@@ -301,7 +302,7 @@
             this.checkBoxFavorite.AutoSize = true;
             this.checkBoxFavorite.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.checkBoxFavorite.ForeColor = System.Drawing.SystemColors.Window;
-            this.checkBoxFavorite.Location = new System.Drawing.Point(396, 34);
+            this.checkBoxFavorite.Location = new System.Drawing.Point(396, 24);
             this.checkBoxFavorite.Name = "checkBoxFavorite";
             this.checkBoxFavorite.Size = new System.Drawing.Size(61, 17);
             this.checkBoxFavorite.TabIndex = 10;
@@ -534,12 +535,25 @@
             this.checkBoxImageLocation.Text = "Utilizar la imagen en su ubicacion actual";
             this.checkBoxImageLocation.UseVisualStyleBackColor = true;
             // 
+            // BackgroundColorCheck
+            // 
+            this.BackgroundColorCheck.AutoSize = true;
+            this.BackgroundColorCheck.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BackgroundColorCheck.ForeColor = System.Drawing.SystemColors.Window;
+            this.BackgroundColorCheck.Location = new System.Drawing.Point(361, 86);
+            this.BackgroundColorCheck.Name = "BackgroundColorCheck";
+            this.BackgroundColorCheck.Size = new System.Drawing.Size(68, 17);
+            this.BackgroundColorCheck.TabIndex = 33;
+            this.BackgroundColorCheck.Text = "Sin fondo";
+            this.BackgroundColorCheck.UseVisualStyleBackColor = true;
+            // 
             // NewCollection
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(61)))), ((int)(((byte)(72)))));
             this.ClientSize = new System.Drawing.Size(1065, 483);
+            this.Controls.Add(this.BackgroundColorCheck);
             this.Controls.Add(this.checkBoxImageLocation);
             this.Controls.Add(this.buttonColorPickIMG);
             this.Controls.Add(this.buttonSearchSonCoverTest);
@@ -624,5 +638,6 @@
         private System.Windows.Forms.Button buttonSearchSonCoverTest;
         private System.Windows.Forms.Button buttonColorPickIMG;
         private System.Windows.Forms.CheckBox checkBoxImageLocation;
+        private System.Windows.Forms.CheckBox BackgroundColorCheck;
     }
 }

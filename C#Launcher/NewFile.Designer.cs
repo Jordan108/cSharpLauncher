@@ -61,6 +61,7 @@
             this.buttonColorPickIMG = new System.Windows.Forms.Button();
             this.checkBoxImageLocation = new System.Windows.Forms.CheckBox();
             this.addResolution = new System.Windows.Forms.Button();
+            this.BackgroundColorCheck = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCover)).BeginInit();
             this.groupBoxImageFormat.SuspendLayout();
             this.panelImageLimit.SuspendLayout();
@@ -241,7 +242,7 @@
             this.groupBoxImageFormat.Controls.Add(this.radioButtonEstreched);
             this.groupBoxImageFormat.Controls.Add(this.radioButtonZoom);
             this.groupBoxImageFormat.ForeColor = System.Drawing.SystemColors.Window;
-            this.groupBoxImageFormat.Location = new System.Drawing.Point(52, 442);
+            this.groupBoxImageFormat.Location = new System.Drawing.Point(52, 447);
             this.groupBoxImageFormat.Name = "groupBoxImageFormat";
             this.groupBoxImageFormat.Size = new System.Drawing.Size(162, 71);
             this.groupBoxImageFormat.TabIndex = 16;
@@ -276,7 +277,7 @@
             // 
             this.panelImageLimit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(40)))), ((int)(((byte)(47)))));
             this.panelImageLimit.Controls.Add(this.pictureBoxCover);
-            this.panelImageLimit.Location = new System.Drawing.Point(280, 255);
+            this.panelImageLimit.Location = new System.Drawing.Point(280, 280);
             this.panelImageLimit.Name = "panelImageLimit";
             this.panelImageLimit.Size = new System.Drawing.Size(300, 300);
             this.panelImageLimit.TabIndex = 17;
@@ -338,7 +339,7 @@
             this.groupBoxSize.Controls.Add(this.numericWidthImage);
             this.groupBoxSize.Controls.Add(this.labelHeight);
             this.groupBoxSize.ForeColor = System.Drawing.SystemColors.Window;
-            this.groupBoxSize.Location = new System.Drawing.Point(25, 318);
+            this.groupBoxSize.Location = new System.Drawing.Point(25, 324);
             this.groupBoxSize.Name = "groupBoxSize";
             this.groupBoxSize.Size = new System.Drawing.Size(228, 100);
             this.groupBoxSize.TabIndex = 21;
@@ -370,7 +371,7 @@
             this.buttonSearchCover.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
             this.buttonSearchCover.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonSearchCover.ForeColor = System.Drawing.SystemColors.Window;
-            this.buttonSearchCover.Location = new System.Drawing.Point(280, 203);
+            this.buttonSearchCover.Location = new System.Drawing.Point(280, 228);
             this.buttonSearchCover.Name = "buttonSearchCover";
             this.buttonSearchCover.Size = new System.Drawing.Size(115, 23);
             this.buttonSearchCover.TabIndex = 24;
@@ -383,7 +384,7 @@
             this.buttonSetColor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
             this.buttonSetColor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonSetColor.ForeColor = System.Drawing.SystemColors.Window;
-            this.buttonSetColor.Location = new System.Drawing.Point(402, 203);
+            this.buttonSetColor.Location = new System.Drawing.Point(402, 227);
             this.buttonSetColor.Name = "buttonSetColor";
             this.buttonSetColor.Size = new System.Drawing.Size(93, 23);
             this.buttonSetColor.TabIndex = 25;
@@ -396,7 +397,7 @@
             this.buttonSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
             this.buttonSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonSave.ForeColor = System.Drawing.SystemColors.Window;
-            this.buttonSave.Location = new System.Drawing.Point(87, 519);
+            this.buttonSave.Location = new System.Drawing.Point(98, 554);
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(75, 23);
             this.buttonSave.TabIndex = 26;
@@ -411,7 +412,7 @@
             this.comboBoxResolution.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.comboBoxResolution.ForeColor = System.Drawing.SystemColors.Window;
             this.comboBoxResolution.FormattingEnabled = true;
-            this.comboBoxResolution.Location = new System.Drawing.Point(9, 271);
+            this.comboBoxResolution.Location = new System.Drawing.Point(6, 271);
             this.comboBoxResolution.Name = "comboBoxResolution";
             this.comboBoxResolution.Size = new System.Drawing.Size(214, 21);
             this.comboBoxResolution.TabIndex = 27;
@@ -432,7 +433,7 @@
             this.buttonColorPickIMG.BackColor = System.Drawing.Color.Black;
             this.buttonColorPickIMG.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonColorPickIMG.ForeColor = System.Drawing.SystemColors.Window;
-            this.buttonColorPickIMG.Location = new System.Drawing.Point(501, 203);
+            this.buttonColorPickIMG.Location = new System.Drawing.Point(501, 227);
             this.buttonColorPickIMG.Name = "buttonColorPickIMG";
             this.buttonColorPickIMG.Size = new System.Drawing.Size(25, 25);
             this.buttonColorPickIMG.TabIndex = 29;
@@ -442,7 +443,7 @@
             // 
             this.checkBoxImageLocation.AutoSize = true;
             this.checkBoxImageLocation.ForeColor = System.Drawing.SystemColors.Window;
-            this.checkBoxImageLocation.Location = new System.Drawing.Point(280, 232);
+            this.checkBoxImageLocation.Location = new System.Drawing.Point(280, 257);
             this.checkBoxImageLocation.Name = "checkBoxImageLocation";
             this.checkBoxImageLocation.Size = new System.Drawing.Size(215, 17);
             this.checkBoxImageLocation.TabIndex = 30;
@@ -463,13 +464,26 @@
             this.addResolution.UseVisualStyleBackColor = false;
             this.addResolution.Click += new System.EventHandler(this.addResolution_Click);
             // 
+            // BackgroundColorCheck
+            // 
+            this.BackgroundColorCheck.AutoSize = true;
+            this.BackgroundColorCheck.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BackgroundColorCheck.ForeColor = System.Drawing.SystemColors.Window;
+            this.BackgroundColorCheck.Location = new System.Drawing.Point(402, 205);
+            this.BackgroundColorCheck.Name = "BackgroundColorCheck";
+            this.BackgroundColorCheck.Size = new System.Drawing.Size(68, 17);
+            this.BackgroundColorCheck.TabIndex = 32;
+            this.BackgroundColorCheck.Text = "Sin fondo";
+            this.BackgroundColorCheck.UseVisualStyleBackColor = true;
+            // 
             // NewFile
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(61)))), ((int)(((byte)(72)))));
-            this.ClientSize = new System.Drawing.Size(588, 567);
+            this.ClientSize = new System.Drawing.Size(588, 587);
+            this.Controls.Add(this.BackgroundColorCheck);
             this.Controls.Add(this.addResolution);
             this.Controls.Add(this.checkBoxImageLocation);
             this.Controls.Add(this.buttonColorPickIMG);
@@ -548,5 +562,6 @@
         private System.Windows.Forms.Button buttonColorPickIMG;
         private System.Windows.Forms.CheckBox checkBoxImageLocation;
         private System.Windows.Forms.Button addResolution;
+        private System.Windows.Forms.CheckBox BackgroundColorCheck;
     }
 }

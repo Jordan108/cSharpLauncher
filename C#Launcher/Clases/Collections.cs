@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrayNotify;
 
 namespace C_Launcher.Clases
 {
@@ -17,6 +18,7 @@ namespace C_Launcher.Clases
         private string imagePath;
         private int imageLayout;
         //Color de fondo del picture box
+        private bool noBackground;
         private int colRed;
         private int colGreen;
         private int colBlue;
@@ -35,13 +37,14 @@ namespace C_Launcher.Clases
 
 
         //Constructor
-        public Collections(int _id, int _idFather, string _name, string _imgPath, int _layout, int _r, int _g, int _b, int _res, int _w, int _h, int _sRint, int _sW, int _sH, int _sL, int [] _tag, bool _fav)
+        public Collections(int _id, int _idFather, string _name, string _imgPath, int _layout, bool _nBg, int _r, int _g, int _b, int _res, int _w, int _h, int _sRint, int _sW, int _sH, int _sL, int [] _tag, bool _fav)
         {
             id = _id; 
             idFather = _idFather; 
             name = _name; 
             imagePath = _imgPath;
             imageLayout = _layout;
+            noBackground = _nBg;
             colRed = _r;
             colGreen = _g;
             colBlue = _b; 
@@ -80,6 +83,11 @@ namespace C_Launcher.Clases
         {
             set { imageLayout = value; }
             get { return imageLayout; }
+        }
+        public bool Background
+        {
+            set { noBackground = value; }
+            get { return noBackground; }
         }
         public int ColorRed
         {
