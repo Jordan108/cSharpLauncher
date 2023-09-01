@@ -1471,7 +1471,7 @@ namespace C_Launcher
             string filePath = root.SelectSingleNode("FilePath").InnerText;
             string programPath = root.SelectSingleNode("ProgramPath").InnerText;
             string cmdLine = root.SelectSingleNode("CMDLine").InnerText;
-            bool background = bool.Parse(root.SelectSingleNode("Background").InnerText);
+            bool background = bool.Parse(XMLDefaultReturn(root, "WithoutBackground", "false"));
             int red = int.Parse(root.SelectSingleNode("BackgroundRed").InnerText);
             int green = int.Parse(root.SelectSingleNode("BackgroundGreen").InnerText);
             int blue = int.Parse(root.SelectSingleNode("BackgroundBlue").InnerText);
