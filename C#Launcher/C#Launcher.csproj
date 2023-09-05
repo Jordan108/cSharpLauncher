@@ -50,8 +50,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Clases\Collections.cs" />
+    <Compile Include="Clases\Controles\DropdownItem.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Clases\Controles\MenuRenderer.cs" />
     <Compile Include="Clases\Files.cs" />
     <Compile Include="Clases\Resolutions.cs" />
+    <Compile Include="Clases\Controles\MenuColorTable.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

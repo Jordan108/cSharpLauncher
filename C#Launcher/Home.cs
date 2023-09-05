@@ -10,6 +10,8 @@ using System.Runtime.Remoting.Metadata.W3cXsd2001;
 //using System.Reflection.Emit;
 using System.Windows.Forms;
 using System.Xml;
+using System.Xml.Linq;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace C_Launcher
 {
@@ -40,6 +42,9 @@ namespace C_Launcher
         //ToolStrip
         //Se define aqui para poder referenciarlo en la creacion de los paneles
         private ContextMenuStrip contextMenuPictureBox = new ContextMenuStrip();
+
+        //Treeview
+        private TreeNode lastHoveredNode = null; // Para realizar un seguimiento del nodo que se encuentra actualmente bajo el mouse.
 
         public Home()
         {
@@ -82,6 +87,10 @@ namespace C_Launcher
             loadTreeView(colSize);
             Console.WriteLine("tamaño col: " +  colSize);
             loadPictureBox(colSize, fileSize, false);
+            menuStripMain.Renderer = new MyRenderer();
+
+            treeViewMain.DrawMode = TreeViewDrawMode.OwnerDrawAll;
+            treeViewMain.DrawNode += new DrawTreeNodeEventHandler(treeViewMain_DrawNode);
         }
 
         #region ToolStrip
@@ -352,6 +361,46 @@ namespace C_Launcher
                 loadPictureBox(colSize, fileSize, false);
             }
             
+        }
+        #endregion
+
+        #region Renderer
+        private class MyRenderer : ToolStripProfessionalRenderer
+        {
+            public MyRenderer() : base(new MyColors()) { }
+
+            Color defaultBG = Color.FromArgb(36, 40, 47);
+            Color selectedBG = Color.FromArgb(23, 29, 37);
+
+            //Establecer color del fondo
+            protected override void OnRenderMenuItemBackground(ToolStripItemRenderEventArgs e)
+            {
+                Rectangle rc = new Rectangle(Point.Empty, e.Item.Size);
+                Color c = e.Item.Selected ? defaultBG : selectedBG;
+                using (SolidBrush brush = new SolidBrush(c)) e.Graphics.FillRectangle(brush, rc);
+            }
+
+            //Evitar que dibuje los bordes
+            protected override void OnRenderToolStripBorder(ToolStripRenderEventArgs e) { }
+
+            //Cambiar el color del texto
+            protected override void OnRenderItemText(ToolStripItemTextRenderEventArgs e)
+            {
+                e.TextColor = Color.White; // Establecer el nuevo color de texto
+                base.OnRenderItemText(e);
+            }
+        }
+
+        private class MyColors : ProfessionalColorTable
+        {
+            //Cambiar el fondo de los bordes
+            public override Color ToolStripDropDownBackground
+            {
+                get
+                {
+                    return Color.FromArgb(23, 29, 37);
+                }
+            }
         }
         #endregion
         #endregion
@@ -1043,6 +1092,107 @@ namespace C_Launcher
             flowLayoutPanelMain.ResumeLayout();
         }
 
+        #region TreeView
+        private void treeViewMain_DrawNode(object sender, DrawTreeNodeEventArgs e)
+        {
+            // Obtén el nodo actual.
+            TreeNode node = e.Node;
+
+            // Determina si el nodo está seleccionado.
+            bool selected = (e.State & TreeNodeStates.Selected) != 0;
+            bool isHovered = (node == lastHoveredNode);
+
+            // Determina el nivel del nodo en la jerarquía.
+            int nivel = node.Level;
+
+            // Ajusta la posición de dibujo del nodo hijo en función del nivel.
+            int offset = nivel * 20;
+
+            // Obtén el área de dibujo del nodo
+            Rectangle bounds = e.Bounds;
+
+
+            // Establece el color de fondo dependiendo del estado del nodo.
+            //Color backColor = selected ? SystemColors.Highlight : SystemColors.Window;
+            // Personaliza el fondo del nodo según el estado (seleccionado o no seleccionado).
+            Color backgroundColor;
+            if (selected)
+            {
+                //Color del nodo seleccionado
+                backgroundColor = Color.FromArgb(65, 72, 85);//SystemColors.Highlight;
+            }
+            else if (isHovered)
+            {
+                //color hovermouse
+                backgroundColor = Color.FromArgb(73, 81, 95); //Color.LightGray;
+            }
+            else
+            {
+                //Color "default"
+                backgroundColor = Color.FromArgb(94, 105, 123);//SystemColors.Window;
+            }
+
+            // Establece el color de primer plano dependiendo del estado del nodo.
+            Color foreColor = selected ? SystemColors.HighlightText : SystemColors.ControlText;
+
+            // Dibuja el fondo del nodo.
+            using (Brush backgroundBrush = new SolidBrush(backgroundColor))
+            {
+                e.Graphics.FillRectangle(backgroundBrush, bounds);
+            }
+
+            //Ajusta la posicion del texto despues de que se haya dibujado el fondo del nodo
+            bounds.X += offset;
+            // Dibuja el texto del nodo.
+            TextRenderer.DrawText(e.Graphics, node.Text, treeViewMain.Font, bounds, foreColor, TextFormatFlags.HorizontalCenter);
+
+            // Si deseas agregar iconos, aquí puedes dibujarlos.
+
+            // Si el nodo está seleccionado, dibuja un borde alrededor de toda la fila.
+            /*if (selected)
+            {
+                using (Pen borderPen = new Pen(SystemColors.Highlight, 2))
+                {
+                    e.Graphics.DrawRectangle(borderPen, bounds);
+                }
+            }*/
+        }
+
+        private void treeViewMain_MouseMove(object sender, MouseEventArgs e)
+        {
+            TreeNode node = treeViewMain.GetNodeAt(e.Location);
+
+            if (node != lastHoveredNode)
+            {
+                // El mouse ha entrado o salido de un nodo.
+                if (lastHoveredNode != null)
+                {
+                    lastHoveredNode = null;
+                    treeViewMain.Invalidate(); // Vuelve a dibujar para restaurar el fondo del nodo anterior.
+                }
+
+                if (node != null)
+                {
+                    lastHoveredNode = node;
+                    treeViewMain.Invalidate(); // Vuelve a dibujar para cambiar el fondo del nodo actual.
+                }
+            }
+        }
+
+        private void treeViewMain_MouseLeave(object sender, EventArgs e)
+        {
+            if (lastHoveredNode != null)
+            {
+                lastHoveredNode = null;
+                treeViewMain.Invalidate(); // Vuelve a dibujar para restaurar el fondo del nodo anterior.
+            }
+        }
+
+        private void treeViewMain_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+            treeViewMain.Invalidate(); // Vuelve a dibujar para actualizar la selección.
+        }
+
         private void loadTreeView(int colSize)
         {
             //Cargar todas las colecciones
@@ -1052,40 +1202,59 @@ namespace C_Launcher
             //Crear el nodo de favoritos
             TreeNode fvNode = new TreeNode("Favoritos");  fvNode.Tag = -1; treeViewMain.Nodes.Add(fvNode);
 
+            //Se carga el archivo XML de colecciones por que se haran "querys"
+            //XmlDocument xmlDoc = new XmlDocument.Load(xmlColPath);
+            XDocument doc = XDocument.Load(xmlColPath);
+            //xmlDoc.Load(xmlColPath);
+            //Cargar los nodos de las colecciones en el tree view
             for (int i = 0; i < colls.Length; i++)
             {
-                //Cargar sub nodos
-                if (colls[i].IDFather != 0)
-                {
-                    //Buscar entre todos los nodos principales
-                    foreach(TreeNode nodeF in treeViewMain.Nodes)
-                    {
-                        if (nodeF.Tag.Equals(colls[i].IDFather))
-                        {
-                            TreeNode subNode = new TreeNode(colls[i].Name);
-                            subNode.Tag = colls[i].ID;
-                            nodeF.Nodes.Add(subNode);
-                            break;//frenar el foreach
-                        }
-                        searchSubNode(nodeF, colls[i].IDFather, colls[i].ID, colls[i].Name);                        
-                    }
-                } else
+                //Cargar nodos de la raiz
+                if (colls[i].IDFather == 0)
                 {
                     //Cargar nodos de profundidad principal (idFather = 0)
-
-
-                    TreeNode node = new TreeNode(colls[i].Name);
+                    TreeNode root = new TreeNode(colls[i].Name);
 
                     // Asignar una etiqueta al nodo
-                    node.Tag = colls[i].ID;
-                    //si la id del nodo coincide con la profundidad, seleccionarlo
-                    if (colls[i].ID == viewDepth)
+                    root.Tag = colls[i].ID;
+                    //root.MouseEnter += Node_MouseEnter;
+                    //root.MouseLeave += Node_MouseLeave;
+
+                    // Utilizar LINQ to XML para contar los elementos que contengan como padre a esta coleccion
+                    var matchingElements = doc.Descendants("collection")
+                                  .Where(item => item.Element("IDFather")?.Value == colls[i].ID.ToString())
+                                  .Select(item => new
+                                  {
+                                      Id = item.Attribute("id").Value,//Es el valor que rescatare para usarlo a futuro
+                                  })
+                                  .ToList();
+
+                    // Contar las coincidencias
+                    int count = matchingElements.Count;
+
+                    if (count > 0)
                     {
-                        treeViewMain.SelectedNode = node;
+                        //MessageBox.Show($"Se encontraron {count} elementos coincidentes en la id {colls[i].ID}");
+
+                        foreach (var element in matchingElements)
+                        {
+                            Collections col = colls.FirstOrDefault(o => o.ID == int.Parse(element.Id));
+                            TreeNode subNode = new TreeNode(col.Name);
+                            subNode.Tag = col.ID;
+                            root.Nodes.Add(subNode);
+
+                            //Buscar en ese sub nodo, si tiene sub nodos para agregarlo
+                            int subCount = doc.Descendants("IDFather").Where(subElement => subElement.Value == element.Id).Count();
+
+                            if (subCount > 0)
+                            {
+                                searchSubNode(doc, subNode, colls, element.Id);
+                            }
+                        }
                     }
 
                     // Agregar el nodo al TreeView
-                    treeViewMain.Nodes.Add(node);
+                    treeViewMain.Nodes.Add(root);
                 }
             }
             //Verificar que, si la vista esta en favoritos (-1; seleccionar automaticamente el primer nodo)
@@ -1098,7 +1267,7 @@ namespace C_Launcher
 
         }
 
-        private void searchSubNode(TreeNode node, int tagId, int collId, string collName)
+        private void searchSubNodeNoUse(TreeNode node, int tagId, int collId, string collName)
         {
             foreach(TreeNode subnodo in node.Nodes) {
                 if (subnodo.Tag.Equals(tagId))
@@ -1110,13 +1279,41 @@ namespace C_Launcher
                     break;//frenar el foreach
 
                 }
-                searchSubNode(subnodo, tagId, collId, collName);
+                searchSubNodeNoUse(subnodo, tagId, collId, collName);
+            }
+        }
+        private void searchSubNode(XDocument doc, TreeNode fatherNode, Collections[] colls, string FatherID)
+        {
+            //Buscar todos los elementos del sub nodo
+            var matchingElements = doc.Descendants("collection")
+                                  .Where(item => item.Element("IDFather")?.Value == FatherID)
+                                  .Select(item => new
+                                  {
+                                      Id = item.Attribute("id").Value,//Es el valor que rescatare para usarlo a futuro
+                                  })
+                                  .ToList();
+
+            foreach (var element in matchingElements)
+            {
+                Collections col = colls.FirstOrDefault(o => o.ID == int.Parse(element.Id));
+                TreeNode subNode = new TreeNode(col.Name);
+                subNode.Tag = col.ID;
+                fatherNode.Nodes.Add(subNode);
+
+                //Buscar en ese sub nodo, si tiene sub nodos para agregarlo
+                int subCount = doc.Descendants("IDFather").Where(subElement => subElement.Value == element.Id).Count();
+
+                if (subCount > 0)
+                {
+                    searchSubNode(doc, subNode, colls, element.Id);
+                }
             }
         }
 
         //Navegar entre nodos
         private void treeViewMain_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
+            treeViewMain.SelectedNode = e.Node;
             object tag = e.Node.Tag;
             if (tag != null)
             {
@@ -1125,6 +1322,7 @@ namespace C_Launcher
                 loadPictureBox(colSize, fileSize, false);
             }
         }
+        #endregion
 
         //Funcion que ordena el array de los paneles por orden alfabetico (Ordenamiento por Inserción)
         private PictureBox[] orderPBoxName(PictureBox[] pArray)
@@ -1777,7 +1975,7 @@ namespace C_Launcher
             string name = root.SelectSingleNode("Name").InnerText;
             string imgPath = root.SelectSingleNode("Image").InnerText;
             int imgLayout = int.Parse(root.SelectSingleNode("ImageLayout").InnerText);
-            bool background = bool.Parse(root.SelectSingleNode("Background").InnerText);
+            bool background = bool.Parse(XMLDefaultReturn(root, "WithoutBackground", "false"));
             int red = int.Parse(root.SelectSingleNode("BackgroundRed").InnerText);
             int green = int.Parse(root.SelectSingleNode("BackgroundGreen").InnerText);
             int blue = int.Parse(root.SelectSingleNode("BackgroundBlue").InnerText);
@@ -2026,6 +2224,17 @@ namespace C_Launcher
         {
 
         }
+
+        private void menuStripMain_Paint(object sender, PaintEventArgs e)
+        {
+        }
+
+        
+
+
+
+
+
         #endregion
 
         #endregion
