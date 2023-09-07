@@ -42,6 +42,10 @@
             this.fechaDeCreacionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.nombreToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.administrarResolucionesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.filtroDeBusquedaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.searchFromActualToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.searchActualtoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.searchAlltoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.labelDepth = new System.Windows.Forms.Label();
             this.flowLayoutPanelMain = new System.Windows.Forms.FlowLayoutPanel();
             this.treeViewMain = new System.Windows.Forms.TreeView();
@@ -62,7 +66,7 @@
             this.panelTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTop.Location = new System.Drawing.Point(0, 0);
             this.panelTop.Name = "panelTop";
-            this.panelTop.Size = new System.Drawing.Size(451, 58);
+            this.panelTop.Size = new System.Drawing.Size(901, 58);
             this.panelTop.TabIndex = 0;
             // 
             // btnBackView
@@ -110,7 +114,7 @@
             this.textBoxSearch.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(40)))), ((int)(((byte)(47)))));
             this.textBoxSearch.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBoxSearch.ForeColor = System.Drawing.SystemColors.Window;
-            this.textBoxSearch.Location = new System.Drawing.Point(305, 31);
+            this.textBoxSearch.Location = new System.Drawing.Point(755, 31);
             this.textBoxSearch.Name = "textBoxSearch";
             this.textBoxSearch.Size = new System.Drawing.Size(139, 20);
             this.textBoxSearch.TabIndex = 4;
@@ -126,7 +130,7 @@
             this.menuStripMain.Location = new System.Drawing.Point(0, 0);
             this.menuStripMain.Name = "menuStripMain";
             this.menuStripMain.Padding = new System.Windows.Forms.Padding(4, 1, 0, 1);
-            this.menuStripMain.Size = new System.Drawing.Size(451, 24);
+            this.menuStripMain.Size = new System.Drawing.Size(901, 24);
             this.menuStripMain.TabIndex = 3;
             this.menuStripMain.Text = "menuStrip1";
             this.menuStripMain.Paint += new System.Windows.Forms.PaintEventHandler(this.menuStripMain_Paint);
@@ -157,7 +161,8 @@
             this.verToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.verToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ordenarPanelesToolStripMenuItem,
-            this.administrarResolucionesToolStripMenuItem});
+            this.administrarResolucionesToolStripMenuItem,
+            this.filtroDeBusquedaToolStripMenuItem});
             this.verToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Window;
             this.verToolStripMenuItem.Name = "verToolStripMenuItem";
             this.verToolStripMenuItem.Size = new System.Drawing.Size(35, 22);
@@ -196,13 +201,46 @@
             this.administrarResolucionesToolStripMenuItem.Text = "Administrar resoluciones";
             this.administrarResolucionesToolStripMenuItem.Click += new System.EventHandler(this.administrarResolucionesToolStripMenuItem_Click);
             // 
+            // filtroDeBusquedaToolStripMenuItem
+            // 
+            this.filtroDeBusquedaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.searchFromActualToolStripMenuItem,
+            this.searchActualtoolStripMenuItem,
+            this.searchAlltoolStripMenuItem});
+            this.filtroDeBusquedaToolStripMenuItem.Name = "filtroDeBusquedaToolStripMenuItem";
+            this.filtroDeBusquedaToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
+            this.filtroDeBusquedaToolStripMenuItem.Text = "Filtro de busqueda";
+            // 
+            // searchFromActualToolStripMenuItem
+            // 
+            this.searchFromActualToolStripMenuItem.Checked = true;
+            this.searchFromActualToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.searchFromActualToolStripMenuItem.Name = "searchFromActualToolStripMenuItem";
+            this.searchFromActualToolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.searchFromActualToolStripMenuItem.Text = "Desde profundidad actual";
+            this.searchFromActualToolStripMenuItem.Click += new System.EventHandler(this.searchFromActualToolStripMenuItem_Click);
+            // 
+            // searchActualtoolStripMenuItem
+            // 
+            this.searchActualtoolStripMenuItem.Name = "searchActualtoolStripMenuItem";
+            this.searchActualtoolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.searchActualtoolStripMenuItem.Text = "Solo profundidad actual";
+            this.searchActualtoolStripMenuItem.Click += new System.EventHandler(this.searchActualtoolStripMenuItem_Click);
+            // 
+            // searchAlltoolStripMenuItem
+            // 
+            this.searchAlltoolStripMenuItem.Name = "searchAlltoolStripMenuItem";
+            this.searchAlltoolStripMenuItem.Size = new System.Drawing.Size(210, 22);
+            this.searchAlltoolStripMenuItem.Text = "Todo";
+            this.searchAlltoolStripMenuItem.Click += new System.EventHandler(this.searchAlltoolStripMenuItem_Click);
+            // 
             // labelDepth
             // 
             this.labelDepth.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.labelDepth.AutoSize = true;
             this.labelDepth.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelDepth.ForeColor = System.Drawing.Color.White;
-            this.labelDepth.Location = new System.Drawing.Point(209, 29);
+            this.labelDepth.Location = new System.Drawing.Point(434, 29);
             this.labelDepth.Name = "labelDepth";
             this.labelDepth.Size = new System.Drawing.Size(68, 25);
             this.labelDepth.TabIndex = 5;
@@ -218,7 +256,7 @@
             this.flowLayoutPanelMain.Location = new System.Drawing.Point(105, 58);
             this.flowLayoutPanelMain.Name = "flowLayoutPanelMain";
             this.flowLayoutPanelMain.Padding = new System.Windows.Forms.Padding(5, 0, 0, 0);
-            this.flowLayoutPanelMain.Size = new System.Drawing.Size(346, 412);
+            this.flowLayoutPanelMain.Size = new System.Drawing.Size(796, 586);
             this.flowLayoutPanelMain.TabIndex = 2;
             // 
             // treeViewMain
@@ -232,7 +270,7 @@
             this.treeViewMain.Location = new System.Drawing.Point(0, 58);
             this.treeViewMain.MinimumSize = new System.Drawing.Size(97, 4);
             this.treeViewMain.Name = "treeViewMain";
-            this.treeViewMain.Size = new System.Drawing.Size(100, 412);
+            this.treeViewMain.Size = new System.Drawing.Size(100, 586);
             this.treeViewMain.TabIndex = 0;
             this.treeViewMain.AfterSelect += new System.Windows.Forms.TreeViewEventHandler(this.treeViewMain_AfterSelect);
             this.treeViewMain.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeViewMain_NodeMouseClick);
@@ -244,7 +282,7 @@
             this.splitter1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(65)))), ((int)(((byte)(72)))), ((int)(((byte)(85)))));
             this.splitter1.Location = new System.Drawing.Point(100, 58);
             this.splitter1.Name = "splitter1";
-            this.splitter1.Size = new System.Drawing.Size(5, 412);
+            this.splitter1.Size = new System.Drawing.Size(5, 586);
             this.splitter1.TabIndex = 3;
             this.splitter1.TabStop = false;
             // 
@@ -252,7 +290,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(451, 470);
+            this.ClientSize = new System.Drawing.Size(901, 644);
             this.Controls.Add(this.flowLayoutPanelMain);
             this.Controls.Add(this.splitter1);
             this.Controls.Add(this.treeViewMain);
@@ -261,7 +299,7 @@
             this.MainMenuStrip = this.menuStripMain;
             this.MinimumSize = new System.Drawing.Size(352, 294);
             this.Name = "Home";
-            this.Text = "C# Launcher";
+            this.Text = "Cover pad Launcher";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Home_FormClosed);
             this.panelTop.ResumeLayout(false);
@@ -291,5 +329,9 @@
         private System.Windows.Forms.Splitter splitter1;
         private System.Windows.Forms.TextBox textBoxSearch;
         private System.Windows.Forms.Label labelDepth;
+        private System.Windows.Forms.ToolStripMenuItem filtroDeBusquedaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem searchFromActualToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem searchActualtoolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem searchAlltoolStripMenuItem;
     }
 }

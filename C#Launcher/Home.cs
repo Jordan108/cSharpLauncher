@@ -7,6 +7,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Runtime.Remoting.Metadata.W3cXsd2001;
+using System.Security.Cryptography;
 //using System.Reflection.Emit;
 using System.Windows.Forms;
 using System.Xml;
@@ -25,6 +26,7 @@ namespace C_Launcher
         private int orderPanels = 0;
         private int formState = 1;
         private int viewDepth = 0;//-1 = favoritos | 0 = inicio
+        private int searchType = 0;//0 = Buscara desde esa coleccion para adentro | 1 = buscara solo en esa coleccion (no sub colecciones) | 2 = buscara en todos los ficheros xml
 
         //Rutas de los archivos XML
         private string xmlColPath = "System\\Collections.xml";
@@ -310,7 +312,7 @@ namespace C_Launcher
         #endregion
 
         #region navbar ToolStrip
-        //Administrar las resoluciones
+        #region Administrar las resoluciones
         private void administrarResolucionesToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Resolution res = new Resolution();
@@ -337,8 +339,9 @@ namespace C_Launcher
                 Console.WriteLine("Error al abrir la carpeta: " + ex.Message);
             }
         }
+        #endregion
 
-        //Ordenar paneles
+        #region Ordenar paneles
         //Ordenarlos por ID (orderPanels 0)
         private void fechaDeCreacionToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -362,6 +365,33 @@ namespace C_Launcher
             }
             
         }
+        #endregion
+
+        #region filtro de busqueda
+        private void searchFromActualToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            searchType = 0;
+            searchFromActualToolStripMenuItem.Checked = true;
+            searchActualtoolStripMenuItem.Checked = false;
+            searchAlltoolStripMenuItem.Checked = false;
+        }
+
+        private void searchActualtoolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            searchType = 1;
+            searchFromActualToolStripMenuItem.Checked = false;
+            searchActualtoolStripMenuItem.Checked = true;
+            searchAlltoolStripMenuItem.Checked = false;
+        }
+
+        private void searchAlltoolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            searchType = 2;
+            searchFromActualToolStripMenuItem.Checked = false;
+            searchActualtoolStripMenuItem.Checked = false;
+            searchAlltoolStripMenuItem.Checked = true;
+        }
+        #endregion
         #endregion
 
         #region Renderer
@@ -787,6 +817,37 @@ namespace C_Launcher
             }
         }
 
+        private bool returnCollectionID (Collections[] colls, int searchID)
+        {
+            Collections Coll = colls.FirstOrDefault(o => o.ID == searchID);
+
+            if ( Coll.IDFather == viewDepth)
+            {
+                return true;
+            } else if ( Coll.IDFather != 0)
+            {
+                return returnCollectionID(colls, Coll.IDFather);
+            } 
+
+            return false;
+        }
+
+        private bool returnFileID(Files[] files, int searchID)
+        {
+            Files file = files.FirstOrDefault(o => o.ID == searchID);
+
+            if (file.IDFather == viewDepth)
+            {
+                return true;
+            }
+            else if (file.IDFather != 0)
+            {
+                return returnFileID(files, file.IDFather);
+            }
+
+            return false;
+        }
+
         private void loadPictureBox(int colSize, int fileSize, bool filter)
         {
             flowLayoutPanelMain.SuspendLayout();
@@ -842,7 +903,7 @@ namespace C_Launcher
             #endregion
 
             #region Colecciones
-            //Recorrer todos el array de las colecciones
+            //Recorrer todo el array de las colecciones
             for (int i = 0; i < colls.Length; i++)
             {
                 bool addCollection = false;//Me permite añadir varias condicionales dentro de un mismo if
@@ -853,7 +914,21 @@ namespace C_Launcher
                     string nom = colls[i].Name.ToLower();
                     string search = textBoxSearch.Text.ToLower();
 
-                    if (nom.Contains(search) && ((viewDepth == colls[i].IDFather) || (viewDepth == -1 && colls[i].Favorite == true))) addCollection = true;
+                    switch (searchType)
+                    {
+                        case 1:// buscara solo en esa coleccion (no sub colecciones)
+                            if (nom.Contains(search) && ((viewDepth == colls[i].IDFather) || (viewDepth == -1 && colls[i].Favorite == true))) addCollection = true;
+                            break;
+                        case 2://buscara en todo el xml
+                            if (nom.Contains(search)) addCollection = true;
+                            break;
+                        default://Buscara desde esa coleccion para adentro
+                            if (nom.Contains(search) 
+                                && (returnCollectionID(colls, colls[i].ID)
+                                || (viewDepth == -1 && colls[i].Favorite == true))) addCollection = true;
+                            break;
+                    }
+                    
 
                 } else
                 {
@@ -955,7 +1030,22 @@ namespace C_Launcher
                     string nom = files[f].Name.ToLower();
                     string search = textBoxSearch.Text.ToLower();
 
-                    if (nom.Contains(search) && ((viewDepth == files[f].IDFather) || (viewDepth == -1 && files[f].Favorite == true))) addFile = true;
+                    //if (nom.Contains(search) && ((viewDepth == files[f].IDFather) || (viewDepth == -1 && files[f].Favorite == true))) addFile = true;
+
+                    switch (searchType)
+                    {
+                        case 1:// buscara solo en esa coleccion (no sub colecciones)
+                            if (nom.Contains(search) && ((viewDepth == files[f].IDFather) || (viewDepth == -1 && files[f].Favorite == true))) addFile = true;
+                            break;
+                        case 2://buscara en todo el xml
+                            if (nom.Contains(search)) addFile = true;
+                            break;
+                        default://Buscara desde esa coleccion para adentro
+                            if (nom.Contains(search)
+                                && (returnFileID(files, files[f].ID)
+                                || (viewDepth == -1 && files[f].Favorite == true))) addFile = true;
+                            break;
+                    }
 
                 }
                 else
@@ -1095,67 +1185,52 @@ namespace C_Launcher
         #region TreeView
         private void treeViewMain_DrawNode(object sender, DrawTreeNodeEventArgs e)
         {
-            // Obtén el nodo actual.
-            TreeNode node = e.Node;
+            TreeNode node = e.Node;//Obtener el nodo que se va a dibujar
 
-            // Determina si el nodo está seleccionado.
+            //Determina si el nodo esta seleccionado
             bool selected = (e.State & TreeNodeStates.Selected) != 0;
-            bool isHovered = (node == lastHoveredNode);
+            bool hover = (node == lastHoveredNode);
 
-            // Determina el nivel del nodo en la jerarquía.
-            int nivel = node.Level;
+            //Nivel del nodo en jerarquia
+            int offset = node.Level * 20; //Ajusta la posicion del texto del nodo en funcion del nivel en el que este
 
-            // Ajusta la posición de dibujo del nodo hijo en función del nivel.
-            int offset = nivel * 20;
-
-            // Obtén el área de dibujo del nodo
+            //Recoger el area de dibujo del nodo
             Rectangle bounds = e.Bounds;
-
 
             // Establece el color de fondo dependiendo del estado del nodo.
             //Color backColor = selected ? SystemColors.Highlight : SystemColors.Window;
-            // Personaliza el fondo del nodo según el estado (seleccionado o no seleccionado).
+            //Personalizar el fondo del nodo segun el estado
             Color backgroundColor;
-            if (selected)
+            if (selected)//Nodo seleccionado
             {
-                //Color del nodo seleccionado
                 backgroundColor = Color.FromArgb(65, 72, 85);//SystemColors.Highlight;
             }
-            else if (isHovered)
+            else if (hover)//Nodo con el mouse encima
             {
                 //color hovermouse
                 backgroundColor = Color.FromArgb(73, 81, 95); //Color.LightGray;
             }
-            else
+            else //Default
             {
-                //Color "default"
                 backgroundColor = Color.FromArgb(94, 105, 123);//SystemColors.Window;
             }
 
-            // Establece el color de primer plano dependiendo del estado del nodo.
-            Color foreColor = selected ? SystemColors.HighlightText : SystemColors.ControlText;
+            //Establece el color de primer plano dependiendo del estado del nodo
+            Color foreColor = Color.White;//selected ? Color.White : Color.FromArgb(65, 72, 85);
 
-            // Dibuja el fondo del nodo.
+            //Dibuja el fondo del nodo
             using (Brush backgroundBrush = new SolidBrush(backgroundColor))
             {
                 e.Graphics.FillRectangle(backgroundBrush, bounds);
             }
 
+            //Ajusta el texto para que se empiece a escribir a 1/3 del nodo
+            bounds.X += treeViewMain.Width/3;
             //Ajusta la posicion del texto despues de que se haya dibujado el fondo del nodo
             bounds.X += offset;
-            // Dibuja el texto del nodo.
-            TextRenderer.DrawText(e.Graphics, node.Text, treeViewMain.Font, bounds, foreColor, TextFormatFlags.HorizontalCenter);
+            // Dibuja el texto del nodo
+            TextRenderer.DrawText(e.Graphics, node.Text, treeViewMain.Font, bounds, foreColor, TextFormatFlags.VerticalCenter);
 
-            // Si deseas agregar iconos, aquí puedes dibujarlos.
-
-            // Si el nodo está seleccionado, dibuja un borde alrededor de toda la fila.
-            /*if (selected)
-            {
-                using (Pen borderPen = new Pen(SystemColors.Highlight, 2))
-                {
-                    e.Graphics.DrawRectangle(borderPen, bounds);
-                }
-            }*/
         }
 
         private void treeViewMain_MouseMove(object sender, MouseEventArgs e)
@@ -1164,17 +1239,17 @@ namespace C_Launcher
 
             if (node != lastHoveredNode)
             {
-                // El mouse ha entrado o salido de un nodo.
+                // El mouse ha entrado o salido de un nodo
                 if (lastHoveredNode != null)
                 {
                     lastHoveredNode = null;
-                    treeViewMain.Invalidate(); // Vuelve a dibujar para restaurar el fondo del nodo anterior.
+                    treeViewMain.Invalidate(); //volver a dibujar para restaurar el fondo del nodo anterior
                 }
 
                 if (node != null)
                 {
                     lastHoveredNode = node;
-                    treeViewMain.Invalidate(); // Vuelve a dibujar para cambiar el fondo del nodo actual.
+                    treeViewMain.Invalidate(); //volver a dibujar para cambiar el fondo del nodo actual
                 }
             }
         }
@@ -1184,13 +1259,13 @@ namespace C_Launcher
             if (lastHoveredNode != null)
             {
                 lastHoveredNode = null;
-                treeViewMain.Invalidate(); // Vuelve a dibujar para restaurar el fondo del nodo anterior.
+                treeViewMain.Invalidate(); //volver a dibujar para restaurar el fondo del nodo anterior
             }
         }
 
         private void treeViewMain_AfterSelect(object sender, TreeViewEventArgs e)
         {
-            treeViewMain.Invalidate(); // Vuelve a dibujar para actualizar la selección.
+            treeViewMain.Invalidate(); //volver a dibujar para actualizar la selección
         }
 
         private void loadTreeView(int colSize)
@@ -2123,6 +2198,32 @@ namespace C_Launcher
                 orderPanels = pOrder; 
             }
 
+            //Cargar el tipo de filtro al utilizar la barra de busqueda
+            int searchT = 0;
+            try { if (root.SelectSingleNode("SearchFilter") != null) searchT = int.Parse(root.SelectSingleNode("SearchFilter").InnerText); }
+            finally
+            {
+                switch(searchT)
+                {
+                    case 1:
+                        searchFromActualToolStripMenuItem.Checked = false;
+                        searchActualtoolStripMenuItem.Checked = true;
+                        searchAlltoolStripMenuItem.Checked = false;
+                        break;
+                    case 2:
+                        searchFromActualToolStripMenuItem.Checked = false;
+                        searchActualtoolStripMenuItem.Checked = false;
+                        searchAlltoolStripMenuItem.Checked = true;
+                        break;
+                    default:
+                        searchFromActualToolStripMenuItem.Checked = true;
+                        searchActualtoolStripMenuItem.Checked = false;
+                        searchAlltoolStripMenuItem.Checked = false;
+                        break;
+                }
+                searchType = searchT;
+            }
+
             //Cargar las opciones de la ventana (estan en un sub nodo)
             //Ancho de la ventana
             int wWidth = 688;
@@ -2203,9 +2304,11 @@ namespace C_Launcher
             //Guardar tamaño de treenode
             XmlElement treeWidth = xmlDoc.CreateElement("TreeWidth"); treeWidth.InnerText = treeViewMain.Width.ToString(); set.AppendChild(treeWidth);
 
-
             //Guardar como se ordenan los paneles
             XmlElement pOrder = xmlDoc.CreateElement("PanelOrder"); pOrder.InnerText = orderPanels.ToString(); set.AppendChild(pOrder);
+
+            //Guardar como se muestran los elementos al utilizar la barra de busqueda
+            XmlElement searchT = xmlDoc.CreateElement("SearchFilter"); searchT.InnerText = searchType.ToString(); set.AppendChild(searchT);
 
             xmlDoc.Save(xmlSettingsPath);
         }
@@ -2228,8 +2331,6 @@ namespace C_Launcher
         private void menuStripMain_Paint(object sender, PaintEventArgs e)
         {
         }
-
-        
 
 
 
