@@ -299,7 +299,7 @@
             this.MainMenuStrip = this.menuStripMain;
             this.MinimumSize = new System.Drawing.Size(352, 294);
             this.Name = "Home";
-            this.Text = "Cover pad Launcher";
+            this.Text = "Cover Pad Launcher 0.1.0";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Home_FormClosed);
             this.panelTop.ResumeLayout(false);
