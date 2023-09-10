@@ -577,7 +577,7 @@ namespace C_Launcher
             //Dibujar un rectangulo balcno encima de un picture box
             Pen borderPen = new Pen(Color.White);
             borderPen.Width = 2;
-            g.DrawRectangle(borderPen, borderPen.Width, borderPen.Width, pictureBox.Width-(borderPen.Width+1), pictureBox.Height-(borderPen.Width+1));
+            g.DrawRectangle(borderPen, borderPen.Width-1, borderPen.Width-1, pictureBox.Width-(borderPen.Width), pictureBox.Height-(borderPen.Width));
 
             //Dibujar el texto
             Font font = new Font("Arial", 8);
