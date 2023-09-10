@@ -8,6 +8,7 @@ using System.IO;
 using System.Linq;
 using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Security.Cryptography;
+using System.Security.Policy;
 //using System.Reflection.Emit;
 using System.Windows.Forms;
 using System.Xml;
@@ -62,13 +63,16 @@ namespace C_Launcher
             ToolStripMenuItem ToolStripAddCollection   = new ToolStripMenuItem();
             ToolStripMenuItem ToolStripAddFile         = new ToolStripMenuItem();
             ToolStripMenuItem ToolStripAddMultipleFile = new ToolStripMenuItem();
+            ToolStripMenuItem ToolStripEditAllElements = new ToolStripMenuItem();
             ToolStripAddCollection.Text = "Crear coleccion";
             ToolStripAddCollection.Click += new EventHandler(ToolStripAddCollection_Click);
             ToolStripAddFile.Text = "Crear elemento";
             ToolStripAddFile.Click += new EventHandler(ToolStripAddFile_Click);
             ToolStripAddMultipleFile.Text = "Crear multiples elementos";
             ToolStripAddMultipleFile.Click += new EventHandler(ToolStripAddMultipleFiles_Click);
-            contextMenuLayoutPanel.Items.AddRange(new ToolStripItem[] { ToolStripAddCollection, ToolStripAddFile, ToolStripAddMultipleFile });
+            ToolStripEditAllElements.Text = "Editar todos los elementos de la coleccion";
+            ToolStripEditAllElements.Click += new EventHandler(ToolStripEditMultiplePictureBox_Click);//Esta funcion permite picture box y flow layout panel
+            contextMenuLayoutPanel.Items.AddRange(new ToolStripItem[] { ToolStripAddCollection, ToolStripAddFile, ToolStripAddMultipleFile, ToolStripEditAllElements });
             //Agregar al layout panel
             flowLayoutPanelMain.ContextMenuStrip = contextMenuLayoutPanel;
 
@@ -217,10 +221,22 @@ namespace C_Launcher
         //Editar los archivos de esa coleccion picture box
         private void ToolStripEditMultiplePictureBox_Click(object sender, EventArgs e)
         {
+            string id;
+            string boxType;
             //Recojer los datos del picture box
-            PictureBox pic = (PictureBox)contextMenuPictureBox.SourceControl;
-            string id = pic.Tag.ToString();
-            string boxType = pic.AccessibleDescription;
+            try
+            {
+                PictureBox pic = (PictureBox)contextMenuPictureBox.SourceControl;
+                id = pic.Tag.ToString();
+                boxType = pic.AccessibleDescription;
+            }
+            catch (Exception ex)
+            {
+                //Si no recoje un picture box, significa que estamos recogiendo desde el flow layout panel
+                id = viewDepth.ToString();
+                boxType = "collection";
+            }
+            
 
             //Lo hago solo por si acaso
             if (boxType == "collection")
@@ -308,6 +324,83 @@ namespace C_Launcher
                 Console.WriteLine("set fav " + boxType + " | " + idBox);
                 if (viewDepth == -1) loadView(colSize, fileSize);
             }
+        }
+
+        //Abrir el programa de un elemento
+        private void ToolStripOpenProgramPictureBox_Click(object sender, EventArgs e)
+        {
+            PictureBox pic = (PictureBox)contextMenuPictureBox.SourceControl;
+            int idBox = int.Parse(pic.Tag.ToString());//no se puede transformar un objeto a int, pero si a un string
+            string programExe = getFileProgram(idBox);
+
+            //bool url = true;
+
+            //file y program se deben de formatear
+            string fileExe;// = "";
+            string fileDir;// = "";
+            //string programDir = "";
+            //string cmdLine = "";//es necesario establecerlo como "", por default es null, pero si alguien escribe algo y lo borra quedara como "" y complicara las validaciones
+
+            //Crear el process start
+            Process process = new Process();
+
+            //Formatear la ruta del archivo
+            try
+            {
+                fileExe = Path.GetFullPath(programExe);
+                fileDir = Path.GetDirectoryName(programExe);
+            }
+            catch
+            {
+                MessageBox.Show("No se pudo encontrar el programa del elemento", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            //Intentar ejecutar los archivos/URL
+            try
+            {
+                Console.WriteLine("Abriendo el programa");
+                Console.WriteLine(fileExe);
+
+                ProcessStartInfo startInfo = new ProcessStartInfo(fileExe);//Ruta del archivo o URL
+
+                
+                //Establecer el directorio de trabajo del archivo a ejecutar
+                startInfo.WorkingDirectory = fileDir;//Es necesario para que se tome cual es el directorio donde se ejecuta el archivo y pueda tomar los archivos de esa zona
+                
+                process.StartInfo = startInfo;
+                process.Start();
+
+            }
+            //En caso de errores
+            catch (Exception ex)
+            {
+                MessageBox.Show("Error abrir el programa", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);//Error con archivos/programas/cmdLine
+
+            }
+
+        }
+
+        //Mostrar el elemento en el explorador de archivos
+        private void ToolStripOpenInExplorerElementPictureBox_Click(object sender, EventArgs e)
+        {
+            PictureBox pic = (PictureBox)contextMenuPictureBox.SourceControl;
+            int idBox = int.Parse(pic.Tag.ToString());//no se puede transformar un objeto a int, pero si a un string
+            string fileDir = getFileDir(idBox);
+
+            //Crear el process start
+            //Process process = new Process();
+
+            if (File.Exists(fileDir))
+            {
+                Process.Start("explorer.exe", $"/select,\"{fileDir}\"");
+            }
+            else
+            {
+                MessageBox.Show("No se pudo encontrar el elemento", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+
         }
         #endregion
 
@@ -669,13 +762,39 @@ namespace C_Launcher
 
                 if (boxType == "file")
                 {
+                    bool url = false;
+                    string program = "";
+
                     //Dentro de la funcion se buscara los procesos asociados al archivo y llamara a start process
                     fav = getFileFav(idBox);
+                    program = getFileProgram(idBox);
+                    url = getFileURL(idBox);
+
+                    //Mostrar elemento en el explorador de archivos (solo si no son URL)
+                    if (url == false) {
+                        ToolStripMenuItem ToolStripOpenInExplorer = new ToolStripMenuItem();
+                        ToolStripOpenInExplorer.Text = "Abrir ubicacion";
+                        ToolStripOpenInExplorer.Click += new EventHandler(ToolStripOpenInExplorerElementPictureBox_Click);
+                        contextMenuStrip.Items.Add(ToolStripOpenInExplorer);
+                    }
+
+                    //Abrir el programa con el que se abre el archivo (si lo tiene)
+                    if (program != "")
+                    {
+                        string programName = Path.GetFileNameWithoutExtension(program);
+
+                        ToolStripMenuItem ToolStripOpenProgram = new ToolStripMenuItem();
+                        ToolStripOpenProgram.Text = $"Abrir {programName}";
+                        ToolStripOpenProgram.Click += new EventHandler(ToolStripOpenProgramPictureBox_Click);
+
+                        contextMenuStrip.Items.Add(ToolStripOpenProgram);
+                    }
+
                 }
                 else if (boxType == "collection")
                 {
                     ToolStripMenuItem ToolStripEditAll = new ToolStripMenuItem();
-                    ToolStripEditAll.Text = "Editar todos los archivos de la coleccion";
+                    ToolStripEditAll.Text = "Editar todos los elementos de la coleccion";
                     ToolStripEditAll.Click += new EventHandler(ToolStripEditMultiplePictureBox_Click);
 
                     fav = getColeFav(idBox);
@@ -853,6 +972,7 @@ namespace C_Launcher
             return false;
         }
 
+        //Cargar todos los picture box de esa profundidad
         private void loadPictureBox(int colSize, int fileSize, bool filter)
         {
             flowLayoutPanelMain.SuspendLayout();
@@ -872,7 +992,7 @@ namespace C_Launcher
 
             int pL = 0;//largo de los pictureBox de esa profundidad
 
-            #region Texto "ruta"
+            #region Texto "ruta" en la barra superior
             //Cambiar el texto de la "ruta"
             if (viewDepth == -1)
             {
@@ -1432,6 +1552,7 @@ namespace C_Launcher
             return pArray;
         }
 
+        //subir de profundidad
         private void btnBackView_Click(object sender, EventArgs e)
         {
             if (viewDepth > 0)//No volver atras si estas en el menu base
@@ -1448,6 +1569,7 @@ namespace C_Launcher
             }
         }
 
+        //Ir a la profundidad 0
         private void btnHomeView_Click(object sender, EventArgs e)
         {
             if (viewDepth != 0)
@@ -1457,6 +1579,7 @@ namespace C_Launcher
             }
         }
 
+        //Volver a cargar la vista
         private void btnReloadView_Click(object sender, EventArgs e)
         {
             colSize = LoadCollectionSize();
@@ -1729,6 +1852,63 @@ namespace C_Launcher
 
                 doc.Save(xmlFilesPath);
             }
+        }
+
+        private bool getFileURL(int fileID)
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.Load(xmlFilesPath);
+
+            string xpath = "//Launcher/file[@id='" + fileID + "']";
+            XmlNode root = doc.SelectSingleNode(xpath);
+
+            bool returnURL = false;
+
+            if (root != null)
+            {
+                returnURL = bool.Parse(root.SelectSingleNode("URLCheck").InnerText);
+            }
+
+            //Llamar a la funcion para que empiece el proceso
+            return returnURL;
+        }
+
+        private string getFileProgram(int fileID)
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.Load(xmlFilesPath);
+
+            string xpath = "//Launcher/file[@id='" + fileID + "']";
+            XmlNode root = doc.SelectSingleNode(xpath);
+
+            string returnProgram = "";
+
+            if (root != null)
+            {
+                returnProgram = root.SelectSingleNode("ProgramPath").InnerText;
+            }
+
+            //Llamar a la funcion para que empiece el proceso
+            return returnProgram;
+        }
+
+        private string getFileDir(int fileID)
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.Load(xmlFilesPath);
+
+            string xpath = "//Launcher/file[@id='" + fileID + "']";
+            XmlNode root = doc.SelectSingleNode(xpath);
+
+            string returnDir = "";
+
+            if (root != null)
+            {
+                returnDir = root.SelectSingleNode("FilePath").InnerText;
+            }
+
+            //Llamar a la funcion para que empiece el proceso
+            return returnDir;
         }
 
         private Files searchFileData(int fileID)
@@ -2117,7 +2297,7 @@ namespace C_Launcher
                 string filePath = root.SelectSingleNode("FilePath").InnerText;
                 string programPath = root.SelectSingleNode("ProgramPath").InnerText;
                 string cmdLine = root.SelectSingleNode("CMDLine").InnerText;
-                bool background = bool.Parse(root.SelectSingleNode("Background").InnerText);
+                bool background = bool.Parse(XMLDefaultReturn(root, "WithoutBackground", "false"));
                 int red = int.Parse(root.SelectSingleNode("BackgroundRed").InnerText);
                 int green = int.Parse(root.SelectSingleNode("BackgroundGreen").InnerText);
                 int blue = int.Parse(root.SelectSingleNode("BackgroundBlue").InnerText);
