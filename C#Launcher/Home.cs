@@ -574,6 +574,11 @@ namespace C_Launcher
             SolidBrush RectBrush = new SolidBrush(Bcolor);
             g.FillRectangle(RectBrush, 0, pictureBox.Height - (pictureBox.Height / 3), pictureBox.Width, pictureBox.Height);
 
+            //Dibujar un rectangulo balcno encima de un picture box
+            Pen borderPen = new Pen(Color.White);
+            borderPen.Width = 2;
+            g.DrawRectangle(borderPen, borderPen.Width, borderPen.Width, pictureBox.Width-(borderPen.Width+1), pictureBox.Height-(borderPen.Width+1));
+
             //Dibujar el texto
             Font font = new Font("Arial", 8);
             SolidBrush FontBrush = new SolidBrush(Color.White);
@@ -2445,6 +2450,8 @@ namespace C_Launcher
         }
         #endregion
 
+
+        //Guardar los settings
         private void Home_FormClosed(object sender, FormClosedEventArgs e)
         {
             saveSettingsXML();
