@@ -1,4 +1,5 @@
 ﻿using C_Launcher.Clases;
+using ImageMagick;
 using System;
 using System.Drawing;
 using System.IO;
@@ -274,7 +275,33 @@ namespace C_Launcher
             // Image image = null;
 
             // Carga la imagen original.
-            Image originalImage = Image.FromFile(imagePath);
+            Image originalImage;
+            //Detectar si la imagen es webp (puede dar problemas, por lo que se tiene que utilizar imagemagick
+            string ex = Path.GetExtension(imagePath);
+            if (ex.ToLower() == ".webp")
+            {
+                using (MagickImage img = new MagickImage(imagePath))
+                {
+                    // Convierte la imagen WebP a un formato compatible con PictureBox (por ejemplo, JPEG)
+                    // Para mostrar la imagen en el PictureBox
+                    img.Format = MagickFormat.Jpeg;
+
+                    // Convierte la imagen en un flujo de memoria
+                    using (var memoryStream = new System.IO.MemoryStream())
+                    {
+                        img.Write(memoryStream);
+
+                        // Carga el flujo de memoria en el PictureBox
+                        originalImage = System.Drawing.Image.FromStream(memoryStream);//img;
+                        //pictureBox1.Image = System.Drawing.Image.FromStream(memoryStream);
+                    }
+                }
+            }
+            else
+            {
+                // Carga la imagen original desde la ruta
+                originalImage = Image.FromFile(imagePath);
+            }
 
             // Calcula el nuevo tamaño manteniendo la relación de aspecto.
             int maxWidth = 300;
@@ -621,7 +648,7 @@ namespace C_Launcher
         private void buttonSearchCover_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Archivos de imagen (*.png;*.jpg;*.jpeg;)|*.png;*.jpg;*.jpeg;";
+            openFileDialog.Filter = "Archivos de imagen (*.png;*.jpg;*.jpeg;*.webp;)|*.png;*.jpg;*.jpeg;*.webp;";
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 Image image;

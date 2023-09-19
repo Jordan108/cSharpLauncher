@@ -34,10 +34,13 @@ namespace C_Launcher.Clases
         //Datos
         private int[] tagsId;
         private bool favorite;
+        //Coleccion automatica
+        private bool scanFolder;
+        private string scanPath;
 
 
         //Constructor
-        public Collections(int _id, int _idFather, string _name, string _imgPath, int _layout, bool _nBg, int _r, int _g, int _b, int _res, int _w, int _h, int _sRint, int _sW, int _sH, int _sL, int [] _tag, bool _fav)
+        public Collections(int _id, int _idFather, string _name, string _imgPath, int _layout, bool _nBg, int _r, int _g, int _b, int _res, int _w, int _h, int _sRint, int _sW, int _sH, int _sL, int [] _tag, bool _fav, bool _scan, string _scanPath)
         {
             id = _id; 
             idFather = _idFather; 
@@ -57,6 +60,8 @@ namespace C_Launcher.Clases
             sonImageLayout = _sL;
             tagsId = _tag;
             favorite = _fav;
+            scanFolder = _scan;
+            scanPath = _scanPath;
         }
 
         //Encapsulamiento
@@ -148,6 +153,18 @@ namespace C_Launcher.Clases
         {
             set { favorite = value; }
             get { return favorite; }
+        }
+
+        public bool ScanFolder
+        {
+            set { scanFolder = value; }
+            get { return scanFolder; }
+        }
+
+        public string ScanPath
+        {
+            set { scanPath = value; }
+            get { return scanPath; }
         }
     }
 }

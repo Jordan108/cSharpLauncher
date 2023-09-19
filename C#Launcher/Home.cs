@@ -2,18 +2,15 @@
 //using C_Launcher.Properties;
 using System;
 using System.Diagnostics;
-using System.Diagnostics.Eventing.Reader;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Runtime.Remoting.Metadata.W3cXsd2001;
-using System.Security.Cryptography;
-using System.Security.Policy;
 //using System.Reflection.Emit;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using ImageMagick;
+using System.Collections.Generic;
 
 namespace C_Launcher
 {
@@ -38,6 +35,9 @@ namespace C_Launcher
         private string dirCoversPath = "System\\Covers";
         //Ruta de los elementos del sistema (iconos y demas)
         private string imgCollIconPath = "System\\Resources\\CollectionIcon.png";
+
+        //Escaneo de directorio
+        private List<string> scanDepth = new List<string>();
 
         //Mantener el tamaño de los archivos y colecciones
         private int colSize, fileSize = 0;
@@ -711,7 +711,16 @@ namespace C_Launcher
             if (e.Button == MouseButtons.Left)
             {
                 PictureBox pictureBox = (PictureBox)sender;
-                int idBox = int.Parse(pictureBox.Tag.ToString());//no se puede transformar un objeto a int, pero si a un string
+                int idBox = -1;
+                try
+                {
+                    idBox = int.Parse(pictureBox.Tag.ToString());//no se puede transformar un objeto a int, pero si a un string
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine($"No se pudo transformar el tag {pictureBox.Tag} a int");
+                }
+                
                 string boxType = pictureBox.AccessibleDescription;//Recoje el tipo de picture box para buscar en el array especifico (col/file)
 
                 //Console.WriteLine("boxtype: " + boxType);
@@ -730,6 +739,27 @@ namespace C_Launcher
                     viewDepth = idBox;
                     Console.WriteLine("new view depth: " + idBox);
                     loadPictureBox(colSize, fileSize, false);
+                }
+                else if (boxType == "automaticFolder")
+                {
+                    string rutaEscaneo = pictureBox.Tag.ToString();
+
+                    if (Directory.Exists(rutaEscaneo))
+                    {
+                        // Obtiene una lista de todos los archivos en la carpeta
+                        string[] archivos = Directory.GetFiles(rutaEscaneo);
+                        string[] subDir = Directory.GetDirectories(rutaEscaneo);
+                        //Buscar dentro de esa coleccion un archivo e intentar abrirlo
+                        if (archivos.Length > 0 && subDir.Length == 0)
+                        {
+                            startProcess(archivos[0], "", "", false);
+                        } else
+                        {
+                            //viewDepth = -2;
+                            scanDepth.Add(rutaEscaneo);
+                            loadPictureBox(0, 0, false);
+                        }
+                    }
                 }
             }
                 
@@ -858,10 +888,34 @@ namespace C_Launcher
         //Para reducir el tamaño de las imagenes del picture box
         private Image loadImage(string imagePath)
         {
-           // Image image = null;
+            Image originalImage;
+            //Detectar si la imagen es webp (puede dar problemas, por lo que se tiene que utilizar imagemagick
+            string ex = Path.GetExtension(imagePath);
+            if (ex.ToLower() == ".webp")
+            {
+                using (MagickImage img = new MagickImage(imagePath))
+                {
+                    // Convierte la imagen WebP a un formato compatible con PictureBox (por ejemplo, JPEG)
+                    // Para mostrar la imagen en el PictureBox
+                    img.Format = MagickFormat.Jpeg;
 
-            // Carga la imagen original.
-            Image originalImage = Image.FromFile(imagePath);
+                    // Convierte la imagen en un flujo de memoria
+                    using (var memoryStream = new System.IO.MemoryStream())
+                    {
+                        img.Write(memoryStream);
+
+                        // Carga el flujo de memoria en el PictureBox
+                        originalImage = System.Drawing.Image.FromStream(memoryStream);//img;
+                        //pictureBox1.Image = System.Drawing.Image.FromStream(memoryStream);
+                    }
+                }
+            } else
+            {
+                // Carga la imagen original desde la ruta
+                originalImage = Image.FromFile(imagePath);
+            }
+
+            
 
             // Calcula el nuevo tamaño manteniendo la relación de aspecto.
             int maxWidth = 300;
@@ -992,6 +1046,10 @@ namespace C_Launcher
 
             int pL = 0;//largo de los pictureBox de esa profundidad
 
+            int actualColl = 0;
+
+            Console.WriteLine($"Profundidad actual {viewDepth}");
+
             #region Texto "ruta" en la barra superior
             //Cambiar el texto de la "ruta"
             if (viewDepth == -1)
@@ -1009,6 +1067,8 @@ namespace C_Launcher
                     if (colls[i].ID == viewDepth)
                     {
                         labelDepth.Text = colls[i].Name;
+                        actualColl = i;
+                        
 
                         if (colls[i].IDFather != 0)
                         {
@@ -1021,13 +1081,122 @@ namespace C_Launcher
                 
             }
 
+            //Añadir rutas de escaneo
+            if (scanDepth.Count > 0)
+            {
+                //foreach(string name in scanDepth)
+                //{
+                string name = scanDepth.Last();
+                int pos = name.LastIndexOf("\\") + 1;
+                labelDepth.Text = labelDepth.Text + "/" + name.Substring(pos, name.Length - pos);
+                //}
+            }
+
             //Ajustar el texto en el centro
             int centerX = (this.ClientSize.Width - labelDepth.Width) / 2;
             labelDepth.Location = new Point(centerX, labelDepth.Location.Y);
             //140+180
             #endregion
 
-            #region Colecciones
+            #region Cargar Elementos escaneables
+            if (scanDepth.Count > 0 || (colls[actualColl].ScanFolder == true && colls[actualColl].ScanPath != ""))
+            {
+                string rutaEscaneo;
+
+                if (scanDepth.Count > 0)
+                {
+                    rutaEscaneo = scanDepth.Last();//automaticPath;
+                } else
+                {
+                    rutaEscaneo = colls[actualColl].ScanPath;
+                }
+                
+
+                if (Directory.Exists(rutaEscaneo))
+                {
+                    // Obtiene una lista de todos los archivos en la carpeta
+                    string[] archivos = Directory.GetFiles(rutaEscaneo);
+                    Array.Resize(ref picBoxArr, archivos.Length);
+                    foreach (string archivo in archivos)
+                    {
+                        picBoxArr[pL] = new PictureBox
+                        {
+                            AccessibleDescription = "automaticFile",//Aqui se indica que tipo de picture box es (coleccion / archivo)
+                            Name = Path.GetFileName(archivo),//Aqui se guarda el nombre de la coleccion
+                            Size = new Size(250, 250),
+                            BackColor = Color.FromArgb(0, 0, 0),
+                            Tag = archivo,//Aqui se guarda en que espacio del array estamos buscando//colls[i].ID,
+                        };
+                        picBoxArr[pL].MouseEnter += new System.EventHandler(this.pictureBox_MouseEnter);
+                        picBoxArr[pL].MouseLeave += new System.EventHandler(this.pictureBox_MouseLeave);
+                        picBoxArr[pL].MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox_Click);
+                        picBoxArr[pL].MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseUp);
+                        pL++;//iterar en el array de paneles
+                    }
+
+                    // También puedes obtener una lista de todas las subcarpetas
+                    string[] subcarpetas = Directory.GetDirectories(rutaEscaneo);
+                    Array.Resize(ref picBoxArr, subcarpetas.Length);
+                    foreach (string subcarpeta in subcarpetas)
+                    {
+                        picBoxArr[pL] = new PictureBox
+                        {
+                            AccessibleDescription = "automaticFolder",//Aqui se indica que tipo de picture box es (coleccion / archivo)
+                            Name = Path.GetFileName(subcarpeta),//Aqui se guarda el nombre de la coleccion
+                            Size = new Size(250, 250),
+                            BackColor = Color.FromArgb(0, 0, 0),
+                            Tag = subcarpeta,//Aqui se guarda en que espacio del array estamos buscando//colls[i].ID,
+                        };
+                        //Intentar buscar dentro de la carpeta si tiene algun archivo de imagen para establecerlo como background IMAGE
+                        string[] subArchivos = Directory.GetFiles(subcarpeta);
+                        if (subArchivos.Length > 0)
+                        {
+                            string[] rutasImagenes = subArchivos.Where(ruta => checkImage(ruta)).ToArray();
+
+                            if (rutasImagenes.Length <= 0) Console.WriteLine($"La carpeta {subcarpeta} no encontro imagenes");
+                            try
+                            {
+                                Image image;
+                                image = loadImage(rutasImagenes[0]);
+                                picBoxArr[pL].BackgroundImage = image;
+                                image = null;
+                            }
+                            catch (Exception)
+                            {
+                                Console.WriteLine($"No se pudo establecer una imagen a la carpeta automatica {subcarpeta}");
+                            }
+                        }
+
+                        //Formato de la imagen
+                        try
+                        {
+                            if (colls[actualColl].ImageLayout == 0)
+                            {
+                                picBoxArr[pL].BackgroundImageLayout = ImageLayout.Zoom;
+                            }
+                            else
+                            {
+                                picBoxArr[pL].BackgroundImageLayout = ImageLayout.Stretch;
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            picBoxArr[pL].BackgroundImageLayout = ImageLayout.Zoom;
+                        }
+                        
+
+                        picBoxArr[pL].MouseEnter += new System.EventHandler(this.pictureBox_MouseEnter);
+                        picBoxArr[pL].MouseLeave += new System.EventHandler(this.pictureBox_MouseLeave);
+                        picBoxArr[pL].MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox_Click);
+                        picBoxArr[pL].MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseUp);
+                        pL++;//iterar en el array de paneles
+                    }
+                }
+            }
+            
+            #endregion
+
+            #region Cargar Colecciones
             //Recorrer todo el array de las colecciones
             for (int i = 0; i < colls.Length; i++)
             {
@@ -1143,7 +1312,7 @@ namespace C_Launcher
 
             #endregion
 
-            #region archivos
+            #region Cargar archivos
             //Recorrer todo el array de los files
             for (int f = 0; f < files.Length; f++)
             {
@@ -1283,7 +1452,7 @@ namespace C_Launcher
             }
             #endregion
 
-            #region Ordenar el array
+            #region Ordenar el array de los paneles
             //Optimizar el tamaño del array
             Array.Resize(ref picBoxArr, pL);
 
@@ -1557,14 +1726,26 @@ namespace C_Launcher
         {
             if (viewDepth > 0)//No volver atras si estas en el menu base
             {
-                //Buscar con la profundidad el idPadre de la coleccion actual
-                XmlDocument doc = new XmlDocument();
-                doc.Load(xmlColPath);
+                //Si estamos dentro de un escaneo, dejar ViewDepth tal cual
+                if (scanDepth.Count > 0)
+                {
+                    //Si la lista de escaneo de directorios no es 0, eliminar un elemento
+                    scanDepth.RemoveAt(scanDepth.Count - 1);
+                }
+                else
+                {
+                    //Buscar con la profundidad el idPadre de la coleccion actual
+                    XmlDocument doc = new XmlDocument();
+                    doc.Load(xmlColPath);
 
-                string xpath = "//Launcher/collection[@id='" + viewDepth + "']";
-                XmlNode root = doc.SelectSingleNode(xpath);
-                int id = int.Parse(root.SelectSingleNode("IDFather").InnerText);
-                viewDepth = id;
+                    string xpath = "//Launcher/collection[@id='" + viewDepth + "']";
+                    XmlNode root = doc.SelectSingleNode(xpath);
+                    int id = int.Parse(root.SelectSingleNode("IDFather").InnerText);
+                    viewDepth = id;
+                }
+                
+                
+                
                 loadPictureBox(colSize, fileSize, false);
             }
         }
@@ -2151,13 +2332,14 @@ namespace C_Launcher
                 //Console.WriteLine(num);
             }
             XmlElement colFavorite = xmlDoc.CreateElement("Favorite"); colFavorite.InnerText = Class.Favorite.ToString(); coleccion.AppendChild(colFavorite);
+            XmlElement colScanFolder = xmlDoc.CreateElement("ScanFolder"); colScanFolder.InnerText = Class.ScanFolder.ToString(); coleccion.AppendChild(colScanFolder);
+            XmlElement colScanPath = xmlDoc.CreateElement("ScanPath"); colScanPath.InnerText = Class.ScanPath.ToString(); coleccion.AppendChild(colScanPath);
 
             xmlDoc.Save(xmlColPath);
 
             //Actualizar cantidad de colecciones
             colSize = LoadCollectionSize();
         }
-
 
         //cargar las colecciones del xml en un objeto collections array
         private Collections[] LoadCollections(int arraySize)
@@ -2211,8 +2393,10 @@ namespace C_Launcher
                     tagsArray = tagsArray.Append(int.Parse(tagid.InnerText)).ToArray();
                 }
                 bool fav = bool.Parse(root.SelectSingleNode("Favorite").InnerText);
+                bool scanFold = bool.Parse(XMLDefaultReturn(root, "ScanFolder", "false"));
+                string scanPath = XMLDefaultReturn(root, "ScanPath", "");
 
-                colData[i] = new Collections(fileID, idFather, name, imgPath, imgLayout, background, red, green, blue, resolution, width, height, sonRes, sonWidth, sonHeight, sonLayout, tagsArray, fav);
+                colData[i] = new Collections(fileID, idFather, name, imgPath, imgLayout, background, red, green, blue, resolution, width, height, sonRes, sonWidth, sonHeight, sonLayout, tagsArray, fav, scanFold, scanPath);
 
                 fileID++;
                 }
@@ -2252,9 +2436,11 @@ namespace C_Launcher
                 tagsArray = tagsArray.Append(int.Parse(tagid.InnerText)).ToArray();
             }
             bool fav = bool.Parse(root.SelectSingleNode("Favorite").InnerText);
+            bool scanFold = bool.Parse(XMLDefaultReturn(root, "ScanFolder", "false"));
+            string scanPath = XMLDefaultReturn(root, "ScanPath", "");
 
 
-            Collections colReturn = new Collections(colID, idFather, name, imgPath, imgLayout, background, red, green, blue, resolution, width, height, sonRes, sonWidth, sonHeight, sonLayout, tagsArray, fav);
+            Collections colReturn = new Collections(colID, idFather, name, imgPath, imgLayout, background, red, green, blue, resolution, width, height, sonRes, sonWidth, sonHeight, sonLayout, tagsArray, fav, scanFold, scanPath);
 
             return colReturn;
         }
@@ -2627,6 +2813,17 @@ namespace C_Launcher
 
             
 
+        }
+
+        private bool checkImage(string fileDir)
+        {
+            string ex = Path.GetExtension(fileDir);
+            if (!string.IsNullOrEmpty(ex))
+            {
+                string extensionLower = ex.ToLower();
+                return extensionLower == ".jpg" || extensionLower == ".png" || extensionLower == ".webp";
+            }
+            return false;
         }
         #endregion
 

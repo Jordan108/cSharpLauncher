@@ -1,13 +1,10 @@
 ﻿using C_Launcher.Clases;
+using ImageMagick;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml;
 
@@ -38,6 +35,8 @@ namespace C_Launcher
         //Datos default al crear una nueva coleccion (al editar obviamente no es necesario; no afecta a los datos de los hijos, por que esos lo tiene que editar el usuario)
         private int defaultFather, defaultRes, defaultImageLayout = 0;
         private int defaultWidth, defaultHeight = 200;
+
+        
         public NewCollection(int viewDepth, int ResId, int Width, int Height, int Layout)
         {
             InitializeComponent();
@@ -142,7 +141,33 @@ namespace C_Launcher
             // Image image = null;
 
             // Carga la imagen original.
-            Image originalImage = Image.FromFile(imagePath);
+            Image originalImage;
+            //Detectar si la imagen es webp (puede dar problemas, por lo que se tiene que utilizar imagemagick
+            string ex = Path.GetExtension(imagePath);
+            if (ex.ToLower() == ".webp")
+            {
+                using (MagickImage img = new MagickImage(imagePath))
+                {
+                    // Convierte la imagen WebP a un formato compatible con PictureBox (por ejemplo, JPEG)
+                    // Para mostrar la imagen en el PictureBox
+                    img.Format = MagickFormat.Jpeg;
+
+                    // Convierte la imagen en un flujo de memoria
+                    using (var memoryStream = new System.IO.MemoryStream())
+                    {
+                        img.Write(memoryStream);
+
+                        // Carga el flujo de memoria en el PictureBox
+                        originalImage = System.Drawing.Image.FromStream(memoryStream);//img;
+                        //pictureBox1.Image = System.Drawing.Image.FromStream(memoryStream);
+                    }
+                }
+            }
+            else
+            {
+                // Carga la imagen original desde la ruta
+                originalImage = Image.FromFile(imagePath);
+            }
 
             // Calcula el nuevo tamaño manteniendo la relación de aspecto.
             int maxWidth = 300;
@@ -178,6 +203,9 @@ namespace C_Launcher
         }
         private void CustomComponent()
         {
+            //Establecer el tamaño de la ventana por defecto
+            //this.Size = new Size(539, this.Height);
+
             //Manejar coverBox de la coleccion
             //Coleccion
             this.pictureBoxCoverCollection.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBoxCoverCollection_MouseDown);
@@ -741,7 +769,7 @@ namespace C_Launcher
         private void buttonSearchCover_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Archivos de imagen (*.png;*.jpg;*.jpeg;)|*.png;*.jpg;*.jpeg;";
+            openFileDialog.Filter = "Archivos de imagen (*.png;*.jpg;*.jpeg;*.webp;)|*.png;*.jpg;*.jpeg;*.webp;";
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 Image image;
@@ -756,7 +784,7 @@ namespace C_Launcher
         private void buttonSearchSonCoverTest_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Archivos de imagen (*.png;*.jpg;*.jpeg;)|*.png;*.jpg;*.jpeg;";
+            openFileDialog.Filter = "Archivos de imagen (*.png;*.jpg;*.jpeg;*.webp;)|*.png;*.jpg;*.jpeg;*.webp;";
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 Image image;
@@ -787,7 +815,47 @@ namespace C_Launcher
             pictureBoxCoverSon.BackgroundImageLayout = ImageLayout.Stretch;
         }
 
-        
+
+        private void buttonMoreOptions_Click(object sender, EventArgs e)
+        {
+            this.Size = new Size(1081, this.Height);
+        }
+
+        private void checkBoxScanFolder_CheckedChanged(object sender, EventArgs e)
+        {
+            if (checkBoxScanFolder.Checked == true)
+            {
+                buttonSearchSonCoverTest.Text = "Seleccionar Caratula por defecto";
+                textBoxScanFolder.Enabled = true;
+                buttonSearchDir.Enabled = true;
+
+
+            } else
+            {
+                buttonSearchSonCoverTest.Text = "Seleccionar Caratula de prueba";
+                textBoxScanFolder.Enabled = false;
+                buttonSearchDir.Enabled = false;
+            }
+            
+        }
+
+        private void buttonSearchDir_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog folderBrowser = new OpenFileDialog();
+            // Set validate names and check file exists to false otherwise windows will
+            // not let you select "Folder Selection."
+            folderBrowser.ValidateNames = false;
+            folderBrowser.CheckFileExists = false;
+            folderBrowser.CheckPathExists = true;
+            // Always default to Folder Selection.
+            folderBrowser.FileName = "Selecciona un directorio";
+            if (folderBrowser.ShowDialog() == DialogResult.OK)
+            {
+                textBoxScanFolder.Text = Path.GetDirectoryName(folderBrowser.FileName);
+            }
+        }
+
+
         #endregion
 
         #endregion
@@ -931,8 +999,11 @@ namespace C_Launcher
 
             int[] tagsArray = new int[] { 1, 2, 3 };
             bool favorite = checkBoxFavorite.Checked;
+
+            bool scanFolder = checkBoxScanFolder.Checked;
+            string scanPath = textBoxScanFolder.Text;
             //Console.WriteLine("resID: " + resSonID);
-            Collections passCollection = new Collections(idCollection, idFather, nameCollection, imgPath, imgLayout, background, R, G, B, resID, width, height, resSonID, sonWidth, sonHeight, sonLayout, tagsArray, favorite);
+            Collections passCollection = new Collections(idCollection, idFather, nameCollection, imgPath, imgLayout, background, R, G, B, resID, width, height, resSonID, sonWidth, sonHeight, sonLayout, tagsArray, favorite, scanFolder, scanPath);
             ReturnedObject?.Invoke(this, passCollection);
             this.Close();
         }

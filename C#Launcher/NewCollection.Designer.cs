@@ -65,6 +65,10 @@
             this.buttonColorPickIMG = new System.Windows.Forms.Button();
             this.checkBoxImageLocation = new System.Windows.Forms.CheckBox();
             this.BackgroundColorCheck = new System.Windows.Forms.CheckBox();
+            this.buttonMoreOptions = new System.Windows.Forms.Button();
+            this.checkBoxScanFolder = new System.Windows.Forms.CheckBox();
+            this.textBoxScanFolder = new System.Windows.Forms.TextBox();
+            this.buttonSearchDir = new System.Windows.Forms.Button();
             this.groupBoxCover.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericColHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericColWidth)).BeginInit();
@@ -108,7 +112,7 @@
             this.comboBoxFather.FormattingEnabled = true;
             this.comboBoxFather.Location = new System.Drawing.Point(145, 47);
             this.comboBoxFather.Name = "comboBoxFather";
-            this.comboBoxFather.Size = new System.Drawing.Size(263, 21);
+            this.comboBoxFather.Size = new System.Drawing.Size(245, 21);
             this.comboBoxFather.TabIndex = 2;
             // 
             // labelFather
@@ -349,9 +353,9 @@
             this.label1.ForeColor = System.Drawing.SystemColors.Window;
             this.label1.Location = new System.Drawing.Point(585, 149);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(84, 13);
+            this.label1.Size = new System.Drawing.Size(110, 13);
             this.label1.TabIndex = 12;
-            this.label1.Text = "Resolucion hijos";
+            this.label1.Text = "Resolucion contenido";
             // 
             // groupBoxSon
             // 
@@ -504,9 +508,9 @@
             this.buttonSearchSonCoverTest.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
             this.buttonSearchSonCoverTest.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonSearchSonCoverTest.ForeColor = System.Drawing.SystemColors.Window;
-            this.buttonSearchSonCoverTest.Location = new System.Drawing.Point(802, 136);
+            this.buttonSearchSonCoverTest.Location = new System.Drawing.Point(742, 136);
             this.buttonSearchSonCoverTest.Name = "buttonSearchSonCoverTest";
-            this.buttonSearchSonCoverTest.Size = new System.Drawing.Size(170, 23);
+            this.buttonSearchSonCoverTest.Size = new System.Drawing.Size(197, 23);
             this.buttonSearchSonCoverTest.TabIndex = 15;
             this.buttonSearchSonCoverTest.Text = "Seleccionar Caratula de prueba";
             this.buttonSearchSonCoverTest.UseVisualStyleBackColor = false;
@@ -528,7 +532,7 @@
             this.checkBoxImageLocation.AutoSize = true;
             this.checkBoxImageLocation.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.checkBoxImageLocation.ForeColor = System.Drawing.SystemColors.Window;
-            this.checkBoxImageLocation.Location = new System.Drawing.Point(218, 140);
+            this.checkBoxImageLocation.Location = new System.Drawing.Point(221, 143);
             this.checkBoxImageLocation.Name = "checkBoxImageLocation";
             this.checkBoxImageLocation.Size = new System.Drawing.Size(212, 17);
             this.checkBoxImageLocation.TabIndex = 17;
@@ -547,12 +551,64 @@
             this.BackgroundColorCheck.Text = "Sin fondo";
             this.BackgroundColorCheck.UseVisualStyleBackColor = true;
             // 
+            // buttonMoreOptions
+            // 
+            this.buttonMoreOptions.Location = new System.Drawing.Point(466, 0);
+            this.buttonMoreOptions.Name = "buttonMoreOptions";
+            this.buttonMoreOptions.Size = new System.Drawing.Size(60, 24);
+            this.buttonMoreOptions.TabIndex = 35;
+            this.buttonMoreOptions.Text = "button1";
+            this.buttonMoreOptions.UseVisualStyleBackColor = true;
+            this.buttonMoreOptions.Click += new System.EventHandler(this.buttonMoreOptions_Click);
+            // 
+            // checkBoxScanFolder
+            // 
+            this.checkBoxScanFolder.AutoSize = true;
+            this.checkBoxScanFolder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.checkBoxScanFolder.ForeColor = System.Drawing.SystemColors.Window;
+            this.checkBoxScanFolder.Location = new System.Drawing.Point(540, 21);
+            this.checkBoxScanFolder.Name = "checkBoxScanFolder";
+            this.checkBoxScanFolder.Size = new System.Drawing.Size(129, 17);
+            this.checkBoxScanFolder.TabIndex = 36;
+            this.checkBoxScanFolder.Text = "Escanear un directorio";
+            this.checkBoxScanFolder.UseVisualStyleBackColor = true;
+            this.checkBoxScanFolder.CheckedChanged += new System.EventHandler(this.checkBoxScanFolder_CheckedChanged);
+            // 
+            // textBoxScanFolder
+            // 
+            this.textBoxScanFolder.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(40)))), ((int)(((byte)(47)))));
+            this.textBoxScanFolder.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBoxScanFolder.Enabled = false;
+            this.textBoxScanFolder.ForeColor = System.Drawing.SystemColors.Window;
+            this.textBoxScanFolder.Location = new System.Drawing.Point(675, 21);
+            this.textBoxScanFolder.Name = "textBoxScanFolder";
+            this.textBoxScanFolder.Size = new System.Drawing.Size(264, 20);
+            this.textBoxScanFolder.TabIndex = 37;
+            // 
+            // buttonSearchDir
+            // 
+            this.buttonSearchDir.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
+            this.buttonSearchDir.Enabled = false;
+            this.buttonSearchDir.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonSearchDir.ForeColor = System.Drawing.SystemColors.Window;
+            this.buttonSearchDir.Location = new System.Drawing.Point(945, 18);
+            this.buttonSearchDir.Name = "buttonSearchDir";
+            this.buttonSearchDir.Size = new System.Drawing.Size(75, 23);
+            this.buttonSearchDir.TabIndex = 38;
+            this.buttonSearchDir.Text = "Examinar...";
+            this.buttonSearchDir.UseVisualStyleBackColor = false;
+            this.buttonSearchDir.Click += new System.EventHandler(this.buttonSearchDir_Click);
+            // 
             // NewCollection
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(61)))), ((int)(((byte)(72)))));
-            this.ClientSize = new System.Drawing.Size(1065, 483);
+            this.ClientSize = new System.Drawing.Size(1047, 483);
+            this.Controls.Add(this.buttonSearchDir);
+            this.Controls.Add(this.textBoxScanFolder);
+            this.Controls.Add(this.checkBoxScanFolder);
+            this.Controls.Add(this.buttonMoreOptions);
             this.Controls.Add(this.BackgroundColorCheck);
             this.Controls.Add(this.checkBoxImageLocation);
             this.Controls.Add(this.buttonColorPickIMG);
@@ -578,7 +634,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "NewCollection";
-            this.Text = "NewCollection";
+            this.Text = "Nueva Coleccion";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.NewCollection_FormClosed);
             this.groupBoxCover.ResumeLayout(false);
             this.groupBoxCover.PerformLayout();
@@ -639,5 +695,9 @@
         private System.Windows.Forms.Button buttonColorPickIMG;
         private System.Windows.Forms.CheckBox checkBoxImageLocation;
         private System.Windows.Forms.CheckBox BackgroundColorCheck;
+        private System.Windows.Forms.Button buttonMoreOptions;
+        private System.Windows.Forms.CheckBox checkBoxScanFolder;
+        private System.Windows.Forms.TextBox textBoxScanFolder;
+        private System.Windows.Forms.Button buttonSearchDir;
     }
 }

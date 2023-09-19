@@ -41,3 +41,11 @@ D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\bin\Debug\CoverPadLau
 D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\obj\Debug\CoverPadLauncher.Properties.Resources.resources
 D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\obj\Debug\CoverPadLauncher.exe
 D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\obj\Debug\CoverPadLauncher.pdb
+D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\bin\Debug\Magick.Native-Q16-arm64.dll
+D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\bin\Debug\Magick.Native-Q16-x64.dll
+D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\bin\Debug\Magick.Native-Q16-x86.dll
+D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\bin\Debug\Magick.NET-Q16-AnyCPU.dll
+D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\bin\Debug\Magick.NET.Core.dll
+D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\bin\Debug\Magick.NET-Q16-AnyCPU.xml
+D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\bin\Debug\Magick.NET.Core.xml
+D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\obj\Debug\C#Launcher.csproj.CopyComplete

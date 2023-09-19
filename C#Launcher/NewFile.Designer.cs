@@ -52,7 +52,6 @@
             this.numericHeightImage = new System.Windows.Forms.NumericUpDown();
             this.groupBoxSize = new System.Windows.Forms.GroupBox();
             this.buttonSearchFile = new System.Windows.Forms.Button();
-            this.buttonSearchProgram = new System.Windows.Forms.Button();
             this.buttonSearchCover = new System.Windows.Forms.Button();
             this.buttonSetColor = new System.Windows.Forms.Button();
             this.buttonSave = new System.Windows.Forms.Button();
@@ -62,6 +61,7 @@
             this.checkBoxImageLocation = new System.Windows.Forms.CheckBox();
             this.addResolution = new System.Windows.Forms.Button();
             this.BackgroundColorCheck = new System.Windows.Forms.CheckBox();
+            this.buttonSearchProgram = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCover)).BeginInit();
             this.groupBoxImageFormat.SuspendLayout();
             this.panelImageLimit.SuspendLayout();
@@ -348,23 +348,16 @@
             // 
             // buttonSearchFile
             // 
+            this.buttonSearchFile.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
+            this.buttonSearchFile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonSearchFile.ForeColor = System.Drawing.SystemColors.Window;
             this.buttonSearchFile.Location = new System.Drawing.Point(426, 98);
             this.buttonSearchFile.Name = "buttonSearchFile";
             this.buttonSearchFile.Size = new System.Drawing.Size(75, 23);
             this.buttonSearchFile.TabIndex = 22;
             this.buttonSearchFile.Text = "Examinar...";
-            this.buttonSearchFile.UseVisualStyleBackColor = true;
+            this.buttonSearchFile.UseVisualStyleBackColor = false;
             this.buttonSearchFile.Click += new System.EventHandler(this.buttonSearchFile_Click);
-            // 
-            // buttonSearchProgram
-            // 
-            this.buttonSearchProgram.Location = new System.Drawing.Point(426, 139);
-            this.buttonSearchProgram.Name = "buttonSearchProgram";
-            this.buttonSearchProgram.Size = new System.Drawing.Size(75, 23);
-            this.buttonSearchProgram.TabIndex = 23;
-            this.buttonSearchProgram.Text = "Examinar...";
-            this.buttonSearchProgram.UseVisualStyleBackColor = true;
-            this.buttonSearchProgram.Click += new System.EventHandler(this.buttonSearchProgram_Click);
             // 
             // buttonSearchCover
             // 
@@ -476,6 +469,19 @@
             this.BackgroundColorCheck.Text = "Sin fondo";
             this.BackgroundColorCheck.UseVisualStyleBackColor = true;
             // 
+            // buttonSearchProgram
+            // 
+            this.buttonSearchProgram.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
+            this.buttonSearchProgram.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonSearchProgram.ForeColor = System.Drawing.SystemColors.Window;
+            this.buttonSearchProgram.Location = new System.Drawing.Point(426, 139);
+            this.buttonSearchProgram.Name = "buttonSearchProgram";
+            this.buttonSearchProgram.Size = new System.Drawing.Size(75, 23);
+            this.buttonSearchProgram.TabIndex = 23;
+            this.buttonSearchProgram.Text = "Examinar...";
+            this.buttonSearchProgram.UseVisualStyleBackColor = false;
+            this.buttonSearchProgram.Click += new System.EventHandler(this.buttonSearchProgram_Click);
+            // 
             // NewFile
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -553,7 +559,6 @@
         private System.Windows.Forms.NumericUpDown numericHeightImage;
         private System.Windows.Forms.GroupBox groupBoxSize;
         private System.Windows.Forms.Button buttonSearchFile;
-        private System.Windows.Forms.Button buttonSearchProgram;
         private System.Windows.Forms.Button buttonSearchCover;
         private System.Windows.Forms.Button buttonSetColor;
         private System.Windows.Forms.Button buttonSave;
@@ -563,5 +568,6 @@
         private System.Windows.Forms.CheckBox checkBoxImageLocation;
         private System.Windows.Forms.Button addResolution;
         private System.Windows.Forms.CheckBox BackgroundColorCheck;
+        private System.Windows.Forms.Button buttonSearchProgram;
     }
 }
