@@ -757,7 +757,7 @@ namespace C_Launcher
                         {
                             //viewDepth = -2;
                             scanDepth.Add(rutaEscaneo);
-                            loadPictureBox(0, 0, false);
+                            loadPictureBox(colSize, fileSize, false);
                         }
                     }
                 }
@@ -1068,7 +1068,7 @@ namespace C_Launcher
                     {
                         labelDepth.Text = colls[i].Name;
                         actualColl = i;
-                        
+                        Console.WriteLine($"actualColl {actualColl}");
 
                         if (colls[i].IDFather != 0)
                         {
@@ -1114,16 +1114,19 @@ namespace C_Launcher
 
                 if (Directory.Exists(rutaEscaneo))
                 {
-                    // Obtiene una lista de todos los archivos en la carpeta
+                    // Obtiene una lista de todos los archivos y sub carpetas en la carpeta
                     string[] archivos = Directory.GetFiles(rutaEscaneo);
-                    Array.Resize(ref picBoxArr, archivos.Length);
+                    string[] subcarpetas = Directory.GetDirectories(rutaEscaneo);
+                    Array.Resize(ref picBoxArr, archivos.Length+ subcarpetas.Length);
+
+                    //Analizar los archivos
                     foreach (string archivo in archivos)
                     {
                         picBoxArr[pL] = new PictureBox
                         {
                             AccessibleDescription = "automaticFile",//Aqui se indica que tipo de picture box es (coleccion / archivo)
                             Name = Path.GetFileName(archivo),//Aqui se guarda el nombre de la coleccion
-                            Size = new Size(250, 250),
+                            Size = new Size(colls[actualColl].SonWidth, colls[actualColl].SonHeight),
                             BackColor = Color.FromArgb(0, 0, 0),
                             Tag = archivo,//Aqui se guarda en que espacio del array estamos buscando//colls[i].ID,
                         };
@@ -1133,17 +1136,15 @@ namespace C_Launcher
                         picBoxArr[pL].MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseUp);
                         pL++;//iterar en el array de paneles
                     }
-
-                    // También puedes obtener una lista de todas las subcarpetas
-                    string[] subcarpetas = Directory.GetDirectories(rutaEscaneo);
-                    Array.Resize(ref picBoxArr, subcarpetas.Length);
+                    //Analizar las carpetas
                     foreach (string subcarpeta in subcarpetas)
                     {
                         picBoxArr[pL] = new PictureBox
                         {
                             AccessibleDescription = "automaticFolder",//Aqui se indica que tipo de picture box es (coleccion / archivo)
                             Name = Path.GetFileName(subcarpeta),//Aqui se guarda el nombre de la coleccion
-                            Size = new Size(250, 250),
+                            Size = new Size(colls[actualColl].SonWidth, colls[actualColl].SonHeight),
+                            //Size = new Size(250,250),
                             BackColor = Color.FromArgb(0, 0, 0),
                             Tag = subcarpeta,//Aqui se guarda en que espacio del array estamos buscando//colls[i].ID,
                         };

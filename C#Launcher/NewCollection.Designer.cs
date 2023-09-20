@@ -65,7 +65,6 @@
             this.buttonColorPickIMG = new System.Windows.Forms.Button();
             this.checkBoxImageLocation = new System.Windows.Forms.CheckBox();
             this.BackgroundColorCheck = new System.Windows.Forms.CheckBox();
-            this.buttonMoreOptions = new System.Windows.Forms.Button();
             this.checkBoxScanFolder = new System.Windows.Forms.CheckBox();
             this.textBoxScanFolder = new System.Windows.Forms.TextBox();
             this.buttonSearchDir = new System.Windows.Forms.Button();
@@ -551,16 +550,6 @@
             this.BackgroundColorCheck.Text = "Sin fondo";
             this.BackgroundColorCheck.UseVisualStyleBackColor = true;
             // 
-            // buttonMoreOptions
-            // 
-            this.buttonMoreOptions.Location = new System.Drawing.Point(466, 0);
-            this.buttonMoreOptions.Name = "buttonMoreOptions";
-            this.buttonMoreOptions.Size = new System.Drawing.Size(60, 24);
-            this.buttonMoreOptions.TabIndex = 35;
-            this.buttonMoreOptions.Text = "button1";
-            this.buttonMoreOptions.UseVisualStyleBackColor = true;
-            this.buttonMoreOptions.Click += new System.EventHandler(this.buttonMoreOptions_Click);
-            // 
             // checkBoxScanFolder
             // 
             this.checkBoxScanFolder.AutoSize = true;
@@ -608,7 +597,6 @@
             this.Controls.Add(this.buttonSearchDir);
             this.Controls.Add(this.textBoxScanFolder);
             this.Controls.Add(this.checkBoxScanFolder);
-            this.Controls.Add(this.buttonMoreOptions);
             this.Controls.Add(this.BackgroundColorCheck);
             this.Controls.Add(this.checkBoxImageLocation);
             this.Controls.Add(this.buttonColorPickIMG);
@@ -695,7 +683,6 @@
         private System.Windows.Forms.Button buttonColorPickIMG;
         private System.Windows.Forms.CheckBox checkBoxImageLocation;
         private System.Windows.Forms.CheckBox BackgroundColorCheck;
-        private System.Windows.Forms.Button buttonMoreOptions;
         private System.Windows.Forms.CheckBox checkBoxScanFolder;
         private System.Windows.Forms.TextBox textBoxScanFolder;
         private System.Windows.Forms.Button buttonSearchDir;
