@@ -35,6 +35,8 @@ namespace C_Launcher
         private string dirCoversPath = "System\\Covers";
         //Ruta de los elementos del sistema (iconos y demas)
         private string imgCollIconPath = "System\\Resources\\CollectionIcon.png";
+        private string imgScanFileIconPath = "System\\Resources\\ScanFileIcon.png";
+        private string imgScanDirIconPath = "System\\Resources\\ScanDirIcon.png";
 
         //Escaneo de directorio
         private List<string> scanDepth = new List<string>();
@@ -385,22 +387,50 @@ namespace C_Launcher
         private void ToolStripOpenInExplorerElementPictureBox_Click(object sender, EventArgs e)
         {
             PictureBox pic = (PictureBox)contextMenuPictureBox.SourceControl;
-            int idBox = int.Parse(pic.Tag.ToString());//no se puede transformar un objeto a int, pero si a un string
-            string fileDir = getFileDir(idBox);
+            string fileDir;
+            string boxType = pic.AccessibleDescription;
+
+            if (boxType != "automaticFile" && boxType != "automaticFolder")
+            {
+                int idBox = int.Parse(pic.Tag.ToString());//no se puede transformar un objeto a int, pero si a un string
+                fileDir = getFileDir(idBox);
+            } else
+            {
+                fileDir = pic.Tag.ToString();
+            }
+            
 
             //Crear el process start
             //Process process = new Process();
 
-            if (File.Exists(fileDir))
+            if (File.Exists(fileDir) || Directory.Exists(fileDir))
             {
                 Process.Start("explorer.exe", $"/select,\"{fileDir}\"");
             }
             else
             {
-                MessageBox.Show("No se pudo encontrar el elemento", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("No se pudo encontrar la ubicacion, verifica que el elemento exista en su equipo", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
 
 
+        //---------------------
+        //PictureBox automaticas
+        //---------------------
+        private void ToolStripOpenInExplorerContentAutomaticPictureBox_Click(object sender, EventArgs e)
+        {
+            PictureBox pic = (PictureBox)contextMenuPictureBox.SourceControl;
+            string fileDir = pic.Tag.ToString();
+
+            //Crear el process start
+            if (Directory.Exists(fileDir))
+            {
+                Process.Start("explorer.exe", $"/root,\"{fileDir}\"");
+            }
+            else
+            {
+                MessageBox.Show("No se pudo encontrar el directorio", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
         #endregion
 
@@ -686,11 +716,17 @@ namespace C_Launcher
             FontBrush.Dispose();
             RectBrush.Dispose();//Dejar de ocupar pincel
 
-
             //Dibujar un icono para indicar que algo es una coleccion
-            if (boxType == "collection")
-            {
+            if (boxType == "collection") {
                 Bitmap bpm = new Bitmap(imgCollIconPath);
+                g.DrawImage(bpm, 5, 5);
+                bpm.Dispose();
+            } else if (boxType == "automaticFile") {
+                Bitmap bpm = new Bitmap(imgScanFileIconPath);
+                g.DrawImage(bpm, 5, 5);
+                bpm.Dispose();
+            } else if (boxType == "automaticFolder") {
+                Bitmap bpm = new Bitmap(imgScanDirIconPath);
                 g.DrawImage(bpm, 5, 5);
                 bpm.Dispose();
             }
@@ -771,24 +807,50 @@ namespace C_Launcher
             if (e.Button == MouseButtons.Right)
             {
                 PictureBox pictureBox = (PictureBox)sender;
-                int idBox = int.Parse(pictureBox.Tag.ToString());//no se puede transformar un objeto a int, pero si a un string
+                int idBox = -1;
+                try
+                {
+                    idBox = int.Parse(pictureBox.Tag.ToString());//no se puede transformar un objeto a int, pero si a un string
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine($"No se pudo transformar el tag {pictureBox.Tag} a int");
+                }
+
                 string boxType = pictureBox.AccessibleDescription;//Recoje el tipo de picture box para buscar en el array especifico (col/file)
                 bool fav = false;
 
                 //Picture Box
-                ToolStripMenuItem ToolStripEdit = new ToolStripMenuItem();
-                ToolStripMenuItem ToolStripDelete = new ToolStripMenuItem();
-                ToolStripMenuItem ToolStripFav = new ToolStripMenuItem();
-                ToolStripEdit.Text = "Editar";
-                ToolStripEdit.Click += new EventHandler(ToolStripEditPictureBox_Click);
-                ToolStripDelete.Text = "Eliminar";
-                ToolStripDelete.Click += new EventHandler(ToolStripDeletePictureBox_Click);
-                ToolStripFav.Text = "Agregar a Favoritos";
-                ToolStripFav.Click += new EventHandler(ToolStripFavSetPictureBox_Click);
-
-                //Crear un contextMenu local para modificarlo a gusto
                 ContextMenuStrip contextMenuStrip = new ContextMenuStrip();//pictureBox.ContextMenuStrip;
-                contextMenuStrip.Items.AddRange(new ToolStripItem[] { ToolStripFav, ToolStripEdit, ToolStripDelete });
+
+                //Menu Strip "global" (no sirve para los picture box escaneados de un directorio
+                if (boxType != "automaticFile" && boxType != "automaticFolder")
+                {
+                    ToolStripMenuItem ToolStripEdit = new ToolStripMenuItem();
+                    ToolStripMenuItem ToolStripDelete = new ToolStripMenuItem();
+                    ToolStripMenuItem ToolStripFav = new ToolStripMenuItem();
+                    ToolStripEdit.Text = "Editar";
+                    ToolStripEdit.Click += new EventHandler(ToolStripEditPictureBox_Click);
+                    ToolStripDelete.Text = "Eliminar";
+                    ToolStripDelete.Click += new EventHandler(ToolStripDeletePictureBox_Click);
+                    ToolStripFav.Text = "Agregar a Favoritos";
+                    ToolStripFav.Click += new EventHandler(ToolStripFavSetPictureBox_Click);
+
+                    //Crear un contextMenu local para modificarlo a gusto
+                    
+                    contextMenuStrip.Items.AddRange(new ToolStripItem[] { ToolStripFav, ToolStripEdit, ToolStripDelete });
+                } else
+                {
+                    ToolStripMenuItem ToolStripAutomaticOpen = new ToolStripMenuItem();
+                    ToolStripMenuItem ToolStripAutomaticOpenContent = new ToolStripMenuItem();
+                    ToolStripAutomaticOpen.Text = "Mostrar ubicacion";
+                    ToolStripAutomaticOpen.Click += new EventHandler(ToolStripOpenInExplorerElementPictureBox_Click);
+                    ToolStripAutomaticOpenContent.Text = "Mostrar ubicacion del contenido";
+                    ToolStripAutomaticOpenContent.Click += new EventHandler(ToolStripOpenInExplorerContentAutomaticPictureBox_Click);
+
+                    contextMenuStrip.Items.AddRange(new ToolStripItem[] { ToolStripAutomaticOpen, ToolStripAutomaticOpenContent });
+                }
+                
 
                 if (boxType == "file")
                 {
@@ -803,7 +865,7 @@ namespace C_Launcher
                     //Mostrar elemento en el explorador de archivos (solo si no son URL)
                     if (url == false) {
                         ToolStripMenuItem ToolStripOpenInExplorer = new ToolStripMenuItem();
-                        ToolStripOpenInExplorer.Text = "Abrir ubicacion";
+                        ToolStripOpenInExplorer.Text = "Mostrar ubicacion";
                         ToolStripOpenInExplorer.Click += new EventHandler(ToolStripOpenInExplorerElementPictureBox_Click);
                         contextMenuStrip.Items.Add(ToolStripOpenInExplorer);
                     }
@@ -831,19 +893,21 @@ namespace C_Launcher
                     contextMenuStrip.Items.Add(ToolStripEditAll);
                 }
 
-                
-
-                // Accede al ToolStripMenuItem dentro del ContextMenuStrip
-                ToolStripMenuItem toolStripMenuItem = (ToolStripMenuItem)contextMenuStrip.Items[0];//depende del orden establecido en la linea 75
-
-                // Cambia el atributo "Text" del ToolStripMenuItem según el valor del "Tag" del PictureBox
-                if (fav == false)
+                //Agregar a favoritos no sirve para archivos o directorios escaneados
+                if (boxType != "automaticFile" && boxType != "automaticFolder")
                 {
-                    toolStripMenuItem.Text = "Agregar a favoritos";
-                }
-                else if (fav == true)
-                {
-                    toolStripMenuItem.Text = "Quitar de favoritos";
+                    // Accede al ToolStripMenuItem dentro del ContextMenuStrip
+                    ToolStripMenuItem toolStripMenuItem = (ToolStripMenuItem)contextMenuStrip.Items[0];//depende del orden establecido en la linea 75
+
+                    // Cambia el atributo "Text" del ToolStripMenuItem según el valor del "Tag" del PictureBox
+                    if (fav == false)
+                    {
+                        toolStripMenuItem.Text = "Agregar a favoritos";
+                    }
+                    else if (fav == true)
+                    {
+                        toolStripMenuItem.Text = "Quitar de favoritos";
+                    }
                 }
 
                 // Muestra el ContextMenuStrip
@@ -879,7 +943,14 @@ namespace C_Launcher
         {
             if (e.KeyCode == Keys.Enter)
             {
-                loadPictureBox(colSize, fileSize, true);
+                if (textBoxSearch.Text != "")
+                {
+                    loadPictureBox(colSize, fileSize, true);
+                } else
+                {
+                    loadPictureBox(colSize, fileSize, false);
+                }
+                
             }
             
         }
@@ -1190,7 +1261,12 @@ namespace C_Launcher
                         picBoxArr[pL].MouseLeave += new System.EventHandler(this.pictureBox_MouseLeave);
                         picBoxArr[pL].MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox_Click);
                         picBoxArr[pL].MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseUp);
+
+                        picBoxArr[pL].ContextMenuStrip = contextMenuPictureBox;
+
                         pL++;//iterar en el array de paneles
+
+                        
                     }
                 }
             }
@@ -1757,6 +1833,7 @@ namespace C_Launcher
             if (viewDepth != 0)
             {
                 viewDepth = 0;
+                scanDepth.Clear();
                 loadPictureBox(colSize, fileSize, false);
             }
         }
