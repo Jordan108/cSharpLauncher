@@ -375,10 +375,9 @@ namespace C_Launcher
 
             }
             //En caso de errores
-            catch (Exception ex)
+            catch (Exception)
             {
-                MessageBox.Show("Error abrir el programa", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);//Error con archivos/programas/cmdLine
-
+                MessageBox.Show("Error abrir el programa", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);//Error con archivos/programas/cmdLin
             }
 
         }
@@ -785,10 +784,15 @@ namespace C_Launcher
                         // Obtiene una lista de todos los archivos en la carpeta
                         string[] archivos = Directory.GetFiles(rutaEscaneo);
                         string[] subDir = Directory.GetDirectories(rutaEscaneo);
+
+                        
                         //Buscar dentro de esa coleccion un archivo e intentar abrirlo
                         if (archivos.Length > 0 && subDir.Length == 0)
                         {
-                            startProcess(archivos[0], "", "", false);
+                            //Filtrar los archivos por una extension especifica
+                            //archivos.Where(x => x.EndsWith(".html") || x.EndsWith(".lnk") || x.EndsWith(".url")).ToArray();
+                            string[] filter = archivos.Where(x => x.EndsWith(".html")).ToArray();
+                            startProcess(filter[0], "", "", false);
                         } else
                         {
                             //viewDepth = -2;
@@ -1121,7 +1125,7 @@ namespace C_Launcher
 
             Console.WriteLine($"Profundidad actual {viewDepth}");
 
-            #region Texto "ruta" en la barra superior
+            #region Texto "ruta" en la barra superior y cargar actualColl
             //Cambiar el texto de la "ruta"
             if (viewDepth == -1)
             {
@@ -1170,7 +1174,7 @@ namespace C_Launcher
             #endregion
 
             #region Cargar Elementos escaneables
-            if (scanDepth.Count > 0 || (colls[actualColl].ScanFolder == true && colls[actualColl].ScanPath != ""))
+            if (colls.Length>0 && (scanDepth.Count > 0 || (colls[actualColl].ScanFolder == true && colls[actualColl].ScanPath != "")))
             {
                 string rutaEscaneo;
 
@@ -1181,14 +1185,13 @@ namespace C_Launcher
                 {
                     rutaEscaneo = colls[actualColl].ScanPath;
                 }
-                
 
                 if (Directory.Exists(rutaEscaneo))
                 {
                     // Obtiene una lista de todos los archivos y sub carpetas en la carpeta
                     string[] archivos = Directory.GetFiles(rutaEscaneo);
                     string[] subcarpetas = Directory.GetDirectories(rutaEscaneo);
-                    Array.Resize(ref picBoxArr, archivos.Length+ subcarpetas.Length);
+                    Array.Resize(ref picBoxArr, colSize + fileSize + archivos.Length + subcarpetas.Length);
 
                     //Analizar los archivos
                     foreach (string archivo in archivos)
@@ -1265,18 +1268,17 @@ namespace C_Launcher
                         picBoxArr[pL].ContextMenuStrip = contextMenuPictureBox;
 
                         pL++;//iterar en el array de paneles
-
-                        
                     }
                 }
             }
-            
             #endregion
 
             #region Cargar Colecciones
+            Console.WriteLine($"Cargar colecciones 1 {colls.Length}");
             //Recorrer todo el array de las colecciones
             for (int i = 0; i < colls.Length; i++)
             {
+                Console.WriteLine($"Iteracion {i}");
                 bool addCollection = false;//Me permite añadir varias condicionales dentro de un mismo if
 
                 if (filter)
@@ -1326,6 +1328,9 @@ namespace C_Launcher
                         green = colls[i].ColorGreen;
                         blue = colls[i].ColorBlue;
                     }
+
+                    Console.WriteLine($"Cargar colecciones 2 {colls.Length}");
+
                     picBoxArr[pL] = new PictureBox
                     {
                         AccessibleDescription = "collection",//Aqui se indica que tipo de picture box es (coleccion / archivo)
