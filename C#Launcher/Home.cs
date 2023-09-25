@@ -1647,6 +1647,9 @@ namespace C_Launcher
             treeViewMain.Nodes.Clear();//Limpiar todo el treeview
             //Crear el nodo de favoritos
             TreeNode fvNode = new TreeNode("Favoritos");  fvNode.Tag = -1; treeViewMain.Nodes.Add(fvNode);
+            if (viewDepth == -1) {
+                treeViewMain.SelectedNode = treeViewMain.Nodes[0];
+            }
 
             //Se carga el archivo XML de colecciones por que se haran "querys"
             //XmlDocument xmlDoc = new XmlDocument.Load(xmlColPath);
@@ -1663,8 +1666,6 @@ namespace C_Launcher
 
                     // Asignar una etiqueta al nodo
                     root.Tag = colls[i].ID;
-                    //root.MouseEnter += Node_MouseEnter;
-                    //root.MouseLeave += Node_MouseLeave;
 
                     // Utilizar LINQ to XML para contar los elementos que contengan como padre a esta coleccion
                     var matchingElements = doc.Descendants("collection")
@@ -1689,6 +1690,11 @@ namespace C_Launcher
                             subNode.Tag = col.ID;
                             root.Nodes.Add(subNode);
 
+                            if (subNode.Tag.ToString() == viewDepth.ToString())
+                            {
+                                treeViewMain.SelectedNode = subNode;
+                            }
+
                             //Buscar en ese sub nodo, si tiene sub nodos para agregarlo
                             int subCount = doc.Descendants("IDFather").Where(subElement => subElement.Value == element.Id).Count();
 
@@ -1701,13 +1707,20 @@ namespace C_Launcher
 
                     // Agregar el nodo al TreeView
                     treeViewMain.Nodes.Add(root);
+
+                    if (root.Tag.ToString() == viewDepth.ToString())
+                    {
+                        treeViewMain.SelectedNode = root;
+                    }
+
+                    
                 }
             }
+
             //Verificar que, si la vista esta en favoritos (-1; seleccionar automaticamente el primer nodo)
-            if (viewDepth == -1)
-            {
-                treeViewMain.SelectedNode = treeViewMain.Nodes[0];
-            }
+            
+
+            //treeViewMain.SelectedNode = treeViewMain.Nodes[1].Nodes[1];
             //Expandir el tree view para ver todos los nodos
             treeViewMain.ExpandAll();
 
@@ -1745,6 +1758,11 @@ namespace C_Launcher
                 TreeNode subNode = new TreeNode(col.Name);
                 subNode.Tag = col.ID;
                 fatherNode.Nodes.Add(subNode);
+
+                if (subNode.Tag.ToString() == viewDepth.ToString())
+                {
+                    treeViewMain.SelectedNode = subNode;
+                }
 
                 //Buscar en ese sub nodo, si tiene sub nodos para agregarlo
                 int subCount = doc.Descendants("IDFather").Where(subElement => subElement.Value == element.Id).Count();
