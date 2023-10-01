@@ -37,10 +37,12 @@ namespace C_Launcher.Clases
         //Coleccion automatica
         private bool scanFolder;
         private string scanPath;
+        private int scanStartNumber;
+        private string[] scanOpenExtension;
 
 
         //Constructor
-        public Collections(int _id, int _idFather, string _name, string _imgPath, int _layout, bool _nBg, int _r, int _g, int _b, int _res, int _w, int _h, int _sRint, int _sW, int _sH, int _sL, int [] _tag, bool _fav, bool _scan, string _scanPath)
+        public Collections(int _id, int _idFather, string _name, string _imgPath, int _layout, bool _nBg, int _r, int _g, int _b, int _res, int _w, int _h, int _sRint, int _sW, int _sH, int _sL, int[] _tag, bool _fav, bool _scan, string _scanPath, int _scanStartNumber, string[] _scanOpenExtension)
         {
             id = _id; 
             idFather = _idFather; 
@@ -62,6 +64,8 @@ namespace C_Launcher.Clases
             favorite = _fav;
             scanFolder = _scan;
             scanPath = _scanPath;
+            scanStartNumber = _scanStartNumber;
+            scanOpenExtension = _scanOpenExtension;
         }
 
         //Encapsulamiento
@@ -165,6 +169,18 @@ namespace C_Launcher.Clases
         {
             set { scanPath = value; }
             get { return scanPath; }
+        }
+
+        public int ScanStartNumber
+        {
+            set { scanStartNumber = value; }
+            get { return scanStartNumber; }
+        }
+
+        public string[] ScanOpenExtension
+        {
+            set { scanOpenExtension = value; }
+            get { return scanOpenExtension; }
         }
     }
 }

@@ -779,9 +779,16 @@ namespace C_Launcher
                 image = null;
             }
         }
-       
-        //Buscar caratula de prueba
-        private void buttonSearchSonCoverTest_Click(object sender, EventArgs e)
+
+        //Borrar caratula de la coleccion
+        private void buttonDeleteCover_Click(Object sender, EventArgs e)
+        {
+            pictureBoxCoverCollection.BackgroundImage = null;
+            pictureBoxCoverCollection.Tag = null;
+        }
+
+        //Buscar caratula por defecto para el contenido
+        private void buttonSearchSonCoverDefault_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
             openFileDialog.Filter = "Archivos de imagen (*.png;*.jpg;*.jpeg;*.webp;)|*.png;*.jpg;*.jpeg;*.webp;";
@@ -825,14 +832,14 @@ namespace C_Launcher
         {
             if (checkBoxScanFolder.Checked == true)
             {
-                buttonSearchSonCoverTest.Text = "Seleccionar Caratula por defecto";
+                buttonSearchSonCoverDefault.Text = "Seleccionar Caratula por defecto";
                 textBoxScanFolder.Enabled = true;
                 buttonSearchDir.Enabled = true;
 
 
             } else
             {
-                buttonSearchSonCoverTest.Text = "Seleccionar Caratula de prueba";
+                buttonSearchSonCoverDefault.Text = "Seleccionar Caratula de prueba";
                 textBoxScanFolder.Enabled = false;
                 buttonSearchDir.Enabled = false;
             }
@@ -855,10 +862,7 @@ namespace C_Launcher
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-
-        }
+        
 
 
         #endregion
@@ -1005,10 +1009,30 @@ namespace C_Launcher
             int[] tagsArray = new int[] { 1, 2, 3 };
             bool favorite = checkBoxFavorite.Checked;
 
+            ///Escaneo
             bool scanFolder = checkBoxScanFolder.Checked;
             string scanPath = textBoxScanFolder.Text;
+            int scanStartNumber = 1;
+
+            string[] scanOpenExtension;
+            List<string> dgValue = new List<string>();
+            
+
+            foreach (DataGridViewRow fila in dataGridViewScanOpenExtension.Rows)
+            {
+                foreach (DataGridViewCell celda in fila.Cells)
+                {
+                    string cell = celda.Value != null ? celda.Value.ToString() : string.Empty;
+                    dgValue.Add(cell);
+                }
+            }
+
+            //Agregarlo como array
+            scanOpenExtension = dgValue.ToArray();
+            
+
             //Console.WriteLine("resID: " + resSonID);
-            Collections passCollection = new Collections(idCollection, idFather, nameCollection, imgPath, imgLayout, background, R, G, B, resID, width, height, resSonID, sonWidth, sonHeight, sonLayout, tagsArray, favorite, scanFolder, scanPath);
+            Collections passCollection = new Collections(idCollection, idFather, nameCollection, imgPath, imgLayout, background, R, G, B, resID, width, height, resSonID, sonWidth, sonHeight, sonLayout, tagsArray, favorite, scanFolder, scanPath, scanStartNumber, scanOpenExtension);
             ReturnedObject?.Invoke(this, passCollection);
             this.Close();
         }

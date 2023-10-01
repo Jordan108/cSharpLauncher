@@ -791,8 +791,21 @@ namespace C_Launcher
                         {
                             //Filtrar los archivos por una extension especifica
                             //archivos.Where(x => x.EndsWith(".html") || x.EndsWith(".lnk") || x.EndsWith(".url")).ToArray();
-                            string[] filter = archivos.Where(x => x.EndsWith(".html")).ToArray();
-                            startProcess(filter[0], "", "", false);
+                            string[] extensions = getColeScanExtension(viewDepth);
+                            //string[] filter = archivos.Where(x => x.EndsWith(".html")).ToArray();
+
+                            string[] filter = archivos.Where(archivo =>
+                                    extensions.Any(extension => archivo.EndsWith("." + extension))
+                                ).ToArray();
+
+                            int scanStart = getColeScanStartNumber(viewDepth);
+
+                            startProcess(filter[scanStart-1], "", "", false);
+                            //startProcess(archivos[0], "", "", false);
+
+
+                            /*Falta por poner que el array de filter sobreescriba el array de archivos (para asi solo ocupar 1 startProcess)
+                             Luego hacer el int scanStart despues de la sobreeescritura para hacer los calculos necesarios y por ultimo poner el start process*/
                         } else
                         {
                             //viewDepth = -2;
@@ -2351,6 +2364,53 @@ namespace C_Launcher
             }
         }
 
+        private string[] getColeScanExtension(int colID)
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.Load(xmlColPath);
+
+            string xpath = "//Launcher/collection[@id='" + colID + "']";
+            XmlNode root = doc.SelectSingleNode(xpath);
+
+            List<string> extValues = new List<string>();
+            if (root != null)
+            {
+                //returnExt.Append(root.SelectSingleNode("ScanOpenExtension").InnerText);
+
+                XmlNode rootScanExtension = doc.SelectSingleNode("//Launcher/collection/ScanOpenExtension");
+                if (rootScanExtension != null)
+                {
+                    foreach (XmlNode extension in rootScanExtension)
+                    {
+                        extValues.Add(extension.InnerText);
+                    }
+                }
+            }
+
+            string[] returnExt = extValues.ToArray();
+
+            return returnExt;
+        }
+
+        private int getColeScanStartNumber(int colID)
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.Load(xmlColPath);
+
+            string xpath = "//Launcher/collection[@id='" + colID + "']";
+            XmlNode root = doc.SelectSingleNode(xpath);
+
+            int returnNumber = 0;
+
+            if (root != null)
+            {
+                returnNumber = int.Parse(root.SelectSingleNode("ScanStartNumber").InnerText);
+            }
+
+            //Llamar a la funcion para que empiece el proceso
+            return returnNumber;
+        }
+
         private void SaveXMLCollection(Collections Class)
         {
             //Verificar que el archivo xml exista (y si no es asi, crearlo y formatearlo)
@@ -2430,11 +2490,19 @@ namespace C_Launcher
                 XmlElement numArray = xmlDoc.CreateElement("id");
                 numArray.InnerText = num.ToString();
                 colTags.AppendChild(numArray);
-                //Console.WriteLine(num);
             }
             XmlElement colFavorite = xmlDoc.CreateElement("Favorite"); colFavorite.InnerText = Class.Favorite.ToString(); coleccion.AppendChild(colFavorite);
             XmlElement colScanFolder = xmlDoc.CreateElement("ScanFolder"); colScanFolder.InnerText = Class.ScanFolder.ToString(); coleccion.AppendChild(colScanFolder);
             XmlElement colScanPath = xmlDoc.CreateElement("ScanPath"); colScanPath.InnerText = Class.ScanPath.ToString(); coleccion.AppendChild(colScanPath);
+            XmlElement colScanStartNumber = xmlDoc.CreateElement("ScanStartNumber"); colScanStartNumber.InnerText = Class.ScanStartNumber.ToString(); coleccion.AppendChild(colScanStartNumber);
+            //Guardar el array de extensiones para los escaneos
+            XmlElement colScanOpenExtension = xmlDoc.CreateElement("ScanOpenExtension"); coleccion.AppendChild(colScanOpenExtension);
+            foreach (string ext in Class.ScanOpenExtension)
+            {
+                XmlElement extArray = xmlDoc.CreateElement("extension");
+                extArray.InnerText = ext.ToString();
+                colScanOpenExtension.AppendChild(extArray);
+            }
 
             xmlDoc.Save(xmlColPath);
 
@@ -2456,16 +2524,15 @@ namespace C_Launcher
             {
                 //Buscamos el elemento a modificar
                 string xpath = "//Launcher/collection[@id='" + fileID + "']";
-                string tagpath = "//Launcher/collection/TagsID";
                 XmlNode root = xmlDoc.SelectSingleNode(xpath);
-                XmlNode rootTag = xmlDoc.SelectSingleNode(tagpath);
+
 
                 //si no existe un elemento con esa id, sumar 1
                 while (root == null)
                 {
                     fileID++;
                     xpath = "//Launcher/collection[@id='" + fileID + "']";
-                    
+
                     root = xmlDoc.SelectSingleNode(xpath);
                 }
 
@@ -2485,6 +2552,7 @@ namespace C_Launcher
                 int sonHeight = int.Parse(root.SelectSingleNode("CoverSonHeight").InnerText);
                 int sonLayout = int.Parse(root.SelectSingleNode("SonImageLayout").InnerText);
                 int[] tagsArray = { };
+                XmlNode rootTag = xmlDoc.SelectSingleNode("//Launcher/collection/TagsID");
                 foreach (XmlNode tagid in rootTag)
                 {
                     //string[] strArray = rootxml.InnerText.Split(' ');
@@ -2496,8 +2564,19 @@ namespace C_Launcher
                 bool fav = bool.Parse(root.SelectSingleNode("Favorite").InnerText);
                 bool scanFold = bool.Parse(XMLDefaultReturn(root, "ScanFolder", "false"));
                 string scanPath = XMLDefaultReturn(root, "ScanPath", "");
+                int scanStartNumber = int.Parse(XMLDefaultReturn(root, "ScanStartNumber", "1"));
+                string[] scanExtension = { };
+                XmlNode rootScanExtension = xmlDoc.SelectSingleNode("//Launcher/collection/ScanOpenExtension"); 
+                if (rootScanExtension != null)
+                {
+                    foreach (XmlNode extension in rootScanExtension)
+                    {
+                        scanExtension = scanExtension.Append(extension.InnerText).ToArray();
+                    }
+                }
+                
 
-                colData[i] = new Collections(fileID, idFather, name, imgPath, imgLayout, background, red, green, blue, resolution, width, height, sonRes, sonWidth, sonHeight, sonLayout, tagsArray, fav, scanFold, scanPath);
+                colData[i] = new Collections(fileID, idFather, name, imgPath, imgLayout, background, red, green, blue, resolution, width, height, sonRes, sonWidth, sonHeight, sonLayout, tagsArray, fav, scanFold, scanPath, scanStartNumber, scanExtension);
 
                 fileID++;
                 }
@@ -2539,9 +2618,16 @@ namespace C_Launcher
             bool fav = bool.Parse(root.SelectSingleNode("Favorite").InnerText);
             bool scanFold = bool.Parse(XMLDefaultReturn(root, "ScanFolder", "false"));
             string scanPath = XMLDefaultReturn(root, "ScanPath", "");
+            int scanStartNumber = int.Parse(XMLDefaultReturn(root, "ScanStartNumber", "1"));
+            string[] scanExtension = { };
+            XmlNode rootScanExtension = doc.SelectSingleNode("//Launcher/collection/ScanOpenExtension");
+            foreach (XmlNode extension in rootScanExtension)
+            {
+                scanExtension = scanExtension.Append(extension.InnerText).ToArray();
+            }
 
 
-            Collections colReturn = new Collections(colID, idFather, name, imgPath, imgLayout, background, red, green, blue, resolution, width, height, sonRes, sonWidth, sonHeight, sonLayout, tagsArray, fav, scanFold, scanPath);
+            Collections colReturn = new Collections(colID, idFather, name, imgPath, imgLayout, background, red, green, blue, resolution, width, height, sonRes, sonWidth, sonHeight, sonLayout, tagsArray, fav, scanFold, scanPath, scanStartNumber, scanExtension);
 
             return colReturn;
         }
