@@ -798,14 +798,26 @@ namespace C_Launcher
                                     extensions.Any(extension => archivo.EndsWith("." + extension))
                                 ).ToArray();
 
+                            if (filter.Length > 0)
+                            {
+                                //establecer el array de los filtros como el array para los archivos disponibles
+                                archivos = filter;
+                            }
+
                             int scanStart = getColeScanStartNumber(viewDepth);
+                            //Invertir el orden del array para empezar a buscar desde atras
+                            if (scanStart < 0)
+                            {
+                                archivos.Reverse();
+                                scanStart *= -1;//Volver al scanStart positivo
+                            }
+                            //Los arrays empiezan en 0, mientras que el scanStart empezara en 1
+                            if (scanStart != 0) scanStart -= 1;
 
-                            startProcess(filter[scanStart-1], "", "", false);
-                            //startProcess(archivos[0], "", "", false);
+                            //Hacer que si el numero para empezar es mas largo que el array, adaptarlo
+                            if (scanStart > archivos.Length) scanStart = archivos.Length;
 
-
-                            /*Falta por poner que el array de filter sobreescriba el array de archivos (para asi solo ocupar 1 startProcess)
-                             Luego hacer el int scanStart despues de la sobreeescritura para hacer los calculos necesarios y por ultimo poner el start process*/
+                            startProcess(archivos[scanStart], "", "", false);
                         } else
                         {
                             //viewDepth = -2;
