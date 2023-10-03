@@ -71,7 +71,7 @@
             this.buttonSearchDir = new System.Windows.Forms.Button();
             this.dataGridViewScanOpenExtension = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.numericScanStart = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
             this.buttonDeleteCover = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
@@ -91,7 +91,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.numericSonWidth)).BeginInit();
             this.groupBoxSonFormat.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewScanOpenExtension)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericScanStart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
             this.SuspendLayout();
             // 
@@ -622,14 +622,19 @@
             this.Column1.Name = "Column1";
             this.Column1.Width = 150;
             // 
-            // numericUpDown1
+            // numericScanStart
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(641, 47);
-            this.numericUpDown1.Margin = new System.Windows.Forms.Padding(2);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(42, 20);
-            this.numericUpDown1.TabIndex = 40;
-            this.numericUpDown1.Value = new decimal(new int[] {
+            this.numericScanStart.Location = new System.Drawing.Point(641, 47);
+            this.numericScanStart.Margin = new System.Windows.Forms.Padding(2);
+            this.numericScanStart.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            -2147483648});
+            this.numericScanStart.Name = "numericScanStart";
+            this.numericScanStart.Size = new System.Drawing.Size(42, 20);
+            this.numericScanStart.TabIndex = 40;
+            this.numericScanStart.Value = new decimal(new int[] {
             1,
             0,
             0,
@@ -729,7 +734,7 @@
             this.Controls.Add(this.button2);
             this.Controls.Add(this.buttonDeleteCover);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.numericUpDown1);
+            this.Controls.Add(this.numericScanStart);
             this.Controls.Add(this.dataGridViewScanOpenExtension);
             this.Controls.Add(this.buttonSearchDir);
             this.Controls.Add(this.textBoxScanFolder);
@@ -778,7 +783,7 @@
             this.groupBoxSonFormat.ResumeLayout(false);
             this.groupBoxSonFormat.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewScanOpenExtension)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericScanStart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -828,7 +833,7 @@
         private System.Windows.Forms.Button buttonSearchDir;
         private System.Windows.Forms.DataGridView dataGridViewScanOpenExtension;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.NumericUpDown numericScanStart;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button buttonDeleteCover;
         private System.Windows.Forms.Button button2;

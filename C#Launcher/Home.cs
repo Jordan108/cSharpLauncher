@@ -808,7 +808,7 @@ namespace C_Launcher
                             //Invertir el orden del array para empezar a buscar desde atras
                             if (scanStart < 0)
                             {
-                                archivos.Reverse();
+                                Array.Reverse(archivos);
                                 scanStart *= -1;//Volver al scanStart positivo
                             }
                             //Los arrays empiezan en 0, mientras que el scanStart empezara en 1
@@ -2531,74 +2531,36 @@ namespace C_Launcher
             xmlDoc.Load(xmlColPath);
 
 
-            int fileID = 1;
+            int colID = 1;
             for (int i = 0; i < arraySize; i++)
             {
                 //Buscamos el elemento a modificar
-                string xpath = "//Launcher/collection[@id='" + fileID + "']";
+                string xpath = "//Launcher/collection[@id='" + colID + "']";
                 XmlNode root = xmlDoc.SelectSingleNode(xpath);
 
 
                 //si no existe un elemento con esa id, sumar 1
                 while (root == null)
                 {
-                    fileID++;
-                    xpath = "//Launcher/collection[@id='" + fileID + "']";
+                    colID++;
+                    xpath = "//Launcher/collection[@id='" + colID + "']";
 
                     root = xmlDoc.SelectSingleNode(xpath);
                 }
 
-                int idFather = int.Parse(root.SelectSingleNode("IDFather").InnerText);
-                string name = root.SelectSingleNode("Name").InnerText;
-                string imgPath = root.SelectSingleNode("Image").InnerText;
-                int imgLayout = int.Parse(root.SelectSingleNode("ImageLayout").InnerText);
-                bool background = bool.Parse(XMLDefaultReturn(root, "WithoutBackground", "false"));
-                int red = int.Parse(root.SelectSingleNode("BackgroundRed").InnerText);
-                int green = int.Parse(root.SelectSingleNode("BackgroundGreen").InnerText);
-                int blue = int.Parse(root.SelectSingleNode("BackgroundBlue").InnerText);
-                int resolution = int.Parse(root.SelectSingleNode("CoverResolutionID").InnerText);
-                int width = int.Parse(root.SelectSingleNode("CoverWidth").InnerText);
-                int height = int.Parse(root.SelectSingleNode("CoverHeight").InnerText);
-                int sonRes = int.Parse(root.SelectSingleNode("CoverSonResolutionID").InnerText);
-                int sonWidth = int.Parse(root.SelectSingleNode("CoverSonWidth").InnerText);
-                int sonHeight = int.Parse(root.SelectSingleNode("CoverSonHeight").InnerText);
-                int sonLayout = int.Parse(root.SelectSingleNode("SonImageLayout").InnerText);
-                int[] tagsArray = { };
-                XmlNode rootTag = xmlDoc.SelectSingleNode("//Launcher/collection/TagsID");
-                foreach (XmlNode tagid in rootTag)
-                {
-                    //string[] strArray = rootxml.InnerText.Split(' ');
-                    //tagsArray = strArray.Select(s => int.Parse(s)).ToArray();
-                    //break;
-                    //hacer un append al array
-                    tagsArray = tagsArray.Append(int.Parse(tagid.InnerText)).ToArray();
-                }
-                bool fav = bool.Parse(root.SelectSingleNode("Favorite").InnerText);
-                bool scanFold = bool.Parse(XMLDefaultReturn(root, "ScanFolder", "false"));
-                string scanPath = XMLDefaultReturn(root, "ScanPath", "");
-                int scanStartNumber = int.Parse(XMLDefaultReturn(root, "ScanStartNumber", "1"));
-                string[] scanExtension = { };
-                XmlNode rootScanExtension = xmlDoc.SelectSingleNode("//Launcher/collection/ScanOpenExtension"); 
-                if (rootScanExtension != null)
-                {
-                    foreach (XmlNode extension in rootScanExtension)
-                    {
-                        scanExtension = scanExtension.Append(extension.InnerText).ToArray();
-                    }
-                }
+                colData[i] = searchCollectionData(colID);
                 
-
-                colData[i] = new Collections(fileID, idFather, name, imgPath, imgLayout, background, red, green, blue, resolution, width, height, sonRes, sonWidth, sonHeight, sonLayout, tagsArray, fav, scanFold, scanPath, scanStartNumber, scanExtension);
-
-                fileID++;
-                }
+                colID++;
+            }
 
             return colData;
         }
 
+        //Cargar una coleccion desde el xml (sirve para no repetir el mismo script en todas las funciones)
         private Collections searchCollectionData(int colID)
         {
             Console.WriteLine("buscando en coleccion con id " + colID);
+            
             XmlDocument doc = new XmlDocument();
             doc.Load(xmlColPath);
 

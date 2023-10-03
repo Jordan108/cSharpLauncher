@@ -133,6 +133,22 @@ namespace C_Launcher
                 radioButtonSonEstreched.Checked = true;
                 pictureBoxCoverSon.BackgroundImageLayout = ImageLayout.Stretch;
             }
+
+            ///---------
+            ///Escaneo
+            ///---------
+            checkBoxScanFolder.Checked = colData.ScanFolder;
+            textBoxScanFolder.Text = colData.ScanPath;
+            //Recorrer extensiones de escaneo
+            string[] exts = colData.ScanOpenExtension;
+            for(int i= 0; i< exts.Length; i++)
+            {
+                this.dataGridViewScanOpenExtension.Rows.Add(exts[i]);
+                // this.dataGridViewFiles.Rows.Add(files[i].Name, files[i].URLCheck, files[i].FilePath, files[i].ProgramPath, files[i].CMDLine, files[i].Width, files[i].Height, null, files[i].ImagePath, null, files[i].Background, null);
+            }
+            
+
+            numericScanStart.Value = colData.ScanStartNumber;
         }
 
         //Para reducir el tamaño de las imagenes del picture box
