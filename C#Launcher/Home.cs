@@ -2583,10 +2583,14 @@ namespace C_Launcher
             int scanStartNumber = int.Parse(XMLDefaultReturn(root, "ScanStartNumber", "1"));
             string[] scanExtension = { };
             XmlNode rootScanExtension = doc.SelectSingleNode("//Launcher/collection/ScanOpenExtension");
-            foreach (XmlNode extension in rootScanExtension)
+            if (rootScanExtension != null)
             {
-                scanExtension = scanExtension.Append(extension.InnerText).ToArray();
+                foreach (XmlNode extension in rootScanExtension)
+                {
+                    scanExtension = scanExtension.Append(extension.InnerText).ToArray();
+                }
             }
+            
 
 
             Collections colReturn = new Collections(colID, idFather, name, imgPath, imgLayout, background, red, green, blue, resolution, width, height, sonRes, sonWidth, sonHeight, sonLayout, tagsArray, fav, scanFold, scanPath, scanStartNumber, scanExtension);
