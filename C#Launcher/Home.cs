@@ -287,14 +287,21 @@ namespace C_Launcher
             string id = pic.Tag.ToString();
             string boxType = pic.AccessibleDescription;
 
-            Console.WriteLine("id del context menu " + id);
-            //destroyPictureBox();
+            string message;
+            if (boxType == "file")
+            {
+                message = $"¿Estas seguro de querer eliminar el elemento {pic.Name}?";
+            } else
+            {
+                message = $"¿Estas seguro de querer eliminar la coleccion {pic.Name}?\n(Esto tambien eliminara su contenido)";
+            }
 
             //PictureBox pictureBox = (PictureBox)sender;
-            var result = MessageBox.Show("Estas seguro de querer eliminar "+pic.Name.ToString(),"Eliminar", MessageBoxButtons.YesNo);
+            //var result = MessageBox.Show("Estas seguro de querer eliminar "+pic.Name.ToString(),"Eliminar", MessageBoxButtons.YesNo);
+            var result = MessageBox.Show(message, "Eliminar", MessageBoxButtons.YesNo);
             if (result == DialogResult.Yes)
             {
-                if (boxType == "file")
+                if (boxType == "file") 
                 {
                     deleteFile(int.Parse(id));
                 }
@@ -1058,18 +1065,6 @@ namespace C_Launcher
                 if (picBoxArr[i].BackgroundImage != null) picBoxArr[i].BackgroundImage.Dispose();//Dejar de utilizar la imagen de fondo en memoria
                 flowLayoutPanelMain.Controls.Remove(picBoxArr[i]);
             }
-
-            //Remueve los bitmap
-            /*
-             for each (auto bitmap in bitmaps) {
-			    //System::Drawing::Graphics::FromImage(bitmap);
-			    delete bitmap; //Eliminar los objetos bitmap (las caratulas) de la memoria 
-			    bitmap = nullptr;
-		    }
-
-		    bitmaps->Clear();
-             */
-
         }
 
         private void loadView(int colSize, int fileSize)
@@ -1299,11 +1294,9 @@ namespace C_Launcher
             #endregion
 
             #region Cargar Colecciones
-            Console.WriteLine($"Cargar colecciones 1 {colls.Length}");
             //Recorrer todo el array de las colecciones
             for (int i = 0; i < colls.Length; i++)
             {
-                Console.WriteLine($"Iteracion {i}");
                 bool addCollection = false;//Me permite añadir varias condicionales dentro de un mismo if
 
                 if (filter)
@@ -1354,7 +1347,6 @@ namespace C_Launcher
                         blue = colls[i].ColorBlue;
                     }
 
-                    Console.WriteLine($"Cargar colecciones 2 {colls.Length}");
 
                     picBoxArr[pL] = new PictureBox
                     {
@@ -2267,36 +2259,34 @@ namespace C_Launcher
             string xpath = "//Launcher/file[@id='" + fileID + "']"; //Buscar un elemento que se llame "ColeccionX" que tenga en el atributo id un 1
             XmlNode root = xmlDoc.SelectSingleNode(xpath);
 
-            //Eliminar la caratula solo si está ubicada en la carpeta "System"
-
-            string imgDir = root.SelectSingleNode("Image").InnerText;
-            if (imgDir != "")
-            {
-                string folder = Path.GetDirectoryName(imgDir);
-                string workFolder = Directory.GetCurrentDirectory() + "\\" + dirCoversPath;
-
-                //Si la carpeta donde se ubica la imagen es System//Covers, eliminar el archivo
-                if (folder == workFolder)
-                {
-                    try
-                    {
-                        //Solo eliminara el archivo si existe
-                        if (File.Exists(imgDir))
-                        {
-                            // Eliminar el archivo
-                            File.Delete(imgDir);
-                        }
-                    }
-                    catch (IOException ex)
-                    {
-                        Console.WriteLine("Error al eliminar el archivo: " + ex.Message);
-                    }
-                }
-            }
-            
-
             if (root != null)
             {
+                //Eliminar la caratula solo si está ubicada en la carpeta "System"
+                string imgDir = root.SelectSingleNode("Image").InnerText;
+                if (imgDir != "")
+                {
+                    string folder = Path.GetDirectoryName(imgDir);
+                    string workFolder = Directory.GetCurrentDirectory() + "\\" + dirCoversPath;
+
+                    //Si la carpeta donde se ubica la imagen es System//Covers, eliminar el archivo
+                    if (folder == workFolder)
+                    {
+                        try
+                        {
+                            //Solo eliminara el archivo si existe
+                            if (File.Exists(imgDir))
+                            {
+                                // Eliminar el archivo
+                                File.Delete(imgDir);
+                            }
+                        }
+                        catch (IOException ex)
+                        {
+                            Console.WriteLine("Error al eliminar el archivo: " + ex.Message);
+                        }
+                    }
+                }
+
                 root.ParentNode.RemoveChild(root);
             }
 
@@ -2559,8 +2549,6 @@ namespace C_Launcher
         //Cargar una coleccion desde el xml (sirve para no repetir el mismo script en todas las funciones)
         private Collections searchCollectionData(int colID)
         {
-            Console.WriteLine("buscando en coleccion con id " + colID);
-            
             XmlDocument doc = new XmlDocument();
             doc.Load(xmlColPath);
 
@@ -2673,7 +2661,7 @@ namespace C_Launcher
         private void deleteCollection(int colID)
         {
             //Cargar el archivo XML
-            XmlDocument xmlDoc = new XmlDocument();
+            /*XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load(xmlColPath);
 
             //Buscamos el elemento a eliminar
@@ -2685,14 +2673,96 @@ namespace C_Launcher
                 root.ParentNode.RemoveChild(root);
             }
 
+            xmlDoc.Save(xmlColPath);*/
+            //cargar xml con linq
+            XDocument xmlDoc = XDocument.Load(xmlColPath);
+
+            Console.Write($"\n/////////////////////////////////////////////\nColeccion a eliminar {colID}\n////////////////////////////////////////////////////\n");
+            // Eliminar la coleccion principal
+           /* var deleteColl = xmlDoc.Descendants("collection")
+                .Where(e => e.Attribute("id").Value == colID.ToString()).Remove();*/
+
+            XElement deleteColl = xmlDoc.Root.Elements("collection")
+            .FirstOrDefault(e => e.Attribute("id")?.Value == colID.ToString());
+
+            if (deleteColl != null)
+            {
+                //Eliminar la caratula solo si está ubicada en la carpeta "System"
+                string imgDir = deleteColl.Attribute("nombre")?.Value;
+                if (imgDir != "")
+                {
+                    string folder = Path.GetDirectoryName(imgDir);
+                    string workFolder = Directory.GetCurrentDirectory() + "\\" + dirCoversPath;
+
+                    //Si la carpeta donde se ubica la imagen es System//Covers, eliminar el archivo
+                    if (folder == workFolder)
+                    {
+                        try
+                        {
+                            //Solo eliminara el archivo si existe
+                            if (File.Exists(imgDir))
+                            {
+                                // Eliminar el archivo
+                                File.Delete(imgDir);
+                            }
+                        }
+                        catch (IOException ex)
+                        {
+                            Console.WriteLine("Error al eliminar el archivo: " + ex.Message);
+                        }
+                    }
+                }
+
+                deleteColl.Remove();
+            }
+
+            /*var matchingElements = doc.Descendants("collection")
+                                  .Where(item => item.Element("IDFather")?.Value == colls[i].ID.ToString())
+                                  .Select(item => new
+                                  {
+                                      Id = item.Attribute("id").Value,//Es el valor que rescatare para usarlo a futuro
+                                  })
+                                  .ToList();*/
+
+            //prinColl.Remove();
+
+            //Buscar todos los archivos que esten dentro de esa coleccion y eliminarlo
+            XDocument xmlFileDoc = XDocument.Load(xmlFilesPath);
+
+            List<XElement> filesToDelete = xmlFileDoc.Root.Elements("file")//xmlFileDoc.Root.Elements()
+            .Where(e => e.Element("IDFather")?.Value == colID.ToString())
+            .ToList();
+
+            foreach (var file in filesToDelete)
+            {
+                //Eliminar el elemento
+                deleteFile(int.Parse(file.Attribute("id").Value));
+            }
+            
+
+            //Buscar todos los descendientes de esa coleccion
+            List <XElement> collsToDelete = xmlDoc.Root.Elements("collection")//xmlDoc.Root.Elements()
+            .Where(e => e.Element("IDFather")?.Value == colID.ToString())
+            .ToList();
+
+            
+            foreach (var coll in collsToDelete)
+            {
+                // Llamar recursivamente a la función para eliminar los descendientes
+                deleteCollection(int.Parse(coll.Attribute("id").Value));
+
+                // Eliminar el elemento actual
+                //coll.Remove();
+            }
+
+
             xmlDoc.Save(xmlColPath);
+
 
             colSize = LoadCollectionSize();
             fileSize = LoadFilesSize();
 
             loadView(colSize, fileSize);
-            //loadTreeView(colSize);
-            //loadPictureBox(colSize, fileSize, false);
         }
         #endregion
 
