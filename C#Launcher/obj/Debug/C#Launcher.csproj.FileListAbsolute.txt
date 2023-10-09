@@ -58,3 +58,4 @@ C:\Users\Duoc\Documents\GitHub\cSharpLauncher\C#Launcher\bin\Debug\Magick.NET-Q1
 C:\Users\Duoc\Documents\GitHub\cSharpLauncher\C#Launcher\bin\Debug\Magick.NET.Core.xml
 C:\Users\Duoc\Documents\GitHub\cSharpLauncher\C#Launcher\obj\Debug\C#Launcher.csproj.CopyComplete
 D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\obj\Debug\CoverPadLauncher.Tags.resources
+D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\obj\Debug\CoverPadLauncher.EditScaned.resources

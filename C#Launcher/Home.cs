@@ -12,6 +12,9 @@ using System.Xml.Linq;
 using ImageMagick;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using CoverPadLauncher;
+using CoverPadLauncher.Clases;
+using System.Collections.ObjectModel;
 
 namespace C_Launcher
 {
@@ -33,6 +36,7 @@ namespace C_Launcher
         private string xmlResPath = "System\\Resolutions.xml";
         private string xmlSettingsPath = "System\\Settings.xml";
         private string xmlTagPath = "System\\Tags.xml";
+        private string xmlScannedPath = "System\\ScannedDirs.xml";
         //Ruta de los covers
         private string dirCoversPath = "System\\Covers";
         //Ruta de los elementos del sistema (iconos y demas)
@@ -43,8 +47,8 @@ namespace C_Launcher
         //Escaneo de directorio
         private List<string> scanDepth = new List<string>();
 
-        //Mantener el tamaño de los archivos y colecciones
-        private int colSize, fileSize = 0;
+        //Mantener el tamaño de los archivos, colecciones y escaneados
+        private int colSize, fileSize, scanSize = 0;
         
         //ToolStrip
         //Se define aqui para poder referenciarlo en la creacion de los paneles
@@ -204,22 +208,34 @@ namespace C_Launcher
             //destroyPictureBox();
 
             //PictureBox pictureBox = (PictureBox)sender;
-            if (boxType == "file")
-            {
+            if (boxType == "file") {
                 Files file = searchFileData(int.Parse(id));
 
                 NewFile editFile = new NewFile(file);
                 editFile.ReturnedObject += NewFile_ReturnedObject;
                 editFile.ShowDialog();
-            }
-            else if (boxType == "collection")
-            {
+            } else if (boxType == "collection") {
                 Collections col = searchCollectionData(int.Parse(id));
 
                 NewCollection editCollection = new NewCollection(col);
                 editCollection.ReturnedObject += NewCollection_ReturnedObject;
                 editCollection.ShowDialog();
-            }
+            } else if (boxType == "automaticFile" || boxType == "automaticFolder") {
+                Scanneds scanned = searchScanData(id);
+
+                //Si scanned es null, significa que estamos tratando de editar un scanElement que aun no a sido editado anteriormente
+                if (scanned == null)
+                {
+                    string[] def = { };
+                    scanned = new Scanneds(id, pic.Name, "", 0, false, 0, 0, 0, 0, pic.Width, pic.Height, 1, def);
+                }
+
+                EditScaned editScan = new EditScaned(scanned);
+                editScan.ReturnedObject += EditScanned_ReturnedObject;
+                editScan.ShowDialog();
+
+            } 
+
         }
 
         //Editar los archivos de esa coleccion picture box
@@ -580,6 +596,12 @@ namespace C_Launcher
             loadView(colSize, fileSize);
         }
 
+        private void EditScanned_ReturnedObject(object sender, Scanneds e)
+        {
+            SaveXMLScanned(e);
+            loadView(colSize, fileSize);
+        }
+
         private void Resolution_ReturnedObject(object sender, bool e)
         {
             if (e == true)
@@ -876,14 +898,17 @@ namespace C_Launcher
                 //Picture Box
                 ContextMenuStrip contextMenuStrip = new ContextMenuStrip();//pictureBox.ContextMenuStrip;
 
-                //Menu Strip "global" (no sirve para los picture box escaneados de un directorio
+                //MenuStrip Globales (normales y escaneados)
+                ToolStripMenuItem ToolStripEdit = new ToolStripMenuItem();
+                ToolStripEdit.Text = "Editar";
+                ToolStripEdit.Click += new EventHandler(ToolStripEditPictureBox_Click);
+
+                //Menu Strip "global" (no sirve para los picture box escaneados de un directorio)
                 if (boxType != "automaticFile" && boxType != "automaticFolder")
                 {
-                    ToolStripMenuItem ToolStripEdit = new ToolStripMenuItem();
                     ToolStripMenuItem ToolStripDelete = new ToolStripMenuItem();
                     ToolStripMenuItem ToolStripFav = new ToolStripMenuItem();
-                    ToolStripEdit.Text = "Editar";
-                    ToolStripEdit.Click += new EventHandler(ToolStripEditPictureBox_Click);
+                    
                     ToolStripDelete.Text = "Eliminar";
                     ToolStripDelete.Click += new EventHandler(ToolStripDeletePictureBox_Click);
                     ToolStripFav.Text = "Agregar a Favoritos";
@@ -901,7 +926,7 @@ namespace C_Launcher
                     ToolStripAutomaticOpenContent.Text = "Mostrar ubicacion del contenido";
                     ToolStripAutomaticOpenContent.Click += new EventHandler(ToolStripOpenInExplorerContentAutomaticPictureBox_Click);
 
-                    contextMenuStrip.Items.AddRange(new ToolStripItem[] { ToolStripAutomaticOpen, ToolStripAutomaticOpenContent });
+                    contextMenuStrip.Items.AddRange(new ToolStripItem[] { ToolStripEdit, ToolStripAutomaticOpen, ToolStripAutomaticOpenContent });
                 }
                 
 
@@ -1161,6 +1186,9 @@ namespace C_Launcher
             Files[] files = new Files[fileSize];
             files = LoadFiles(fileSize);
 
+            //Scanneds[] scanneds = new Scanneds[scanSize];
+            //scanneds = LoadScanneds(scanSize);
+
             //Hacer el array tan largo como las colecciones y archivos existentes (despues se optimiza)
             Array.Resize(ref picBoxArr, colSize + fileSize);
 
@@ -1271,43 +1299,192 @@ namespace C_Launcher
                     //Analizar los archivos
                     foreach (string archivo in archivos)
                     {
+                        string name = Path.GetFileName(archivo);
+                        string imgDir = "";
+                        int layout = -1;//-1 para identificar si fue cargado desde un xml o no
+                        int r = 0;
+                        int g = 0;
+                        int b = 0;
+                        int res = 0;
+                        int w = colls[actualColl].SonWidth;
+                        int h = colls[actualColl].SonHeight;
+
+                        #region Cargar desde un XML
+                        XDocument doc = XDocument.Load(xmlScannedPath);
+
+                        var matchingScans = doc.Descendants("scanned")
+                                  .Where(item => item.Attribute("dir")?.Value == archivo)
+                                  .Select(item => new
+                                  {
+                                      //Valores a rescatar
+                                      Name = item.Element("Name").Value,
+                                      ImageDir = item.Element("Image").Value,
+                                      ImageLayout = item.Element("ImageLayout").Value,
+                                      BoolBackground = item.Element("WithoutBackground").Value,
+                                      CRed = item.Element("BackgroundRed").Value,
+                                      CGreen = item.Element("BackgroundGreen").Value,
+                                      CBlue = item.Element("BackgroundBlue").Value,
+                                      ResID = item.Element("CoverResolutionID").Value,
+                                      Width = item.Element("CoverWidth").Value,
+                                      Height = item.Element("CoverHeight").Value,
+                                  });
+                        //Solo se debe recuperar 1
+                        var match = matchingScans.FirstOrDefault();
+
+                        if (match != null)
+                        {
+                            name = match.Name;
+                            imgDir = match.ImageDir;
+                            layout = int.Parse(match.ImageLayout);
+                            r = int.Parse(match.CRed);
+                            g = int.Parse(match.CGreen);
+                            b = int.Parse(match.CBlue);
+                            res = int.Parse(match.ResID);
+                            w = int.Parse(match.Width);
+                            h = int.Parse(match.Height);
+                        }
+                        #endregion
+
                         picBoxArr[pL] = new PictureBox
                         {
                             AccessibleDescription = "automaticFile",//Aqui se indica que tipo de picture box es (coleccion / archivo)
-                            Name = Path.GetFileName(archivo),//Aqui se guarda el nombre de la coleccion
-                            Size = new Size(colls[actualColl].SonWidth, colls[actualColl].SonHeight),
-                            BackColor = Color.FromArgb(0, 0, 0),
+                            Name = name,//Aqui se guarda el nombre de la coleccion
+                            Size = new Size(w, h),
+                            BackColor = Color.FromArgb(r, g, b),
                             Tag = archivo,//Aqui se guarda en que espacio del array estamos buscando//colls[i].ID,
                         };
+
+                        #region Caratula
+                        #region Cargar la imagen
+                        if (imgDir != "")
+                        {
+                            try
+                            {
+                                Image image;
+                                image = loadImage(imgDir);
+                                picBoxArr[pL].BackgroundImage = image;
+                                image = null;
+                            }
+                            catch (Exception)
+                            {
+                                Console.WriteLine($"No se pudo establecer una imagen al archivo automatico {archivo}");
+                            }
+                        }
+                        #endregion
+
+                        #region Formato de la imagen
+                        try
+                        {
+
+                            if (layout != -1)
+                            {
+                                if (layout == 0)
+                                {
+                                    picBoxArr[pL].BackgroundImageLayout = ImageLayout.Zoom;
+                                }
+                                else
+                                {
+                                    picBoxArr[pL].BackgroundImageLayout = ImageLayout.Stretch;
+                                }
+                            }
+                            else
+                            {
+                                if (colls[actualColl].ImageLayout == 0)
+                                {
+                                    picBoxArr[pL].BackgroundImageLayout = ImageLayout.Zoom;
+                                }
+                                else
+                                {
+                                    picBoxArr[pL].BackgroundImageLayout = ImageLayout.Stretch;
+                                }
+                            }
+                        }
+                        catch (Exception)
+                        {
+                            picBoxArr[pL].BackgroundImageLayout = ImageLayout.Zoom;
+                        }
+                        #endregion
+                        #endregion
+
                         picBoxArr[pL].MouseEnter += new System.EventHandler(this.pictureBox_MouseEnter);
                         picBoxArr[pL].MouseLeave += new System.EventHandler(this.pictureBox_MouseLeave);
                         picBoxArr[pL].MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox_Click);
                         picBoxArr[pL].MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseUp);
                         pL++;//iterar en el array de paneles
                     }
+
                     //Analizar las carpetas
                     foreach (string subcarpeta in subcarpetas)
                     {
+                        string name = Path.GetFileName(subcarpeta);
+                        string imgDir = "";
+                        int layout = -1;//-1 para identificar si fue cargado desde un xml o no
+                        int r = 0;
+                        int g = 0;
+                        int b = 0;
+                        int res = 0;
+                        int w = colls[actualColl].SonWidth;
+                        int h = colls[actualColl].SonHeight;
+                        int startN = 0;
+                        string[] extensions = { };
+
+                        #region Cargar desde un XML
+                        XDocument doc = XDocument.Load(xmlScannedPath); 
+                        
+                        var matchingScans = doc.Descendants("scanned")
+                                  .Where(item => item.Attribute("dir")?.Value == subcarpeta)
+                                  .Select(item => new
+                                  {
+                                      //Valores a rescatar
+                                      Name = item.Element("Name").Value,
+                                      ImageDir = item.Element("Image").Value,
+                                      ImageLayout = item.Element("ImageLayout").Value,
+                                      BoolBackground = item.Element("WithoutBackground").Value,
+                                      CRed = item.Element("BackgroundRed").Value,
+                                      CGreen = item.Element("BackgroundGreen").Value,
+                                      CBlue = item.Element("BackgroundBlue").Value,
+                                      ResID = item.Element("CoverResolutionID").Value,
+                                      Width = item.Element("CoverWidth").Value,
+                                      Height = item.Element("CoverHeight").Value,
+                                      StartNumber = item.Element("StartNumber").Value,
+                                      OpenExtensions = item.Element("OpenExtension").Elements().Select(x => x.Value).ToArray(),
+                                  });
+                        //Solo se debe recuperar 1
+                        var match = matchingScans.FirstOrDefault();
+
+                        if (match != null)
+                        {
+                            name = match.Name;
+                            imgDir = match.ImageDir;
+                            layout = int.Parse(match.ImageLayout);
+                            r = int.Parse(match.CRed);
+                            g = int.Parse(match.CGreen);
+                            b = int.Parse(match.CBlue);
+                            res = int.Parse(match.ResID);
+                            w = int.Parse(match.Width);
+                            h = int.Parse(match.Height);
+                            startN = int.Parse(match.StartNumber);
+                            extensions = match.OpenExtensions;
+                        }
+                        #endregion
+
                         picBoxArr[pL] = new PictureBox
                         {
                             AccessibleDescription = "automaticFolder",//Aqui se indica que tipo de picture box es (coleccion / archivo)
-                            Name = Path.GetFileName(subcarpeta),//Aqui se guarda el nombre de la coleccion
-                            Size = new Size(colls[actualColl].SonWidth, colls[actualColl].SonHeight),
-                            //Size = new Size(250,250),
-                            BackColor = Color.FromArgb(0, 0, 0),
+                            Name = name,//Aqui se guarda el nombre de la coleccion
+                            Size = new Size(w, h),
+                            BackColor = Color.FromArgb(r, g, b),
                             Tag = subcarpeta,//Aqui se guarda en que espacio del array estamos buscando//colls[i].ID,
                         };
-                        //Intentar buscar dentro de la carpeta si tiene algun archivo de imagen para establecerlo como background IMAGE
-                        string[] subArchivos = Directory.GetFiles(subcarpeta);
-                        if (subArchivos.Length > 0)
-                        {
-                            string[] rutasImagenes = subArchivos.Where(ruta => checkImage(ruta)).ToArray();
 
-                            if (rutasImagenes.Length <= 0) Console.WriteLine($"La carpeta {subcarpeta} no encontro imagenes");
+                        #region Caratula
+                        #region Cargar la imagen
+                        if (imgDir != "")
+                        {
                             try
                             {
                                 Image image;
-                                image = loadImage(rutasImagenes[0]);
+                                image = loadImage(imgDir);
                                 picBoxArr[pL].BackgroundImage = image;
                                 image = null;
                             }
@@ -1316,24 +1493,63 @@ namespace C_Launcher
                                 Console.WriteLine($"No se pudo establecer una imagen a la carpeta automatica {subcarpeta}");
                             }
                         }
+                        else
+                        {
+                            //Intentar buscar dentro de la carpeta si tiene algun archivo de imagen para establecerlo como background IMAGE
+                            string[] subArchivos = Directory.GetFiles(subcarpeta);
+                            if (subArchivos.Length > 0)
+                            {
+                                string[] rutasImagenes = subArchivos.Where(ruta => checkImage(ruta)).ToArray();
 
-                        //Formato de la imagen
+                                if (rutasImagenes.Length <= 0) Console.WriteLine($"La carpeta {subcarpeta} no encontro imagenes");
+                                try
+                                {
+                                    Image image;
+                                    image = loadImage(rutasImagenes[0]);
+                                    picBoxArr[pL].BackgroundImage = image;
+                                    image = null;
+                                }
+                                catch (Exception)
+                                {
+                                    Console.WriteLine($"No se pudo establecer una imagen a la carpeta automatica {subcarpeta}");
+                                }
+                            }
+                        }
+                        #endregion
+
+                        #region Formato de la imagen
                         try
                         {
-                            if (colls[actualColl].ImageLayout == 0)
+
+                            if (layout != -1)
                             {
-                                picBoxArr[pL].BackgroundImageLayout = ImageLayout.Zoom;
+                                if (layout == 0)
+                                {
+                                    picBoxArr[pL].BackgroundImageLayout = ImageLayout.Zoom;
+                                }
+                                else
+                                {
+                                    picBoxArr[pL].BackgroundImageLayout = ImageLayout.Stretch;
+                                }
                             }
                             else
                             {
-                                picBoxArr[pL].BackgroundImageLayout = ImageLayout.Stretch;
+                                if (colls[actualColl].ImageLayout == 0)
+                                {
+                                    picBoxArr[pL].BackgroundImageLayout = ImageLayout.Zoom;
+                                }
+                                else
+                                {
+                                    picBoxArr[pL].BackgroundImageLayout = ImageLayout.Stretch;
+                                }
                             }
                         }
                         catch (Exception)
                         {
                             picBoxArr[pL].BackgroundImageLayout = ImageLayout.Zoom;
                         }
-                        
+                        #endregion
+                        #endregion
 
                         picBoxArr[pL].MouseEnter += new System.EventHandler(this.pictureBox_MouseEnter);
                         picBoxArr[pL].MouseLeave += new System.EventHandler(this.pictureBox_MouseLeave);
@@ -1967,6 +2183,132 @@ namespace C_Launcher
             return defaultValue;
         }
 
+        #region Directorios escaneados
+        private void SaveXMLScanned(Scanneds Class)
+        {
+            //Verificar que el archivo xml exista (y si no es asi, crearlo y formatearlo)
+            if (!File.Exists(xmlScannedPath))
+            {
+                XmlWriterSettings settings = new XmlWriterSettings();
+                settings.Indent = true;
+
+                using (XmlWriter writer = XmlWriter.Create(xmlScannedPath, settings))
+                {
+                    //Crear el elemento raiz del archivo (obligatorio)
+                    writer.WriteStartElement("Launcher");
+                    writer.WriteEndElement();
+                }
+            }
+
+            //Cargar el archivo XML
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.Load(xmlScannedPath);
+
+            XmlElement scan;
+           
+            //Editar/crear elemento
+            string xpath = "//Launcher/scanned[@dir='" + Class.Dir + "']";
+            
+            scan = xmlDoc.SelectSingleNode(xpath) as XmlElement;
+            //Si no lo encuentra en el archivo, crearlo
+            if (scan == null)
+            {
+                scan = xmlDoc.CreateElement("scanned");
+                scan.SetAttribute("dir", Class.Dir.ToString());
+                xmlDoc.DocumentElement.AppendChild(scan);//agrega la coleccion al documento
+            } else
+            {
+                //Limpiarlo para agregarle las modificaciones
+                scan.RemoveAll();
+                scan.SetAttribute("dir", Class.Dir.ToString());
+            }
+
+            
+            
+            //Elementos de ese scan
+            //Crea el nombre del elemento a agregar; agrega los datos; agrega los elementos de la coleccion a la coleccion
+            XmlElement scanName = xmlDoc.CreateElement("Name"); scanName.InnerText = Class.Name; scan.AppendChild(scanName);
+            XmlElement scanImage = xmlDoc.CreateElement("Image"); scanImage.InnerText = Class.ImagePath; scan.AppendChild(scanImage);
+            XmlElement scanLayout = xmlDoc.CreateElement("ImageLayout"); scanLayout.InnerText = Class.ImageLayout.ToString(); scan.AppendChild(scanLayout);
+            XmlElement scanBg = xmlDoc.CreateElement("WithoutBackground"); scanBg.InnerText = Class.Background.ToString(); scan.AppendChild(scanBg);
+            XmlElement scanBgRed = xmlDoc.CreateElement("BackgroundRed"); scanBgRed.InnerText = Class.ColorRed.ToString(); scan.AppendChild(scanBgRed);
+            XmlElement scanBgGreen = xmlDoc.CreateElement("BackgroundGreen"); scanBgGreen.InnerText = Class.ColorGreen.ToString(); scan.AppendChild(scanBgGreen);
+            XmlElement scanBgBlue = xmlDoc.CreateElement("BackgroundBlue"); scanBgBlue.InnerText = Class.ColorBlue.ToString(); scan.AppendChild(scanBgBlue);
+            XmlElement scanResolution = xmlDoc.CreateElement("CoverResolutionID"); scanResolution.InnerText = Class.ResolutionID.ToString(); scan.AppendChild(scanResolution);
+            XmlElement scanWith = xmlDoc.CreateElement("CoverWidth"); scanWith.InnerText = Class.Width.ToString(); scan.AppendChild(scanWith);
+            XmlElement scanHeight = xmlDoc.CreateElement("CoverHeight"); scanHeight.InnerText = Class.Height.ToString(); scan.AppendChild(scanHeight);
+            XmlElement scanStartNumber = xmlDoc.CreateElement("StartNumber"); scanStartNumber.InnerText = Class.ScanStartNumber.ToString(); scan.AppendChild(scanStartNumber);
+            //Guardar el array de extensiones para los escaneos
+            XmlElement scanOpenExtension = xmlDoc.CreateElement("OpenExtension"); scan.AppendChild(scanOpenExtension);
+            foreach (string ext in Class.ScanOpenExtension)
+            {
+                XmlElement extArray = xmlDoc.CreateElement("extension");
+                extArray.InnerText = ext.ToString();
+                scanOpenExtension.AppendChild(extArray);
+            }
+
+            xmlDoc.Save(xmlScannedPath);
+
+            //Actualizar la cantidad de archivos
+            //fileSize = LoadFilesSize();
+            //viewDepth = Class.IDFather;
+        }
+
+        private Scanneds searchScanData(string dirID)
+        {
+            if (File.Exists(xmlScannedPath))
+            {
+                XmlDocument doc = new XmlDocument();
+                doc.Load(xmlScannedPath);
+
+                string xpath = "//Launcher/scanned[@dir='" + dirID + "']";
+
+                XmlNode root = doc.SelectSingleNode(xpath);
+                XmlNode rootScanExtension = doc.SelectSingleNode(xpath + "/OpenExtension");
+
+                //Si root es null, significa que estamos tratando de editar un scanDir por primera vez (el null se maneja en ToolStripEditPictureBox_Click)
+                if (root == null) return null;
+
+                string name = root.SelectSingleNode("Name").InnerText;
+                string imgPath = root.SelectSingleNode("Image").InnerText;
+                int imgLayout = int.Parse(root.SelectSingleNode("ImageLayout").InnerText);
+                bool background = bool.Parse(XMLDefaultReturn(root, "WithoutBackground", "false"));
+                int red = int.Parse(root.SelectSingleNode("BackgroundRed").InnerText);
+                int green = int.Parse(root.SelectSingleNode("BackgroundGreen").InnerText);
+                int blue = int.Parse(root.SelectSingleNode("BackgroundBlue").InnerText);
+                int resolution = int.Parse(root.SelectSingleNode("CoverResolutionID").InnerText);
+                int width = int.Parse(root.SelectSingleNode("CoverWidth").InnerText);
+                int height = int.Parse(root.SelectSingleNode("CoverHeight").InnerText);
+
+
+                int scanStartNumber = int.Parse(XMLDefaultReturn(root, "StartNumber", "1"));
+                string[] scanExtension = { };
+                if (rootScanExtension != null)
+                {
+                    foreach (XmlNode extension in rootScanExtension)
+                    {
+                        scanExtension = scanExtension.Append(extension.InnerText).ToArray();
+                    }
+                }
+
+                Scanneds ScanReturn = new Scanneds(dirID, name, imgPath, imgLayout, background, red, green, blue, resolution, width, height, scanStartNumber, scanExtension);
+
+                return ScanReturn;
+            }
+            return null;
+        }
+
+        /*private Scanneds[] LoadScanneds()
+        {
+            Scanneds[] returnScan = new Scanneds[scanSize];
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.Load(xmlScannedPath);
+
+            int 
+
+        }*/
+        #endregion
+
         #region Archivos
         //Cargar el tamaño de elementos con id que existen en el xml de archivos
         private int LoadFilesSize()
@@ -2449,12 +2791,12 @@ namespace C_Launcher
             XmlNode root = doc.SelectSingleNode(xpath);
 
             int returnNumber = 0;
-
-            if (root != null)
+                        
+            try
             {
                 returnNumber = int.Parse(root.SelectSingleNode("ScanStartNumber").InnerText);
-            }
-
+            } catch (Exception ) { }
+                
             //Llamar a la funcion para que empiece el proceso
             return returnNumber;
         }
@@ -2997,6 +3339,20 @@ namespace C_Launcher
             {
                 // Crea la carpeta si no existe
                 Directory.CreateDirectory(dirCoversPath);
+            }
+
+            //Verificar la existencia del XML ScanDirs
+            if (!File.Exists(xmlScannedPath))
+            {
+                XmlWriterSettings settings = new XmlWriterSettings();
+                settings.Indent = true;
+
+                using (XmlWriter writer = XmlWriter.Create(xmlScannedPath, settings))
+                {
+                    //Crear el elemento raiz del archivo (obligatorio)
+                    writer.WriteStartElement("Launcher");
+                    writer.WriteEndElement();
+                }
             }
 
             //Verificar la existencia del XML Files

@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Launcher>
+  <scanned dir="D:\Bibliotecas\Programas\ripSM Chromium 2.9\Descargas\#Leidos">
+    <Name>#Leidos_2</Name>
+    <Image></Image>
+    <ImageLayout>0</ImageLayout>
+    <WithoutBackground>False</WithoutBackground>
+    <BackgroundRed>0</BackgroundRed>
+    <BackgroundGreen>0</BackgroundGreen>
+    <BackgroundBlue>0</BackgroundBlue>
+    <CoverResolutionID>0</CoverResolutionID>
+    <CoverWidth>200</CoverWidth>
+    <CoverHeight>300</CoverHeight>
+    <StartNumber>1</StartNumber>
+    <OpenExtension>
+      <extension>
+      </extension>
+    </OpenExtension>
+  </scanned>
+</Launcher>
