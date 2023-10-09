@@ -360,7 +360,7 @@
             // 
             // ColumnCMD
             // 
-            this.ColumnCMD.HeaderText = "Argumentos de inicio";
+            this.ColumnCMD.HeaderText = "Parametros de lanzamiento";
             this.ColumnCMD.MinimumWidth = 8;
             this.ColumnCMD.Name = "ColumnCMD";
             this.ColumnCMD.Width = 150;

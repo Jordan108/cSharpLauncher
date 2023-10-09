@@ -1,8 +1,9 @@
 ﻿using C_Launcher.Clases;
-using ImageMagick;
+using ImageMagick;//ImageMagick para poder manejar imagenes webp
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -26,6 +27,7 @@ namespace C_Launcher
         //private int[] combResSonID = new int[0];//Para recoger el index de los archivos
 
         private string coverPath = "System\\Covers";
+        private string xmlTagPath = "System\\Tags.xml";
 
         //Id de la coleccion, si es nuevo, -1, si no, se establece
         private int idCollection = -1;
@@ -149,6 +151,21 @@ namespace C_Launcher
             
 
             numericScanStart.Value = colData.ScanStartNumber;
+
+            //Etiquetas
+            foreach (DataGridViewRow fila in dataGridViewTags.Rows)
+            {
+                string tagValor = fila.Tag?.ToString();
+
+                if (int.TryParse(tagValor, out int tagNumero))//Verificar si el valor del tag se puede convertir a un int
+                {
+                    if (colData.TagsID.Contains(tagNumero))//Comprobar si el tag esta en el array
+                    {
+                        DataGridViewCheckBoxCell checkBoxCell = fila.Cells[0] as DataGridViewCheckBoxCell;
+                        checkBoxCell.Value = true;
+                    }
+                }
+            }
         }
 
         //Para reducir el tamaño de las imagenes del picture box
@@ -231,6 +248,8 @@ namespace C_Launcher
             this.pictureBoxCoverSon.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBoxCoverSon_MouseDown);
             this.pictureBoxCoverSon.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBoxCoverSon_MouseMove);
             this.pictureBoxCoverSon.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBoxCoverSon_MouseUp);
+
+            loadXMLTags();//Cargar todas las etiquetas existentes y ponerlas dentro del datagridview
 
             #region Combobox
             #region idFather
@@ -348,6 +367,44 @@ namespace C_Launcher
         }
 
         #region Manejar archivos XML
+        private void loadXMLTags()
+        {
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.Load(xmlTagPath);
+
+            //Recoger la cantidad de elementos que existen
+            XmlNodeList tagElements = xmlDoc.SelectNodes("//*[@id]");
+            int size = tagElements.Count;
+
+            int tagID = 1;
+            for (int i = 0; i < size; i++)
+            {
+                //Buscamos el elemento a recoger
+                string xpath = "//Launcher/tag[@id='" + tagID + "']";
+                XmlNode root = xmlDoc.SelectSingleNode(xpath);
+
+                //si no existe un elemento con esa id, sumar 1
+                while (root == null)
+                {
+
+                    tagID++;
+                    xpath = "//Launcher/tag[@id='" + tagID + "']";
+                    root = xmlDoc.SelectSingleNode(xpath);
+                }
+
+                string name = root.SelectSingleNode("Name").InnerText;
+
+
+                this.dataGridViewTags.Rows.Add(false, name);
+                DataGridViewRow selectedRow = dataGridViewTags.Rows[i];
+                selectedRow.Tag = tagID;
+
+                //Iterar al siguiente elemento
+                tagID++;
+            }
+        }
+
+        
         private int LoadCollectionSize()
         {
             int size = 0;
@@ -945,7 +1002,8 @@ namespace C_Launcher
             //Evitar que se guarde la imagen con caracteres invalidos
             string cleanName = Path.GetInvalidFileNameChars().Aggregate(textBoxName.Text, (current, c) => current.Replace(c.ToString(), string.Empty));
             string imgPath = "";
-
+             
+            //Guardar la imagen
             if (pictureBoxCoverCollection.Tag != null)
             {
                 if (checkBoxImageLocation.Checked == true)
@@ -997,7 +1055,35 @@ namespace C_Launcher
                     //Solo reemplazar una imagen si esta existe o si la imagen de origen no es la misma que el destino
                     if ((imgPath != "") && (imgPath != null) && (source != imgPath))
                     {
-                        System.IO.File.Copy(source, imgPath, true);
+                        //Las imagenes webp no pueden ser copiadas y pegadas a un formato png, deben ser transformadas y guardadas dentro de un objeto
+                        if (Path.GetExtension(source).ToLower() == ".webp")
+                        {
+                            Image saveImage;
+                            using (MagickImage img = new MagickImage(source))
+                            {
+                                // Convierte la imagen WebP a un formato compatible con PictureBox (por ejemplo, JPEG)
+                                // Para mostrar la imagen en el PictureBox
+                                img.Format = MagickFormat.Png;
+
+                                // Convierte la imagen en un flujo de memoria
+                                using (var memoryStream = new System.IO.MemoryStream())
+                                {
+                                    img.Write(memoryStream);
+
+                                    // Carga el flujo de memoria en el PictureBox
+                                    saveImage = System.Drawing.Image.FromStream(memoryStream);//img;
+                                }
+                            }
+
+                            if (saveImage != null)
+                            {
+                                saveImage.Save(imgPath, ImageFormat.Png);
+                            }
+                        }
+                        else
+                        {
+                            System.IO.File.Copy(source, imgPath, true);
+                        }
                     }
                 }
             }
@@ -1022,16 +1108,41 @@ namespace C_Launcher
             int sonLayout = 0;
             if (radioButtonSonEstreched.Checked == true) sonLayout = 1;
 
-            int[] tagsArray = new int[] { 1, 2, 3 };
+            //Guardar las etiquetas
+            int[] saveTagsArray;
+            List<int> dgValue = new List<int>();
+
+            int[] scanTagsArray;
+            List<int> dgScanTags = new List<int>();
+
+            for (int i = 0; i < dataGridViewTags.RowCount; i++)
+            {
+                //Solo agregar las etiquetas que tengan el combobox en true
+                if (Convert.ToBoolean(dataGridViewTags.Rows[i].Cells[0].Value?.ToString()))//Convert.ToBoolean transforma los null en false
+                {
+                    int rowID = int.Parse(dataGridViewTags.Rows[i].Tag.ToString());
+                    dgValue.Add(rowID);
+                }
+
+                if (Convert.ToBoolean(dataGridViewTags.Rows[i].Cells[2].Value?.ToString()))
+                {
+                    int rowID = int.Parse(dataGridViewTags.Rows[i].Tag.ToString());
+                    dgScanTags.Add(rowID);
+                }
+            }
+            //Agregarlo como array
+            saveTagsArray = dgValue.ToArray();//Las etiquetas de la coleccion en si
+            scanTagsArray = dgScanTags.ToArray();//Las etiquetas que la coleccion mostrara automaticamente
+
             bool favorite = checkBoxFavorite.Checked;
 
-            ///Escaneo
+            //Escaneo
             bool scanFolder = checkBoxScanFolder.Checked;
             string scanPath = textBoxScanFolder.Text;
             int scanStartNumber = 1;
 
             string[] scanOpenExtension;
-            List<string> dgValue = new List<string>();
+            List<string> dgScanValue = new List<string>();
             
 
             foreach (DataGridViewRow fila in dataGridViewScanOpenExtension.Rows)
@@ -1039,16 +1150,15 @@ namespace C_Launcher
                 foreach (DataGridViewCell celda in fila.Cells)
                 {
                     string cell = celda.Value != null ? celda.Value.ToString() : string.Empty;
-                    dgValue.Add(cell);
+                    dgScanValue.Add(cell);
                 }
             }
 
             //Agregarlo como array
-            scanOpenExtension = dgValue.ToArray();
+            scanOpenExtension = dgScanValue.ToArray();
             
 
-            //Console.WriteLine("resID: " + resSonID);
-            Collections passCollection = new Collections(idCollection, idFather, nameCollection, imgPath, imgLayout, background, R, G, B, resID, width, height, resSonID, sonWidth, sonHeight, sonLayout, tagsArray, favorite, scanFolder, scanPath, scanStartNumber, scanOpenExtension);
+            Collections passCollection = new Collections(idCollection, idFather, nameCollection, imgPath, imgLayout, background, R, G, B, resID, width, height, resSonID, sonWidth, sonHeight, sonLayout, saveTagsArray, scanTagsArray, favorite, scanFolder, scanPath, scanStartNumber, scanOpenExtension);
             ReturnedObject?.Invoke(this, passCollection);
             this.Close();
         }

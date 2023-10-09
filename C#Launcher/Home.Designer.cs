@@ -46,6 +46,7 @@
             this.searchFromActualToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.searchActualtoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.searchAlltoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.administrarEtiquetasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.labelDepth = new System.Windows.Forms.Label();
             this.flowLayoutPanelMain = new System.Windows.Forms.FlowLayoutPanel();
             this.treeViewMain = new System.Windows.Forms.TreeView();
@@ -118,7 +119,6 @@
             this.textBoxSearch.Name = "textBoxSearch";
             this.textBoxSearch.Size = new System.Drawing.Size(139, 20);
             this.textBoxSearch.TabIndex = 4;
-            this.textBoxSearch.TextChanged += new System.EventHandler(this.textBoxSearch_TextChanged);
             // 
             // menuStripMain
             // 
@@ -162,7 +162,8 @@
             this.verToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ordenarPanelesToolStripMenuItem,
             this.administrarResolucionesToolStripMenuItem,
-            this.filtroDeBusquedaToolStripMenuItem});
+            this.filtroDeBusquedaToolStripMenuItem,
+            this.administrarEtiquetasToolStripMenuItem});
             this.verToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Window;
             this.verToolStripMenuItem.Name = "verToolStripMenuItem";
             this.verToolStripMenuItem.Size = new System.Drawing.Size(35, 22);
@@ -233,6 +234,13 @@
             this.searchAlltoolStripMenuItem.Size = new System.Drawing.Size(210, 22);
             this.searchAlltoolStripMenuItem.Text = "Todo";
             this.searchAlltoolStripMenuItem.Click += new System.EventHandler(this.searchAlltoolStripMenuItem_Click);
+            // 
+            // administrarEtiquetasToolStripMenuItem
+            // 
+            this.administrarEtiquetasToolStripMenuItem.Name = "administrarEtiquetasToolStripMenuItem";
+            this.administrarEtiquetasToolStripMenuItem.Size = new System.Drawing.Size(205, 22);
+            this.administrarEtiquetasToolStripMenuItem.Text = "Administrar etiquetas";
+            this.administrarEtiquetasToolStripMenuItem.Click += new System.EventHandler(this.administrarEtiquetasToolStripMenuItem_Click);
             // 
             // labelDepth
             // 
@@ -333,5 +341,6 @@
         private System.Windows.Forms.ToolStripMenuItem searchFromActualToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem searchActualtoolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem searchAlltoolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem administrarEtiquetasToolStripMenuItem;
     }
 }

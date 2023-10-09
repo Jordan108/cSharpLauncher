@@ -11,6 +11,7 @@ using System.Xml;
 using System.Xml.Linq;
 using ImageMagick;
 using System.Collections.Generic;
+using System.Security.Cryptography;
 
 namespace C_Launcher
 {
@@ -31,6 +32,7 @@ namespace C_Launcher
         private string xmlFilesPath = "System\\Elements.xml";
         private string xmlResPath = "System\\Resolutions.xml";
         private string xmlSettingsPath = "System\\Settings.xml";
+        private string xmlTagPath = "System\\Tags.xml";
         //Ruta de los covers
         private string dirCoversPath = "System\\Covers";
         //Ruta de los elementos del sistema (iconos y demas)
@@ -449,6 +451,13 @@ namespace C_Launcher
             res.ShowDialog();
         }
 
+        private void administrarEtiquetasToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CoverPadLauncher.Tags tag = new CoverPadLauncher.Tags();
+            tag.ReturnedObject += Tag_ReturnedObject;
+            tag.ShowDialog();
+        }
+
         private void abrirLaCarpetaSystemToolStripMenuItem_Click(object sender, EventArgs e)
         {
             try
@@ -572,6 +581,14 @@ namespace C_Launcher
         }
 
         private void Resolution_ReturnedObject(object sender, bool e)
+        {
+            if (e == true)
+            {
+                loadView(colSize, fileSize);
+            }
+        }
+
+        private void Tag_ReturnedObject(object sender, bool e)
         {
             if (e == true)
             {
@@ -1090,32 +1107,40 @@ namespace C_Launcher
             }
         }
 
-        private bool returnCollectionID (Collections[] colls, int searchID)
+        private bool returnCollectionID (Collections[] colls, int searchID) //Collections[] colls, int searchID
         {
             Collections Coll = colls.FirstOrDefault(o => o.ID == searchID);
 
-            if ( Coll.IDFather == viewDepth)
+            if (Coll != null)
             {
-                return true;
-            } else if ( Coll.IDFather != 0)
-            {
-                return returnCollectionID(colls, Coll.IDFather);
-            } 
+                if (Coll.IDFather == viewDepth)
+                {
+                    return true;
+                }
+                else if (Coll.IDFather != 0)
+                {
+                    return returnCollectionID(colls, Coll.IDFather);
+                }
+            }
 
             return false;
         }
 
-        private bool returnFileID(Files[] files, int searchID)
+        private bool returnFileID(Collections[] colls, Files[] files, int searchID)
         {
             Files file = files.FirstOrDefault(o => o.ID == searchID);
 
-            if (file.IDFather == viewDepth)
+            if (file != null)
             {
-                return true;
-            }
-            else if (file.IDFather != 0)
-            {
-                return returnFileID(files, file.IDFather);
+                if (file.IDFather == viewDepth)
+                {
+                    return true;
+                }
+                else if (file.IDFather != 0)
+                {
+                    //Si el archivo no estaba dentro del viewDepth, hay que empezar a buscar dentro de las colecciones para verificar que el archivo este dentro de alguna coleccion con el viewDepth
+                    return returnCollectionID(colls, file.IDFather);
+                }
             }
 
             return false;
@@ -1135,15 +1160,37 @@ namespace C_Launcher
 
             Files[] files = new Files[fileSize];
             files = LoadFiles(fileSize);
-            
+
             //Hacer el array tan largo como las colecciones y archivos existentes (despues se optimiza)
             Array.Resize(ref picBoxArr, colSize + fileSize);
+
+            //Cargar las etiquetas (ID.toString(), nombre)
 
             int pL = 0;//largo de los pictureBox de esa profundidad
 
             int actualColl = 0;
 
-            Console.WriteLine($"Profundidad actual {viewDepth}");
+            #region Cargar elementos de filtro/etiquetas
+            string search = "";
+            int[] tagsSearchID = { }; 
+            
+
+            if (filter)
+            {
+                search = textBoxSearch.Text.ToLower();
+
+                //Cargar las etiquetas coincidentes
+                XDocument xdoc = XDocument.Load(xmlTagPath);
+
+                //Buscar dentro del fichero xml la coleccion actual
+                var matchingElements = xdoc.Descendants("tag")
+                    .Where(tag => tag.Element("Name")?.Value.Contains(search) == true)
+                    .Select(tag => (int)tag.Attribute("id"));
+
+                tagsSearchID = matchingElements.ToArray();
+            }
+
+            #endregion
 
             #region Texto "ruta" en la barra superior y cargar actualColl
             //Cambiar el texto de la "ruta"
@@ -1191,6 +1238,14 @@ namespace C_Launcher
             int centerX = (this.ClientSize.Width - labelDepth.Width) / 2;
             labelDepth.Location = new Point(centerX, labelDepth.Location.Y);
             //140+180
+            #endregion
+
+            #region Cargar etiquetas escaneables de la profundidad
+            int[] tagsScan = { };
+            if (viewDepth >0 && colls[actualColl].ScanTags != null)
+            {
+                tagsScan = colls[actualColl].ScanTags;
+            }
             #endregion
 
             #region Cargar Elementos escaneables
@@ -1303,27 +1358,35 @@ namespace C_Launcher
                 {
                     //Verifica si el nombre de la coleccion contiene alguno de los elementos del textbox
                     string nom = colls[i].Name.ToLower();
-                    string search = textBoxSearch.Text.ToLower();
 
                     switch (searchType)
                     {
                         case 1:// buscara solo en esa coleccion (no sub colecciones)
-                            if (nom.Contains(search) && ((viewDepth == colls[i].IDFather) || (viewDepth == -1 && colls[i].Favorite == true))) addCollection = true;
+                            if ( 
+                                (nom.Contains(search) || colls[i].TagsID.Intersect(tagsSearchID).Any()) 
+                                && (viewDepth == colls[i].IDFather //Busqueda coincidiendo la profundidad y el nombre/etiqueta
+                                || colls[i].TagsID.Intersect(tagsScan).Any()
+                                || (viewDepth == -1 && colls[i].Favorite == true))//Busqueda coincidiendo con favoritos
+                               ) addCollection = true;
                             break;
                         case 2://buscara en todo el xml
-                            if (nom.Contains(search)) addCollection = true;
+                            if (nom.Contains(search) || colls[i].TagsID.Intersect(tagsSearchID).Any()) addCollection = true;
                             break;
                         default://Buscara desde esa coleccion para adentro
-                            if (nom.Contains(search) 
-                                && (returnCollectionID(colls, colls[i].ID)
-                                || (viewDepth == -1 && colls[i].Favorite == true))) addCollection = true;
+                            if (
+                                (nom.Contains(search) || colls[i].TagsID.Intersect(tagsSearchID).Any())
+                                && (colls[i].TagsID.Intersect(tagsScan).Any() || returnCollectionID(colls, colls[i].ID) || (viewDepth == -1 && colls[i].Favorite == true))
+                               ) addCollection = true;
                             break;
                     }
                     
 
-                } else
-                {
-                    if ((viewDepth == colls[i].IDFather) || (viewDepth == -1 && colls[i].Favorite == true)) addCollection = true;
+                } else {
+                    if (
+                        viewDepth == colls[i].IDFather 
+                        || colls[i].TagsID.Intersect(tagsScan).Any() 
+                        || (viewDepth == -1 && colls[i].Favorite == true)
+                       ) addCollection = true;
                 }
 
                 //Solo agregar las colecciones que coincidan con la profundidad actual o que sea la profundidad de favoritos (-1) y tengan el bool
@@ -1421,29 +1484,35 @@ namespace C_Launcher
                 {
                     //Verifica si el nombre de la coleccion contiene alguno de los elementos del textbox
                     string nom = files[f].Name.ToLower();
-                    string search = textBoxSearch.Text.ToLower();
-
-                    //if (nom.Contains(search) && ((viewDepth == files[f].IDFather) || (viewDepth == -1 && files[f].Favorite == true))) addFile = true;
 
                     switch (searchType)
                     {
                         case 1:// buscara solo en esa coleccion (no sub colecciones)
-                            if (nom.Contains(search) && ((viewDepth == files[f].IDFather) || (viewDepth == -1 && files[f].Favorite == true))) addFile = true;
+                            if ((nom.Contains(search) || files[f].TagsID.Intersect(tagsSearchID).Any()) 
+                                && (viewDepth == files[f].IDFather
+                                || files[f].TagsID.Intersect(tagsScan).Any()
+                                || (viewDepth == -1 && files[f].Favorite == true))
+                               ) addFile = true;
                             break;
                         case 2://buscara en todo el xml
-                            if (nom.Contains(search)) addFile = true;
+                            if (nom.Contains(search) || files[f].TagsID.Intersect(tagsSearchID).Any()) addFile = true;
                             break;
                         default://Buscara desde esa coleccion para adentro
-                            if (nom.Contains(search)
-                                && (returnFileID(files, files[f].ID)
-                                || (viewDepth == -1 && files[f].Favorite == true))) addFile = true;
+                            if (
+                                (nom.Contains(search) || files[f].TagsID.Intersect(tagsSearchID).Any())
+                                 && (files[f].TagsID.Intersect(tagsScan).Any() || returnFileID(colls, files, files[f].ID) || (viewDepth == -1 && files[f].Favorite == true))
+                               ) addFile = true;
                             break;
                     }
 
                 }
                 else
                 {
-                    if ((viewDepth == files[f].IDFather) || (viewDepth == -1 && files[f].Favorite == true)) addFile = true;
+                    if (
+                         (viewDepth == files[f].IDFather)
+                         || files[f].TagsID.Intersect(tagsScan).Any()
+                         || (viewDepth == -1 && files[f].Favorite == true)
+                       ) addFile = true;
                 }
 
                 //Solo agregar las colecciones que coincidan con la profundidad actual o que si estamos en favoritos (-1) tengan el bool en true
@@ -1897,6 +1966,7 @@ namespace C_Launcher
             }
             return defaultValue;
         }
+
         #region Archivos
         //Cargar el tamaño de elementos con id que existen en el xml de archivos
         private int LoadFilesSize()
@@ -1940,9 +2010,9 @@ namespace C_Launcher
             {
                 //Buscamos el elemento a modificar
                 string xpath = "//Launcher/file[@id='" + fileID + "']";
-                string tagpath = "//Launcher/file/TagsID";
+                //string tagpath = "//Launcher/file/TagsID";
                 XmlNode root = xmlDoc.SelectSingleNode(xpath);
-                XmlNode rootTag = xmlDoc.SelectSingleNode(tagpath);
+                //XmlNode rootTag = xmlDoc.SelectSingleNode(tagpath);
 
                 //si no existe un elemento con esa id, sumar 1
                 while (root == null)
@@ -1952,30 +2022,7 @@ namespace C_Launcher
                     root = xmlDoc.SelectSingleNode(xpath);
                 }
 
-                int idFather = int.Parse(root.SelectSingleNode("IDFather").InnerText);
-                string name = root.SelectSingleNode("Name").InnerText;
-                string imgPath = root.SelectSingleNode("Image").InnerText;
-                int imgLayout = int.Parse(root.SelectSingleNode("ImageLayout").InnerText);
-                string filePath = root.SelectSingleNode("FilePath").InnerText;
-                string programPath = root.SelectSingleNode("ProgramPath").InnerText;
-                string cmdLine = root.SelectSingleNode("CMDLine").InnerText;
-                bool background = bool.Parse(XMLDefaultReturn(root, "WithoutBackground", "false"));
-                int red = int.Parse(root.SelectSingleNode("BackgroundRed").InnerText);
-                int green = int.Parse(root.SelectSingleNode("BackgroundGreen").InnerText);
-                int blue = int.Parse(root.SelectSingleNode("BackgroundBlue").InnerText);
-                int resolution = int.Parse(root.SelectSingleNode("CoverResolutionID").InnerText);
-                int width = int.Parse(root.SelectSingleNode("CoverWidth").InnerText);
-                int height = int.Parse(root.SelectSingleNode("CoverHeight").InnerText);
-                bool urlCheck = bool.Parse(root.SelectSingleNode("URLCheck").InnerText);
-                int[] tagsArray = new int[] { };
-                foreach (XmlNode tagid in rootTag)
-                {
-                    //hacer un append al array
-                    tagsArray = tagsArray.Append(int.Parse(tagid.InnerText)).ToArray();
-                }
-                bool fav = bool.Parse(root.SelectSingleNode("Favorite").InnerText);
-
-                fileData[i] = new Files(fileID, idFather, name, imgPath, imgLayout, filePath, programPath, cmdLine, background, red, green, blue, resolution, width, height, urlCheck, tagsArray, fav);
+                fileData[i] = searchFileData(fileID);
 
                 fileID++;
             }
@@ -2217,9 +2264,8 @@ namespace C_Launcher
             doc.Load(xmlFilesPath);
 
             string xpath = "//Launcher/file[@id='" + fileID + "']";
-            string tagpath = "//Launcher/file/TagsID";
             XmlNode root = doc.SelectSingleNode(xpath);
-            XmlNode rootTag = doc.SelectSingleNode(tagpath);
+            XmlNode rootTag = doc.SelectSingleNode(xpath + "/TagsID");
 
             int idFather = int.Parse(root.SelectSingleNode("IDFather").InnerText);
             string name = root.SelectSingleNode("Name").InnerText;
@@ -2485,13 +2531,21 @@ namespace C_Launcher
             XmlElement colSonWidth = xmlDoc.CreateElement("CoverSonWidth"); colSonWidth.InnerText = Class.SonWidth.ToString(); coleccion.AppendChild(colSonWidth);
             XmlElement colSonHeight = xmlDoc.CreateElement("CoverSonHeight"); colSonHeight.InnerText = Class.SonHeight.ToString(); coleccion.AppendChild(colSonHeight);
             XmlElement colSonLayout = xmlDoc.CreateElement("SonImageLayout"); colSonLayout.InnerText = Class.ImageLayout.ToString(); coleccion.AppendChild(colSonLayout);
-            //Guardar el array de tags
+            //Guardar el array de las etiquetas
             XmlElement colTags = xmlDoc.CreateElement("TagsID"); coleccion.AppendChild(colTags);
             foreach (int num in Class.TagsID)
             {
                 XmlElement numArray = xmlDoc.CreateElement("id");
                 numArray.InnerText = num.ToString();
                 colTags.AppendChild(numArray);
+            }
+            //Guardar el array de las etiquetas a escanear
+            XmlElement colTagsScan = xmlDoc.CreateElement("ScanTagsID"); coleccion.AppendChild(colTagsScan);
+            foreach (int num in Class.ScanTags)
+            {
+                XmlElement numArray = xmlDoc.CreateElement("id");
+                numArray.InnerText = num.ToString();
+                colTagsScan.AppendChild(numArray);
             }
             XmlElement colFavorite = xmlDoc.CreateElement("Favorite"); colFavorite.InnerText = Class.Favorite.ToString(); coleccion.AppendChild(colFavorite);
             XmlElement colScanFolder = xmlDoc.CreateElement("ScanFolder"); colScanFolder.InnerText = Class.ScanFolder.ToString(); coleccion.AppendChild(colScanFolder);
@@ -2553,9 +2607,11 @@ namespace C_Launcher
             doc.Load(xmlColPath);
 
             string xpath = "//Launcher/collection[@id='" + colID + "']";
-            string tagpath = "//Launcher/collection/TagsID";
+
             XmlNode root = doc.SelectSingleNode(xpath);
-            XmlNode rootTag = doc.SelectSingleNode(tagpath);
+            XmlNode rootTag = doc.SelectSingleNode(xpath+"/TagsID");
+            XmlNode rootTagScan = doc.SelectSingleNode(xpath+"/ScanTagsID");
+            XmlNode rootScanExtension = doc.SelectSingleNode(xpath+"/ScanOpenExtension");
 
             int idFather = int.Parse(root.SelectSingleNode("IDFather").InnerText);
             string name = root.SelectSingleNode("Name").InnerText;
@@ -2573,16 +2629,26 @@ namespace C_Launcher
             int sonHeight = int.Parse(root.SelectSingleNode("CoverSonHeight").InnerText);
             int sonLayout = int.Parse(root.SelectSingleNode("SonImageLayout").InnerText);
             int[] tagsArray = { };
-            foreach (XmlNode tagid in rootTag)
+            if (rootTag != null)
             {
-                tagsArray = tagsArray.Append(int.Parse(tagid.InnerText)).ToArray();
+                foreach (XmlNode tagid in rootTag)
+                {
+                    tagsArray = tagsArray.Append(int.Parse(tagid.InnerText)).ToArray();
+                }
+            }
+            int[] tagsScan = { };
+            if (rootTagScan != null)
+            {
+                foreach (XmlNode tagid in rootTagScan)
+                {
+                    tagsScan = tagsArray.Append(int.Parse(tagid.InnerText)).ToArray();
+                }
             }
             bool fav = bool.Parse(root.SelectSingleNode("Favorite").InnerText);
             bool scanFold = bool.Parse(XMLDefaultReturn(root, "ScanFolder", "false"));
             string scanPath = XMLDefaultReturn(root, "ScanPath", "");
             int scanStartNumber = int.Parse(XMLDefaultReturn(root, "ScanStartNumber", "1"));
             string[] scanExtension = { };
-            XmlNode rootScanExtension = doc.SelectSingleNode("//Launcher/collection/ScanOpenExtension");
             if (rootScanExtension != null)
             {
                 foreach (XmlNode extension in rootScanExtension)
@@ -2590,10 +2656,8 @@ namespace C_Launcher
                     scanExtension = scanExtension.Append(extension.InnerText).ToArray();
                 }
             }
-            
 
-
-            Collections colReturn = new Collections(colID, idFather, name, imgPath, imgLayout, background, red, green, blue, resolution, width, height, sonRes, sonWidth, sonHeight, sonLayout, tagsArray, fav, scanFold, scanPath, scanStartNumber, scanExtension);
+            Collections colReturn = new Collections(colID, idFather, name, imgPath, imgLayout, background, red, green, blue, resolution, width, height, sonRes, sonWidth, sonHeight, sonLayout, tagsArray, tagsScan, fav, scanFold, scanPath, scanStartNumber, scanExtension);
 
             return colReturn;
         }
@@ -2664,20 +2728,6 @@ namespace C_Launcher
 
         private void deleteCollection(int colID)
         {
-            //Cargar el archivo XML
-            /*XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.Load(xmlColPath);
-
-            //Buscamos el elemento a eliminar
-            string xpath = "//Launcher/collection[@id='" + colID + "']";  //Buscar un elemento que se llame "ColeccionX" que tenga en el atributo id un 1
-            XmlNode root = xmlDoc.SelectSingleNode(xpath);
-
-            if (root != null)
-            {
-                root.ParentNode.RemoveChild(root);
-            }
-
-            xmlDoc.Save(xmlColPath);*/
             //cargar xml con linq
             XDocument xmlDoc = XDocument.Load(xmlColPath);
 
@@ -2692,7 +2742,7 @@ namespace C_Launcher
             if (deleteColl != null)
             {
                 //Eliminar la caratula solo si está ubicada en la carpeta "System"
-                string imgDir = deleteColl.Attribute("nombre")?.Value;
+                string imgDir = deleteColl.Attribute("Image")?.Value;
                 if (imgDir != "")
                 {
                     string folder = Path.GetDirectoryName(imgDir);
@@ -2720,15 +2770,6 @@ namespace C_Launcher
                 deleteColl.Remove();
             }
 
-            /*var matchingElements = doc.Descendants("collection")
-                                  .Where(item => item.Element("IDFather")?.Value == colls[i].ID.ToString())
-                                  .Select(item => new
-                                  {
-                                      Id = item.Attribute("id").Value,//Es el valor que rescatare para usarlo a futuro
-                                  })
-                                  .ToList();*/
-
-            //prinColl.Remove();
 
             //Buscar todos los archivos que esten dentro de esa coleccion y eliminarlo
             XDocument xmlFileDoc = XDocument.Load(xmlFilesPath);
@@ -2929,11 +2970,6 @@ namespace C_Launcher
 
         }
 
-        private void textBoxSearch_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
         private void menuStripMain_Paint(object sender, PaintEventArgs e)
         {
         }
@@ -3049,6 +3085,8 @@ namespace C_Launcher
             
 
         }
+
+        
 
         private bool checkImage(string fileDir)
         {

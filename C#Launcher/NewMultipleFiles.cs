@@ -1,6 +1,8 @@
 ﻿using C_Launcher.Clases;
+using ImageMagick;
 using System;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
@@ -605,7 +607,34 @@ namespace C_Launcher
                         //Solo reemplazar una imagen si esta existe o si la imagen de origen no es la misma que el destino
                         if ((imgPath != "") && (imgPath != null) && (source != imgPath))
                         {
-                            System.IO.File.Copy(source, imgPath, true);
+                            if (Path.GetExtension(source).ToLower() == ".webp")
+                            {
+                                Image saveImage;
+                                using (MagickImage img = new MagickImage(source))
+                                {
+                                    // Convierte la imagen WebP a un formato compatible con PictureBox (por ejemplo, JPEG)
+                                    // Para mostrar la imagen en el PictureBox
+                                    img.Format = MagickFormat.Png;
+
+                                    // Convierte la imagen en un flujo de memoria
+                                    using (var memoryStream = new System.IO.MemoryStream())
+                                    {
+                                        img.Write(memoryStream);
+
+                                        // Carga el flujo de memoria en el PictureBox
+                                        saveImage = System.Drawing.Image.FromStream(memoryStream);//img;
+                                    }
+                                }
+
+                                if (saveImage != null)
+                                {
+                                    saveImage.Save(imgPath, ImageFormat.Png);
+                                }
+                            }
+                            else
+                            {
+                                System.IO.File.Copy(source, imgPath, true);
+                            }
                         }
                    // }
                 }
@@ -629,7 +658,7 @@ namespace C_Launcher
                 int width = int.Parse(dataGridViewFiles.Rows[i].Cells[5].Value.ToString());
                 int height = int.Parse(dataGridViewFiles.Rows[i].Cells[6].Value.ToString());
                 bool url = bool.Parse(dataGridViewFiles.Rows[i].Cells[1].Value.ToString());
-                int[] tagsArray = new int[] { 1, 2, 3 };
+                int[] tagsArray = new int[] { };
                 bool favorite = false;
 
 

@@ -75,9 +75,11 @@
             this.label2 = new System.Windows.Forms.Label();
             this.buttonDeleteCover = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
-            this.dataGridView2 = new System.Windows.Forms.DataGridView();
-            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.dataGridViewTags = new System.Windows.Forms.DataGridView();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.Column2 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.Column3 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.groupBoxCover.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericColHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericColWidth)).BeginInit();
@@ -92,7 +94,7 @@
             this.groupBoxSonFormat.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewScanOpenExtension)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericScanStart)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTags)).BeginInit();
             this.SuspendLayout();
             // 
             // textBoxName
@@ -520,7 +522,7 @@
             this.buttonSearchSonCoverDefault.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
             this.buttonSearchSonCoverDefault.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonSearchSonCoverDefault.ForeColor = System.Drawing.SystemColors.Window;
-            this.buttonSearchSonCoverDefault.Location = new System.Drawing.Point(739, 174);
+            this.buttonSearchSonCoverDefault.Location = new System.Drawing.Point(739, 202);
             this.buttonSearchSonCoverDefault.Name = "buttonSearchSonCoverDefault";
             this.buttonSearchSonCoverDefault.Size = new System.Drawing.Size(118, 23);
             this.buttonSearchSonCoverDefault.TabIndex = 15;
@@ -612,7 +614,7 @@
             this.dataGridViewScanOpenExtension.RowHeadersVisible = false;
             this.dataGridViewScanOpenExtension.RowHeadersWidth = 62;
             this.dataGridViewScanOpenExtension.RowTemplate.Height = 28;
-            this.dataGridViewScanOpenExtension.Size = new System.Drawing.Size(101, 92);
+            this.dataGridViewScanOpenExtension.Size = new System.Drawing.Size(104, 165);
             this.dataGridViewScanOpenExtension.TabIndex = 39;
             // 
             // Column1
@@ -620,7 +622,6 @@
             this.Column1.HeaderText = "Extension";
             this.Column1.MinimumWidth = 8;
             this.Column1.Name = "Column1";
-            this.Column1.Width = 150;
             // 
             // numericScanStart
             // 
@@ -670,7 +671,7 @@
             this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button2.ForeColor = System.Drawing.SystemColors.Window;
-            this.button2.Location = new System.Drawing.Point(739, 202);
+            this.button2.Location = new System.Drawing.Point(862, 202);
             this.button2.Margin = new System.Windows.Forms.Padding(2);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(91, 23);
@@ -678,13 +679,17 @@
             this.button2.Text = "Borrar caratula";
             this.button2.UseVisualStyleBackColor = false;
             // 
-            // dataGridView2
+            // dataGridViewTags
             // 
-            this.dataGridView2.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(40)))), ((int)(((byte)(47)))));
-            this.dataGridView2.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.dataGridView2.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView2.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.dataGridViewTextBoxColumn1});
+            this.dataGridViewTags.AllowUserToAddRows = false;
+            this.dataGridViewTags.AllowUserToDeleteRows = false;
+            this.dataGridViewTags.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(40)))), ((int)(((byte)(47)))));
+            this.dataGridViewTags.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.dataGridViewTags.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewTags.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.Column2,
+            this.dataGridViewTextBoxColumn1,
+            this.Column3});
             dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
             dataGridViewCellStyle1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
@@ -692,23 +697,16 @@
             dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(255)))));
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
-            this.dataGridView2.DefaultCellStyle = dataGridViewCellStyle1;
-            this.dataGridView2.GridColor = System.Drawing.Color.White;
-            this.dataGridView2.Location = new System.Drawing.Point(12, 78);
-            this.dataGridView2.Margin = new System.Windows.Forms.Padding(2);
-            this.dataGridView2.Name = "dataGridView2";
-            this.dataGridView2.RowHeadersVisible = false;
-            this.dataGridView2.RowHeadersWidth = 62;
-            this.dataGridView2.RowTemplate.Height = 28;
-            this.dataGridView2.Size = new System.Drawing.Size(124, 203);
-            this.dataGridView2.TabIndex = 44;
-            // 
-            // dataGridViewTextBoxColumn1
-            // 
-            this.dataGridViewTextBoxColumn1.HeaderText = "Etiquetas";
-            this.dataGridViewTextBoxColumn1.MinimumWidth = 8;
-            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
-            this.dataGridViewTextBoxColumn1.Width = 150;
+            this.dataGridViewTags.DefaultCellStyle = dataGridViewCellStyle1;
+            this.dataGridViewTags.GridColor = System.Drawing.Color.White;
+            this.dataGridViewTags.Location = new System.Drawing.Point(1, 78);
+            this.dataGridViewTags.Margin = new System.Windows.Forms.Padding(2);
+            this.dataGridViewTags.Name = "dataGridViewTags";
+            this.dataGridViewTags.RowHeadersVisible = false;
+            this.dataGridViewTags.RowHeadersWidth = 62;
+            this.dataGridViewTags.RowTemplate.Height = 28;
+            this.dataGridViewTags.Size = new System.Drawing.Size(213, 203);
+            this.dataGridViewTags.TabIndex = 44;
             // 
             // checkBox1
             // 
@@ -722,6 +720,29 @@
             this.checkBox1.Text = "Utilizar la imagen desde su ubicacion actual";
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
+            // Column2
+            // 
+            this.Column2.HeaderText = "Añadir";
+            this.Column2.Name = "Column2";
+            this.Column2.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Column2.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.Column2.Width = 50;
+            // 
+            // dataGridViewTextBoxColumn1
+            // 
+            this.dataGridViewTextBoxColumn1.HeaderText = "Etiqueta";
+            this.dataGridViewTextBoxColumn1.MinimumWidth = 8;
+            this.dataGridViewTextBoxColumn1.Name = "dataGridViewTextBoxColumn1";
+            this.dataGridViewTextBoxColumn1.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            // 
+            // Column3
+            // 
+            this.Column3.HeaderText = "Escanear";
+            this.Column3.Name = "Column3";
+            this.Column3.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.Column3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.Column3.Width = 60;
+            // 
             // NewCollection
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -730,7 +751,7 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(61)))), ((int)(((byte)(72)))));
             this.ClientSize = new System.Drawing.Size(1047, 561);
             this.Controls.Add(this.checkBox1);
-            this.Controls.Add(this.dataGridView2);
+            this.Controls.Add(this.dataGridViewTags);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.buttonDeleteCover);
             this.Controls.Add(this.label2);
@@ -784,7 +805,7 @@
             this.groupBoxSonFormat.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewScanOpenExtension)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericScanStart)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTags)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -832,13 +853,15 @@
         private System.Windows.Forms.TextBox textBoxScanFolder;
         private System.Windows.Forms.Button buttonSearchDir;
         private System.Windows.Forms.DataGridView dataGridViewScanOpenExtension;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.NumericUpDown numericScanStart;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button buttonDeleteCover;
         private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.DataGridView dataGridView2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridView dataGridViewTags;
         private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Column2;
+        private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn Column3;
     }
 }

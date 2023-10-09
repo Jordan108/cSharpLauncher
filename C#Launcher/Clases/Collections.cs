@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.TrayNotify;
-
-namespace C_Launcher.Clases
+﻿namespace C_Launcher.Clases
 {
     public class Collections
     {
@@ -33,6 +25,7 @@ namespace C_Launcher.Clases
         private int sonImageLayout;
         //Datos
         private int[] tagsId;
+        private int[] scanTags;
         private bool favorite;
         //Coleccion automatica
         private bool scanFolder;
@@ -42,7 +35,7 @@ namespace C_Launcher.Clases
 
 
         //Constructor
-        public Collections(int _id, int _idFather, string _name, string _imgPath, int _layout, bool _nBg, int _r, int _g, int _b, int _res, int _w, int _h, int _sRint, int _sW, int _sH, int _sL, int[] _tag, bool _fav, bool _scan, string _scanPath, int _scanStartNumber, string[] _scanOpenExtension)
+        public Collections(int _id, int _idFather, string _name, string _imgPath, int _layout, bool _nBg, int _r, int _g, int _b, int _res, int _w, int _h, int _sRint, int _sW, int _sH, int _sL, int[] _tag, int[] _scanTag, bool _fav, bool _scan, string _scanPath, int _scanStartNumber, string[] _scanOpenExtension)
         {
             id = _id; 
             idFather = _idFather; 
@@ -61,6 +54,7 @@ namespace C_Launcher.Clases
             sonHeight = _sH;
             sonImageLayout = _sL;
             tagsId = _tag;
+            scanTags = _scanTag;
             favorite = _fav;
             scanFolder = _scan;
             scanPath = _scanPath;
@@ -152,6 +146,12 @@ namespace C_Launcher.Clases
         {
             set { tagsId = value; }
             get { return tagsId; }
+        }
+
+        public int[] ScanTags
+        {
+            set { scanTags = value; }
+            get { return scanTags; }
         }
         public bool Favorite
         {

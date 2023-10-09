@@ -1,11 +1,15 @@
 ﻿using C_Launcher.Clases;
 using ImageMagick;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
+//using static System.Net.Mime.MediaTypeNames; //ELIMINAR
+//using static System.Net.WebRequestMethods; //ELIMINAR
 
 namespace C_Launcher
 {
@@ -20,6 +24,7 @@ namespace C_Launcher
         private int[] combResID = new int[0];//Para recoger el index
 
         private string coverPath = "System\\Covers";
+        private string xmlTagPath = "System\\Tags.xml";
 
         private int idFile = -1;//Si es un archivo nuevo -1, si no, se actualiza con el segundo constructor
         private string xmlImagePath;//Lo ocupare para editar la caratula
@@ -88,7 +93,7 @@ namespace C_Launcher
             buttonColorPickIMG.BackColor = BackgroundCol; //Definir los colores para el boton de colores
 
 
-            //Caratula
+            #region Caratula
             if (comboBoxResolution.SelectedIndex != 0)
             {
                 groupBoxSize.Enabled = false;
@@ -145,7 +150,22 @@ namespace C_Launcher
                 radioButtonEstreched.Checked = true;
                 pictureBoxCover.BackgroundImageLayout = ImageLayout.Stretch;
             }
+            #endregion
 
+            //Etiquetas
+            foreach (DataGridViewRow fila in dataGridViewTags.Rows)
+            {
+                string tagValor = fila.Tag?.ToString();
+
+                if (int.TryParse(tagValor, out int tagNumero))//Verificar si el valor del tag se puede convertir a un int
+                {
+                    if (fileData.TagsID.Contains(tagNumero))//Comprobar si el tag esta en el array
+                    {
+                        DataGridViewCheckBoxCell checkBoxCell = fila.Cells[0] as DataGridViewCheckBoxCell;
+                        checkBoxCell.Value = true;
+                    }
+                }
+            }
         }
 
         private void CustomComponent()
@@ -154,6 +174,8 @@ namespace C_Launcher
             this.pictureBoxCover.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBoxCover_MouseDown);
             this.pictureBoxCover.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBoxCover_MouseMove);
             this.pictureBoxCover.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBoxCover_MouseUp);
+
+            loadXMLTagsDGV();//Cargar todas las etiquetas existentes y ponerlas dentro del datagridview
 
             #region Combobox
             #region idFather
@@ -268,6 +290,44 @@ namespace C_Launcher
             }
             #endregion
         }
+
+        private void loadXMLTagsDGV()
+        {
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.Load(xmlTagPath);
+
+            //Recoger la cantidad de elementos que existen
+            XmlNodeList tagElements = xmlDoc.SelectNodes("//*[@id]");
+            int size = tagElements.Count;
+
+            int tagID = 1;
+            for (int i = 0; i < size; i++)
+            {
+                //Buscamos el elemento a recoger
+                string xpath = "//Launcher/tag[@id='" + tagID + "']";
+                XmlNode root = xmlDoc.SelectSingleNode(xpath);
+
+                //si no existe un elemento con esa id, sumar 1
+                while (root == null)
+                {
+
+                    tagID++;
+                    xpath = "//Launcher/tag[@id='" + tagID + "']";
+                    root = xmlDoc.SelectSingleNode(xpath);
+                }
+
+                string name = root.SelectSingleNode("Name").InnerText;
+
+
+                this.dataGridViewTags.Rows.Add(false, name);
+                DataGridViewRow selectedRow = dataGridViewTags.Rows[i];
+                selectedRow.Tag = tagID;
+
+                //Iterar al siguiente elemento
+                tagID++;
+            }
+        }
+
 
         //Para reducir el tamaño de las imagenes del picture box
         private Image loadImage(string imagePath)
@@ -810,13 +870,15 @@ namespace C_Launcher
             string cleanName = Path.GetInvalidFileNameChars().Aggregate(textBoxName.Text, (current, c) => current.Replace(c.ToString(), string.Empty));
             string imgPath = "";
 
+            //Guardar la imagen
             if (pictureBoxCover.Tag != null)
             {
                 if (checkBoxImageLocation.Checked == true)
                 {
+                    //Ocupar la imagen en su ubicacion actual
                     imgPath = pictureBoxCover.Tag.ToString();
-                } else
-                {
+                } else {
+                    //Mover la imagen hacia la carpeta covers y transformarla a .png
                     //string outputFolder = System.Environment.CurrentDirectory + "\\System\\Covers";
                     string outputFolder = coverPath;
 
@@ -842,6 +904,7 @@ namespace C_Launcher
                             }
                         } else
                         {
+                            
                             imgPath = returnImagePath(outputFolder, cleanName);
                         }
                         
@@ -849,16 +912,43 @@ namespace C_Launcher
 
                     if (!Directory.Exists(outputFolder))
                     {
-                        // Crea la carpeta si no existe
+                        // Crea la carpeta Systems/Covers si no existe
                         Directory.CreateDirectory(outputFolder);
                     }
 
                     string source = pictureBoxCover.Tag.ToString();
+
                     //Solo reemplazar una imagen si esta existe o si la imagen de origen no es la misma que el destino
                     if ((imgPath != "") && (imgPath != null) && (source != imgPath))
                     {
+                        //Las imagenes webp no pueden ser copiadas y pegadas a un formato png, deben ser transformadas y guardadas dentro de un objeto
+                        if (Path.GetExtension(source).ToLower() == ".webp")
+                        {
+                            Image saveImage;
+                            using (MagickImage img = new MagickImage(source))
+                            {
+                                // Convierte la imagen WebP a un formato compatible con PictureBox (por ejemplo, JPEG)
+                                // Para mostrar la imagen en el PictureBox
+                                img.Format = MagickFormat.Png;
+
+                                // Convierte la imagen en un flujo de memoria
+                                using (var memoryStream = new System.IO.MemoryStream())
+                                {
+                                    img.Write(memoryStream);
+
+                                    // Carga el flujo de memoria en el PictureBox
+                                    saveImage = System.Drawing.Image.FromStream(memoryStream);//img;
+                                }
+                            }
+
+                            if (saveImage != null)
+                            {
+                                saveImage.Save(imgPath, ImageFormat.Png);
+                            }
+                        } else {
+                            System.IO.File.Copy(source, imgPath, true);
+                        }
                         
-                        System.IO.File.Copy(source, imgPath, true);
                     }
                 }
             }
@@ -877,7 +967,24 @@ namespace C_Launcher
             int width = pictureBoxCover.Width;
             int height = pictureBoxCover.Height;
             bool url = checkBoxURL.Checked;
-            int[] tagsArray = new int[] { 1, 2, 3};
+
+            //Cargar las etiquetas
+            int[] tagsArray; //= new int[] { 1, 2, 3};
+            List<int> dgValue = new List<int>();
+
+            for (int i=0; i<dataGridViewTags.RowCount; i++)
+            {
+                //Solo agregar las etiquetas que tengan el combobox en true
+                if (Convert.ToBoolean(dataGridViewTags.Rows[i].Cells[0].Value?.ToString()))//Convert.ToBoolean transforma los null en false
+                {
+                    int rowID = int.Parse(dataGridViewTags.Rows[i].Tag.ToString());
+                    dgValue.Add(rowID);
+                }
+            }
+
+            //Agregarlo como array
+            tagsArray = dgValue.ToArray();
+
             bool favorite = checkBoxFavorite.Checked;
 
 
