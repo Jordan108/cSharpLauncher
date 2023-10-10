@@ -227,7 +227,20 @@ namespace C_Launcher
                 if (scanned == null)
                 {
                     string[] def = { };
-                    scanned = new Scanneds(id, pic.Name, "", 0, false, 0, 0, 0, 0, pic.Width, pic.Height, 1, def);
+                    string imgPath = "";
+
+                    if (boxType == "automaticFolder")
+                    {
+                        string[] subArchivos = Directory.GetFiles(id);
+                        if (subArchivos.Length > 0)
+                        {
+                            //string rutasImagen = subArchivos.Where(ruta => checkImage(ruta));
+                            imgPath = subArchivos.FirstOrDefault(ruta => checkImage(ruta));
+                        }
+                    }
+                    
+
+                        scanned = new Scanneds(id, pic.Name, imgPath, 0, false, 0, 0, 0, 0, pic.Width, pic.Height, 1, def);
                 }
 
                 EditScaned editScan = new EditScaned(scanned);
