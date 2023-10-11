@@ -1,15 +1,2 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Launcher>
-  <tag id="1">
-    <Name>sexo</Name>
-  </tag>
-  <tag id="2">
-    <Name>isaac</Name>
-  </tag>
-  <tag id="3">
-    <Name>videos</Name>
-  </tag>
-  <tag id="4">
-    <Name>sexo 2</Name>
-  </tag>
-</Launcher>
+<Launcher />

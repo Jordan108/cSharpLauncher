@@ -3410,6 +3410,20 @@ namespace C_Launcher
                 }
             }
 
+            //Verificar la existencia del XML Tags
+            if (!File.Exists(xmlTagPath))
+            {
+                XmlWriterSettings settings = new XmlWriterSettings();
+                settings.Indent = true;
+
+                using (XmlWriter writer = XmlWriter.Create(xmlTagPath, settings))
+                {
+                    //Crear el elemento raiz del archivo (obligatorio)
+                    writer.WriteStartElement("Launcher");
+                    writer.WriteEndElement();
+                }
+            }
+
             //Verificar la existencia del xml settings
             if (!File.Exists(xmlSettingsPath))
             {
