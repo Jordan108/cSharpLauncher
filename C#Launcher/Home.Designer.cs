@@ -274,6 +274,7 @@
             this.treeViewMain.Dock = System.Windows.Forms.DockStyle.Left;
             this.treeViewMain.ForeColor = System.Drawing.Color.Black;
             this.treeViewMain.FullRowSelect = true;
+            this.treeViewMain.HideSelection = false;
             this.treeViewMain.ItemHeight = 25;
             this.treeViewMain.Location = new System.Drawing.Point(0, 58);
             this.treeViewMain.MinimumSize = new System.Drawing.Size(97, 4);

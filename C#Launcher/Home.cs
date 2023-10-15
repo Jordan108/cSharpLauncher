@@ -80,7 +80,7 @@ namespace C_Launcher
             ToolStripAddMultipleFile.Click += new EventHandler(ToolStripAddMultipleFiles_Click);
             ToolStripEditAllElements.Text = "Editar todos los elementos de la coleccion";
             ToolStripEditAllElements.Click += new EventHandler(ToolStripEditMultiplePictureBox_Click);//Esta funcion permite picture box y flow layout panel
-            contextMenuLayoutPanel.Items.AddRange(new ToolStripItem[] { ToolStripAddCollection, ToolStripAddFile, ToolStripAddMultipleFile, ToolStripEditAllElements });
+            contextMenuLayoutPanel.Items.AddRange(new ToolStripItem[] { ToolStripAddFile, ToolStripAddCollection, ToolStripAddMultipleFile, ToolStripEditAllElements });
             //Agregar al layout panel
             flowLayoutPanelMain.ContextMenuStrip = contextMenuLayoutPanel;
 
@@ -99,7 +99,6 @@ namespace C_Launcher
             fileSize = LoadFilesSize();
 
             loadTreeView(colSize);
-            Console.WriteLine("tamaño col: " +  colSize);
             loadPictureBox(colSize, fileSize, false);
             menuStripMain.Renderer = new MyRenderer();
 
@@ -889,7 +888,7 @@ namespace C_Launcher
                 
         }
 
-        //Intervenir en el contextMenu
+        //Intervenir en el contextMenu para crearlos
         private void pictureBox_MouseUp(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
@@ -1251,7 +1250,7 @@ namespace C_Launcher
                     {
                         labelDepth.Text = colls[i].Name;
                         actualColl = i;
-                        Console.WriteLine($"actualColl {actualColl}");
+                        Console.WriteLine($"actualColl {actualColl} | viewdepth {viewDepth}");
 
                         if (colls[i].IDFather != 0)
                         {
@@ -1673,7 +1672,8 @@ namespace C_Launcher
                         }
                     } else
                     {
-                        Console.WriteLine("No se pudo cargar la imagen de la id"+i+"por que no habia string en: " + colls[i].ImagePath);
+                      
+                        //Console.WriteLine("No se pudo cargar la imagen de la id"+i+"por que no habia string en: " + colls[i].ImagePath);
                     }
                     
                    
@@ -1915,8 +1915,8 @@ namespace C_Launcher
                 e.Graphics.FillRectangle(backgroundBrush, bounds);
             }
 
-            //Ajusta el texto para que se empiece a escribir a 1/3 del nodo
-            bounds.X += treeViewMain.Width/3;
+            //Ajusta el texto para que se empiece a escribir desde el punto x40 en adelante
+            bounds.X += 40;//treeViewMain.Width/3 (si quiero que el nodo se vaya ajustando a 1/3 del ancho)
             //Ajusta la posicion del texto despues de que se haya dibujado el fondo del nodo
             bounds.X += offset;
             // Dibuja el texto del nodo
@@ -1964,17 +1964,23 @@ namespace C_Launcher
             //Cargar todas las colecciones
             Collections[] colls = new Collections[colSize];
             colls = LoadCollections(colSize);
+            treeViewMain.SelectedNode = null;
             treeViewMain.Nodes.Clear();//Limpiar todo el treeview
+
+            //Nodo seleccionado
+            TreeNode Selectednode = null;
+            /*Debido a que al agregar muchos nodos el treeview cambia, el valor de los nodos tambien puede cambiar, por lo que treeViewMain.SelectedNode = node no sive siempre*/
+
             //Crear el nodo de favoritos
             TreeNode fvNode = new TreeNode("Favoritos");  fvNode.Tag = -1; treeViewMain.Nodes.Add(fvNode);
-            if (viewDepth == -1) {
-                treeViewMain.SelectedNode = treeViewMain.Nodes[0];
-            }
+
+            Console.WriteLine($"viewdepth loadTreeview {viewDepth}");
+            
 
             //Se carga el archivo XML de colecciones por que se haran "querys"
             //XmlDocument xmlDoc = new XmlDocument.Load(xmlColPath);
             XDocument doc = XDocument.Load(xmlColPath);
-            //xmlDoc.Load(xmlColPath);
+
             //Cargar los nodos de las colecciones en el tree view
             for (int i = 0; i < colls.Length; i++)
             {
@@ -2010,9 +2016,11 @@ namespace C_Launcher
                             subNode.Tag = col.ID;
                             root.Nodes.Add(subNode);
 
-                            if (subNode.Tag.ToString() == viewDepth.ToString())
+                            //Si el tag del nodo coincide con la profundidad, volverlo un nodo seleccionado
+                            if (col.ID == viewDepth)
                             {
-                                treeViewMain.SelectedNode = subNode;
+                                Selectednode = subNode;
+                                //treeViewMain.SelectedNode = subNode;
                             }
 
                             //Buscar en ese sub nodo, si tiene sub nodos para agregarlo
@@ -2020,7 +2028,10 @@ namespace C_Launcher
 
                             if (subCount > 0)
                             {
-                                searchSubNode(doc, subNode, colls, element.Id);
+                                TreeNode returnSubNode;
+                                returnSubNode = searchSubNode(doc, subNode, colls, element.Id, null);
+
+                                if (returnSubNode != null) Selectednode = returnSubNode;
                             }
                         }
                     }
@@ -2028,41 +2039,41 @@ namespace C_Launcher
                     // Agregar el nodo al TreeView
                     treeViewMain.Nodes.Add(root);
 
-                    if (root.Tag.ToString() == viewDepth.ToString())
+                    //viewDepth == colls[i].IDFather
+
+                    //Si el nodo padre coincide con la profundidad, volverlo seleccionado
+                    if (colls[i].ID == viewDepth)
                     {
-                        treeViewMain.SelectedNode = root;
+                       // treeViewMain.SelectedNode = root;
+                        Selectednode = root;
                     }
 
                     
                 }
             }
 
-            //Verificar que, si la vista esta en favoritos (-1; seleccionar automaticamente el primer nodo)
+            //Si estan en favoritos, seleccionar a ese nodo
+            if (viewDepth == -1)
+            {
+                Selectednode = fvNode;
+                //treeViewMain.SelectedNode = treeViewMain.Nodes[0];
+            }
+
+            //Seleccionar el nodo
+            if (Selectednode != null)
+            {
+                treeViewMain.SelectedNode = Selectednode;
+            }
             
 
-            //treeViewMain.SelectedNode = treeViewMain.Nodes[1].Nodes[1];
             //Expandir el tree view para ver todos los nodos
             treeViewMain.ExpandAll();
 
         }
 
-        private void searchSubNodeNoUse(TreeNode node, int tagId, int collId, string collName)
+        private TreeNode searchSubNode(XDocument doc, TreeNode fatherNode, Collections[] colls, string FatherID, TreeNode passReturnNode)
         {
-            foreach(TreeNode subnodo in node.Nodes) {
-                if (subnodo.Tag.Equals(tagId))
-                {
-                    //MessageBox::Show("el tag del sub nodo: " + subnodo->Tag + " coincide con el tag: " + tagId);
-                    TreeNode subSubNode = new TreeNode(collName);
-                    subSubNode.Tag = collId;
-                    subnodo.Nodes.Add(subSubNode);
-                    break;//frenar el foreach
-
-                }
-                searchSubNodeNoUse(subnodo, tagId, collId, collName);
-            }
-        }
-        private void searchSubNode(XDocument doc, TreeNode fatherNode, Collections[] colls, string FatherID)
-        {
+            TreeNode returnNode = passReturnNode;
             //Buscar todos los elementos del sub nodo
             var matchingElements = doc.Descendants("collection")
                                   .Where(item => item.Element("IDFather")?.Value == FatherID)
@@ -2079,9 +2090,10 @@ namespace C_Launcher
                 subNode.Tag = col.ID;
                 fatherNode.Nodes.Add(subNode);
 
-                if (subNode.Tag.ToString() == viewDepth.ToString())
+                if (int.Parse(subNode.Tag.ToString()) == viewDepth)
                 {
-                    treeViewMain.SelectedNode = subNode;
+                    //treeViewMain.SelectedNode = subNode;
+                    returnNode = subNode;
                 }
 
                 //Buscar en ese sub nodo, si tiene sub nodos para agregarlo
@@ -2089,9 +2101,11 @@ namespace C_Launcher
 
                 if (subCount > 0)
                 {
-                    searchSubNode(doc, subNode, colls, element.Id);
+                    returnNode = searchSubNode(doc, subNode, colls, element.Id, returnNode);
                 }
             }
+
+            return returnNode;
         }
 
         //Navegar entre nodos
@@ -2614,7 +2628,6 @@ namespace C_Launcher
 
         private Files searchFileData(int fileID)
         {
-            Console.WriteLine("Buscando en el archivo con id: " + fileID);
             XmlDocument doc = new XmlDocument();
             doc.Load(xmlFilesPath);
 
