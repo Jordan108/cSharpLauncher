@@ -75,7 +75,8 @@ namespace C_Launcher
                 int rowCount = dataGridViewFiles.Rows.Count;
                 dataGridViewFiles.CurrentCell = dataGridViewFiles.Rows[rowCount - 1].Cells[0];
                 //Combobox de las resoluciones
-                dataGridViewFiles.Rows[rowCount - 1].Cells[7].Value = (dataGridViewFiles.Rows[rowCount - 1].Cells[7] as DataGridViewComboBoxCell).Items[files[i].ResolutionID];
+                int resolutionIndex = Array.IndexOf(combResID, files[i].ResolutionID);
+                dataGridViewFiles.Rows[rowCount - 1].Cells[7].Value = (dataGridViewFiles.Rows[rowCount - 1].Cells[7] as DataGridViewComboBoxCell).Items[resolutionIndex+1];
                 //Combobox del formato de imagen
                 dataGridViewFiles.Rows[rowCount - 1].Cells[9].Value = (dataGridViewFiles.Rows[rowCount - 1].Cells[9] as DataGridViewComboBoxCell).Items[files[i].ImageLayout];
                 //Color del boton
@@ -220,11 +221,10 @@ namespace C_Launcher
                 ((DataGridViewComboBoxColumn)dataGridViewFiles.Columns["ColumnRes"]).DataSource = CmbRes.Items;
                 ((DataGridViewComboBoxColumn)dataGridViewFiles.Columns["ColumnFormat"]).DataSource = CmbImageFormat.Items;
 
+                //Agregar los archivos
                 for (int i = 0; i < archivosSeleccionados.Length; i++)
                 {
                     string texto = archivosSeleccionados[i];
-                    Console.WriteLine(texto);
-
 
                     //Extraer el nombre del open file dialog (nombre archivo)
                     string fileName = Path.GetFileNameWithoutExtension(texto);
@@ -237,16 +237,14 @@ namespace C_Launcher
                     int rowCount = dataGridViewFiles.Rows.Count;
                     dataGridViewFiles.CurrentCell = dataGridViewFiles.Rows[rowCount - 1].Cells[0];
                     //Combobox de las resoluciones
-                    dataGridViewFiles.Rows[rowCount - 1].Cells[7].Value = (dataGridViewFiles.Rows[rowCount - 1].Cells[7] as DataGridViewComboBoxCell).Items[0];
+                    //dataGridViewFiles.Rows[rowCount - 1].Cells[7].Value = (dataGridViewFiles.Rows[rowCount - 1].Cells[7] as DataGridViewComboBoxCell).Items[0];
+                    dataGridViewFiles.Rows[rowCount - 1].Cells[7].Value = (dataGridViewFiles.Rows[rowCount - 1].Cells[7] as DataGridViewComboBoxCell).Items[comboBoxResolution.SelectedIndex];
                     //Combobox del formato de imagen
                     dataGridViewFiles.Rows[rowCount - 1].Cells[9].Value = (dataGridViewFiles.Rows[rowCount - 1].Cells[9] as DataGridViewComboBoxCell).Items[0];
                     //Color del boton
                     DataGridViewCellStyle CellStyle = new DataGridViewCellStyle();
                     CellStyle.BackColor = Color.FromArgb(255, 0, 0, 0); ;
                     dataGridViewFiles.Rows[rowCount - 1].Cells[11].Style = CellStyle;
-
-
-
 
                     dataGridViewFiles.Rows[rowCount - 1].Tag = -1;//Para declarar que estos archivos son nuevos
                     dataGridViewFiles.Rows[rowCount - 1].Selected = true;
@@ -301,7 +299,7 @@ namespace C_Launcher
                     case 8:
                         //Busca la caratula
                         OpenFileDialog openDialog = new OpenFileDialog();
-                        openDialog.Filter = "Archivos de imagen (*.png;*.jpg;*.jpeg;)|*.png;*.jpg;*.jpeg;";
+                        openDialog.Filter = "Archivos de imagen(*.png; *.jpg; *.jpeg; *.webp;)| *.png; *.jpg; *.jpeg; *.webp;";
                         if (openDialog.ShowDialog() == DialogResult.OK)
                         {
                             dataGridViewFiles.Rows[e.RowIndex].Cells[8].Value = openDialog.FileName;
@@ -584,6 +582,7 @@ namespace C_Launcher
                 string cleanName = Path.GetInvalidFileNameChars().Aggregate(nameFile, (current, c) => current.Replace(c.ToString(), string.Empty));
                 string imgPath = "";
 
+                //Guardar la imagen
                 if (cellImgPath != "")
                 {
                     /*if (checkBoxImageLocation.Checked == true)
@@ -607,6 +606,7 @@ namespace C_Launcher
                         //Solo reemplazar una imagen si esta existe o si la imagen de origen no es la misma que el destino
                         if ((imgPath != "") && (imgPath != null) && (source != imgPath))
                         {
+                        //Las imagenes webp no pueden ser copiadas y pegadas a un formato png, deben ser transformadas y guardadas dentro de un objeto
                             if (Path.GetExtension(source).ToLower() == ".webp")
                             {
                                 Image saveImage;
@@ -651,13 +651,13 @@ namespace C_Launcher
                 string filePath = dataGridViewFiles.Rows[i].Cells[2].Value.ToString();
                 string programPath = dataGridViewFiles.Rows[i].Cells[3].Value.ToString();
                 string cmdLine = dataGridViewFiles.Rows[i].Cells[4].Value.ToString();
-                bool background = bool.Parse(dataGridViewFiles.Rows[i].Cells[10].Value.ToString());
+                bool background = Convert.ToBoolean(dataGridViewFiles.Rows[i].Cells[10].Value?.ToString());//Convert.ToBoolean transforma los null en false
                 int R = dataGridViewFiles.Rows[i].Cells[11].Style.BackColor.R;
                 int G = dataGridViewFiles.Rows[i].Cells[11].Style.BackColor.G;
                 int B = dataGridViewFiles.Rows[i].Cells[11].Style.BackColor.B;
                 int width = int.Parse(dataGridViewFiles.Rows[i].Cells[5].Value.ToString());
                 int height = int.Parse(dataGridViewFiles.Rows[i].Cells[6].Value.ToString());
-                bool url = bool.Parse(dataGridViewFiles.Rows[i].Cells[1].Value.ToString());
+                bool url = Convert.ToBoolean(dataGridViewFiles.Rows[i].Cells[1].Value?.ToString());
                 int[] tagsArray = new int[] { };
                 bool favorite = false;
 

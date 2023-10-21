@@ -106,6 +106,11 @@ namespace C_Launcher
                 int resWidth = int.Parse(root.SelectSingleNode("Width").InnerText);
                 int resHeight = int.Parse(root.SelectSingleNode("Height").InnerText);
 
+                if (resWidth < 100) resWidth = 100;
+                if (resWidth > 300) resWidth = 300;
+                if (resHeight < 100) resHeight = 100;
+                if (resHeight > 300) resHeight = 300;
+
                 pictureBoxCover.Width = resWidth;
                 pictureBoxCover.Height = resHeight;
                 numericWidthImage.Value = resWidth;

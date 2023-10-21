@@ -209,4 +209,26 @@
     <TagsID />
     <Favorite>False</Favorite>
   </file>
+  <file id="10">
+    <IDFather>1</IDFather>
+    <Name>Capcom vs. SNK 2 EO - Millionaire Fighting 2001 (USA)</Name>
+    <Image>
+    </Image>
+    <ImageLayout>0</ImageLayout>
+    <FilePath>D:\Bibliotecas\Juegos\Roms Gamecube\Capcom vs. SNK 2 EO - Millionaire Fighting 2001 (USA).iso</FilePath>
+    <ProgramPath>
+    </ProgramPath>
+    <CMDLine>
+    </CMDLine>
+    <WithoutBackground>False</WithoutBackground>
+    <BackgroundRed>0</BackgroundRed>
+    <BackgroundGreen>0</BackgroundGreen>
+    <BackgroundBlue>0</BackgroundBlue>
+    <CoverResolutionID>4</CoverResolutionID>
+    <CoverWidth>200</CoverWidth>
+    <CoverHeight>200</CoverHeight>
+    <URLCheck>False</URLCheck>
+    <TagsID />
+    <Favorite>False</Favorite>
+  </file>
 </Launcher>

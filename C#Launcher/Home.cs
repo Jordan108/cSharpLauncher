@@ -11,10 +11,8 @@ using System.Xml;
 using System.Xml.Linq;
 using ImageMagick;
 using System.Collections.Generic;
-using System.Security.Cryptography;
 using CoverPadLauncher;
 using CoverPadLauncher.Clases;
-using System.Collections.ObjectModel;
 
 namespace C_Launcher
 {
@@ -48,12 +46,11 @@ namespace C_Launcher
         private List<string> scanDepth = new List<string>();
 
         //Mantener el tamaño de los archivos, colecciones y escaneados
-        private int colSize, fileSize, scanSize = 0;
+        private int colSize, fileSize = 0;
         
         //ToolStrip
         //Se define aqui para poder referenciarlo en la creacion de los paneles
         private ContextMenuStrip contextMenuPictureBox = new ContextMenuStrip();
-
         //Treeview
         private TreeNode lastHoveredNode = null; // Para realizar un seguimiento del nodo que se encuentra actualmente bajo el mouse.
 
@@ -66,7 +63,7 @@ namespace C_Launcher
             loadSettingXML();
 
             //Tool strip (click derecho)
-            //Layout Panel
+            //flow Layout Panel Tool Strip
             ContextMenuStrip  contextMenuLayoutPanel   = new ContextMenuStrip();
             ToolStripMenuItem ToolStripAddCollection   = new ToolStripMenuItem();
             ToolStripMenuItem ToolStripAddFile         = new ToolStripMenuItem();
@@ -79,7 +76,7 @@ namespace C_Launcher
             ToolStripAddMultipleFile.Text = "Crear multiples elementos";
             ToolStripAddMultipleFile.Click += new EventHandler(ToolStripAddMultipleFiles_Click);
             ToolStripEditAllElements.Text = "Editar todos los elementos de la coleccion";
-            ToolStripEditAllElements.Click += new EventHandler(ToolStripEditMultiplePictureBox_Click);//Esta funcion permite picture box y flow layout panel
+            ToolStripEditAllElements.Click += new EventHandler(ToolStripEditMultipleFlowLayoutPanel_Click);
             contextMenuLayoutPanel.Items.AddRange(new ToolStripItem[] { ToolStripAddFile, ToolStripAddCollection, ToolStripAddMultipleFile, ToolStripEditAllElements });
             //Agregar al layout panel
             flowLayoutPanelMain.ContextMenuStrip = contextMenuLayoutPanel;
@@ -250,6 +247,14 @@ namespace C_Launcher
 
         }
 
+        //Editar los archivos de la coleccion desde el flow layout panel
+        private void ToolStripEditMultipleFlowLayoutPanel_Click(object sender, EventArgs e)
+        {
+            string id = viewDepth.ToString();
+
+            editMultipleElementsFromCollection(id);
+        }
+
         //Editar los archivos de esa coleccion picture box
         private void ToolStripEditMultiplePictureBox_Click(object sender, EventArgs e)
         {
@@ -261,52 +266,60 @@ namespace C_Launcher
                 PictureBox pic = (PictureBox)contextMenuPictureBox.SourceControl;
                 id = pic.Tag.ToString();
                 boxType = pic.AccessibleDescription;
+                Console.WriteLine("picture Box EditMultiple");
             }
             catch (Exception ex)
             {
-                //Si no recoje un picture box, significa que estamos recogiendo desde el flow layout panel
+                //Si no recoje un picture box, significa que estamos recogiendo desde el flow layout panel (aunque este tenga su propia funcion, es un porsiacaso)
                 id = viewDepth.ToString();
                 boxType = "collection";
             }
+
             
 
             //Lo hago solo por si acaso
             if (boxType == "collection")
             {
-                int defaultWidth = 200;
-                int defaultHeight = 200;
-                int defaultRes = 0;
-                int defaultImageLayout = 0;
-
-                //Si la profundidad es mayor a 0, buscar la coleccion con esa id en especifico y extraerle los valores default
-                if (viewDepth > 0)
-                {
-                    XmlDocument doc = new XmlDocument();
-                    doc.Load(xmlColPath);
-
-                    string xpath = "//Launcher/collection[@id='" + id + "']";
-                    XmlNode root = doc.SelectSingleNode(xpath);
-
-                    defaultRes = int.Parse(root.SelectSingleNode("CoverSonResolutionID").InnerText);
-                    defaultWidth = int.Parse(root.SelectSingleNode("CoverSonWidth").InnerText);
-                    defaultHeight = int.Parse(root.SelectSingleNode("CoverSonHeight").InnerText);
-                    defaultImageLayout = int.Parse(root.SelectSingleNode("SonImageLayout").InnerText);
-                }
-
-                Files[] files = searchFilesInCollection(int.Parse(id));
-
-                if (files.Length <= 0)
-                {
-                    MessageBox.Show("Esta coleccion no tiene archivos para editar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                } 
-                NewMultipleFiles editFilesCollection = new NewMultipleFiles(files, int.Parse(id), defaultRes, defaultWidth, defaultHeight, defaultImageLayout);
-                editFilesCollection.ReturnedObject += NewMultFiles_ReturnedObject;
-                editFilesCollection.ShowDialog();
+                editMultipleElementsFromCollection(id);
             } else
             {
                 MessageBox.Show("No se puede editar los archivos de algo que no es una coleccion", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        //Funcion global para editar los archivos de una coleccion (se ocupa en ToolStripEditMultipleFlowLayoutPanel_Click y ToolStripEditMultiplePictureBox_Click)
+        private void editMultipleElementsFromCollection(string id)
+        {
+            int defaultWidth = 200;
+            int defaultHeight = 200;
+            int defaultRes = 0;
+            int defaultImageLayout = 0;
+
+            //Si la profundidad es mayor a 0, buscar la coleccion con esa id en especifico y extraerle los valores default
+            if (viewDepth > 0)
+            {
+                XmlDocument doc = new XmlDocument();
+                doc.Load(xmlColPath);
+
+                string xpath = "//Launcher/collection[@id='" + id + "']";
+                XmlNode root = doc.SelectSingleNode(xpath);
+
+                defaultRes = int.Parse(root.SelectSingleNode("CoverSonResolutionID").InnerText);
+                defaultWidth = int.Parse(root.SelectSingleNode("CoverSonWidth").InnerText);
+                defaultHeight = int.Parse(root.SelectSingleNode("CoverSonHeight").InnerText);
+                defaultImageLayout = int.Parse(root.SelectSingleNode("SonImageLayout").InnerText);
+            }
+
+            Files[] files = searchFilesInCollection(int.Parse(id));
+
+            if (files.Length <= 0)
+            {
+                MessageBox.Show("Esta coleccion no tiene archivos para editar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+            NewMultipleFiles editFilesCollection = new NewMultipleFiles(files, int.Parse(id), defaultRes, defaultWidth, defaultHeight, defaultImageLayout);
+            editFilesCollection.ReturnedObject += NewMultFiles_ReturnedObject;
+            editFilesCollection.ShowDialog();
         }
 
         //Eliminar el picture box
@@ -651,6 +664,7 @@ namespace C_Launcher
         #endregion
 
         #region Interaccion pictureBox
+            
         //Empezar un proceso al hacer click a un archivo
         private void startProcess(string file, string program, string cmdLine, bool url)
         {
@@ -895,6 +909,7 @@ namespace C_Launcher
             {
                 PictureBox pictureBox = (PictureBox)sender;
                 int idBox = -1;
+
                 try
                 {
                     idBox = int.Parse(pictureBox.Tag.ToString());//no se puede transformar un objeto a int, pero si a un string
