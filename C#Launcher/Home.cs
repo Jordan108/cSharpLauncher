@@ -13,6 +13,7 @@ using ImageMagick;
 using System.Collections.Generic;
 using CoverPadLauncher;
 using CoverPadLauncher.Clases;
+//using static System.Net.WebRequestMethods;
 
 namespace C_Launcher
 {
@@ -3497,7 +3498,11 @@ namespace C_Launcher
 
         }
 
-        
+        private void configuracionesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Configuration config = new Configuration();
+            config.ShowDialog();
+        }
 
         private bool checkImage(string fileDir)
         {

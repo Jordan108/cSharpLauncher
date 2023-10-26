@@ -47,10 +47,12 @@
             this.searchActualtoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.searchAlltoolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.administrarEtiquetasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.herramientasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.labelDepth = new System.Windows.Forms.Label();
             this.flowLayoutPanelMain = new System.Windows.Forms.FlowLayoutPanel();
             this.treeViewMain = new System.Windows.Forms.TreeView();
             this.splitter1 = new System.Windows.Forms.Splitter();
+            this.configuracionesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelTop.SuspendLayout();
             this.menuStripMain.SuspendLayout();
             this.SuspendLayout();
@@ -126,7 +128,8 @@
             this.menuStripMain.ImageScalingSize = new System.Drawing.Size(24, 24);
             this.menuStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.archivoToolStripMenuItem,
-            this.verToolStripMenuItem});
+            this.verToolStripMenuItem,
+            this.herramientasToolStripMenuItem});
             this.menuStripMain.Location = new System.Drawing.Point(0, 0);
             this.menuStripMain.Name = "menuStripMain";
             this.menuStripMain.Padding = new System.Windows.Forms.Padding(4, 1, 0, 1);
@@ -161,13 +164,13 @@
             this.verToolStripMenuItem.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
             this.verToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.ordenarPanelesToolStripMenuItem,
-            this.administrarResolucionesToolStripMenuItem,
             this.filtroDeBusquedaToolStripMenuItem,
+            this.administrarResolucionesToolStripMenuItem,
             this.administrarEtiquetasToolStripMenuItem});
             this.verToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Window;
             this.verToolStripMenuItem.Name = "verToolStripMenuItem";
-            this.verToolStripMenuItem.Size = new System.Drawing.Size(35, 22);
-            this.verToolStripMenuItem.Text = "Ver";
+            this.verToolStripMenuItem.Size = new System.Drawing.Size(44, 22);
+            this.verToolStripMenuItem.Text = "Vista";
             // 
             // ordenarPanelesToolStripMenuItem
             // 
@@ -242,6 +245,15 @@
             this.administrarEtiquetasToolStripMenuItem.Text = "Administrar etiquetas";
             this.administrarEtiquetasToolStripMenuItem.Click += new System.EventHandler(this.administrarEtiquetasToolStripMenuItem_Click);
             // 
+            // herramientasToolStripMenuItem
+            // 
+            this.herramientasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.configuracionesToolStripMenuItem});
+            this.herramientasToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Window;
+            this.herramientasToolStripMenuItem.Name = "herramientasToolStripMenuItem";
+            this.herramientasToolStripMenuItem.Size = new System.Drawing.Size(90, 22);
+            this.herramientasToolStripMenuItem.Text = "Herramientas";
+            // 
             // labelDepth
             // 
             this.labelDepth.Anchor = System.Windows.Forms.AnchorStyles.None;
@@ -295,6 +307,13 @@
             this.splitter1.TabIndex = 3;
             this.splitter1.TabStop = false;
             // 
+            // configuracionesToolStripMenuItem
+            // 
+            this.configuracionesToolStripMenuItem.Name = "configuracionesToolStripMenuItem";
+            this.configuracionesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.configuracionesToolStripMenuItem.Text = "Configuraciones";
+            this.configuracionesToolStripMenuItem.Click += new System.EventHandler(this.configuracionesToolStripMenuItem_Click);
+            // 
             // Home
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -343,5 +362,7 @@
         private System.Windows.Forms.ToolStripMenuItem searchActualtoolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem searchAlltoolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem administrarEtiquetasToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem herramientasToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem configuracionesToolStripMenuItem;
     }
 }
