@@ -64,7 +64,6 @@
             this.buttonBackgroundColor = new System.Windows.Forms.Button();
             this.buttonSearchSonCoverDefault = new System.Windows.Forms.Button();
             this.buttonColorPickIMG = new System.Windows.Forms.Button();
-            this.checkBoxImageLocation = new System.Windows.Forms.CheckBox();
             this.BackgroundColorCheck = new System.Windows.Forms.CheckBox();
             this.checkBoxScanFolder = new System.Windows.Forms.CheckBox();
             this.textBoxScanFolder = new System.Windows.Forms.TextBox();
@@ -76,7 +75,6 @@
             this.buttonDeleteCover = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.dataGridViewTags = new System.Windows.Forms.DataGridView();
-            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.Column2 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
@@ -496,7 +494,7 @@
             this.buttonSearchCover.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
             this.buttonSearchCover.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonSearchCover.ForeColor = System.Drawing.SystemColors.Window;
-            this.buttonSearchCover.Location = new System.Drawing.Point(218, 174);
+            this.buttonSearchCover.Location = new System.Drawing.Point(218, 192);
             this.buttonSearchCover.Name = "buttonSearchCover";
             this.buttonSearchCover.Size = new System.Drawing.Size(118, 23);
             this.buttonSearchCover.TabIndex = 13;
@@ -509,7 +507,7 @@
             this.buttonBackgroundColor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
             this.buttonBackgroundColor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonBackgroundColor.ForeColor = System.Drawing.SystemColors.Window;
-            this.buttonBackgroundColor.Location = new System.Drawing.Point(341, 202);
+            this.buttonBackgroundColor.Location = new System.Drawing.Point(341, 220);
             this.buttonBackgroundColor.Name = "buttonBackgroundColor";
             this.buttonBackgroundColor.Size = new System.Drawing.Size(99, 23);
             this.buttonBackgroundColor.TabIndex = 14;
@@ -522,7 +520,7 @@
             this.buttonSearchSonCoverDefault.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
             this.buttonSearchSonCoverDefault.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonSearchSonCoverDefault.ForeColor = System.Drawing.SystemColors.Window;
-            this.buttonSearchSonCoverDefault.Location = new System.Drawing.Point(739, 202);
+            this.buttonSearchSonCoverDefault.Location = new System.Drawing.Point(739, 220);
             this.buttonSearchSonCoverDefault.Name = "buttonSearchSonCoverDefault";
             this.buttonSearchSonCoverDefault.Size = new System.Drawing.Size(118, 23);
             this.buttonSearchSonCoverDefault.TabIndex = 15;
@@ -535,30 +533,18 @@
             this.buttonColorPickIMG.BackColor = System.Drawing.Color.Black;
             this.buttonColorPickIMG.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonColorPickIMG.ForeColor = System.Drawing.SystemColors.Window;
-            this.buttonColorPickIMG.Location = new System.Drawing.Point(446, 202);
+            this.buttonColorPickIMG.Location = new System.Drawing.Point(446, 220);
             this.buttonColorPickIMG.Name = "buttonColorPickIMG";
             this.buttonColorPickIMG.Size = new System.Drawing.Size(23, 23);
             this.buttonColorPickIMG.TabIndex = 16;
             this.buttonColorPickIMG.UseVisualStyleBackColor = false;
-            // 
-            // checkBoxImageLocation
-            // 
-            this.checkBoxImageLocation.AutoSize = true;
-            this.checkBoxImageLocation.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.checkBoxImageLocation.ForeColor = System.Drawing.SystemColors.Window;
-            this.checkBoxImageLocation.Location = new System.Drawing.Point(218, 226);
-            this.checkBoxImageLocation.Name = "checkBoxImageLocation";
-            this.checkBoxImageLocation.Size = new System.Drawing.Size(229, 17);
-            this.checkBoxImageLocation.TabIndex = 17;
-            this.checkBoxImageLocation.Text = "Utilizar la imagen desde su ubicacion actual";
-            this.checkBoxImageLocation.UseVisualStyleBackColor = true;
             // 
             // BackgroundColorCheck
             // 
             this.BackgroundColorCheck.AutoSize = true;
             this.BackgroundColorCheck.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BackgroundColorCheck.ForeColor = System.Drawing.SystemColors.Window;
-            this.BackgroundColorCheck.Location = new System.Drawing.Point(342, 180);
+            this.BackgroundColorCheck.Location = new System.Drawing.Point(342, 198);
             this.BackgroundColorCheck.Name = "BackgroundColorCheck";
             this.BackgroundColorCheck.Size = new System.Drawing.Size(115, 17);
             this.BackgroundColorCheck.TabIndex = 33;
@@ -657,7 +643,7 @@
             this.buttonDeleteCover.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
             this.buttonDeleteCover.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonDeleteCover.ForeColor = System.Drawing.SystemColors.Window;
-            this.buttonDeleteCover.Location = new System.Drawing.Point(218, 202);
+            this.buttonDeleteCover.Location = new System.Drawing.Point(218, 220);
             this.buttonDeleteCover.Margin = new System.Windows.Forms.Padding(2);
             this.buttonDeleteCover.Name = "buttonDeleteCover";
             this.buttonDeleteCover.Size = new System.Drawing.Size(118, 23);
@@ -671,7 +657,7 @@
             this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
             this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.button2.ForeColor = System.Drawing.SystemColors.Window;
-            this.button2.Location = new System.Drawing.Point(862, 202);
+            this.button2.Location = new System.Drawing.Point(862, 220);
             this.button2.Margin = new System.Windows.Forms.Padding(2);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(91, 23);
@@ -708,18 +694,6 @@
             this.dataGridViewTags.Size = new System.Drawing.Size(213, 203);
             this.dataGridViewTags.TabIndex = 44;
             // 
-            // checkBox1
-            // 
-            this.checkBox1.AutoSize = true;
-            this.checkBox1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.checkBox1.ForeColor = System.Drawing.SystemColors.Window;
-            this.checkBox1.Location = new System.Drawing.Point(739, 226);
-            this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(229, 17);
-            this.checkBox1.TabIndex = 45;
-            this.checkBox1.Text = "Utilizar la imagen desde su ubicacion actual";
-            this.checkBox1.UseVisualStyleBackColor = true;
-            // 
             // Column2
             // 
             this.Column2.HeaderText = "Añadir";
@@ -750,7 +724,6 @@
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(61)))), ((int)(((byte)(72)))));
             this.ClientSize = new System.Drawing.Size(1047, 561);
-            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.dataGridViewTags);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.buttonDeleteCover);
@@ -761,7 +734,6 @@
             this.Controls.Add(this.textBoxScanFolder);
             this.Controls.Add(this.checkBoxScanFolder);
             this.Controls.Add(this.BackgroundColorCheck);
-            this.Controls.Add(this.checkBoxImageLocation);
             this.Controls.Add(this.buttonColorPickIMG);
             this.Controls.Add(this.buttonSearchSonCoverDefault);
             this.Controls.Add(this.buttonBackgroundColor);
@@ -847,7 +819,6 @@
         private System.Windows.Forms.Button buttonBackgroundColor;
         private System.Windows.Forms.Button buttonSearchSonCoverDefault;
         private System.Windows.Forms.Button buttonColorPickIMG;
-        private System.Windows.Forms.CheckBox checkBoxImageLocation;
         private System.Windows.Forms.CheckBox BackgroundColorCheck;
         private System.Windows.Forms.CheckBox checkBoxScanFolder;
         private System.Windows.Forms.TextBox textBoxScanFolder;
@@ -858,7 +829,6 @@
         private System.Windows.Forms.Button buttonDeleteCover;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.DataGridView dataGridViewTags;
-        private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;

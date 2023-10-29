@@ -13,7 +13,7 @@ using ImageMagick;
 using System.Collections.Generic;
 using CoverPadLauncher;
 using CoverPadLauncher.Clases;
-//using static System.Net.WebRequestMethods;
+using System.Drawing.Imaging;
 
 namespace C_Launcher
 {
@@ -39,9 +39,18 @@ namespace C_Launcher
         //Ruta de los covers
         private string dirCoversPath = "System\\Covers";
         //Ruta de los elementos del sistema (iconos y demas)
-        private string imgCollIconPath = "System\\Resources\\CollectionIcon.png";
-        private string imgScanFileIconPath = "System\\Resources\\ScanFileIcon.png";
-        private string imgScanDirIconPath = "System\\Resources\\ScanDirIcon.png";
+        private string[] imgResourceIcons = { 
+            "System\\Resources\\CollectionIcon.png" ,//0
+            "System\\Resources\\ScanFileIcon.png", //1
+            "System\\Resources\\ScanDirIcon.png",//2
+            "System\\Resources\\CreateIcon.png",//3
+            "System\\Resources\\DeleteIcon.png",//4
+            "System\\Resources\\EditIcon.png",//5
+            "System\\Resources\\FavoriteIcon.png",//6
+            "System\\Resources\\FavoriteIcon2.png",//7
+            "System\\Resources\\UbicationIcon.png", //8
+            "System\\Resources\\OpenIcon.png" //9
+        };
 
         //Escaneo de directorio
         private List<string> scanDepth = new List<string>();
@@ -70,13 +79,17 @@ namespace C_Launcher
             ToolStripMenuItem ToolStripAddFile         = new ToolStripMenuItem();
             ToolStripMenuItem ToolStripAddMultipleFile = new ToolStripMenuItem();
             ToolStripMenuItem ToolStripEditAllElements = new ToolStripMenuItem();
-            ToolStripAddCollection.Text = "Crear coleccion";
-            ToolStripAddCollection.Click += new EventHandler(ToolStripAddCollection_Click);
             ToolStripAddFile.Text = "Crear elemento";
+            ToolStripAddFile.Image = Image.FromFile(imgResourceIcons[3]);
             ToolStripAddFile.Click += new EventHandler(ToolStripAddFile_Click);
+            ToolStripAddCollection.Text = "Crear coleccion";
+            ToolStripAddCollection.Image = Image.FromFile(imgResourceIcons[3]);
+            ToolStripAddCollection.Click += new EventHandler(ToolStripAddCollection_Click);
             ToolStripAddMultipleFile.Text = "Crear multiples elementos";
+            ToolStripAddMultipleFile.Image = Image.FromFile(imgResourceIcons[3]);
             ToolStripAddMultipleFile.Click += new EventHandler(ToolStripAddMultipleFiles_Click);
             ToolStripEditAllElements.Text = "Editar todos los elementos de la coleccion";
+            ToolStripEditAllElements.Image = Image.FromFile(imgResourceIcons[5]);
             ToolStripEditAllElements.Click += new EventHandler(ToolStripEditMultipleFlowLayoutPanel_Click);
             contextMenuLayoutPanel.Items.AddRange(new ToolStripItem[] { ToolStripAddFile, ToolStripAddCollection, ToolStripAddMultipleFile, ToolStripEditAllElements });
             //Agregar al layout panel
@@ -790,15 +803,15 @@ namespace C_Launcher
 
             //Dibujar un icono para indicar que algo es una coleccion
             if (boxType == "collection") {
-                Bitmap bpm = new Bitmap(imgCollIconPath);
+                Bitmap bpm = new Bitmap(imgResourceIcons[0]);
                 g.DrawImage(bpm, 5, 5);
                 bpm.Dispose();
             } else if (boxType == "automaticFile") {
-                Bitmap bpm = new Bitmap(imgScanFileIconPath);
+                Bitmap bpm = new Bitmap(imgResourceIcons[1]);
                 g.DrawImage(bpm, 5, 5);
                 bpm.Dispose();
             } else if (boxType == "automaticFolder") {
-                Bitmap bpm = new Bitmap(imgScanDirIconPath);
+                Bitmap bpm = new Bitmap(imgResourceIcons[2]);
                 g.DrawImage(bpm, 5, 5);
                 bpm.Dispose();
             }
@@ -929,6 +942,7 @@ namespace C_Launcher
                 //MenuStrip Globales (normales y escaneados)
                 ToolStripMenuItem ToolStripEdit = new ToolStripMenuItem();
                 ToolStripEdit.Text = "Editar";
+                ToolStripEdit.Image = Image.FromFile(imgResourceIcons[5]);
                 ToolStripEdit.Click += new EventHandler(ToolStripEditPictureBox_Click);
 
                 //Menu Strip "global" (no sirve para los picture box escaneados de un directorio)
@@ -938,8 +952,10 @@ namespace C_Launcher
                     ToolStripMenuItem ToolStripFav = new ToolStripMenuItem();
                     
                     ToolStripDelete.Text = "Eliminar";
+                    ToolStripDelete.Image = Image.FromFile(imgResourceIcons[3]);
                     ToolStripDelete.Click += new EventHandler(ToolStripDeletePictureBox_Click);
                     ToolStripFav.Text = "Agregar a Favoritos";
+                    ToolStripFav.Image = Image.FromFile(imgResourceIcons[7]);
                     ToolStripFav.Click += new EventHandler(ToolStripFavSetPictureBox_Click);
 
                     //Crear un contextMenu local para modificarlo a gusto
@@ -950,8 +966,10 @@ namespace C_Launcher
                     ToolStripMenuItem ToolStripAutomaticOpen = new ToolStripMenuItem();
                     ToolStripMenuItem ToolStripAutomaticOpenContent = new ToolStripMenuItem();
                     ToolStripAutomaticOpen.Text = "Mostrar ubicacion";
+                    ToolStripAutomaticOpen.Image = Image.FromFile(imgResourceIcons[8]);
                     ToolStripAutomaticOpen.Click += new EventHandler(ToolStripOpenInExplorerElementPictureBox_Click);
                     ToolStripAutomaticOpenContent.Text = "Mostrar ubicacion del contenido";
+                    ToolStripAutomaticOpenContent.Image = Image.FromFile(imgResourceIcons[8]);
                     ToolStripAutomaticOpenContent.Click += new EventHandler(ToolStripOpenInExplorerContentAutomaticPictureBox_Click);
 
                     contextMenuStrip.Items.AddRange(new ToolStripItem[] { ToolStripEdit, ToolStripAutomaticOpen, ToolStripAutomaticOpenContent });
@@ -972,6 +990,7 @@ namespace C_Launcher
                     if (url == false) {
                         ToolStripMenuItem ToolStripOpenInExplorer = new ToolStripMenuItem();
                         ToolStripOpenInExplorer.Text = "Mostrar ubicacion";
+                        ToolStripOpenInExplorer.Image = Image.FromFile(imgResourceIcons[8]);
                         ToolStripOpenInExplorer.Click += new EventHandler(ToolStripOpenInExplorerElementPictureBox_Click);
                         contextMenuStrip.Items.Add(ToolStripOpenInExplorer);
                     }
@@ -983,6 +1002,7 @@ namespace C_Launcher
 
                         ToolStripMenuItem ToolStripOpenProgram = new ToolStripMenuItem();
                         ToolStripOpenProgram.Text = $"Abrir {programName}";
+                        ToolStripOpenProgram.Image = Image.FromFile(imgResourceIcons[9]);
                         ToolStripOpenProgram.Click += new EventHandler(ToolStripOpenProgramPictureBox_Click);
 
                         contextMenuStrip.Items.Add(ToolStripOpenProgram);
@@ -993,6 +1013,7 @@ namespace C_Launcher
                 {
                     ToolStripMenuItem ToolStripEditAll = new ToolStripMenuItem();
                     ToolStripEditAll.Text = "Editar todos los elementos de la coleccion";
+                    ToolStripEditAll.Image = Image.FromFile(imgResourceIcons[5]);
                     ToolStripEditAll.Click += new EventHandler(ToolStripEditMultiplePictureBox_Click);
 
                     fav = getColeFav(idBox);
@@ -1009,10 +1030,12 @@ namespace C_Launcher
                     if (fav == false)
                     {
                         toolStripMenuItem.Text = "Agregar a favoritos";
+                        toolStripMenuItem.Image = Image.FromFile(imgResourceIcons[7]);
                     }
                     else if (fav == true)
                     {
                         toolStripMenuItem.Text = "Quitar de favoritos";
+                        toolStripMenuItem.Image = Image.FromFile(imgResourceIcons[6]);
                     }
                 }
 
@@ -1884,8 +1907,6 @@ namespace C_Launcher
             }
             #endregion
 
-            
-
             flowLayoutPanelMain.ResumeLayout();
         }
 
@@ -2352,7 +2373,7 @@ namespace C_Launcher
         }*/
         #endregion
 
-        #region Archivos
+        #region Elementos
         //Cargar el tamaño de elementos con id que existen en el xml de archivos
         private int LoadFilesSize()
         {
@@ -2470,11 +2491,15 @@ namespace C_Launcher
                 file.SetAttribute("id", Class.ID.ToString());
             }
 
+            //Guardar la imagen
+            string coverDir = "";
+            if (Class.ImagePath != "") coverDir = saveCover(Class.Name, Class.ImagePath, Class.ID == -1, "element_");//si Class.ID == 1, se esta creando un elemento desde 0
+
             //Elementos de ese file
             //Crea el nombre del elemento a agregar; agrega los datos; agrega los elementos de la coleccion a la coleccion
             XmlElement fileFather = xmlDoc.CreateElement("IDFather"); fileFather.InnerText = Class.IDFather.ToString(); file.AppendChild(fileFather);
             XmlElement fileName = xmlDoc.CreateElement("Name"); fileName.InnerText = Class.Name; file.AppendChild(fileName);
-            XmlElement fileImage = xmlDoc.CreateElement("Image"); fileImage.InnerText = Class.ImagePath; file.AppendChild(fileImage);
+            XmlElement fileImage = xmlDoc.CreateElement("Image"); fileImage.InnerText = coverDir; file.AppendChild(fileImage);
             XmlElement fileLayout = xmlDoc.CreateElement("ImageLayout"); fileLayout.InnerText = Class.ImageLayout.ToString(); file.AppendChild(fileLayout);
             XmlElement filePath = xmlDoc.CreateElement("FilePath"); filePath.InnerText = Class.FilePath; file.AppendChild(filePath);
             XmlElement fileProgram = xmlDoc.CreateElement("ProgramPath"); fileProgram.InnerText = Class.ProgramPath; file.AppendChild(fileProgram);
@@ -2898,11 +2923,16 @@ namespace C_Launcher
                 coleccion.SetAttribute("id", Class.ID.ToString());
             }
 
+            //Guardar la imagen
+            string coverDir = "";
+            if (Class.ImagePath != "") coverDir = saveCover(Class.Name, Class.ImagePath, Class.ID == -1, "collection_");//si Class.ID == 1, se esta creando un elemento desde 0
+
+
             //Elementos de esa coleccion
             //Crea el nombre del elemento a agregar; agrega los datos; agrega los elementos de la coleccion a la coleccion
             XmlElement colFather = xmlDoc.CreateElement("IDFather"); colFather.InnerText = Class.IDFather.ToString(); coleccion.AppendChild(colFather);
             XmlElement colName = xmlDoc.CreateElement("Name"); colName.InnerText = Class.Name; coleccion.AppendChild(colName);
-            XmlElement colImage = xmlDoc.CreateElement("Image"); colImage.InnerText = Class.ImagePath; coleccion.AppendChild(colImage);
+            XmlElement colImage = xmlDoc.CreateElement("Image"); colImage.InnerText = coverDir; coleccion.AppendChild(colImage);
             XmlElement colLayout = xmlDoc.CreateElement("ImageLayout"); colLayout.InnerText = Class.ImageLayout.ToString(); coleccion.AppendChild(colLayout);
             XmlElement colBg = xmlDoc.CreateElement("WithoutBackground"); colBg.InnerText = Class.Background.ToString(); coleccion.AppendChild(colBg);
             XmlElement colBgRed = xmlDoc.CreateElement("BackgroundRed"); colBgRed.InnerText = Class.ColorRed.ToString(); coleccion.AppendChild(colBgRed);
@@ -3513,6 +3543,101 @@ namespace C_Launcher
                 return extensionLower == ".jpg" || extensionLower == ".png" || extensionLower == ".webp";
             }
             return false;
+        }
+
+        private string returnImagePath(string outputFolder, string fileName, string extension)
+        {
+            string destinationFile = outputFolder + "\\" + extension + fileName + ".png";
+            int i = 0;
+            while (File.Exists(destinationFile))
+            {
+                i++;
+                destinationFile = outputFolder + "\\"+ extension + fileName + "(" + i + ").png";//Se le cambia la extension a png
+            }
+            return destinationFile;
+        }
+
+        private string saveCover(string coverName, string originalImageDir, bool newCover, string coverType)
+        {
+            //Evitar que se guarde la imagen con caracteres invalidos
+            string cleanName = Path.GetInvalidFileNameChars().Aggregate(coverName, (current, c) => current.Replace(c.ToString(), string.Empty));
+            string imgPath = "";
+            //Mover la imagen hacia la carpeta covers y transformarla a .png
+            //Si estas creando un nuevo archivo, verificar si no existe un archivo con el mismo nombre, y si es asi, ponerle un iterador
+            if (originalImageDir != "")
+            {
+                if (newCover)
+                {
+                    imgPath = returnImagePath(dirCoversPath, cleanName, coverType);
+                }
+                else
+                {
+                    //Si estas editando un archivo, ocupar la misma direccion que en el xml, pues el nombre se decidio al crearse
+                    if (originalImageDir != null)
+                    {
+                        string systemCoverDir = dirCoversPath;
+                        string xmlDir = Path.GetDirectoryName(originalImageDir);
+                        if (xmlDir != systemCoverDir)
+                        {
+                            imgPath = returnImagePath(dirCoversPath, cleanName, coverType);
+                        }
+                        else
+                        {
+                            imgPath = originalImageDir;
+                        }
+                    }
+                    else
+                    {
+
+                        imgPath = returnImagePath(dirCoversPath, cleanName, coverType);
+                    }
+
+                }
+            }
+
+            if (!Directory.Exists(dirCoversPath))
+            {
+                // Crea la carpeta Systems/Covers si no existe
+                Directory.CreateDirectory(dirCoversPath);
+            }
+
+
+            //Solo reemplazar una imagen si esta existe o si la imagen de origen no es la misma que el destino
+            if ((imgPath != "") && (imgPath != null) && (originalImageDir != imgPath))
+            {
+                //Las imagenes webp no pueden ser copiadas y pegadas a un formato png, deben ser transformadas y guardadas dentro de un objeto
+                if (Path.GetExtension(originalImageDir).ToLower() == ".webp")
+                {
+                    Image saveImage;
+                    using (MagickImage img = new MagickImage(originalImageDir))
+                    {
+                        // Convierte la imagen WebP a un formato compatible con PictureBox (por ejemplo, JPEG)
+                        // Para mostrar la imagen en el PictureBox
+                        img.Format = MagickFormat.Png;
+
+                        // Convierte la imagen en un flujo de memoria
+                        using (var memoryStream = new System.IO.MemoryStream())
+                        {
+                            img.Write(memoryStream);
+
+                            // Carga el flujo de memoria en el PictureBox
+                            saveImage = System.Drawing.Image.FromStream(memoryStream);//img;
+                        }
+                    }
+
+                    if (saveImage != null)
+                    {
+                        saveImage.Save(imgPath, ImageFormat.Png);
+                    }
+                }
+                else
+                {
+                    System.IO.File.Copy(originalImageDir, imgPath, true);
+                }
+
+            }
+
+            return imgPath;
         }
         #endregion
 

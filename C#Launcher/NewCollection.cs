@@ -998,22 +998,22 @@ namespace C_Launcher
                 Console.WriteLine("res son id comb res selected: " + resSonID);
             }
 
-            string nameCollection = textBoxName.Text;
+            //string nameCollection = textBoxName.Text;
             //Evitar que se guarde la imagen con caracteres invalidos
-            string cleanName = Path.GetInvalidFileNameChars().Aggregate(textBoxName.Text, (current, c) => current.Replace(c.ToString(), string.Empty));
-            string imgPath = "";
+            //string cleanName = Path.GetInvalidFileNameChars().Aggregate(textBoxName.Text, (current, c) => current.Replace(c.ToString(), string.Empty));
+            //string imgPath = "";
              
             //Guardar la imagen
-            if (pictureBoxCoverCollection.Tag != null)
+            /*if (pictureBoxCoverCollection.Tag != null)
             {
-                if (checkBoxImageLocation.Checked == true)
+                /*if (checkBoxImageLocation.Checked == true)
                 {
                     imgPath = pictureBoxCoverCollection.Tag.ToString();
                 }
                 else
-                {
+                {*/
                     //string outputFolder = System.Environment.CurrentDirectory + "\\System\\Covers";
-                    string outputFolder = coverPath;
+                    /*string outputFolder = coverPath;
 
                     //Si estas creando un nuevo archivo, verificar si no existe un archivo con el mismo nombre, y si es asi, ponerle un iterador
                     if (idCollection == -1)
@@ -1085,8 +1085,8 @@ namespace C_Launcher
                             System.IO.File.Copy(source, imgPath, true);
                         }
                     }
-                }
-            }
+                //}
+            }*/
 
             //Image layout
             int imgLayout = 0;
@@ -1156,9 +1156,10 @@ namespace C_Launcher
 
             //Agregarlo como array
             scanOpenExtension = dgScanValue.ToArray();
-            
 
-            Collections passCollection = new Collections(idCollection, idFather, nameCollection, imgPath, imgLayout, background, R, G, B, resID, width, height, resSonID, sonWidth, sonHeight, sonLayout, saveTagsArray, scanTagsArray, favorite, scanFolder, scanPath, scanStartNumber, scanOpenExtension);
+            string imageDir = pictureBoxCoverCollection.Tag != null ? pictureBoxCoverCollection.Tag.ToString() : "";
+
+            Collections passCollection = new Collections(idCollection, idFather, textBoxName.Text, imageDir, imgLayout, background, R, G, B, resID, width, height, resSonID, sonWidth, sonHeight, sonLayout, saveTagsArray, scanTagsArray, favorite, scanFolder, scanPath, scanStartNumber, scanOpenExtension);
             ReturnedObject?.Invoke(this, passCollection);
             this.Close();
         }

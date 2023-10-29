@@ -843,18 +843,6 @@ namespace C_Launcher
             }
         }
 
-        private string returnImagePath(string outputFolder, string fileName)
-        {
-            string destinationFile = outputFolder + "\\file_" + fileName + ".png";
-            int i = 0;
-            while (File.Exists(destinationFile))
-            {
-                i++;
-                destinationFile = outputFolder + "\\file_" + fileName + "(" + i + ").png";//Se le cambia la extension a png
-            }
-            return destinationFile;
-        }
-
         private void buttonSave_Click(object sender, EventArgs e)
         {
             Console.WriteLine(comboBoxFather.SelectedIndex - 1);
@@ -870,93 +858,11 @@ namespace C_Launcher
                 resID = combResID[comboBoxResolution.SelectedIndex - 1];
             }
 
-            string nameFile = textBoxName.Text;
+            //string nameFile = textBoxName.Text;
             //Evitar que se guarde la imagen con caracteres invalidos
-            string cleanName = Path.GetInvalidFileNameChars().Aggregate(textBoxName.Text, (current, c) => current.Replace(c.ToString(), string.Empty));
-            string imgPath = "";
+            //string cleanName = Path.GetInvalidFileNameChars().Aggregate(textBoxName.Text, (current, c) => current.Replace(c.ToString(), string.Empty));
+            //string imgPath = "";
 
-            //Guardar la imagen
-            if (pictureBoxCover.Tag != null)
-            {
-                if (checkBoxImageLocation.Checked == true)
-                {
-                    //Ocupar la imagen en su ubicacion actual
-                    imgPath = pictureBoxCover.Tag.ToString();
-                } else {
-                    //Mover la imagen hacia la carpeta covers y transformarla a .png
-                    //string outputFolder = System.Environment.CurrentDirectory + "\\System\\Covers";
-                    string outputFolder = coverPath;
-
-                    //Si estas creando un nuevo archivo, verificar si no existe un archivo con el mismo nombre, y si es asi, ponerle un iterador
-                    if (idFile == -1)
-                    {
-                        imgPath = returnImagePath(outputFolder, cleanName);
-                    } else
-                    {
-                        //Si estas editando un archivo, ocupar la misma direccion que en el xml, pues el nombre se decidio al crearlo (arriba)
-                        if (xmlImagePath != null)
-                        {
-                            //string systemCoverDir = System.Environment.CurrentDirectory + "\\System\\Covers";
-                            string systemCoverDir = coverPath;
-                            string xmlDir = Path.GetDirectoryName(xmlImagePath);
-                            if (xmlDir != systemCoverDir)
-                            {
-                                imgPath = returnImagePath(outputFolder, cleanName);
-                            }
-                            else
-                            {
-                                imgPath = xmlImagePath;//pictureBoxCover.Tag.ToString();
-                            }
-                        } else
-                        {
-                            
-                            imgPath = returnImagePath(outputFolder, cleanName);
-                        }
-                        
-                    }
-
-                    if (!Directory.Exists(outputFolder))
-                    {
-                        // Crea la carpeta Systems/Covers si no existe
-                        Directory.CreateDirectory(outputFolder);
-                    }
-
-                    string source = pictureBoxCover.Tag.ToString();
-
-                    //Solo reemplazar una imagen si esta existe o si la imagen de origen no es la misma que el destino
-                    if ((imgPath != "") && (imgPath != null) && (source != imgPath))
-                    {
-                        //Las imagenes webp no pueden ser copiadas y pegadas a un formato png, deben ser transformadas y guardadas dentro de un objeto
-                        if (Path.GetExtension(source).ToLower() == ".webp")
-                        {
-                            Image saveImage;
-                            using (MagickImage img = new MagickImage(source))
-                            {
-                                // Convierte la imagen WebP a un formato compatible con PictureBox (por ejemplo, JPEG)
-                                // Para mostrar la imagen en el PictureBox
-                                img.Format = MagickFormat.Png;
-
-                                // Convierte la imagen en un flujo de memoria
-                                using (var memoryStream = new System.IO.MemoryStream())
-                                {
-                                    img.Write(memoryStream);
-
-                                    // Carga el flujo de memoria en el PictureBox
-                                    saveImage = System.Drawing.Image.FromStream(memoryStream);//img;
-                                }
-                            }
-
-                            if (saveImage != null)
-                            {
-                                saveImage.Save(imgPath, ImageFormat.Png);
-                            }
-                        } else {
-                            System.IO.File.Copy(source, imgPath, true);
-                        }
-                        
-                    }
-                }
-            }
 
             //Image layout
             int imgLayout = 0;
@@ -992,8 +898,9 @@ namespace C_Launcher
 
             bool favorite = checkBoxFavorite.Checked;
 
-
-            Files passFile = new Files(idFile, idFather, nameFile, imgPath, imgLayout, filePath, programPath, cmdLine, background, R, G, B, resID, width, height, url, tagsArray, favorite);
+            string imageDir = pictureBoxCover.Tag != null ? pictureBoxCover.Tag.ToString() : "";
+            
+            Files passFile = new Files(idFile, idFather, textBoxName.Text, imageDir, imgLayout, filePath, programPath, cmdLine, background, R, G, B, resID, width, height, url, tagsArray, favorite);
             ReturnedObject?.Invoke(this, passFile);
             this.Close();
         }

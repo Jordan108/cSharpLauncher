@@ -58,7 +58,6 @@
             this.comboBoxResolution = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.buttonColorPickIMG = new System.Windows.Forms.Button();
-            this.checkBoxImageLocation = new System.Windows.Forms.CheckBox();
             this.addResolution = new System.Windows.Forms.Button();
             this.BackgroundColorCheck = new System.Windows.Forms.CheckBox();
             this.buttonSearchProgram = new System.Windows.Forms.Button();
@@ -437,17 +436,6 @@
             this.buttonColorPickIMG.TabIndex = 29;
             this.buttonColorPickIMG.UseVisualStyleBackColor = false;
             // 
-            // checkBoxImageLocation
-            // 
-            this.checkBoxImageLocation.AutoSize = true;
-            this.checkBoxImageLocation.ForeColor = System.Drawing.SystemColors.Window;
-            this.checkBoxImageLocation.Location = new System.Drawing.Point(280, 257);
-            this.checkBoxImageLocation.Name = "checkBoxImageLocation";
-            this.checkBoxImageLocation.Size = new System.Drawing.Size(215, 17);
-            this.checkBoxImageLocation.TabIndex = 30;
-            this.checkBoxImageLocation.Text = "Utilizar la imagen en su ubicacion actual";
-            this.checkBoxImageLocation.UseVisualStyleBackColor = true;
-            // 
             // addResolution
             // 
             this.addResolution.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
@@ -539,7 +527,6 @@
             this.Controls.Add(this.button2);
             this.Controls.Add(this.BackgroundColorCheck);
             this.Controls.Add(this.addResolution);
-            this.Controls.Add(this.checkBoxImageLocation);
             this.Controls.Add(this.buttonColorPickIMG);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.comboBoxResolution);
@@ -614,7 +601,6 @@
         private System.Windows.Forms.ComboBox comboBoxResolution;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button buttonColorPickIMG;
-        private System.Windows.Forms.CheckBox checkBoxImageLocation;
         private System.Windows.Forms.Button addResolution;
         private System.Windows.Forms.CheckBox BackgroundColorCheck;
         private System.Windows.Forms.Button buttonSearchProgram;
