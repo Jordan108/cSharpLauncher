@@ -78,6 +78,7 @@
             this.Column2 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.addResolution = new System.Windows.Forms.Button();
             this.groupBoxCover.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericColHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericColWidth)).BeginInit();
@@ -144,7 +145,7 @@
             this.comboBoxResolutionCol.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.comboBoxResolutionCol.ForeColor = System.Drawing.SystemColors.Window;
             this.comboBoxResolutionCol.FormattingEnabled = true;
-            this.comboBoxResolutionCol.Location = new System.Drawing.Point(12, 318);
+            this.comboBoxResolutionCol.Location = new System.Drawing.Point(12, 284);
             this.comboBoxResolutionCol.Name = "comboBoxResolutionCol";
             this.comboBoxResolutionCol.Size = new System.Drawing.Size(200, 21);
             this.comboBoxResolutionCol.TabIndex = 4;
@@ -154,7 +155,7 @@
             // 
             this.labelResolutionCol.AutoSize = true;
             this.labelResolutionCol.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelResolutionCol.Location = new System.Drawing.Point(12, 302);
+            this.labelResolutionCol.Location = new System.Drawing.Point(9, 268);
             this.labelResolutionCol.Name = "labelResolutionCol";
             this.labelResolutionCol.Size = new System.Drawing.Size(109, 13);
             this.labelResolutionCol.TabIndex = 5;
@@ -685,13 +686,13 @@
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridViewTags.DefaultCellStyle = dataGridViewCellStyle1;
             this.dataGridViewTags.GridColor = System.Drawing.Color.White;
-            this.dataGridViewTags.Location = new System.Drawing.Point(1, 78);
+            this.dataGridViewTags.Location = new System.Drawing.Point(1, 73);
             this.dataGridViewTags.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridViewTags.Name = "dataGridViewTags";
             this.dataGridViewTags.RowHeadersVisible = false;
             this.dataGridViewTags.RowHeadersWidth = 62;
             this.dataGridViewTags.RowTemplate.Height = 28;
-            this.dataGridViewTags.Size = new System.Drawing.Size(213, 203);
+            this.dataGridViewTags.Size = new System.Drawing.Size(213, 193);
             this.dataGridViewTags.TabIndex = 44;
             // 
             // Column2
@@ -717,6 +718,20 @@
             this.Column3.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
             this.Column3.Width = 60;
             // 
+            // addResolution
+            // 
+            this.addResolution.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
+            this.addResolution.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.addResolution.ForeColor = System.Drawing.SystemColors.Window;
+            this.addResolution.Location = new System.Drawing.Point(12, 310);
+            this.addResolution.Margin = new System.Windows.Forms.Padding(2);
+            this.addResolution.Name = "addResolution";
+            this.addResolution.Size = new System.Drawing.Size(200, 21);
+            this.addResolution.TabIndex = 45;
+            this.addResolution.Text = "Añadir";
+            this.addResolution.UseVisualStyleBackColor = false;
+            this.addResolution.Click += new System.EventHandler(this.addResolution_Click);
+            // 
             // NewCollection
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -724,6 +739,7 @@
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(61)))), ((int)(((byte)(72)))));
             this.ClientSize = new System.Drawing.Size(1047, 561);
+            this.Controls.Add(this.addResolution);
             this.Controls.Add(this.dataGridViewTags);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.buttonDeleteCover);
@@ -833,5 +849,6 @@
         private System.Windows.Forms.DataGridViewCheckBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Column3;
+        private System.Windows.Forms.Button addResolution;
     }
 }

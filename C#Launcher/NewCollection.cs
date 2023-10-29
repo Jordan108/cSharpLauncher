@@ -935,7 +935,73 @@ namespace C_Launcher
             }
         }
 
-        
+        private void addResolution_Click(object sender, EventArgs e)
+        {
+            Resolution res = new Resolution();
+            res.ReturnedObject += Resolution_ReturnedObject; //Este script actualiza las resoluciones
+            res.ShowDialog();
+        }
+
+        private void Resolution_ReturnedObject(object sender, bool e)
+        {
+            if (e == true)
+            {
+                //Actualizar las resoluciones despues de administrarlas
+                #region Actualizar Resoluciones despues de administrarlas
+                //Limpiar todo del combobox
+                comboBoxResolutionCol.Items.Clear();
+                comboBoxSonResolution.Items.Clear();
+                //Agregando item default
+                comboBoxResolutionCol.Items.Add("Ninguno");
+                comboBoxSonResolution.Items.Add("Ninguno");
+                comboBoxResolutionCol.SelectedIndex = 0;//Se selecciona despues
+                comboBoxSonResolution.SelectedIndex = 0;//Se selecciona despues
+
+                //Cargar el tamaño del xml de las resoluciones y adaptar el array a eso
+                int resSize = LoadResolutionSize();
+                Array.Resize(ref combResID, resSize);
+
+                Console.WriteLine("SIZE RES: " + resSize.ToString());
+
+                //Cargar las resoluciones al combobox
+                int resID = 1;
+                for (int i = 1; i < (resSize + 1); i++)
+                {
+                    Console.WriteLine("iterando en: " + i + " sobre la id: " + resID);
+                    XmlDocument doc = new XmlDocument();
+                    doc.Load(xmlResPath);
+
+                    string xpath = "//Launcher/resolution[@id='" + resID + "']";
+                    XmlNode root = doc.SelectSingleNode(xpath);
+                    while (root == null)
+                    {
+                        resID++;
+                        xpath = "//Launcher/resolution[@id='" + resID + "']";
+                        root = doc.SelectSingleNode(xpath);
+                    }
+
+                    string name = root.SelectSingleNode("Name").InnerText;
+                    string width = root.SelectSingleNode("Width").InnerText;
+                    string height = root.SelectSingleNode("Height").InnerText;
+
+                    comboBoxResolutionCol.Items.Add(name + " (" + width + " x" + height + ")");
+                    comboBoxSonResolution.Items.Add(name + " (" + width + " x" + height + ")");
+                    combResID[i - 1] = resID;
+                    resID++;
+                }
+
+                //Buscar dentro del combobox de resoluciones el index de la resolucion
+                int resIndex = Array.IndexOf(combResID, defaultRes);
+                comboBoxResolutionCol.SelectedIndex = resIndex + 1;
+                comboBoxSonResolution.SelectedIndex = resIndex + 1;
+
+                if (resIndex + 1 > 0)
+                {
+                    groupBoxCover.Enabled = false;
+                }
+                #endregion
+            }
+        }
 
 
         #endregion

@@ -61,7 +61,7 @@
             this.addResolution = new System.Windows.Forms.Button();
             this.BackgroundColorCheck = new System.Windows.Forms.CheckBox();
             this.buttonSearchProgram = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.buttonEraseCover = new System.Windows.Forms.Button();
             this.dataGridViewTags = new System.Windows.Forms.DataGridView();
             this.Column2 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -368,7 +368,7 @@
             this.buttonSearchCover.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
             this.buttonSearchCover.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonSearchCover.ForeColor = System.Drawing.SystemColors.Window;
-            this.buttonSearchCover.Location = new System.Drawing.Point(280, 228);
+            this.buttonSearchCover.Location = new System.Drawing.Point(281, 228);
             this.buttonSearchCover.Name = "buttonSearchCover";
             this.buttonSearchCover.Size = new System.Drawing.Size(115, 23);
             this.buttonSearchCover.TabIndex = 24;
@@ -381,7 +381,7 @@
             this.buttonSetColor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
             this.buttonSetColor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonSetColor.ForeColor = System.Drawing.SystemColors.Window;
-            this.buttonSetColor.Location = new System.Drawing.Point(400, 228);
+            this.buttonSetColor.Location = new System.Drawing.Point(400, 255);
             this.buttonSetColor.Name = "buttonSetColor";
             this.buttonSetColor.Size = new System.Drawing.Size(93, 23);
             this.buttonSetColor.TabIndex = 25;
@@ -430,9 +430,9 @@
             this.buttonColorPickIMG.BackColor = System.Drawing.Color.Black;
             this.buttonColorPickIMG.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonColorPickIMG.ForeColor = System.Drawing.SystemColors.Window;
-            this.buttonColorPickIMG.Location = new System.Drawing.Point(499, 228);
+            this.buttonColorPickIMG.Location = new System.Drawing.Point(499, 255);
             this.buttonColorPickIMG.Name = "buttonColorPickIMG";
-            this.buttonColorPickIMG.Size = new System.Drawing.Size(25, 25);
+            this.buttonColorPickIMG.Size = new System.Drawing.Size(23, 23);
             this.buttonColorPickIMG.TabIndex = 29;
             this.buttonColorPickIMG.UseVisualStyleBackColor = false;
             // 
@@ -455,7 +455,7 @@
             this.BackgroundColorCheck.AutoSize = true;
             this.BackgroundColorCheck.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BackgroundColorCheck.ForeColor = System.Drawing.SystemColors.Window;
-            this.BackgroundColorCheck.Location = new System.Drawing.Point(402, 205);
+            this.BackgroundColorCheck.Location = new System.Drawing.Point(402, 232);
             this.BackgroundColorCheck.Name = "BackgroundColorCheck";
             this.BackgroundColorCheck.Size = new System.Drawing.Size(115, 17);
             this.BackgroundColorCheck.TabIndex = 32;
@@ -475,15 +475,19 @@
             this.buttonSearchProgram.UseVisualStyleBackColor = false;
             this.buttonSearchProgram.Click += new System.EventHandler(this.buttonSearchProgram_Click);
             // 
-            // button2
+            // buttonEraseCover
             // 
-            this.button2.Location = new System.Drawing.Point(495, 255);
-            this.button2.Margin = new System.Windows.Forms.Padding(2);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(91, 20);
-            this.button2.TabIndex = 44;
-            this.button2.Text = "Borrar caratula";
-            this.button2.UseVisualStyleBackColor = true;
+            this.buttonEraseCover.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
+            this.buttonEraseCover.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonEraseCover.ForeColor = System.Drawing.SystemColors.Window;
+            this.buttonEraseCover.Location = new System.Drawing.Point(281, 255);
+            this.buttonEraseCover.Margin = new System.Windows.Forms.Padding(2);
+            this.buttonEraseCover.Name = "buttonEraseCover";
+            this.buttonEraseCover.Size = new System.Drawing.Size(114, 23);
+            this.buttonEraseCover.TabIndex = 44;
+            this.buttonEraseCover.Text = "Borrar caratula";
+            this.buttonEraseCover.UseVisualStyleBackColor = false;
+            this.buttonEraseCover.Click += new System.EventHandler(this.buttonEraseCover_Click);
             // 
             // dataGridViewTags
             // 
@@ -524,7 +528,7 @@
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(61)))), ((int)(((byte)(72)))));
             this.ClientSize = new System.Drawing.Size(815, 587);
             this.Controls.Add(this.dataGridViewTags);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.buttonEraseCover);
             this.Controls.Add(this.BackgroundColorCheck);
             this.Controls.Add(this.addResolution);
             this.Controls.Add(this.buttonColorPickIMG);
@@ -604,7 +608,7 @@
         private System.Windows.Forms.Button addResolution;
         private System.Windows.Forms.CheckBox BackgroundColorCheck;
         private System.Windows.Forms.Button buttonSearchProgram;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button buttonEraseCover;
         private System.Windows.Forms.DataGridView dataGridViewTags;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;

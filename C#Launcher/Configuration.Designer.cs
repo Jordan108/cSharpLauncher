@@ -34,27 +34,36 @@
             this.tabPageGeneral = new System.Windows.Forms.TabPage();
             this.tabPageSistema = new System.Windows.Forms.TabPage();
             this.tabPageInterfaz = new System.Windows.Forms.TabPage();
+            this.labelInterfazTema = new System.Windows.Forms.Label();
+            this.comboBoxInterfazTema = new System.Windows.Forms.ComboBox();
             this.tabControl.SuspendLayout();
+            this.tabPageInterfaz.SuspendLayout();
             this.SuspendLayout();
             // 
             // buttonSave
             // 
+            this.buttonSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
+            this.buttonSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonSave.ForeColor = System.Drawing.SystemColors.Window;
             this.buttonSave.Location = new System.Drawing.Point(632, 415);
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(75, 23);
             this.buttonSave.TabIndex = 0;
             this.buttonSave.Text = "Guardar";
-            this.buttonSave.UseVisualStyleBackColor = true;
+            this.buttonSave.UseVisualStyleBackColor = false;
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
             // buttonCancel
             // 
+            this.buttonCancel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
+            this.buttonCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonCancel.ForeColor = System.Drawing.SystemColors.Window;
             this.buttonCancel.Location = new System.Drawing.Point(713, 415);
             this.buttonCancel.Name = "buttonCancel";
             this.buttonCancel.Size = new System.Drawing.Size(75, 23);
             this.buttonCancel.TabIndex = 1;
             this.buttonCancel.Text = "Cancelar";
-            this.buttonCancel.UseVisualStyleBackColor = true;
+            this.buttonCancel.UseVisualStyleBackColor = false;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
             // tabControl
@@ -70,32 +79,58 @@
             // 
             // tabPageGeneral
             // 
+            this.tabPageGeneral.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(61)))), ((int)(((byte)(72)))));
+            this.tabPageGeneral.ForeColor = System.Drawing.SystemColors.Window;
             this.tabPageGeneral.Location = new System.Drawing.Point(4, 22);
             this.tabPageGeneral.Name = "tabPageGeneral";
             this.tabPageGeneral.Padding = new System.Windows.Forms.Padding(3);
             this.tabPageGeneral.Size = new System.Drawing.Size(768, 371);
             this.tabPageGeneral.TabIndex = 0;
             this.tabPageGeneral.Text = "General";
-            this.tabPageGeneral.UseVisualStyleBackColor = true;
             // 
             // tabPageSistema
             // 
+            this.tabPageSistema.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(61)))), ((int)(((byte)(72)))));
+            this.tabPageSistema.ForeColor = System.Drawing.SystemColors.Window;
             this.tabPageSistema.Location = new System.Drawing.Point(4, 22);
             this.tabPageSistema.Name = "tabPageSistema";
             this.tabPageSistema.Padding = new System.Windows.Forms.Padding(3);
             this.tabPageSistema.Size = new System.Drawing.Size(768, 371);
             this.tabPageSistema.TabIndex = 1;
             this.tabPageSistema.Text = "Sistema";
-            this.tabPageSistema.UseVisualStyleBackColor = true;
             // 
             // tabPageInterfaz
             // 
+            this.tabPageInterfaz.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(61)))), ((int)(((byte)(72)))));
+            this.tabPageInterfaz.Controls.Add(this.comboBoxInterfazTema);
+            this.tabPageInterfaz.Controls.Add(this.labelInterfazTema);
+            this.tabPageInterfaz.ForeColor = System.Drawing.SystemColors.Window;
             this.tabPageInterfaz.Location = new System.Drawing.Point(4, 22);
             this.tabPageInterfaz.Name = "tabPageInterfaz";
             this.tabPageInterfaz.Size = new System.Drawing.Size(768, 371);
             this.tabPageInterfaz.TabIndex = 2;
             this.tabPageInterfaz.Text = "Interfaz";
-            this.tabPageInterfaz.UseVisualStyleBackColor = true;
+            // 
+            // labelInterfazTema
+            // 
+            this.labelInterfazTema.AutoSize = true;
+            this.labelInterfazTema.Location = new System.Drawing.Point(18, 30);
+            this.labelInterfazTema.Name = "labelInterfazTema";
+            this.labelInterfazTema.Size = new System.Drawing.Size(37, 13);
+            this.labelInterfazTema.TabIndex = 0;
+            this.labelInterfazTema.Text = "Tema:";
+            // 
+            // comboBoxInterfazTema
+            // 
+            this.comboBoxInterfazTema.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxInterfazTema.FormattingEnabled = true;
+            this.comboBoxInterfazTema.Items.AddRange(new object[] {
+            "Oscuro",
+            "Claro"});
+            this.comboBoxInterfazTema.Location = new System.Drawing.Point(72, 27);
+            this.comboBoxInterfazTema.Name = "comboBoxInterfazTema";
+            this.comboBoxInterfazTema.Size = new System.Drawing.Size(152, 21);
+            this.comboBoxInterfazTema.TabIndex = 1;
             // 
             // Configuration
             // 
@@ -107,8 +142,10 @@
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonSave);
             this.Name = "Configuration";
-            this.Text = "Configuration";
+            this.Text = "Configuración";
             this.tabControl.ResumeLayout(false);
+            this.tabPageInterfaz.ResumeLayout(false);
+            this.tabPageInterfaz.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -121,5 +158,7 @@
         private System.Windows.Forms.TabPage tabPageGeneral;
         private System.Windows.Forms.TabPage tabPageSistema;
         private System.Windows.Forms.TabPage tabPageInterfaz;
+        private System.Windows.Forms.ComboBox comboBoxInterfazTema;
+        private System.Windows.Forms.Label labelInterfazTema;
     }
 }

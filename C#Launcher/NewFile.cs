@@ -754,6 +754,12 @@ namespace C_Launcher
 
         }
 
+        private void buttonEraseCover_Click(object sender, EventArgs e)
+        {
+            pictureBoxCover.BackgroundImage = null;
+            pictureBoxCover.Tag = null;
+        }
+
         private void Resolution_ReturnedObject(object sender, bool e)
         {
             if (e == true)
