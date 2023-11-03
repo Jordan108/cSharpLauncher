@@ -60,3 +60,4 @@ C:\Users\Duoc\Documents\GitHub\cSharpLauncher\C#Launcher\obj\Debug\C#Launcher.cs
 D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\obj\Debug\CoverPadLauncher.Tags.resources
 D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\obj\Debug\CoverPadLauncher.EditScaned.resources
 D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\obj\Debug\CoverPadLauncher.Configuration.resources
+D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\bin\Debug\MediaToolkit.dll

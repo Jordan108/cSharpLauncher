@@ -88,11 +88,11 @@
             // 
             this.labelName.AutoSize = true;
             this.labelName.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelName.Location = new System.Drawing.Point(40, 9);
+            this.labelName.Location = new System.Drawing.Point(40, 11);
             this.labelName.Name = "labelName";
-            this.labelName.Size = new System.Drawing.Size(82, 13);
+            this.labelName.Size = new System.Drawing.Size(90, 13);
             this.labelName.TabIndex = 1;
-            this.labelName.Text = "Nombre archivo";
+            this.labelName.Text = "Nombre elemento";
             // 
             // comboBoxFather
             // 
@@ -110,11 +110,11 @@
             // 
             this.labelFather.AutoSize = true;
             this.labelFather.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelFather.Location = new System.Drawing.Point(49, 38);
+            this.labelFather.Location = new System.Drawing.Point(32, 38);
             this.labelFather.Name = "labelFather";
-            this.labelFather.Size = new System.Drawing.Size(73, 13);
+            this.labelFather.Size = new System.Drawing.Size(98, 13);
             this.labelFather.TabIndex = 3;
-            this.labelFather.Text = "Padre archivo";
+            this.labelFather.Text = "Padre del elemento";
             // 
             // checkBoxURL
             // 

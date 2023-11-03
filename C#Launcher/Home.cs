@@ -14,6 +14,10 @@ using System.Collections.Generic;
 using CoverPadLauncher;
 using CoverPadLauncher.Clases;
 using System.Drawing.Imaging;
+//mediaToolKit para manejar archivos de video y extraer sus caratulas
+using MediaToolkit;
+using MediaToolkit.Model;
+using MediaToolkit.Options;
 
 namespace C_Launcher
 {
@@ -861,6 +865,11 @@ namespace C_Launcher
                     Console.WriteLine("new view depth: " + idBox);
                     loadPictureBox(colSize, fileSize, false);
                 }
+                else if (boxType == "automaticFile")
+                {
+                    //Ejecutar el archivo automatico
+                    startProcess(pictureBox.Tag.ToString(), "", "", false);
+                }
                 else if (boxType == "automaticFolder")
                 {
                     string rutaEscaneo = pictureBox.Tag.ToString();
@@ -1340,6 +1349,7 @@ namespace C_Launcher
                     rutaEscaneo = colls[actualColl].ScanPath;
                 }
 
+                //La ruta de escaneo
                 if (Directory.Exists(rutaEscaneo))
                 {
                     // Obtiene una lista de todos los archivos y sub carpetas en la carpeta
@@ -1350,7 +1360,7 @@ namespace C_Launcher
                     //Analizar los archivos
                     foreach (string archivo in archivos)
                     {
-                        string name = Path.GetFileName(archivo);
+                        string name = Path.GetFileNameWithoutExtension(archivo);
                         string imgDir = "";
                         int layout = -1;//-1 para identificar si fue cargado desde un xml o no
                         int r = 0;
@@ -1396,10 +1406,12 @@ namespace C_Launcher
                         }
                         #endregion
 
+                        Console.WriteLine(archivo);
+
                         picBoxArr[pL] = new PictureBox
                         {
                             AccessibleDescription = "automaticFile",//Aqui se indica que tipo de picture box es (coleccion / archivo)
-                            Name = name,//Aqui se guarda el nombre de la coleccion
+                            Name = name,//Aqui se guarda el nombre del elemento
                             Size = new Size(w, h),
                             BackColor = Color.FromArgb(r, g, b),
                             Tag = archivo,//Aqui se guarda en que espacio del array estamos buscando//colls[i].ID,
@@ -1407,6 +1419,42 @@ namespace C_Launcher
 
                         #region Caratula
                         #region Cargar la imagen
+                        //Cargar la caratula del archivo si es posible y si no se encontro una ruta en el xml (dando var match = null)
+                        if (match == null)
+                        {
+                            //Rescatar la imagen del archivo (si es posible)
+                            string extension = Path.GetExtension(archivo);
+
+                            //dependiendo del tipo de archivo, el proceso para extraer una imagen preview es totalmente diferente
+                            if (extension == ".mp4")
+                            {
+                                //recojer la miniatura del video con MediaToolKit
+                                var inputFile = new MediaFile { Filename = archivo };//ruta del archivo
+                                var outputFile = new MediaFile { Filename = $"{archivo}.thumbnail.jpg" };//guardado temporal de la caratula en el disco duro (la libreria no permite guardar la imagen en un objeto, tiene que guardarse en el disco duro al parecer
+
+                                using (var engine = new Engine())
+                                {
+                                    engine.GetMetadata(inputFile);
+
+
+                                    var options = new ConversionOptions { Seek = TimeSpan.FromSeconds(inputFile.Metadata.Duration.TotalSeconds / 4) };//Seek = TimeSpan.FromSeconds(15) 
+                                    engine.GetThumbnail(inputFile, outputFile, options);
+                                }
+                                Image thumbnail;
+                                //utilizar un bitmap para no mantener abierto el archivo y poder eliminarlo
+                                using (var tempImage = Image.FromFile(outputFile.Filename))
+                                {
+                                    thumbnail = new Bitmap(tempImage);
+                                }
+                                File.Delete(outputFile.Filename);//eliminar el archivo
+
+                                //Cargar la imagen a la caratula
+                                picBoxArr[pL].BackgroundImage = thumbnail;
+                                thumbnail = null;//porsiacaso para evitar fugas de memoria (aunque no deberia pasar si el recolector de basura cumple su funcion)
+                            }
+                        }
+
+
                         if (imgDir != "")
                         {
                             try
