@@ -1426,7 +1426,7 @@ namespace C_Launcher
                             string extension = Path.GetExtension(archivo);
 
                             //dependiendo del tipo de archivo, el proceso para extraer una imagen preview es totalmente diferente
-                            if (extension == ".mp4")
+                            if (extension == ".mp4" || extension == ".mkv" || extension == ".flv" || extension == ".avi" || extension == ".mov" || extension == ".wmv")//En teoria, esos son los tipos de archivos compatibles
                             {
                                 //recojer la miniatura del video con MediaToolKit
                                 var inputFile = new MediaFile { Filename = archivo };//ruta del archivo
