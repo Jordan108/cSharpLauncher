@@ -147,10 +147,10 @@ namespace C_Launcher
                 string xpath = "//Launcher/collection[@id='" + viewDepth + "']";
                 XmlNode root = doc.SelectSingleNode(xpath);
 
-                defaultRes = int.Parse(root.SelectSingleNode("CoverSonResolutionID").InnerText);
-                defaultWidth = int.Parse(root.SelectSingleNode("CoverSonWidth").InnerText);
-                defaultHeight = int.Parse(root.SelectSingleNode("CoverSonHeight").InnerText);
-                defaultImageLayout = int.Parse(root.SelectSingleNode("SonImageLayout").InnerText);
+                defaultRes = int.Parse(XMLDefaultReturn(root, "CoverSonResolutionID", "0"));
+                defaultWidth = int.Parse(XMLDefaultReturn(root, "CoverSonWidth", "200"));
+                defaultHeight = int.Parse(XMLDefaultReturn(root, "CoverSonHeight", "200"));
+                defaultImageLayout = int.Parse(XMLDefaultReturn(root, "SonImageLayout", "0"));
             }
 
 
@@ -176,10 +176,10 @@ namespace C_Launcher
                 string xpath = "//Launcher/collection[@id='" + viewDepth + "']";
                 XmlNode root = doc.SelectSingleNode(xpath);
 
-                defaultRes = int.Parse(root.SelectSingleNode("CoverSonResolutionID").InnerText);
-                defaultWidth = int.Parse(root.SelectSingleNode("CoverSonWidth").InnerText);
-                defaultHeight = int.Parse(root.SelectSingleNode("CoverSonHeight").InnerText);
-                defaultImageLayout = int.Parse(root.SelectSingleNode("SonImageLayout").InnerText);
+                defaultRes = int.Parse(XMLDefaultReturn(root, "CoverSonResolutionID", "0"));
+                defaultWidth = int.Parse(XMLDefaultReturn(root, "CoverSonWidth", "200"));
+                defaultHeight = int.Parse(XMLDefaultReturn(root, "CoverSonHeight", "200"));
+                defaultImageLayout = int.Parse(XMLDefaultReturn(root, "SonImageLayout", "0"));
             }
 
             NewCollection newCollection = new NewCollection(viewDepth, defaultRes, defaultWidth, defaultHeight, defaultImageLayout);
@@ -332,10 +332,10 @@ namespace C_Launcher
                 string xpath = "//Launcher/collection[@id='" + id + "']";
                 XmlNode root = doc.SelectSingleNode(xpath);
 
-                defaultRes = int.Parse(root.SelectSingleNode("CoverSonResolutionID").InnerText);
-                defaultWidth = int.Parse(root.SelectSingleNode("CoverSonWidth").InnerText);
-                defaultHeight = int.Parse(root.SelectSingleNode("CoverSonHeight").InnerText);
-                defaultImageLayout = int.Parse(root.SelectSingleNode("SonImageLayout").InnerText);
+                defaultRes = int.Parse(XMLDefaultReturn(root, "CoverSonResolutionID", "0"));
+                defaultWidth = int.Parse(XMLDefaultReturn(root, "CoverSonWidth", "200"));
+                defaultHeight = int.Parse(XMLDefaultReturn(root, "CoverSonHeight", "200"));
+                defaultImageLayout = int.Parse(XMLDefaultReturn(root, "SonImageLayout", "0"));
             }
 
             Files[] files = searchFilesInCollection(int.Parse(id));
@@ -1864,8 +1864,8 @@ namespace C_Launcher
                             string xpath = "//Launcher/resolution[@id='" + files[f].ResolutionID + "']";
                             XmlNode root = doc.SelectSingleNode(xpath);
 
-                            fileW = int.Parse(root.SelectSingleNode("Width").InnerText);
-                            fileH = int.Parse(root.SelectSingleNode("Height").InnerText);
+                            fileW = int.Parse(XMLDefaultReturn(root, "Width", "200"));
+                            fileH = int.Parse(XMLDefaultReturn(root, "Height", "200"));
                         } catch (Exception ex)
                         {
                             Console.WriteLine("\n///////\nNo se pudo cargar la resolucion del archivo xml\nerror\n"+ex);
@@ -2267,7 +2267,7 @@ namespace C_Launcher
 
                     string xpath = "//Launcher/collection[@id='" + viewDepth + "']";
                     XmlNode root = doc.SelectSingleNode(xpath);
-                    int id = int.Parse(root.SelectSingleNode("IDFather").InnerText);
+                    int id = int.Parse(XMLDefaultReturn(root, "IDFather", "0"));
                     viewDepth = id;
                 }
                 
@@ -2394,16 +2394,16 @@ namespace C_Launcher
                 //Si root es null, significa que estamos tratando de editar un scanDir por primera vez (el null se maneja en ToolStripEditPictureBox_Click)
                 if (root == null) return null;
 
-                string name = root.SelectSingleNode("Name").InnerText;
-                string imgPath = root.SelectSingleNode("Image").InnerText;
-                int imgLayout = int.Parse(root.SelectSingleNode("ImageLayout").InnerText);
+                string name = XMLDefaultReturn(root, "Name", "");
+                string imgPath = XMLDefaultReturn(root, "Image", "");
+                int imgLayout = int.Parse(XMLDefaultReturn(root, "ImageLayout", "0"));
                 bool background = bool.Parse(XMLDefaultReturn(root, "WithoutBackground", "false"));
-                int red = int.Parse(root.SelectSingleNode("BackgroundRed").InnerText);
-                int green = int.Parse(root.SelectSingleNode("BackgroundGreen").InnerText);
-                int blue = int.Parse(root.SelectSingleNode("BackgroundBlue").InnerText);
-                int resolution = int.Parse(root.SelectSingleNode("CoverResolutionID").InnerText);
-                int width = int.Parse(root.SelectSingleNode("CoverWidth").InnerText);
-                int height = int.Parse(root.SelectSingleNode("CoverHeight").InnerText);
+                int red = int.Parse(XMLDefaultReturn(root, "BackgroundRed", "255"));
+                int green = int.Parse(XMLDefaultReturn(root, "BackgroundGreen", "255"));
+                int blue = int.Parse(XMLDefaultReturn(root, "BackgroundBlue", "255"));
+                int resolution = int.Parse(XMLDefaultReturn(root, "CoverResolutionID", "0"));
+                int width = int.Parse(XMLDefaultReturn(root, "CoverWidth", "200"));
+                int height = int.Parse(XMLDefaultReturn(root, "CoverHeight", "200"));
 
 
                 int scanStartNumber = int.Parse(XMLDefaultReturn(root, "StartNumber", "1"));
@@ -2609,10 +2609,10 @@ namespace C_Launcher
 
             if (root != null)
             {
-                filePath = root.SelectSingleNode("FilePath").InnerText;
-                programPath = root.SelectSingleNode("ProgramPath").InnerText;
-                cmdLine = root.SelectSingleNode("CMDLine").InnerText;
-                urlCheck = bool.Parse(root.SelectSingleNode("URLCheck").InnerText);
+                filePath = XMLDefaultReturn(root, "FilePath", "");
+                programPath = XMLDefaultReturn(root, "ProgramPath", "");
+                cmdLine = XMLDefaultReturn(root, "CMDLine", "");
+                urlCheck = bool.Parse(XMLDefaultReturn(root, "URLCheck", "false"));
                 /*foreach (XmlNode rootxml in root.ChildNodes)
                 {
                     // Hacer algo con el nodo, por ejemplo imprimir su nombre
@@ -2737,28 +2737,28 @@ namespace C_Launcher
             XmlNode root = doc.SelectSingleNode(xpath);
             XmlNode rootTag = doc.SelectSingleNode(xpath + "/TagsID");
 
-            int idFather = int.Parse(root.SelectSingleNode("IDFather").InnerText);
-            string name = root.SelectSingleNode("Name").InnerText;
-            string imgPath = root.SelectSingleNode("Image").InnerText;
-            int imgLayout = int.Parse(root.SelectSingleNode("ImageLayout").InnerText);
-            string filePath = root.SelectSingleNode("FilePath").InnerText;
-            string programPath = root.SelectSingleNode("ProgramPath").InnerText;
-            string cmdLine = root.SelectSingleNode("CMDLine").InnerText;
+            int idFather = int.Parse(XMLDefaultReturn(root, "IDFather", "0"));
+            string name = XMLDefaultReturn(root, "Name", "");
+            string imgPath = XMLDefaultReturn(root, "Image", "");
+            int imgLayout = int.Parse(XMLDefaultReturn(root, "ImageLayout", "0"));
+            string filePath = XMLDefaultReturn(root, "FilePath", "");
+            string programPath = XMLDefaultReturn(root, "ProgramPath", "");
+            string cmdLine = XMLDefaultReturn(root, "CMDLine", "");
             bool background = bool.Parse(XMLDefaultReturn(root, "WithoutBackground", "false"));
-            int red = int.Parse(root.SelectSingleNode("BackgroundRed").InnerText);
-            int green = int.Parse(root.SelectSingleNode("BackgroundGreen").InnerText);
-            int blue = int.Parse(root.SelectSingleNode("BackgroundBlue").InnerText);
-            int resolution = int.Parse(root.SelectSingleNode("CoverResolutionID").InnerText);
-            int width = int.Parse(root.SelectSingleNode("CoverWidth").InnerText);
-            int height = int.Parse(root.SelectSingleNode("CoverHeight").InnerText);
-            bool urlCheck = bool.Parse(root.SelectSingleNode("URLCheck").InnerText);
+            int red = int.Parse(XMLDefaultReturn(root, "BackgroundRed", "255"));
+            int green = int.Parse(XMLDefaultReturn(root, "BackgroundGreen", "255"));
+            int blue = int.Parse(XMLDefaultReturn(root, "BackgroundBlue", "255"));
+            int resolution = int.Parse(XMLDefaultReturn(root, "CoverResolutionID", "0"));
+            int width = int.Parse(XMLDefaultReturn(root, "CoverWidth", "200"));
+            int height = int.Parse(XMLDefaultReturn(root, "CoverHeight", "200"));
+            bool urlCheck = bool.Parse(XMLDefaultReturn(root, "URLCheck", "false"));
             int[] tagsArray = new int[] { };
             foreach (XmlNode tagid in rootTag)
             {
                 //hacer un append al array
                 tagsArray = tagsArray.Append(int.Parse(tagid.InnerText)).ToArray();
             }
-            bool fav = bool.Parse(root.SelectSingleNode("Favorite").InnerText);
+            bool fav = bool.Parse(XMLDefaultReturn(root, "Favorite", "false"));
 
             Files FileReturn = new Files(fileID, idFather, name, imgPath, imgLayout, filePath, programPath, cmdLine, background,red, green, blue, resolution, width, height, urlCheck, tagsArray, fav);
 
@@ -3090,21 +3090,21 @@ namespace C_Launcher
             XmlNode rootTagScan = doc.SelectSingleNode(xpath+"/ScanTagsID");
             XmlNode rootScanExtension = doc.SelectSingleNode(xpath+"/ScanOpenExtension");
 
-            int idFather = int.Parse(root.SelectSingleNode("IDFather").InnerText);
-            string name = root.SelectSingleNode("Name").InnerText;
-            string imgPath = root.SelectSingleNode("Image").InnerText;
-            int imgLayout = int.Parse(root.SelectSingleNode("ImageLayout").InnerText);
+            int idFather = int.Parse(XMLDefaultReturn(root, "IDFather", "0"));
+            string name = XMLDefaultReturn(root, "Name", "");
+            string imgPath = XMLDefaultReturn(root, "Image", "");
+            int imgLayout = int.Parse(XMLDefaultReturn(root, "ImageLayout", "0"));
             bool background = bool.Parse(XMLDefaultReturn(root, "WithoutBackground", "false"));
-            int red = int.Parse(root.SelectSingleNode("BackgroundRed").InnerText);
-            int green = int.Parse(root.SelectSingleNode("BackgroundGreen").InnerText);
-            int blue = int.Parse(root.SelectSingleNode("BackgroundBlue").InnerText);
-            int resolution = int.Parse(root.SelectSingleNode("CoverResolutionID").InnerText);
-            int width = int.Parse(root.SelectSingleNode("CoverWidth").InnerText);
-            int height = int.Parse(root.SelectSingleNode("CoverHeight").InnerText);
-            int sonRes = int.Parse(root.SelectSingleNode("CoverSonResolutionID").InnerText);
-            int sonWidth = int.Parse(root.SelectSingleNode("CoverSonWidth").InnerText);
-            int sonHeight = int.Parse(root.SelectSingleNode("CoverSonHeight").InnerText);
-            int sonLayout = int.Parse(root.SelectSingleNode("SonImageLayout").InnerText);
+            int red = int.Parse(XMLDefaultReturn(root, "BackgroundRed", "255"));
+            int green = int.Parse(XMLDefaultReturn(root, "BackgroundGreen", "255"));
+            int blue = int.Parse(XMLDefaultReturn(root, "BackgroundBlue", "255"));
+            int resolution = int.Parse(XMLDefaultReturn(root, "CoverResolutionID", "0"));
+            int width = int.Parse(XMLDefaultReturn(root, "CoverWidth", "200"));
+            int height = int.Parse(XMLDefaultReturn(root, "CoverHeight", "200"));
+            int sonRes = int.Parse(XMLDefaultReturn(root, "CoverSonResolutionID", "0"));
+            int sonWidth = int.Parse(XMLDefaultReturn(root, "CoverSonWidth", "200"));
+            int sonHeight = int.Parse(XMLDefaultReturn(root, "CoverSonHeight", "200"));
+            int sonLayout = int.Parse(XMLDefaultReturn(root, "SonImageLayout", "0"));
             string sonProgramPath = XMLDefaultReturn(root, "SonProgramPath", "");
             string sonCMDLine = XMLDefaultReturn(root, "SonCMDLine", "");
 
@@ -3124,7 +3124,7 @@ namespace C_Launcher
                     tagsScan = tagsArray.Append(int.Parse(tagid.InnerText)).ToArray();
                 }
             }
-            bool fav = bool.Parse(root.SelectSingleNode("Favorite").InnerText);
+            bool fav = bool.Parse(XMLDefaultReturn(root, "Favorite", "false"));
             bool scanFold = bool.Parse(XMLDefaultReturn(root, "ScanFolder", "false"));
             string scanPath = XMLDefaultReturn(root, "ScanPath", "");
             int scanStartNumber = int.Parse(XMLDefaultReturn(root, "ScanStartNumber", "1"));
@@ -3167,34 +3167,34 @@ namespace C_Launcher
                 }
 
                 //Solo iterar sobre los archivos que tengan de padre a la coleccion a editar
-                int idFather = int.Parse(root.SelectSingleNode("IDFather").InnerText);
+                int idFather = int.Parse(XMLDefaultReturn(root, "IDFather", "0"));
                 if (idFather != colID)
                 {
                     fileID++;
                     continue;
                 }
                 
-                string name = root.SelectSingleNode("Name").InnerText;
-                string imgPath = root.SelectSingleNode("Image").InnerText;
-                int imgLayout = int.Parse(root.SelectSingleNode("ImageLayout").InnerText);
-                string filePath = root.SelectSingleNode("FilePath").InnerText;
-                string programPath = root.SelectSingleNode("ProgramPath").InnerText;
-                string cmdLine = root.SelectSingleNode("CMDLine").InnerText;
+                string name = XMLDefaultReturn(root, "Name", "");
+                string imgPath = XMLDefaultReturn(root, "Image", "");
+                int imgLayout = int.Parse(XMLDefaultReturn(root, "ImageLayout", "0"));
+                string filePath = XMLDefaultReturn(root, "FilePath", "");
+                string programPath = XMLDefaultReturn(root, "ProgramPath", "");
+                string cmdLine = XMLDefaultReturn(root, "CMDLine", "");
                 bool background = bool.Parse(XMLDefaultReturn(root, "WithoutBackground", "false"));
-                int red = int.Parse(root.SelectSingleNode("BackgroundRed").InnerText);
-                int green = int.Parse(root.SelectSingleNode("BackgroundGreen").InnerText);
-                int blue = int.Parse(root.SelectSingleNode("BackgroundBlue").InnerText);
-                int resolution = int.Parse(root.SelectSingleNode("CoverResolutionID").InnerText);
-                int width = int.Parse(root.SelectSingleNode("CoverWidth").InnerText);
-                int height = int.Parse(root.SelectSingleNode("CoverHeight").InnerText);
-                bool urlCheck = bool.Parse(root.SelectSingleNode("URLCheck").InnerText);
+                int red = int.Parse(XMLDefaultReturn(root, "BackgroundRed", "255"));
+                int green = int.Parse(XMLDefaultReturn(root, "BackgroundGreen", "255"));
+                int blue = int.Parse(XMLDefaultReturn(root, "BackgroundBlue", "255"));
+                int resolution = int.Parse(XMLDefaultReturn(root, "CoverResolutionID", "0"));
+                int width = int.Parse(XMLDefaultReturn(root, "CoverWidth", "200"));
+                int height = int.Parse(XMLDefaultReturn(root, "CoverHeight", "200"));
+                bool urlCheck = bool.Parse(XMLDefaultReturn(root, "URLCheck", "false"));
                 int[] tagsArray = new int[] { };
                 foreach (XmlNode tagid in rootTag)
                 {
                     //hacer un append al array
                     tagsArray = tagsArray.Append(int.Parse(tagid.InnerText)).ToArray();
                 }
-                bool fav = bool.Parse(root.SelectSingleNode("Favorite").InnerText);
+                bool fav = bool.Parse(XMLDefaultReturn(root, "Favorite", "false"));
 
                 fileData[i] = new Files(fileID, idFather, name, imgPath, imgLayout, filePath, programPath, cmdLine, background, red, green, blue, resolution, width, height, urlCheck, tagsArray, fav);
 
