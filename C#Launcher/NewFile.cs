@@ -32,10 +32,11 @@ namespace C_Launcher
         //Datos default al crear un nuevo archivo (al editar obviamente no es necesario)
         private int defaultFather, defaultRes, defaultImageLayout = 0;
         private int defaultWidth, defaultHeight = 200;
+        private string defaultProgramPath, defaultCMDLine = "";
 
 
         //Creando un archivo desde 0
-        public NewFile(int viewDepth, int ResId, int Width, int Height, int Layout)
+        public NewFile(int viewDepth, int ResId, int Width, int Height, int Layout, string ProgramPath, string CMDLine)
         {
             InitializeComponent();
             this.defaultFather = viewDepth;
@@ -43,6 +44,8 @@ namespace C_Launcher
             this.defaultWidth = Width;
             this.defaultHeight = Height;
             this.defaultImageLayout = Layout;
+            this.defaultProgramPath = ProgramPath;
+            this.defaultCMDLine = CMDLine;
             CustomComponent();
         }
 
@@ -270,6 +273,10 @@ namespace C_Launcher
             #endregion
 
             #endregion
+
+            //textbox
+            if (defaultProgramPath != null) textBoxProgramPath.Text = defaultProgramPath;
+            if (defaultCMDLine != null) textBoxCMD.Text = defaultCMDLine;
 
             #region pictureBox size/layout
             //Aqui se cargan los datos por default que fueron creados con la coleccion

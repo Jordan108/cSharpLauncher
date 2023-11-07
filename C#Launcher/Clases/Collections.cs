@@ -23,6 +23,8 @@
         private int sonWidth;
         private int sonHeight;
         private int sonImageLayout;
+        private string sonProgramPath;
+        private string sonCMDLine;
         //Datos
         private int[] tagsId;
         private int[] scanTags;
@@ -35,7 +37,7 @@
 
 
         //Constructor
-        public Collections(int _id, int _idFather, string _name, string _imgPath, int _layout, bool _nBg, int _r, int _g, int _b, int _res, int _w, int _h, int _sRint, int _sW, int _sH, int _sL, int[] _tag, int[] _scanTag, bool _fav, bool _scan, string _scanPath, int _scanStartNumber, string[] _scanOpenExtension)
+        public Collections(int _id, int _idFather, string _name, string _imgPath, int _layout, bool _nBg, int _r, int _g, int _b, int _res, int _w, int _h, int _sRint, int _sW, int _sH, int _sL, string _sLP, string _sCMD, int[] _tag, int[] _scanTag, bool _fav, bool _scan, string _scanPath, int _scanStartNumber, string[] _scanOpenExtension)
         {
             id = _id; 
             idFather = _idFather; 
@@ -53,6 +55,8 @@
             sonWidth = _sW;
             sonHeight = _sH;
             sonImageLayout = _sL;
+            sonProgramPath = _sLP;
+            sonCMDLine = _sCMD;
             tagsId = _tag;
             scanTags = _scanTag;
             favorite = _fav;
@@ -141,6 +145,16 @@
         {
             set { sonImageLayout = value; }
             get { return sonImageLayout; }
+        }
+        public string SonProgramPath
+        {
+            set { sonProgramPath = value; } 
+            get { return sonProgramPath; }
+        }
+        public string SonCMDLine
+        {
+            set { sonCMDLine = value; }
+            get { return sonCMDLine; }
         }
         public int[] TagsID
         {

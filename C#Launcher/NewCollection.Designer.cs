@@ -79,6 +79,11 @@
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.addResolution = new System.Windows.Forms.Button();
+            this.label3 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.textBoxSonProgramPath = new System.Windows.Forms.TextBox();
+            this.textBoxDefaultCMD = new System.Windows.Forms.TextBox();
+            this.buttonSearchProgram = new System.Windows.Forms.Button();
             this.groupBoxCover.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericColHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericColWidth)).BeginInit();
@@ -366,9 +371,9 @@
             this.label1.ForeColor = System.Drawing.SystemColors.Window;
             this.label1.Location = new System.Drawing.Point(535, 302);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(110, 13);
+            this.label1.Size = new System.Drawing.Size(127, 13);
             this.label1.TabIndex = 12;
-            this.label1.Text = "Resolucion contenido";
+            this.label1.Text = "Resolucion del contenido";
             // 
             // groupBoxSon
             // 
@@ -595,13 +600,13 @@
             this.dataGridViewScanOpenExtension.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewScanOpenExtension.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1});
-            this.dataGridViewScanOpenExtension.Location = new System.Drawing.Point(533, 78);
+            this.dataGridViewScanOpenExtension.Location = new System.Drawing.Point(533, 73);
             this.dataGridViewScanOpenExtension.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridViewScanOpenExtension.Name = "dataGridViewScanOpenExtension";
             this.dataGridViewScanOpenExtension.RowHeadersVisible = false;
             this.dataGridViewScanOpenExtension.RowHeadersWidth = 62;
             this.dataGridViewScanOpenExtension.RowTemplate.Height = 28;
-            this.dataGridViewScanOpenExtension.Size = new System.Drawing.Size(104, 165);
+            this.dataGridViewScanOpenExtension.Size = new System.Drawing.Size(104, 203);
             this.dataGridViewScanOpenExtension.TabIndex = 39;
             // 
             // Column1
@@ -622,11 +627,6 @@
             this.numericScanStart.Name = "numericScanStart";
             this.numericScanStart.Size = new System.Drawing.Size(42, 20);
             this.numericScanStart.TabIndex = 40;
-            this.numericScanStart.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             // 
             // label2
             // 
@@ -732,6 +732,59 @@
             this.addResolution.UseVisualStyleBackColor = false;
             this.addResolution.Click += new System.EventHandler(this.addResolution_Click);
             // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.ForeColor = System.Drawing.SystemColors.Window;
+            this.label3.Location = new System.Drawing.Point(645, 114);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(157, 13);
+            this.label3.TabIndex = 46;
+            this.label3.Text = "Ruta del lanzador del contenido";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.ForeColor = System.Drawing.SystemColors.Window;
+            this.label4.Location = new System.Drawing.Point(645, 159);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(201, 13);
+            this.label4.TabIndex = 47;
+            this.label4.Text = "Parametros de lanzamiento del contenido";
+            // 
+            // textBoxSonProgramPath
+            // 
+            this.textBoxSonProgramPath.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(40)))), ((int)(((byte)(47)))));
+            this.textBoxSonProgramPath.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBoxSonProgramPath.ForeColor = System.Drawing.SystemColors.Window;
+            this.textBoxSonProgramPath.Location = new System.Drawing.Point(648, 130);
+            this.textBoxSonProgramPath.Name = "textBoxSonProgramPath";
+            this.textBoxSonProgramPath.Size = new System.Drawing.Size(264, 20);
+            this.textBoxSonProgramPath.TabIndex = 48;
+            // 
+            // textBoxDefaultCMD
+            // 
+            this.textBoxDefaultCMD.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(40)))), ((int)(((byte)(47)))));
+            this.textBoxDefaultCMD.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.textBoxDefaultCMD.ForeColor = System.Drawing.SystemColors.Window;
+            this.textBoxDefaultCMD.Location = new System.Drawing.Point(648, 175);
+            this.textBoxDefaultCMD.Name = "textBoxDefaultCMD";
+            this.textBoxDefaultCMD.Size = new System.Drawing.Size(264, 20);
+            this.textBoxDefaultCMD.TabIndex = 49;
+            // 
+            // buttonSearchProgram
+            // 
+            this.buttonSearchProgram.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
+            this.buttonSearchProgram.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonSearchProgram.ForeColor = System.Drawing.SystemColors.Window;
+            this.buttonSearchProgram.Location = new System.Drawing.Point(918, 127);
+            this.buttonSearchProgram.Name = "buttonSearchProgram";
+            this.buttonSearchProgram.Size = new System.Drawing.Size(75, 23);
+            this.buttonSearchProgram.TabIndex = 50;
+            this.buttonSearchProgram.Text = "Examinar...";
+            this.buttonSearchProgram.UseVisualStyleBackColor = false;
+            this.buttonSearchProgram.Click += new System.EventHandler(this.buttonSearchProgram_Click);
+            // 
             // NewCollection
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -739,6 +792,11 @@
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(61)))), ((int)(((byte)(72)))));
             this.ClientSize = new System.Drawing.Size(1047, 561);
+            this.Controls.Add(this.buttonSearchProgram);
+            this.Controls.Add(this.textBoxDefaultCMD);
+            this.Controls.Add(this.textBoxSonProgramPath);
+            this.Controls.Add(this.label4);
+            this.Controls.Add(this.label3);
             this.Controls.Add(this.addResolution);
             this.Controls.Add(this.dataGridViewTags);
             this.Controls.Add(this.button2);
@@ -850,5 +908,10 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Column3;
         private System.Windows.Forms.Button addResolution;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.TextBox textBoxSonProgramPath;
+        private System.Windows.Forms.TextBox textBoxDefaultCMD;
+        private System.Windows.Forms.Button buttonSearchProgram;
     }
 }

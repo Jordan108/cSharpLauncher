@@ -184,10 +184,13 @@ namespace C_Launcher
         //Crear la nueva ventana para crear los archivos (individual)
         private void ToolStripAddFile_Click(object sender, EventArgs e)
         {
-            int defaultWidth = 200; 
-            int defaultHeight = 200;
             int defaultRes = 0;
             int defaultImageLayout = 0;
+            int defaultWidth = 200;
+            int defaultHeight = 200;
+            string defaultProgramPath = "";
+            string defaultCMDLine = "";
+
 
             //Si la profundidad es mayor a 0, buscar la coleccion con esa id en especifico y extraerle los valores default
             if (viewDepth > 0)
@@ -198,14 +201,15 @@ namespace C_Launcher
                 string xpath = "//Launcher/collection[@id='" + viewDepth + "']";
                 XmlNode root = doc.SelectSingleNode(xpath);
 
-                defaultRes = int.Parse(root.SelectSingleNode("CoverSonResolutionID").InnerText);
-                defaultWidth = int.Parse(root.SelectSingleNode("CoverSonWidth").InnerText);
-                defaultHeight = int.Parse(root.SelectSingleNode("CoverSonHeight").InnerText);
-                defaultImageLayout = int.Parse(root.SelectSingleNode("SonImageLayout").InnerText);
+                defaultRes = int.Parse(XMLDefaultReturn(root, "CoverSonResolutionID", "0"));
+                defaultWidth = int.Parse(XMLDefaultReturn(root, "CoverSonWidth", "200"));
+                defaultHeight = int.Parse(XMLDefaultReturn(root, "CoverSonHeight", "200"));
+                defaultImageLayout = int.Parse(XMLDefaultReturn(root, "SonImageLayout", "0"));
+                defaultProgramPath = XMLDefaultReturn(root, "SonProgramPath", "");
+                defaultCMDLine = XMLDefaultReturn(root, "SonCMDLine", "");
             }
-            
 
-            NewFile newFile = new NewFile(viewDepth, defaultRes, defaultWidth, defaultHeight, defaultImageLayout);
+            NewFile newFile = new NewFile(viewDepth, defaultRes, defaultWidth, defaultHeight, defaultImageLayout, defaultProgramPath, defaultCMDLine);
             newFile.ReturnedObject += NewFile_ReturnedObject;
             newFile.ShowDialog();
         }
@@ -286,7 +290,7 @@ namespace C_Launcher
                 boxType = pic.AccessibleDescription;
                 Console.WriteLine("picture Box EditMultiple");
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 //Si no recoje un picture box, significa que estamos recogiendo desde el flow layout panel (aunque este tenga su propia funcion, es un porsiacaso)
                 id = viewDepth.ToString();
@@ -879,10 +883,10 @@ namespace C_Launcher
                         // Obtiene una lista de todos los archivos en la carpeta
                         string[] archivos = Directory.GetFiles(rutaEscaneo);
                         string[] subDir = Directory.GetDirectories(rutaEscaneo);
+                        int scanStart = getColeScanStartNumber(viewDepth);
 
-                        
-                        //Buscar dentro de esa coleccion un archivo e intentar abrirlo
-                        if (archivos.Length > 0 && subDir.Length == 0)
+                        //Buscar dentro de esa coleccion un archivo e intentar abrirlo (si scanStart != 0)
+                        if (archivos.Length > 0 && subDir.Length == 0 && scanStart != 0)
                         {
                             //Filtrar los archivos por una extension especifica
                             //archivos.Where(x => x.EndsWith(".html") || x.EndsWith(".lnk") || x.EndsWith(".url")).ToArray();
@@ -898,16 +902,13 @@ namespace C_Launcher
                                 //establecer el array de los filtros como el array para los archivos disponibles
                                 archivos = filter;
                             }
-
-                            int scanStart = getColeScanStartNumber(viewDepth);
+                            
                             //Invertir el orden del array para empezar a buscar desde atras
                             if (scanStart < 0)
                             {
                                 Array.Reverse(archivos);
                                 scanStart *= -1;//Volver al scanStart positivo
                             }
-                            //Los arrays empiezan en 0, mientras que el scanStart empezara en 1
-                            if (scanStart != 0) scanStart -= 1;
 
                             //Hacer que si el numero para empezar es mas largo que el array, adaptarlo
                             if (scanStart > archivos.Length) scanStart = archivos.Length;
@@ -2993,6 +2994,8 @@ namespace C_Launcher
             XmlElement colSonWidth = xmlDoc.CreateElement("CoverSonWidth"); colSonWidth.InnerText = Class.SonWidth.ToString(); coleccion.AppendChild(colSonWidth);
             XmlElement colSonHeight = xmlDoc.CreateElement("CoverSonHeight"); colSonHeight.InnerText = Class.SonHeight.ToString(); coleccion.AppendChild(colSonHeight);
             XmlElement colSonLayout = xmlDoc.CreateElement("SonImageLayout"); colSonLayout.InnerText = Class.ImageLayout.ToString(); coleccion.AppendChild(colSonLayout);
+            XmlElement colSonProgramPath = xmlDoc.CreateElement("SonProgramPath"); colSonProgramPath.InnerText = Class.SonProgramPath.ToString(); coleccion.AppendChild(colSonProgramPath);
+            XmlElement colSonCMDLine = xmlDoc.CreateElement("SonCMDLine"); colSonCMDLine.InnerText = Class.SonCMDLine.ToString(); coleccion.AppendChild(colSonCMDLine);
             //Guardar el array de las etiquetas
             XmlElement colTags = xmlDoc.CreateElement("TagsID"); coleccion.AppendChild(colTags);
             foreach (int num in Class.TagsID)
@@ -3090,6 +3093,9 @@ namespace C_Launcher
             int sonWidth = int.Parse(root.SelectSingleNode("CoverSonWidth").InnerText);
             int sonHeight = int.Parse(root.SelectSingleNode("CoverSonHeight").InnerText);
             int sonLayout = int.Parse(root.SelectSingleNode("SonImageLayout").InnerText);
+            string sonProgramPath = XMLDefaultReturn(root, "SonProgramPath", "");
+            string sonCMDLine = XMLDefaultReturn(root, "SonCMDLine", "");
+
             int[] tagsArray = { };
             if (rootTag != null)
             {
@@ -3119,7 +3125,7 @@ namespace C_Launcher
                 }
             }
 
-            Collections colReturn = new Collections(colID, idFather, name, imgPath, imgLayout, background, red, green, blue, resolution, width, height, sonRes, sonWidth, sonHeight, sonLayout, tagsArray, tagsScan, fav, scanFold, scanPath, scanStartNumber, scanExtension);
+            Collections colReturn = new Collections(colID, idFather, name, imgPath, imgLayout, background, red, green, blue, resolution, width, height, sonRes, sonWidth, sonHeight, sonLayout, sonProgramPath, sonCMDLine, tagsArray, tagsScan, fav, scanFold, scanPath, scanStartNumber, scanExtension);
 
             return colReturn;
         }

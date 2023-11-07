@@ -117,6 +117,10 @@ namespace C_Launcher
                 pictureBoxCoverCollection.BackgroundImageLayout = ImageLayout.Stretch;
             }
 
+            //Textbox hijos
+            textBoxSonProgramPath.Text = colData.SonProgramPath;
+            textBoxDefaultCMD.Text = colData.SonCMDLine;
+
             //Caratula hijos
             int w = colData.SonWidth;
             int h = colData.SonHeight;
@@ -1003,6 +1007,16 @@ namespace C_Launcher
             }
         }
 
+        private void buttonSearchProgram_Click(object sender, EventArgs e)
+        {
+            //No tiene filtro
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                textBoxSonProgramPath.Text = openFileDialog.FileName;
+            }
+        }
+
 
         #endregion
 
@@ -1168,10 +1182,11 @@ namespace C_Launcher
             int height = pictureBoxCoverCollection.Height;
 
             //Propiedades Hijos
-            
             int sonWidth = pictureBoxCoverSon.Width;
             int sonHeight = pictureBoxCoverSon.Height;
             int sonLayout = 0;
+            string sonProgramPath = textBoxSonProgramPath.Text;
+            string sonCMDLine = textBoxDefaultCMD.Text;
             if (radioButtonSonEstreched.Checked == true) sonLayout = 1;
 
             //Guardar las etiquetas
@@ -1205,7 +1220,7 @@ namespace C_Launcher
             //Escaneo
             bool scanFolder = checkBoxScanFolder.Checked;
             string scanPath = textBoxScanFolder.Text;
-            int scanStartNumber = 1;
+            int scanStartNumber = (int)numericScanStart.Value;
 
             string[] scanOpenExtension;
             List<string> dgScanValue = new List<string>();
@@ -1225,7 +1240,7 @@ namespace C_Launcher
 
             string imageDir = pictureBoxCoverCollection.Tag != null ? pictureBoxCoverCollection.Tag.ToString() : "";
 
-            Collections passCollection = new Collections(idCollection, idFather, textBoxName.Text, imageDir, imgLayout, background, R, G, B, resID, width, height, resSonID, sonWidth, sonHeight, sonLayout, saveTagsArray, scanTagsArray, favorite, scanFolder, scanPath, scanStartNumber, scanOpenExtension);
+            Collections passCollection = new Collections(idCollection, idFather, textBoxName.Text, imageDir, imgLayout, background, R, G, B, resID, width, height, resSonID, sonWidth, sonHeight, sonLayout, sonProgramPath, sonCMDLine, saveTagsArray, scanTagsArray, favorite, scanFolder, scanPath, scanStartNumber, scanOpenExtension);
             ReturnedObject?.Invoke(this, passCollection);
             this.Close();
         }
