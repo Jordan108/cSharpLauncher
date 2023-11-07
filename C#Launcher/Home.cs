@@ -1,4 +1,5 @@
 ﻿using C_Launcher.Clases;
+
 //using C_Launcher.Properties;
 using System;
 using System.Diagnostics;
@@ -18,9 +19,14 @@ using System.Drawing.Imaging;
 using MediaToolkit;
 using MediaToolkit.Model;
 using MediaToolkit.Options;
+using System.Text.RegularExpressions;
+using CoverPadLauncher.Clases.Controles;
+using System.Security.Cryptography;
 
 namespace C_Launcher
 {
+    
+
     public partial class Home : Form
     {
         private PictureBox[] picBoxArr = new PictureBox[0];//Crear el array de picBox que se mantendra en memoria
@@ -902,7 +908,11 @@ namespace C_Launcher
                                 //establecer el array de los filtros como el array para los archivos disponibles
                                 archivos = filter;
                             }
-                            
+
+                            //Ordenar el array de la misma manera que lo hace el explorador de windows
+                            Array.Sort(archivos, new WindowsComparator());
+
+
                             //Invertir el orden del array para empezar a buscar desde atras
                             if (scanStart < 0)
                             {
@@ -912,6 +922,8 @@ namespace C_Launcher
 
                             //Hacer que si el numero para empezar es mas largo que el array, adaptarlo
                             if (scanStart > archivos.Length) scanStart = archivos.Length;
+
+                            scanStart -= 1; //le resta uno a scanStart por que sino abrira el segundo archivo que encuentre, no el primero
 
                             startProcess(archivos[scanStart], "", "", false);
                         } else

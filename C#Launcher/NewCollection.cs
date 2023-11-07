@@ -1226,8 +1226,12 @@ namespace C_Launcher
             List<string> dgScanValue = new List<string>();
             
 
-            foreach (DataGridViewRow fila in dataGridViewScanOpenExtension.Rows)
+            //foreach (DataGridViewRow fila in dataGridViewScanOpenExtension.Rows)
+            //{
+            //No tomar la ultima celda, ya que siempre estara vacia
+            for (int i = 0; i < dataGridViewScanOpenExtension.Rows.Count - 1; i++)
             {
+                DataGridViewRow fila = dataGridViewScanOpenExtension.Rows[i];
                 foreach (DataGridViewCell celda in fila.Cells)
                 {
                     string cell = celda.Value != null ? celda.Value.ToString() : string.Empty;

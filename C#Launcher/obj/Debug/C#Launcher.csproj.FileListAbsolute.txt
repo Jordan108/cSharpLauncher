@@ -13,7 +13,6 @@ D:\Bibliotecas\Escritorio\c++\LauncherProject\C#Launcher\C#Launcher\obj\Debug\C_
 D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\obj\Debug\C#Launcher.csproj.AssemblyReference.cache
 D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\obj\Debug\C#Launcher.csproj.SuggestedBindingRedirects.cache
 D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\obj\Debug\C_Launcher.Form1.resources
-D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\obj\Debug\C_Launcher.Home.resources
 D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\obj\Debug\C#Launcher.csproj.GenerateResource.cache
 D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\obj\Debug\C#Launcher.csproj.CoreCompileInputs.cache
 D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\obj\Debug\C_Launcher.NewFile.resources
@@ -61,3 +60,4 @@ D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\obj\Debug\CoverPadLau
 D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\obj\Debug\CoverPadLauncher.EditScaned.resources
 D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\obj\Debug\CoverPadLauncher.Configuration.resources
 D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\bin\Debug\MediaToolkit.dll
+D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\obj\Debug\C_Launcher.Home.resources

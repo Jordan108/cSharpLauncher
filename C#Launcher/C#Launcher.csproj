@@ -61,6 +61,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Clases\Collections.cs" />
+    <Compile Include="Clases\Controles\WindowsComparator.cs" />
     <Compile Include="Clases\Controles\DropdownItem.cs">
       <SubType>Component</SubType>
     </Compile>
