@@ -25,7 +25,6 @@ using System.Security.Cryptography;
 
 namespace C_Launcher
 {
-    
 
     public partial class Home : Form
     {
@@ -796,11 +795,6 @@ namespace C_Launcher
             SolidBrush RectBrush = new SolidBrush(Bcolor);
             g.FillRectangle(RectBrush, 0, pictureBox.Height - (pictureBox.Height / 3), pictureBox.Width, pictureBox.Height);
 
-            //Dibujar un rectangulo balcno encima de un picture box
-            Pen borderPen = new Pen(Color.White);
-            borderPen.Width = 2;
-            g.DrawRectangle(borderPen, borderPen.Width-1, borderPen.Width-1, pictureBox.Width-(borderPen.Width), pictureBox.Height-(borderPen.Width));
-
             //Dibujar el texto
             Font font = new Font("Arial", 8);
             SolidBrush FontBrush = new SolidBrush(Color.White);
@@ -811,6 +805,12 @@ namespace C_Launcher
             drawFormat.FormatFlags = StringFormatFlags.LineLimit;
             drawFormat.Trimming = StringTrimming.EllipsisCharacter;
             g.DrawString(picName, font, FontBrush, fontRect, drawFormat);
+
+            //Dibujar un rectangulo blanco encima de un picture box
+            Pen borderPen = new Pen(Color.White);
+            borderPen.Width = 2;
+            g.DrawRectangle(borderPen, borderPen.Width - 1, borderPen.Width - 1, pictureBox.Width - (borderPen.Width), pictureBox.Height - (borderPen.Width));
+
 
             FontBrush.Dispose();
             RectBrush.Dispose();//Dejar de ocupar pincel
@@ -1107,6 +1107,39 @@ namespace C_Launcher
         }
         #endregion
 
+        //Dibujar el rectangulo negro y el nombre del pictureBox
+        private void pictureBox_Paint(object sender, PaintEventArgs e)
+        {
+            bool test = true;
+
+            if (test)
+            {
+                PictureBox pictureBox = (PictureBox)sender;
+
+                string picName = pictureBox.Name;
+                //Graphics g = pictureBox.CreateGraphics();//Crear graphics
+
+                // Dibujar un rectángulo negro en el PictureBox
+                Color Bcolor = Color.FromArgb(180, Color.Black);
+                SolidBrush RectBrush = new SolidBrush(Bcolor);
+                e.Graphics.FillRectangle(RectBrush, 0, pictureBox.Height - (pictureBox.Height / 3), pictureBox.Width, pictureBox.Height);
+
+                //Dibujar el texto
+                Font font = new Font("Arial", 8);
+                SolidBrush FontBrush = new SolidBrush(Color.White);
+                StringFormat drawFormat = new StringFormat();
+                RectangleF fontRect = new RectangleF(0, pictureBox.Height - (pictureBox.Height / 3), pictureBox.Width, pictureBox.Height / 3);
+                drawFormat.Alignment = StringAlignment.Center;
+                drawFormat.LineAlignment = StringAlignment.Center;
+                drawFormat.FormatFlags = StringFormatFlags.LineLimit;
+                drawFormat.Trimming = StringTrimming.EllipsisCharacter;
+                e.Graphics.DrawString(picName, font, FontBrush, fontRect, drawFormat);
+
+                FontBrush.Dispose();
+                RectBrush.Dispose();//Dejar de ocupar pincel
+            }
+        }
+        
         //Para reducir el tamaño de las imagenes del picture box
         private Image loadImage(string imagePath)
         {
@@ -1522,6 +1555,7 @@ namespace C_Launcher
                         picBoxArr[pL].MouseLeave += new System.EventHandler(this.pictureBox_MouseLeave);
                         picBoxArr[pL].MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox_Click);
                         picBoxArr[pL].MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseUp);
+                        picBoxArr[pL].Paint += new PaintEventHandler(this.pictureBox_Paint);
                         pL++;//iterar en el array de paneles
                     }
 
@@ -1667,6 +1701,7 @@ namespace C_Launcher
                         picBoxArr[pL].MouseLeave += new System.EventHandler(this.pictureBox_MouseLeave);
                         picBoxArr[pL].MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox_Click);
                         picBoxArr[pL].MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseUp);
+                        picBoxArr[pL].Paint += new PaintEventHandler(this.pictureBox_Paint);
 
                         picBoxArr[pL].ContextMenuStrip = contextMenuPictureBox;
 
@@ -1790,7 +1825,7 @@ namespace C_Launcher
                     picBoxArr[pL].MouseLeave += new System.EventHandler(this.pictureBox_MouseLeave);
                     picBoxArr[pL].MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox_Click);
                     picBoxArr[pL].MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseUp);
-
+                    picBoxArr[pL].Paint += new PaintEventHandler(this.pictureBox_Paint);
 
                     picBoxArr[pL].ContextMenuStrip = contextMenuPictureBox;
 
@@ -1803,7 +1838,7 @@ namespace C_Launcher
 
             #endregion
 
-            #region Cargar archivos
+            #region Cargar Elementos
             //Recorrer todo el array de los files
             for (int f = 0; f < files.Length; f++)
             {
@@ -1892,7 +1927,7 @@ namespace C_Launcher
                     }
                     picBoxArr[pL] = new PictureBox
                     {
-                        AccessibleDescription = "file",//Aqui se indica que tipo de picture box es (coleccion / archivo)//,
+                        AccessibleDescription = "file",//Aqui se indica que tipo de picture box es (coleccion / elemento(archivo))//,
                         Name = files[f].Name,
                         Size = new Size(fileW, fileH),
                         BackColor = Color.FromArgb(red, green, blue),
@@ -1940,6 +1975,7 @@ namespace C_Launcher
                     picBoxArr[pL].MouseLeave += new System.EventHandler(this.pictureBox_MouseLeave);
                     picBoxArr[pL].MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox_Click);
                     picBoxArr[pL].MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseUp);
+                    picBoxArr[pL].Paint += new PaintEventHandler(this.pictureBox_Paint);
                     picBoxArr[pL].ContextMenuStrip = contextMenuPictureBox;
 
                     //Se integraran despues de ordenarlos

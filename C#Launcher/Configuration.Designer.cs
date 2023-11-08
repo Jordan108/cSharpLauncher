@@ -30,14 +30,9 @@
         {
             this.buttonSave = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
-            this.tabControl = new System.Windows.Forms.TabControl();
-            this.tabPageGeneral = new System.Windows.Forms.TabPage();
-            this.tabPageSistema = new System.Windows.Forms.TabPage();
-            this.tabPageInterfaz = new System.Windows.Forms.TabPage();
-            this.labelInterfazTema = new System.Windows.Forms.Label();
-            this.comboBoxInterfazTema = new System.Windows.Forms.ComboBox();
-            this.tabControl.SuspendLayout();
-            this.tabPageInterfaz.SuspendLayout();
+            this.label1 = new System.Windows.Forms.Label();
+            this.comboBox1 = new System.Windows.Forms.ComboBox();
+            this.checkBoxPictureBoxRectangle = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // buttonSave
@@ -66,71 +61,37 @@
             this.buttonCancel.UseVisualStyleBackColor = false;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
-            // tabControl
+            // label1
             // 
-            this.tabControl.Controls.Add(this.tabPageGeneral);
-            this.tabControl.Controls.Add(this.tabPageSistema);
-            this.tabControl.Controls.Add(this.tabPageInterfaz);
-            this.tabControl.Location = new System.Drawing.Point(12, 12);
-            this.tabControl.Name = "tabControl";
-            this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(776, 397);
-            this.tabControl.TabIndex = 2;
+            this.label1.AutoSize = true;
+            this.label1.ForeColor = System.Drawing.SystemColors.Window;
+            this.label1.Location = new System.Drawing.Point(13, 47);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(40, 13);
+            this.label1.TabIndex = 2;
+            this.label1.Text = "Tema: ";
             // 
-            // tabPageGeneral
+            // comboBox1
             // 
-            this.tabPageGeneral.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(61)))), ((int)(((byte)(72)))));
-            this.tabPageGeneral.ForeColor = System.Drawing.SystemColors.Window;
-            this.tabPageGeneral.Location = new System.Drawing.Point(4, 22);
-            this.tabPageGeneral.Name = "tabPageGeneral";
-            this.tabPageGeneral.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageGeneral.Size = new System.Drawing.Size(768, 371);
-            this.tabPageGeneral.TabIndex = 0;
-            this.tabPageGeneral.Text = "General";
+            this.comboBox1.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBox1.FormattingEnabled = true;
+            this.comboBox1.Location = new System.Drawing.Point(59, 45);
+            this.comboBox1.Name = "comboBox1";
+            this.comboBox1.Size = new System.Drawing.Size(203, 21);
+            this.comboBox1.TabIndex = 3;
             // 
-            // tabPageSistema
+            // checkBoxPictureBoxRectangle
             // 
-            this.tabPageSistema.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(61)))), ((int)(((byte)(72)))));
-            this.tabPageSistema.ForeColor = System.Drawing.SystemColors.Window;
-            this.tabPageSistema.Location = new System.Drawing.Point(4, 22);
-            this.tabPageSistema.Name = "tabPageSistema";
-            this.tabPageSistema.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPageSistema.Size = new System.Drawing.Size(768, 371);
-            this.tabPageSistema.TabIndex = 1;
-            this.tabPageSistema.Text = "Sistema";
-            // 
-            // tabPageInterfaz
-            // 
-            this.tabPageInterfaz.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(61)))), ((int)(((byte)(72)))));
-            this.tabPageInterfaz.Controls.Add(this.comboBoxInterfazTema);
-            this.tabPageInterfaz.Controls.Add(this.labelInterfazTema);
-            this.tabPageInterfaz.ForeColor = System.Drawing.SystemColors.Window;
-            this.tabPageInterfaz.Location = new System.Drawing.Point(4, 22);
-            this.tabPageInterfaz.Name = "tabPageInterfaz";
-            this.tabPageInterfaz.Size = new System.Drawing.Size(768, 371);
-            this.tabPageInterfaz.TabIndex = 2;
-            this.tabPageInterfaz.Text = "Interfaz";
-            // 
-            // labelInterfazTema
-            // 
-            this.labelInterfazTema.AutoSize = true;
-            this.labelInterfazTema.Location = new System.Drawing.Point(18, 30);
-            this.labelInterfazTema.Name = "labelInterfazTema";
-            this.labelInterfazTema.Size = new System.Drawing.Size(37, 13);
-            this.labelInterfazTema.TabIndex = 0;
-            this.labelInterfazTema.Text = "Tema:";
-            // 
-            // comboBoxInterfazTema
-            // 
-            this.comboBoxInterfazTema.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.comboBoxInterfazTema.FormattingEnabled = true;
-            this.comboBoxInterfazTema.Items.AddRange(new object[] {
-            "Oscuro",
-            "Claro"});
-            this.comboBoxInterfazTema.Location = new System.Drawing.Point(72, 27);
-            this.comboBoxInterfazTema.Name = "comboBoxInterfazTema";
-            this.comboBoxInterfazTema.Size = new System.Drawing.Size(152, 21);
-            this.comboBoxInterfazTema.TabIndex = 1;
+            this.checkBoxPictureBoxRectangle.AutoSize = true;
+            this.checkBoxPictureBoxRectangle.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.checkBoxPictureBoxRectangle.ForeColor = System.Drawing.SystemColors.Window;
+            this.checkBoxPictureBoxRectangle.Location = new System.Drawing.Point(16, 72);
+            this.checkBoxPictureBoxRectangle.Name = "checkBoxPictureBoxRectangle";
+            this.checkBoxPictureBoxRectangle.Size = new System.Drawing.Size(290, 17);
+            this.checkBoxPictureBoxRectangle.TabIndex = 4;
+            this.checkBoxPictureBoxRectangle.Text = "Mostrar siempre el nombre de los elementos/colecciones";
+            this.checkBoxPictureBoxRectangle.UseVisualStyleBackColor = true;
+            this.checkBoxPictureBoxRectangle.CheckedChanged += new System.EventHandler(this.checkBoxPictureBoxRectangle_CheckedChanged);
             // 
             // Configuration
             // 
@@ -138,15 +99,15 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(61)))), ((int)(((byte)(72)))));
             this.ClientSize = new System.Drawing.Size(800, 450);
-            this.Controls.Add(this.tabControl);
+            this.Controls.Add(this.checkBoxPictureBoxRectangle);
+            this.Controls.Add(this.comboBox1);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonSave);
             this.Name = "Configuration";
             this.Text = "Configuración";
-            this.tabControl.ResumeLayout(false);
-            this.tabPageInterfaz.ResumeLayout(false);
-            this.tabPageInterfaz.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -154,11 +115,8 @@
 
         private System.Windows.Forms.Button buttonSave;
         private System.Windows.Forms.Button buttonCancel;
-        private System.Windows.Forms.TabControl tabControl;
-        private System.Windows.Forms.TabPage tabPageGeneral;
-        private System.Windows.Forms.TabPage tabPageSistema;
-        private System.Windows.Forms.TabPage tabPageInterfaz;
-        private System.Windows.Forms.ComboBox comboBoxInterfazTema;
-        private System.Windows.Forms.Label labelInterfazTema;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.ComboBox comboBox1;
+        private System.Windows.Forms.CheckBox checkBoxPictureBoxRectangle;
     }
 }
