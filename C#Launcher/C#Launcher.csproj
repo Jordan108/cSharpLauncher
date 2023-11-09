@@ -70,6 +70,7 @@
     <Compile Include="Clases\Resolutions.cs" />
     <Compile Include="Clases\Controles\MenuColorTable.cs" />
     <Compile Include="Clases\Scanneds.cs" />
+    <Compile Include="Clases\Settings.cs" />
     <Compile Include="Configuration.cs">
       <SubType>Form</SubType>
     </Compile>

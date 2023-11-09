@@ -3331,6 +3331,9 @@ namespace C_Launcher
         //Cargar las configuraciones de settings
         private void loadSettingXML()
         {
+            //Settings settings = new Settings();
+
+
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load(xmlSettingsPath);
 
