@@ -19,9 +19,7 @@ using System.Drawing.Imaging;
 using MediaToolkit;
 using MediaToolkit.Model;
 using MediaToolkit.Options;
-using System.Text.RegularExpressions;
 using CoverPadLauncher.Clases.Controles;
-using System.Security.Cryptography;
 
 namespace C_Launcher
 {
@@ -32,17 +30,18 @@ namespace C_Launcher
         //Crea el array de las colecciones y los archivos (solo contendran las colecciones que se mostraran en en la vista)
 
         //Valores de settings
-        private int WinWidht, WinHeight = 900;
-        private int orderPanels = 0;
-        private int formState = 1;
+        //private int WinWidht, WinHeight = 900;
+        //private int orderPanels = 0;
+        //private int formState = 1;
         private int viewDepth = 0;//-1 = favoritos | 0 = inicio
-        private int searchType = 0;//0 = Buscara desde esa coleccion para adentro | 1 = buscara solo en esa coleccion (no sub colecciones) | 2 = buscara en todos los ficheros xml
+        //private int searchType = 0;//0 = Buscara desde esa coleccion para adentro | 1 = buscara solo en esa coleccion (no sub colecciones) | 2 = buscara en todos los ficheros xml
+        private CoverPadLauncher.Clases.Settings settings;
 
         //Rutas de los archivos XML
         private string xmlColPath = "System\\Collections.xml";
         private string xmlFilesPath = "System\\Elements.xml";
         private string xmlResPath = "System\\Resolutions.xml";
-        private string xmlSettingsPath = "System\\Settings.xml";
+        //private string xmlSettingsPath = "System\\Settings.xml";
         private string xmlTagPath = "System\\Tags.xml";
         private string xmlScannedPath = "System\\ScannedDirs.xml";
         //Ruta de los covers
@@ -555,7 +554,8 @@ namespace C_Launcher
             {
                 fechaDeCreacionToolStripMenuItem.Checked = true;
                 nombreToolStripMenuItem.Checked = false;
-                orderPanels = 0;
+                //orderPanels = 0;
+                settings.PanelOrder = 0;
                 loadPictureBox(colSize, fileSize, false);
             }
         }
@@ -566,7 +566,8 @@ namespace C_Launcher
             if (!nombreToolStripMenuItem.Checked) {
                 nombreToolStripMenuItem.Checked = true;
                 fechaDeCreacionToolStripMenuItem.Checked = false;
-                orderPanels = 1;
+                settings.PanelOrder = 1;
+                //orderPanels = 1;
                 loadPictureBox(colSize, fileSize, false);
             }
             
@@ -576,7 +577,8 @@ namespace C_Launcher
         #region filtro de busqueda
         private void searchFromActualToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            searchType = 0;
+            //searchType = 0;
+            settings.SearchFilter = 0;
             searchFromActualToolStripMenuItem.Checked = true;
             searchActualtoolStripMenuItem.Checked = false;
             searchAlltoolStripMenuItem.Checked = false;
@@ -584,7 +586,8 @@ namespace C_Launcher
 
         private void searchActualtoolStripMenuItem_Click(object sender, EventArgs e)
         {
-            searchType = 1;
+            //searchType = 1;
+            settings.SearchFilter = 1;
             searchFromActualToolStripMenuItem.Checked = false;
             searchActualtoolStripMenuItem.Checked = true;
             searchAlltoolStripMenuItem.Checked = false;
@@ -592,7 +595,8 @@ namespace C_Launcher
 
         private void searchAlltoolStripMenuItem_Click(object sender, EventArgs e)
         {
-            searchType = 2;
+            //searchType = 2;
+            settings.SearchFilter = 2;
             searchFromActualToolStripMenuItem.Checked = false;
             searchActualtoolStripMenuItem.Checked = false;
             searchAlltoolStripMenuItem.Checked = true;
@@ -1722,7 +1726,7 @@ namespace C_Launcher
                     //Verifica si el nombre de la coleccion contiene alguno de los elementos del textbox
                     string nom = colls[i].Name.ToLower();
 
-                    switch (searchType)
+                    switch (settings.SearchFilter)//searchType
                     {
                         case 1:// buscara solo en esa coleccion (no sub colecciones)
                             if ( 
@@ -1849,7 +1853,7 @@ namespace C_Launcher
                     //Verifica si el nombre de la coleccion contiene alguno de los elementos del textbox
                     string nom = files[f].Name.ToLower();
 
-                    switch (searchType)
+                    switch (settings.SearchFilter)//searchType
                     {
                         case 1:// buscara solo en esa coleccion (no sub colecciones)
                             if ((nom.Contains(search) || files[f].TagsID.Intersect(tagsSearchID).Any()) 
@@ -1990,7 +1994,7 @@ namespace C_Launcher
             Array.Resize(ref picBoxArr, pL);
 
             //Ordenar los paneles por orden alfabetico
-            if (orderPanels == 1)
+            if (settings.PanelOrder == 1)
             {
                 picBoxArr = orderPBoxName(picBoxArr);
             }
@@ -3331,9 +3335,47 @@ namespace C_Launcher
         //Cargar las configuraciones de settings
         private void loadSettingXML()
         {
-            //Settings settings = new Settings();
+            //cargar las configuraciones en el objeto de la clase
+            settings = new Settings();
 
-
+            viewDepth = settings.LastDepth;//Ultima profundidad
+            treeViewMain.Width = settings.TreeViewWidth;//Ancho del treeview
+            //Como se ordenan los paneles
+            if (settings.PanelOrder == 1)
+            {
+                nombreToolStripMenuItem.Checked = true;
+                fechaDeCreacionToolStripMenuItem.Checked = false;
+            }
+            //orderPanels = settings.PanelOrder;
+            //Tipo de filtro en la barra de busqueda
+            switch (settings.SearchFilter)
+            {
+                case 1:
+                    searchFromActualToolStripMenuItem.Checked = false;
+                    searchActualtoolStripMenuItem.Checked = true;
+                    searchAlltoolStripMenuItem.Checked = false;
+                    break;
+                case 2:
+                    searchFromActualToolStripMenuItem.Checked = false;
+                    searchActualtoolStripMenuItem.Checked = false;
+                    searchAlltoolStripMenuItem.Checked = true;
+                    break;
+                default:
+                    searchFromActualToolStripMenuItem.Checked = true;
+                    searchActualtoolStripMenuItem.Checked = false;
+                    searchAlltoolStripMenuItem.Checked = false;
+                    break;
+            }
+            //searchType = settings.SearchFilter;
+            //Cargar las opciones de la ventana (estan en un sub nodo)
+            //Ancho de la ventana
+            //WinWidht = settings.WindowsWidth;
+            //Alto de la ventana
+            //WinHeight = settings.WindowsHeight;
+            //Si esta o no maximizado
+            //formState = settings.WindowsMaxScreen;
+            if (settings.WindowsMaxScreen == 0) WindowState = FormWindowState.Normal; else WindowState = FormWindowState.Maximized;
+            /*
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load(xmlSettingsPath);
 
@@ -3414,13 +3456,16 @@ namespace C_Launcher
             if (WinWidht < 300) WinWidht = 300; Width = WinWidht;
             if (WinHeight < 300) WinHeight = 300; Height = WinHeight;
             if (formState == 0) WindowState =  FormWindowState.Normal; else WindowState = FormWindowState.Maximized;
+            */
         }
 
         //Guardar las configuraciones de settings
         private void saveSettingsXML()
         {
+            Settings classSettings = new Settings();
+            classSettings.SaveSettings(settings);
             //Verificar que el archivo xml exista (y si no es asi, crearlo y formatearlo)
-            if (!File.Exists(xmlSettingsPath))
+            /*if (!File.Exists(xmlSettingsPath))
             {
                 XmlWriterSettings settings = new XmlWriterSettings();
                 settings.Indent = true;
@@ -3476,7 +3521,7 @@ namespace C_Launcher
             //Guardar como se muestran los elementos al utilizar la barra de busqueda
             XmlElement searchT = xmlDoc.CreateElement("SearchFilter"); searchT.InnerText = searchType.ToString(); set.AppendChild(searchT);
 
-            xmlDoc.Save(xmlSettingsPath);
+            xmlDoc.Save(xmlSettingsPath);*/
         }
 
         private void labelTest_Click(object sender, EventArgs e)
@@ -3589,7 +3634,7 @@ namespace C_Launcher
             }
 
             //Verificar la existencia del xml settings
-            if (!File.Exists(xmlSettingsPath))
+            /*if (!File.Exists(xmlSettingsPath))
             {
                 XmlWriterSettings settings = new XmlWriterSettings();
                 settings.Indent = true;
@@ -3627,7 +3672,7 @@ namespace C_Launcher
                 XmlElement pOrder = xmlDoc.CreateElement("PanelOrder"); pOrder.InnerText = "0"; set.AppendChild(pOrder);
 
                 xmlDoc.Save(xmlSettingsPath);
-            }
+            }*/
 
             
 
