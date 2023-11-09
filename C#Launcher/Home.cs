@@ -3680,8 +3680,14 @@ namespace C_Launcher
 
         private void configuracionesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Configuration config = new Configuration();
+            Configuration config = new Configuration(settings);
+            config.ReturnedObject += Configuration_ReturnedObject;
             config.ShowDialog();
+        }
+
+        private void Configuration_ReturnedObject(object sender, Settings e)
+        {
+            settings = e;
         }
 
         private bool checkImage(string fileDir)

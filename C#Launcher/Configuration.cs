@@ -13,11 +13,12 @@ namespace CoverPadLauncher
         //private string xmlSettingsPath = "System\\Settings.xml";
         //almaceno todas las configuraciones ya que se iran ocupando a medida que este la ventana abierta
         private Settings settings;
+        public event EventHandler<Settings> ReturnedObject;
 
-        public Configuration()
+        public Configuration(Settings _settings)
         {
             InitializeComponent();
-            settings = new Settings();
+            settings = _settings;
 
             //Settings classSettings = new Settings();
             //settings = classSettings.LoadSettings();
@@ -31,9 +32,12 @@ namespace CoverPadLauncher
 
         private void buttonSave_Click(object sender, EventArgs e)
         {
+            //Se guardan los cambios en el xml
             Settings classSettings = new Settings();
             classSettings.SaveSettings(settings);
 
+            //Tambien le pasamos los cambios al home
+            ReturnedObject?.Invoke(this, settings);
             this.Close();
         }
 
