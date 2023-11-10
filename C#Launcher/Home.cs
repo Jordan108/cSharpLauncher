@@ -2413,10 +2413,6 @@ namespace C_Launcher
             }
 
             xmlDoc.Save(xmlScannedPath);
-
-            //Actualizar la cantidad de archivos
-            //fileSize = LoadFilesSize();
-            //viewDepth = Class.IDFather;
         }
 
         private Scanneds searchScanData(string dirID)
@@ -2463,15 +2459,6 @@ namespace C_Launcher
             return null;
         }
 
-        /*private Scanneds[] LoadScanneds()
-        {
-            Scanneds[] returnScan = new Scanneds[scanSize];
-            XmlDocument xmlDoc = new XmlDocument();
-            xmlDoc.Load(xmlScannedPath);
-
-            int 
-
-        }*/
         #endregion
 
         #region Elementos
@@ -2537,10 +2524,10 @@ namespace C_Launcher
             return fileData;
         }
 
-        private void SaveXMLFile(Files Class)
+        private void SaveXMLFile(Files file)
         {
             //Verificar que el archivo xml exista (y si no es asi, crearlo y formatearlo)
-            if (!File.Exists(xmlFilesPath))
+            /*if (!File.Exists(xmlFilesPath))
             {
                 XmlWriterSettings settings = new XmlWriterSettings();
                 settings.Indent = true;
@@ -2625,11 +2612,13 @@ namespace C_Launcher
 
             XmlElement fileFavorite = xmlDoc.CreateElement("Favorite"); fileFavorite.InnerText = Class.Favorite.ToString(); file.AppendChild(fileFavorite);
 
-            xmlDoc.Save(xmlFilesPath);
+            xmlDoc.Save(xmlFilesPath);*/
+            Files classFile = new Files();
+            classFile.SaveFiles(file);
 
             //Actualizar la cantidad de archivos
             fileSize = LoadFilesSize();
-            viewDepth = Class.IDFather;
+            //viewDepth = Class.IDFather;
         }
 
         //Cargar los datos de un archivo especifico

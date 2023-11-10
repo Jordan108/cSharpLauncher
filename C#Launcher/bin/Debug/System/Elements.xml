@@ -2,7 +2,7 @@
 <Launcher>
   <file id="1">
     <IDFather>0</IDFather>
-    <Name>a</Name>
+    <Name>b</Name>
     <Image>System\Covers\element_a.png</Image>
     <ImageLayout>0</ImageLayout>
     <FilePath>
@@ -20,7 +20,7 @@
     <CoverHeight>200</CoverHeight>
     <URLCheck>False</URLCheck>
     <TagsID />
-    <Favorite>False</Favorite>
+    <Favorite>True</Favorite>
   </file>
   <file id="2">
     <IDFather>1</IDFather>
