@@ -597,11 +597,14 @@
             // 
             // dataGridViewScanOpenExtension
             // 
+            this.dataGridViewScanOpenExtension.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(29)))), ((int)(((byte)(37)))));
             this.dataGridViewScanOpenExtension.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewScanOpenExtension.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1});
+            this.dataGridViewScanOpenExtension.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
             this.dataGridViewScanOpenExtension.Location = new System.Drawing.Point(533, 73);
             this.dataGridViewScanOpenExtension.Margin = new System.Windows.Forms.Padding(2);
+            this.dataGridViewScanOpenExtension.MultiSelect = false;
             this.dataGridViewScanOpenExtension.Name = "dataGridViewScanOpenExtension";
             this.dataGridViewScanOpenExtension.RowHeadersVisible = false;
             this.dataGridViewScanOpenExtension.RowHeadersWidth = 62;
@@ -670,7 +673,7 @@
             // 
             this.dataGridViewTags.AllowUserToAddRows = false;
             this.dataGridViewTags.AllowUserToDeleteRows = false;
-            this.dataGridViewTags.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(40)))), ((int)(((byte)(47)))));
+            this.dataGridViewTags.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(29)))), ((int)(((byte)(37)))));
             this.dataGridViewTags.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.dataGridViewTags.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewTags.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
@@ -685,9 +688,10 @@
             dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
             dataGridViewCellStyle1.WrapMode = System.Windows.Forms.DataGridViewTriState.False;
             this.dataGridViewTags.DefaultCellStyle = dataGridViewCellStyle1;
-            this.dataGridViewTags.GridColor = System.Drawing.Color.White;
+            this.dataGridViewTags.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
             this.dataGridViewTags.Location = new System.Drawing.Point(1, 73);
             this.dataGridViewTags.Margin = new System.Windows.Forms.Padding(2);
+            this.dataGridViewTags.MultiSelect = false;
             this.dataGridViewTags.Name = "dataGridViewTags";
             this.dataGridViewTags.RowHeadersVisible = false;
             this.dataGridViewTags.RowHeadersWidth = 62;

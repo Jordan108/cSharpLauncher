@@ -24,7 +24,6 @@ namespace CoverPadLauncher.Clases
             }
             return defaultValue;
         }
-
         public string ReturnImagePath(string outputFolder, string fileName, string extension)
         {
             string destinationFile = outputFolder + "\\" + extension + fileName + ".png";
@@ -117,6 +116,17 @@ namespace CoverPadLauncher.Clases
             }
 
             return imgPath;
+        }
+
+        public bool CheckImage(string fileDir)
+        {
+            string ex = Path.GetExtension(fileDir);
+            if (!string.IsNullOrEmpty(ex))
+            {
+                string extensionLower = ex.ToLower();
+                return extensionLower == ".jpg" || extensionLower == ".png" || extensionLower == ".webp";
+            }
+            return false;
         }
     }
 }

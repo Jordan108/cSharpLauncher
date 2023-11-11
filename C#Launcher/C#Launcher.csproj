@@ -71,7 +71,7 @@
     <Compile Include="Clases\Resolutions.cs" />
     <Compile Include="Clases\Controles\MenuColorTable.cs" />
     <Compile Include="Clases\Scanneds.cs" />
-    <Compile Include="Clases\Settings.cs" />
+    <Compile Include="Clases\Configurations.cs" />
     <Compile Include="Configuration.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -83,12 +83,6 @@
     </Compile>
     <Compile Include="EditScaned.Designer.cs">
       <DependentUpon>EditScaned.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Form1.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="Home.cs">
       <SubType>Form</SubType>
@@ -133,9 +127,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EditScaned.resx">
       <DependentUpon>EditScaned.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Home.resx">
       <DependentUpon>Home.cs</DependentUpon>

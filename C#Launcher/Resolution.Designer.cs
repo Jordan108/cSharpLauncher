@@ -82,12 +82,13 @@
             this.dataGridViewResolutions.AllowUserToDeleteRows = false;
             this.dataGridViewResolutions.AllowUserToResizeColumns = false;
             this.dataGridViewResolutions.AllowUserToResizeRows = false;
-            this.dataGridViewResolutions.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(40)))), ((int)(((byte)(47)))));
+            this.dataGridViewResolutions.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(29)))), ((int)(((byte)(37)))));
             this.dataGridViewResolutions.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewResolutions.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.name,
             this.width,
             this.height});
+            this.dataGridViewResolutions.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
             this.dataGridViewResolutions.Location = new System.Drawing.Point(12, 41);
             this.dataGridViewResolutions.MultiSelect = false;
             this.dataGridViewResolutions.Name = "dataGridViewResolutions";

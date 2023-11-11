@@ -48,7 +48,7 @@
             this.radioButtonEstreched = new System.Windows.Forms.RadioButton();
             this.radioButtonZoom = new System.Windows.Forms.RadioButton();
             this.buttonSave = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
+            this.labelScanStart = new System.Windows.Forms.Label();
             this.numericScanStart = new System.Windows.Forms.NumericUpDown();
             this.dataGridViewScanOpenExtension = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -65,16 +65,16 @@
             // 
             // textBoxName
             // 
-            this.textBoxName.Location = new System.Drawing.Point(83, 28);
+            this.textBoxName.Location = new System.Drawing.Point(59, 25);
             this.textBoxName.Name = "textBoxName";
-            this.textBoxName.Size = new System.Drawing.Size(167, 20);
+            this.textBoxName.Size = new System.Drawing.Size(232, 20);
             this.textBoxName.TabIndex = 0;
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.ForeColor = System.Drawing.SystemColors.Window;
-            this.label1.Location = new System.Drawing.Point(33, 31);
+            this.label1.Location = new System.Drawing.Point(9, 28);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(44, 13);
             this.label1.TabIndex = 1;
@@ -98,6 +98,7 @@
             this.pictureBoxCover.Size = new System.Drawing.Size(200, 200);
             this.pictureBoxCover.TabIndex = 13;
             this.pictureBoxCover.TabStop = false;
+            this.pictureBoxCover.MouseLeave += new System.EventHandler(this.pictureBoxCover_MouseLeave);
             // 
             // buttonSearchCover
             // 
@@ -110,6 +111,7 @@
             this.buttonSearchCover.TabIndex = 25;
             this.buttonSearchCover.Text = "Seleccionar Caratula";
             this.buttonSearchCover.UseVisualStyleBackColor = false;
+            this.buttonSearchCover.Click += new System.EventHandler(this.buttonSearchCover_Click);
             // 
             // buttonSetColor
             // 
@@ -122,6 +124,7 @@
             this.buttonSetColor.TabIndex = 26;
             this.buttonSetColor.Text = " Color de fondo";
             this.buttonSetColor.UseVisualStyleBackColor = false;
+            this.buttonSetColor.Click += new System.EventHandler(this.buttonSetColor_Click);
             // 
             // buttonColorPickIMG
             // 
@@ -150,7 +153,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.ForeColor = System.Drawing.SystemColors.Window;
-            this.label2.Location = new System.Drawing.Point(33, 186);
+            this.label2.Location = new System.Drawing.Point(12, 182);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(60, 13);
             this.label2.TabIndex = 34;
@@ -167,19 +170,21 @@
             this.comboBoxResolution.Name = "comboBoxResolution";
             this.comboBoxResolution.Size = new System.Drawing.Size(214, 21);
             this.comboBoxResolution.TabIndex = 35;
+            this.comboBoxResolution.SelectedIndexChanged += new System.EventHandler(this.comboBoxResolution_SelectedIndexChanged);
             // 
             // addResolution
             // 
             this.addResolution.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
             this.addResolution.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.addResolution.ForeColor = System.Drawing.SystemColors.Window;
-            this.addResolution.Location = new System.Drawing.Point(231, 201);
+            this.addResolution.Location = new System.Drawing.Point(241, 201);
             this.addResolution.Margin = new System.Windows.Forms.Padding(2);
             this.addResolution.Name = "addResolution";
             this.addResolution.Size = new System.Drawing.Size(50, 21);
             this.addResolution.TabIndex = 32;
             this.addResolution.Text = "Añadir";
             this.addResolution.UseVisualStyleBackColor = false;
+            this.addResolution.Click += new System.EventHandler(this.addResolution_Click);
             // 
             // groupBoxSize
             // 
@@ -188,9 +193,9 @@
             this.groupBoxSize.Controls.Add(this.numericWidthImage);
             this.groupBoxSize.Controls.Add(this.labelHeight);
             this.groupBoxSize.ForeColor = System.Drawing.SystemColors.Window;
-            this.groupBoxSize.Location = new System.Drawing.Point(22, 253);
+            this.groupBoxSize.Location = new System.Drawing.Point(12, 244);
             this.groupBoxSize.Name = "groupBoxSize";
-            this.groupBoxSize.Size = new System.Drawing.Size(228, 100);
+            this.groupBoxSize.Size = new System.Drawing.Size(279, 100);
             this.groupBoxSize.TabIndex = 36;
             this.groupBoxSize.TabStop = false;
             this.groupBoxSize.Text = "Tamaño en pixeles (100-300)";
@@ -266,7 +271,7 @@
             this.groupBoxImageFormat.Controls.Add(this.radioButtonEstreched);
             this.groupBoxImageFormat.Controls.Add(this.radioButtonZoom);
             this.groupBoxImageFormat.ForeColor = System.Drawing.SystemColors.Window;
-            this.groupBoxImageFormat.Location = new System.Drawing.Point(53, 371);
+            this.groupBoxImageFormat.Location = new System.Drawing.Point(53, 350);
             this.groupBoxImageFormat.Name = "groupBoxImageFormat";
             this.groupBoxImageFormat.Size = new System.Drawing.Size(157, 71);
             this.groupBoxImageFormat.TabIndex = 21;
@@ -300,7 +305,7 @@
             this.buttonSave.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
             this.buttonSave.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonSave.ForeColor = System.Drawing.SystemColors.Window;
-            this.buttonSave.Location = new System.Drawing.Point(117, 475);
+            this.buttonSave.Location = new System.Drawing.Point(98, 475);
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(75, 23);
             this.buttonSave.TabIndex = 27;
@@ -308,20 +313,20 @@
             this.buttonSave.UseVisualStyleBackColor = false;
             this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
             // 
-            // label3
+            // labelScanStart
             // 
-            this.label3.AutoSize = true;
-            this.label3.ForeColor = System.Drawing.SystemColors.Window;
-            this.label3.Location = new System.Drawing.Point(300, 35);
-            this.label3.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(97, 13);
-            this.label3.TabIndex = 42;
-            this.label3.Text = "Ejecutar archivo n°";
+            this.labelScanStart.AutoSize = true;
+            this.labelScanStart.ForeColor = System.Drawing.SystemColors.Window;
+            this.labelScanStart.Location = new System.Drawing.Point(339, 28);
+            this.labelScanStart.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelScanStart.Name = "labelScanStart";
+            this.labelScanStart.Size = new System.Drawing.Size(97, 13);
+            this.labelScanStart.TabIndex = 42;
+            this.labelScanStart.Text = "Ejecutar archivo n°";
             // 
             // numericScanStart
             // 
-            this.numericScanStart.Location = new System.Drawing.Point(416, 33);
+            this.numericScanStart.Location = new System.Drawing.Point(440, 26);
             this.numericScanStart.Margin = new System.Windows.Forms.Padding(2);
             this.numericScanStart.Minimum = new decimal(new int[] {
             100,
@@ -331,19 +336,17 @@
             this.numericScanStart.Name = "numericScanStart";
             this.numericScanStart.Size = new System.Drawing.Size(42, 20);
             this.numericScanStart.TabIndex = 43;
-            this.numericScanStart.Value = new decimal(new int[] {
-            1,
-            0,
-            0,
-            0});
             // 
             // dataGridViewScanOpenExtension
             // 
+            this.dataGridViewScanOpenExtension.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(29)))), ((int)(((byte)(37)))));
             this.dataGridViewScanOpenExtension.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewScanOpenExtension.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column1});
+            this.dataGridViewScanOpenExtension.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
             this.dataGridViewScanOpenExtension.Location = new System.Drawing.Point(499, 11);
             this.dataGridViewScanOpenExtension.Margin = new System.Windows.Forms.Padding(2);
+            this.dataGridViewScanOpenExtension.MultiSelect = false;
             this.dataGridViewScanOpenExtension.Name = "dataGridViewScanOpenExtension";
             this.dataGridViewScanOpenExtension.RowHeadersVisible = false;
             this.dataGridViewScanOpenExtension.RowHeadersWidth = 62;
@@ -377,7 +380,7 @@
             this.Controls.Add(this.checkBoxImageLocation);
             this.Controls.Add(this.dataGridViewScanOpenExtension);
             this.Controls.Add(this.numericScanStart);
-            this.Controls.Add(this.label3);
+            this.Controls.Add(this.labelScanStart);
             this.Controls.Add(this.buttonSave);
             this.Controls.Add(this.groupBoxImageFormat);
             this.Controls.Add(this.groupBoxSize);
@@ -392,7 +395,7 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.textBoxName);
             this.Name = "EditScaned";
-            this.Text = "EditScaned";
+            this.Text = "Editar escaneado";
             this.panelImageLimit.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCover)).EndInit();
             this.groupBoxSize.ResumeLayout(false);
@@ -430,7 +433,7 @@
         private System.Windows.Forms.RadioButton radioButtonEstreched;
         private System.Windows.Forms.RadioButton radioButtonZoom;
         private System.Windows.Forms.Button buttonSave;
-        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.Label labelScanStart;
         private System.Windows.Forms.NumericUpDown numericScanStart;
         private System.Windows.Forms.DataGridView dataGridViewScanOpenExtension;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;

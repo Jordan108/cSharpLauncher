@@ -10,7 +10,7 @@ using System.Xml;
 
 namespace CoverPadLauncher.Clases
 {
-    public class Settings
+    public class Configurations
     {
         private int themeID;//El id del tema
         private bool pictureBoxName;//Mostrar siempre el rectangulo con el nombre de un pictureBox
@@ -26,13 +26,13 @@ namespace CoverPadLauncher.Clases
 
 
         //Constructor que llama los datos desde el XML
-        public Settings() 
+        public Configurations() 
         {
-            LoadSettings();
+            LoadConfigurations();
         }
 
         //Constructor al que le pasamos los datos
-        public Settings(int themeId, bool pictureBoxName, int lastDepth, int windowsWidth, int windowsHeight, int windowsMaxScreen, int treeViewWidth, int panelOrder, int searchFilter)
+        public Configurations(int themeId, bool pictureBoxName, int lastDepth, int windowsWidth, int windowsHeight, int windowsMaxScreen, int treeViewWidth, int panelOrder, int searchFilter)
         {
             this.themeID = themeId;
             this.pictureBoxName = pictureBoxName;
@@ -99,7 +99,7 @@ namespace CoverPadLauncher.Clases
         #endregion
 
         #region funciones de guardado/cargado
-        public void LoadSettings()
+        public void LoadConfigurations()
         {
             GeneralFunctions gf = new GeneralFunctions();//Para llamar a XMLDefaultReturn
 
@@ -150,7 +150,7 @@ namespace CoverPadLauncher.Clases
             this.searchFilter = searchFilter;
         }
 
-        public void SaveSettings(Settings settings)
+        public void SaveConfigurations(Configurations settings)
         {
             //Verificar que el archivo xml exista (y si no es asi, crearlo y formatearlo)
             if (!System.IO.File.Exists(xmlSettingsPath))

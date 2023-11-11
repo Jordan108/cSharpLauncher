@@ -34,6 +34,23 @@ namespace CoverPadLauncher
         {
             InitializeComponent();
             CustomComponent();
+
+            //Verificar si es un archivo o un directorio (para ocultar algunos elementos
+            //Recoger los atributos del directorio
+            FileAttributes attr = File.GetAttributes(scanData.Dir);
+
+            //Saber si es un archivo
+            if ((attr & FileAttributes.Directory) != FileAttributes.Directory){
+                //Ocultar el dataGridView para el filtro de extensiones
+                dataGridViewScanOpenExtension.Enabled = false;
+                dataGridViewScanOpenExtension.Visible = false;
+
+                //Ocultar el numero de archivo a abrir
+                labelScanStart.Visible = false;
+                numericScanStart.Enabled = false;
+                numericScanStart.Visible = false;
+            }
+
             dirScan = scanData.Dir;
             textBoxName.Text = scanData.Name;
             int resolutionIndex = Array.IndexOf(combResID, scanData.ResolutionID);
@@ -120,6 +137,8 @@ namespace CoverPadLauncher
             this.pictureBoxCover.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBoxCover_MouseDown);
             this.pictureBoxCover.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBoxCover_MouseMove);
             this.pictureBoxCover.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBoxCover_MouseUp);
+
+
 
             #region Combobox
             #region resoluciones
@@ -527,6 +546,68 @@ namespace CoverPadLauncher
             pictureBoxCover.BackgroundImageLayout = ImageLayout.Stretch;
         }
 
+        private void addResolution_Click(object sender, EventArgs e)
+        {
+            C_Launcher.Resolution res = new C_Launcher.Resolution();
+            res.ReturnedObject += Resolution_ReturnedObject; //Este script actualiza las resoluciones
+            res.ShowDialog();
+        }
+        private void Resolution_ReturnedObject(object sender, bool e)
+        {
+            if (e == true)
+            {
+                //Actualizar las resoluciones despues de administrarlas
+                #region Actualizar Resoluciones despues de administrarlas
+                //Limpiar todo del combobox
+                comboBoxResolution.Items.Clear();
+                //Agregando item default
+                comboBoxResolution.Items.Add("Ninguno");
+                comboBoxResolution.SelectedIndex = 0;//Se selecciona despues
+
+                //Cargar el tamaño del xml de las resoluciones y adaptar el array a eso
+                int resSize = LoadResolutionSize();
+                Array.Resize(ref combResID, resSize);
+
+                Console.WriteLine("SIZE RES: " + resSize.ToString());
+
+                //Cargar las resoluciones al combobox
+                int resID = 1;
+                for (int i = 1; i < (resSize + 1); i++)
+                {
+                    Console.WriteLine("iterando en: " + i + " sobre la id: " + resID);
+                    XmlDocument doc = new XmlDocument();
+                    doc.Load(xmlResPath);
+
+                    string xpath = "//Launcher/resolution[@id='" + resID + "']";
+                    XmlNode root = doc.SelectSingleNode(xpath);
+                    while (root == null)
+                    {
+                        resID++;
+                        xpath = "//Launcher/resolution[@id='" + resID + "']";
+                        root = doc.SelectSingleNode(xpath);
+                    }
+
+                    string name = root.SelectSingleNode("Name").InnerText;
+                    string width = root.SelectSingleNode("Width").InnerText;
+                    string height = root.SelectSingleNode("Height").InnerText;
+
+                    comboBoxResolution.Items.Add(name + " (" + width + " x" + height + ")");
+                    combResID[i - 1] = resID;
+                    resID++;
+                }
+
+                //Buscar dentro del combobox de resoluciones el index de la resolucion
+                int resIndex = Array.IndexOf(combResID, defaultRes);
+                comboBoxResolution.SelectedIndex = resIndex + 1;
+
+                if (resIndex + 1 > 0)
+                {
+                    groupBoxSize.Enabled = false;
+                }
+                #endregion
+            }
+        }
+
         //Buscar caratula y establecerla
         private void buttonSearchCover_Click(object sender, EventArgs e)
         {
@@ -681,7 +762,7 @@ namespace CoverPadLauncher
             string[] scanOpenExtension;
             List<string> dgScanValue = new List<string>();
 
-
+            //Extensiones que abrira la carpeta (solo disponible si no es un archivo)
             foreach (DataGridViewRow fila in dataGridViewScanOpenExtension.Rows)
             {
                 foreach (DataGridViewCell celda in fila.Cells)

@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Runtime.Remoting.Metadata.W3cXsd2001;
 using System.Windows.Forms;
-using System.Xml;
-using System.Xml.Linq;
-using C_Launcher.Clases;
 using CoverPadLauncher.Clases;
 
 namespace CoverPadLauncher
@@ -12,10 +8,10 @@ namespace CoverPadLauncher
     {
         //private string xmlSettingsPath = "System\\Settings.xml";
         //almaceno todas las configuraciones ya que se iran ocupando a medida que este la ventana abierta
-        private Settings settings;
-        public event EventHandler<Settings> ReturnedObject;
+        private Configurations settings;
+        public event EventHandler<Configurations> ReturnedObject;
 
-        public Configuration(Settings _settings)
+        public Configuration(Configurations _settings)
         {
             InitializeComponent();
             settings = _settings;
@@ -33,8 +29,8 @@ namespace CoverPadLauncher
         private void buttonSave_Click(object sender, EventArgs e)
         {
             //Se guardan los cambios en el xml
-            Settings classSettings = new Settings();
-            classSettings.SaveSettings(settings);
+            Configurations classConfig = new Configurations();
+            classConfig.SaveConfigurations(settings);
 
             //Tambien le pasamos los cambios al home
             ReturnedObject?.Invoke(this, settings);

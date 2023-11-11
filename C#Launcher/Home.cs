@@ -35,7 +35,7 @@ namespace C_Launcher
         //private int formState = 1;
         private int viewDepth = 0;//-1 = favoritos | 0 = inicio
         //private int searchType = 0;//0 = Buscara desde esa coleccion para adentro | 1 = buscara solo en esa coleccion (no sub colecciones) | 2 = buscara en todos los ficheros xml
-        private CoverPadLauncher.Clases.Settings settings;
+        private Configurations config;
 
         //Rutas de los archivos XML
         private string xmlColPath = "System\\Collections.xml";
@@ -78,7 +78,7 @@ namespace C_Launcher
             //Verificar el contenido de la carpeta system, si no existe, crearlo
             verifySystemDir();
             //Cargar las opciones
-            loadSettingXML();
+            loadConfigurationsXML();
 
             //Tool strip (click derecho)
             //flow Layout Panel Tool Strip
@@ -249,7 +249,7 @@ namespace C_Launcher
                 editCollection.ReturnedObject += NewCollection_ReturnedObject;
                 editCollection.ShowDialog();
             } else if (boxType == "automaticFile" || boxType == "automaticFolder") {
-                Scanneds scanned = searchScanData(id);
+                Scanneds scanned = new Scanneds().GetScannedData(id);
 
                 //Si scanned es null, significa que estamos tratando de editar un scanElement que aun no a sido editado anteriormente
                 if (scanned == null)
@@ -262,8 +262,9 @@ namespace C_Launcher
                         string[] subArchivos = Directory.GetFiles(id);
                         if (subArchivos.Length > 0)
                         {
+                            GeneralFunctions gf = new GeneralFunctions();
                             //string rutasImagen = subArchivos.Where(ruta => checkImage(ruta));
-                            imgPath = subArchivos.FirstOrDefault(ruta => checkImage(ruta));
+                            imgPath = subArchivos.FirstOrDefault(ruta => gf.CheckImage(ruta));
                         }
                     }
                     
@@ -580,7 +581,7 @@ namespace C_Launcher
                 fechaDeCreacionToolStripMenuItem.Checked = true;
                 nombreToolStripMenuItem.Checked = false;
                 //orderPanels = 0;
-                settings.PanelOrder = 0;
+                config.PanelOrder = 0;
                 loadPictureBox(colSize, fileSize, false);
             }
         }
@@ -591,7 +592,7 @@ namespace C_Launcher
             if (!nombreToolStripMenuItem.Checked) {
                 nombreToolStripMenuItem.Checked = true;
                 fechaDeCreacionToolStripMenuItem.Checked = false;
-                settings.PanelOrder = 1;
+                config.PanelOrder = 1;
                 //orderPanels = 1;
                 loadPictureBox(colSize, fileSize, false);
             }
@@ -603,7 +604,7 @@ namespace C_Launcher
         private void searchFromActualToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //searchType = 0;
-            settings.SearchFilter = 0;
+            config.SearchFilter = 0;
             searchFromActualToolStripMenuItem.Checked = true;
             searchActualtoolStripMenuItem.Checked = false;
             searchAlltoolStripMenuItem.Checked = false;
@@ -612,7 +613,7 @@ namespace C_Launcher
         private void searchActualtoolStripMenuItem_Click(object sender, EventArgs e)
         {
             //searchType = 1;
-            settings.SearchFilter = 1;
+            config.SearchFilter = 1;
             searchFromActualToolStripMenuItem.Checked = false;
             searchActualtoolStripMenuItem.Checked = true;
             searchAlltoolStripMenuItem.Checked = false;
@@ -621,7 +622,7 @@ namespace C_Launcher
         private void searchAlltoolStripMenuItem_Click(object sender, EventArgs e)
         {
             //searchType = 2;
-            settings.SearchFilter = 2;
+            config.SearchFilter = 2;
             searchFromActualToolStripMenuItem.Checked = false;
             searchActualtoolStripMenuItem.Checked = false;
             searchAlltoolStripMenuItem.Checked = true;
@@ -683,7 +684,9 @@ namespace C_Launcher
 
         private void EditScanned_ReturnedObject(object sender, Scanneds e)
         {
-            SaveXMLScanned(e);
+            //SaveXMLScanned(e);
+            Scanneds classScanned = new Scanneds();
+            classScanned.SaveScanned(e);
             loadView(colSize, fileSize);
         }
 
@@ -1018,7 +1021,7 @@ namespace C_Launcher
                     ToolStripMenuItem ToolStripFav = new ToolStripMenuItem();
                     
                     ToolStripDelete.Text = "Eliminar";
-                    ToolStripDelete.Image = Image.FromFile(imgResourceIcons[3]);
+                    ToolStripDelete.Image = Image.FromFile(imgResourceIcons[4]);
                     ToolStripDelete.Click += new EventHandler(ToolStripDeletePictureBox_Click);
                     ToolStripFav.Text = "Agregar a Favoritos";
                     ToolStripFav.Image = Image.FromFile(imgResourceIcons[7]);
@@ -1154,9 +1157,8 @@ namespace C_Launcher
         //Dibujar el rectangulo negro y el nombre del pictureBox
         private void pictureBox_Paint(object sender, PaintEventArgs e)
         {
-            bool test = true;
 
-            if (test)
+            if (config.PictureBoxName)
             {
                 PictureBox pictureBox = (PictureBox)sender;
 
@@ -1601,6 +1603,8 @@ namespace C_Launcher
                         picBoxArr[pL].MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox_Click);
                         picBoxArr[pL].MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseUp);
                         picBoxArr[pL].Paint += new PaintEventHandler(this.pictureBox_Paint);
+                        picBoxArr[pL].ContextMenuStrip = contextMenuPictureBox;
+
                         pL++;//iterar en el array de paneles
                     }
 
@@ -1690,7 +1694,9 @@ namespace C_Launcher
                             string[] subArchivos = Directory.GetFiles(subcarpeta);
                             if (subArchivos.Length > 0)
                             {
-                                string[] rutasImagenes = subArchivos.Where(ruta => checkImage(ruta)).ToArray();
+                                GeneralFunctions gf = new GeneralFunctions();
+
+                                string[] rutasImagenes = subArchivos.Where(ruta => gf.CheckImage(ruta)).ToArray();
 
                                 if (rutasImagenes.Length <= 0) Console.WriteLine($"La carpeta {subcarpeta} no encontro imagenes");
                                 try
@@ -1767,7 +1773,7 @@ namespace C_Launcher
                     //Verifica si el nombre de la coleccion contiene alguno de los elementos del textbox
                     string nom = colls[i].Name.ToLower();
 
-                    switch (settings.SearchFilter)//searchType
+                    switch (config.SearchFilter)//searchType
                     {
                         case 1:// buscara solo en esa coleccion (no sub colecciones)
                             if ( 
@@ -1894,7 +1900,7 @@ namespace C_Launcher
                     //Verifica si el nombre de la coleccion contiene alguno de los elementos del textbox
                     string nom = files[f].Name.ToLower();
 
-                    switch (settings.SearchFilter)//searchType
+                    switch (config.SearchFilter)//searchType
                     {
                         case 1:// buscara solo en esa coleccion (no sub colecciones)
                             if ((nom.Contains(search) || files[f].TagsID.Intersect(tagsSearchID).Any()) 
@@ -2037,7 +2043,7 @@ namespace C_Launcher
             Array.Resize(ref picBoxArr, pL);
 
             //Ordenar los paneles por orden alfabetico
-            if (settings.PanelOrder == 1)
+            if (config.PanelOrder == 1)
             {
                 picBoxArr = orderPBoxName(picBoxArr);
             }
@@ -2394,8 +2400,8 @@ namespace C_Launcher
             return defaultValue;
         }*/
 
-        #region Directorios escaneados
-        private void SaveXMLScanned(Scanneds Class)
+        #region Directorios escaneados (Pendiente a eliminar)
+        /*private void SaveXMLScanned(Scanneds Class)
         {
             //Verificar que el archivo xml exista (y si no es asi, crearlo y formatearlo)
             if (!File.Exists(xmlScannedPath))
@@ -2459,9 +2465,9 @@ namespace C_Launcher
             }
 
             xmlDoc.Save(xmlScannedPath);
-        }
+        }*/
 
-        private Scanneds searchScanData(string dirID)
+        /*private Scanneds searchScanData(string dirID)
         {
             if (File.Exists(xmlScannedPath))
             {
@@ -2505,7 +2511,7 @@ namespace C_Launcher
                 return ScanReturn;
             }
             return null;
-        }
+        }*/
 
         #endregion
 
@@ -3338,24 +3344,24 @@ namespace C_Launcher
         }*/
         #endregion
 
-        #region Settings
+        #region Configuraciones
         //Cargar las configuraciones de settings ( se tienen que ajustar algunos elementos del formulario)
-        private void loadSettingXML()
+        private void loadConfigurationsXML()
         {
             //cargar las configuraciones en el objeto de la clase
-            settings = new Settings();
+            config = new Configurations();
 
-            viewDepth = settings.LastDepth;//Ultima profundidad
-            treeViewMain.Width = settings.TreeViewWidth;//Ancho del treeview
+            viewDepth = config.LastDepth;//Ultima profundidad
+            treeViewMain.Width = config.TreeViewWidth;//Ancho del treeview
             //Como se ordenan los paneles
-            if (settings.PanelOrder == 1)
+            if (config.PanelOrder == 1)
             {
                 nombreToolStripMenuItem.Checked = true;
                 fechaDeCreacionToolStripMenuItem.Checked = false;
             }
             //orderPanels = settings.PanelOrder;
             //Tipo de filtro en la barra de busqueda
-            switch (settings.SearchFilter)
+            switch (config.SearchFilter)
             {
                 case 1:
                     searchFromActualToolStripMenuItem.Checked = false;
@@ -3381,7 +3387,7 @@ namespace C_Launcher
             //WinHeight = settings.WindowsHeight;
             //Si esta o no maximizado
             //formState = settings.WindowsMaxScreen;
-            if (settings.WindowsMaxScreen == 0) WindowState = FormWindowState.Normal; else WindowState = FormWindowState.Maximized;
+            if (config.WindowsMaxScreen == 0) WindowState = FormWindowState.Normal; else WindowState = FormWindowState.Maximized;
             /*
             XmlDocument xmlDoc = new XmlDocument();
             xmlDoc.Load(xmlSettingsPath);
@@ -3464,6 +3470,22 @@ namespace C_Launcher
             if (WinHeight < 300) WinHeight = 300; Height = WinHeight;
             if (formState == 0) WindowState =  FormWindowState.Normal; else WindowState = FormWindowState.Maximized;
             */
+        }
+
+        //Guardar las configuraciones (se tienen que ajustar algunas cosas)
+        private void SaveConfigurationsXML()
+        {
+            //Guardar tamaño de treenode
+            config.TreeViewWidth = treeViewMain.Width;
+
+            //Guardar el tamaño actual de la venana
+            config.WindowsWidth = Width;
+            config.WindowsHeight = Height;
+            if (WindowState == FormWindowState.Maximized) config.WindowsMaxScreen = 1;
+
+            Configurations classConfig = new Configurations();
+
+            classConfig.SaveConfigurations(config);
         }
 
         //Guardar las configuraciones de settings
@@ -3665,22 +3687,22 @@ namespace C_Launcher
             }*/
 
             
-
+            
         }
 
         private void configuracionesToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Configuration config = new Configuration(settings);
-            config.ReturnedObject += Configuration_ReturnedObject;
-            config.ShowDialog();
+            Configuration conf = new Configuration(config);
+            conf.ReturnedObject += Configuration_ReturnedObject;
+            conf.ShowDialog();
         }
 
-        private void Configuration_ReturnedObject(object sender, Settings e)
+        private void Configuration_ReturnedObject(object sender, Configurations e)
         {
-            settings = e;
+            config = e;
         }
 
-        private bool checkImage(string fileDir)
+        /*private bool checkImage(string fileDir)
         {
             string ex = Path.GetExtension(fileDir);
             if (!string.IsNullOrEmpty(ex))
@@ -3689,7 +3711,7 @@ namespace C_Launcher
                 return extensionLower == ".jpg" || extensionLower == ".png" || extensionLower == ".webp";
             }
             return false;
-        }
+        }*/
 
         /*private string returnImagePath(string outputFolder, string fileName, string extension)
         {
@@ -3791,9 +3813,7 @@ namespace C_Launcher
         //Guardar los settings
         private void Home_FormClosed(object sender, FormClosedEventArgs e)
         {
-            //saveSettingsXML();
-            Settings classSettings = new Settings();
-            classSettings.SaveSettings(settings);
+            SaveConfigurationsXML();
         }
     }
 }

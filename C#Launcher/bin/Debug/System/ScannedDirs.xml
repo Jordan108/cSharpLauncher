@@ -2,7 +2,8 @@
 <Launcher>
   <scanned dir="D:\Bibliotecas\Programas\ripSM Chromium 2.9\Descargas\#Leidos">
     <Name>#Leidos_2</Name>
-    <Image></Image>
+    <Image>
+    </Image>
     <ImageLayout>0</ImageLayout>
     <WithoutBackground>False</WithoutBackground>
     <BackgroundRed>0</BackgroundRed>
@@ -13,6 +14,27 @@
     <CoverHeight>300</CoverHeight>
     <StartNumber>1</StartNumber>
     <OpenExtension>
+      <extension>
+      </extension>
+    </OpenExtension>
+  </scanned>
+  <scanned dir="D:\Bibliotecas\Descargas\Anime-Series\5stone.mp4">
+    <Name>Dr stone chapter 5</Name>
+    <Image>System\Covers\file_Dr stone chapter 5.png</Image>
+    <ImageLayout>1</ImageLayout>
+    <WithoutBackground>False</WithoutBackground>
+    <BackgroundRed>0</BackgroundRed>
+    <BackgroundGreen>0</BackgroundGreen>
+    <BackgroundBlue>128</BackgroundBlue>
+    <CoverResolutionID>6</CoverResolutionID>
+    <CoverWidth>200</CoverWidth>
+    <CoverHeight>200</CoverHeight>
+    <StartNumber>1</StartNumber>
+    <OpenExtension>
+      <extension>
+      </extension>
+      <extension>
+      </extension>
       <extension>
       </extension>
     </OpenExtension>

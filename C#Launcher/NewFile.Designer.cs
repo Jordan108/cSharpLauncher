@@ -495,11 +495,14 @@
             this.dataGridViewTags.AllowUserToDeleteRows = false;
             this.dataGridViewTags.AllowUserToResizeColumns = false;
             this.dataGridViewTags.AllowUserToResizeRows = false;
+            this.dataGridViewTags.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(29)))), ((int)(((byte)(37)))));
             this.dataGridViewTags.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewTags.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Column2,
             this.Column1});
+            this.dataGridViewTags.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
             this.dataGridViewTags.Location = new System.Drawing.Point(598, 13);
+            this.dataGridViewTags.MultiSelect = false;
             this.dataGridViewTags.Name = "dataGridViewTags";
             this.dataGridViewTags.RowHeadersVisible = false;
             this.dataGridViewTags.Size = new System.Drawing.Size(203, 238);

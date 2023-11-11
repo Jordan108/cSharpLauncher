@@ -67,7 +67,7 @@
             // 
             this.dataGridViewFiles.AllowUserToAddRows = false;
             this.dataGridViewFiles.AllowUserToResizeRows = false;
-            this.dataGridViewFiles.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(40)))), ((int)(((byte)(47)))));
+            this.dataGridViewFiles.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(29)))), ((int)(((byte)(37)))));
             this.dataGridViewFiles.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridViewFiles.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColumnName,
@@ -82,6 +82,7 @@
             this.ColumnFormat,
             this.checkBackgroundColor,
             this.ColumnColor});
+            this.dataGridViewFiles.GridColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
             this.dataGridViewFiles.Location = new System.Drawing.Point(8, 77);
             this.dataGridViewFiles.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridViewFiles.Name = "dataGridViewFiles";
