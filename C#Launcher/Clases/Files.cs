@@ -1,5 +1,7 @@
-﻿using System;
+﻿using CoverPadLauncher.Clases;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,7 +11,10 @@ namespace C_Launcher.Clases
 {
     public class Files
     {
+        //XML de los elementos
         private string xmlFilesPath = "System\\Elements.xml";
+        //Ruta de los covers
+        private string dirCoversPath = "System\\Covers";
 
         //Atributos
         private int id;
@@ -156,7 +161,9 @@ namespace C_Launcher.Clases
         #endregion
 
         #region Funciones
-        public void SaveFiles(Files Class)
+        #region  CRUD
+        //Guardar un objeto Files en el archivo XML
+        public void SaveFile(Files Class)
         {
             //Verificar que el archivo xml exista (y si no es asi, crearlo y formatearlo)
             if (!System.IO.File.Exists(xmlFilesPath))
@@ -212,8 +219,9 @@ namespace C_Launcher.Clases
             }
 
             //Guardar la imagen
+            GeneralFunctions gf = new GeneralFunctions();//Para llamar a SaveCover
             string coverDir = "";
-            if (Class.ImagePath != "") coverDir = saveCover(Class.Name, Class.ImagePath, Class.ID == -1, "element_");//si Class.ID == 1, se esta creando un elemento desde 0
+            if (Class.ImagePath != "") coverDir = gf.SaveCover(Class.Name, Class.ImagePath, Class.ID == -1, "element_");//si Class.ID == 1, se esta creando un elemento desde 0
 
             //Elementos de ese file
             //Crea el nombre del elemento a agregar; agrega los datos; agrega los elementos de la coleccion a la coleccion
@@ -246,6 +254,321 @@ namespace C_Launcher.Clases
 
             xmlDoc.Save(xmlFilesPath);
         }
+
+        //Buscar los datos de un elemento especifico
+        public Files LoadFileData(int fileID)
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.Load(xmlFilesPath);
+
+            GeneralFunctions gf = new GeneralFunctions();
+
+            string xpath = "//Launcher/file[@id='" + fileID + "']";
+            XmlNode root = doc.SelectSingleNode(xpath);
+            XmlNode rootTag = doc.SelectSingleNode(xpath + "/TagsID");
+
+            int idFather = int.Parse(gf.XMLDefaultReturn(root, "IDFather", "0"));
+            string name = gf.XMLDefaultReturn(root, "Name", "");
+            string imgPath = gf.XMLDefaultReturn(root, "Image", "");
+            int imgLayout = int.Parse(gf.XMLDefaultReturn(root, "ImageLayout", "0"));
+            string filePath = gf.XMLDefaultReturn(root, "FilePath", "");
+            string programPath = gf.XMLDefaultReturn(root, "ProgramPath", "");
+            string cmdLine = gf.XMLDefaultReturn(root, "CMDLine", "");
+            bool background = bool.Parse(gf.XMLDefaultReturn(root, "WithoutBackground", "false"));
+            int red = int.Parse(gf.XMLDefaultReturn(root, "BackgroundRed", "255"));
+            int green = int.Parse(gf.XMLDefaultReturn(root, "BackgroundGreen", "255"));
+            int blue = int.Parse(gf.XMLDefaultReturn(root, "BackgroundBlue", "255"));
+            int resolution = int.Parse(gf.XMLDefaultReturn(root, "CoverResolutionID", "0"));
+            int width = int.Parse(gf.XMLDefaultReturn(root, "CoverWidth", "200"));
+            int height = int.Parse(gf.XMLDefaultReturn(root, "CoverHeight", "200"));
+            bool urlCheck = bool.Parse(gf.XMLDefaultReturn(root, "URLCheck", "false"));
+            int[] tagsArray = new int[] { };
+            foreach (XmlNode tagid in rootTag)
+            {
+                //hacer un append al array
+                tagsArray = tagsArray.Append(int.Parse(tagid.InnerText)).ToArray();
+            }
+            bool fav = bool.Parse(gf.XMLDefaultReturn(root, "Favorite", "false"));
+
+            Files FileReturn = new Files(fileID, idFather, name, imgPath, imgLayout, filePath, programPath, cmdLine, background, red, green, blue, resolution, width, height, urlCheck, tagsArray, fav);
+
+            return FileReturn;
+        }
+
+        //Buscar los datos de todos los elemtos del XML
+        public Files[] LoadFiles(int arraySize)
+        {
+            Files[] fileData = new Files[arraySize];
+
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.Load(xmlFilesPath);
+
+            int fileID = 1;
+            for (int i = 0; i < arraySize; i++)
+            {
+                //Buscamos el elemento a modificar
+                string xpath = "//Launcher/file[@id='" + fileID + "']";
+                XmlNode root = xmlDoc.SelectSingleNode(xpath);
+
+                //si no existe un elemento con esa id, sumar 1
+                while (root == null)
+                {
+                    fileID++;
+                    xpath = "//Launcher/file[@id='" + fileID + "']";
+                    root = xmlDoc.SelectSingleNode(xpath);
+                }
+
+                fileData[i] = LoadFileData(fileID);
+
+                fileID++;
+            }
+
+            return fileData;
+        }
+
+        //Cargar los elementos que tengan una coleccion padre especifica (se ocupa para editar multiples elementos)
+        public Files[] LoadFilesInCollection(int colID, int fileSize)
+        {
+            Files[] fileData = new Files[fileSize];
+
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.Load(xmlFilesPath);
+
+            GeneralFunctions gf = new GeneralFunctions();
+
+            int fileID = 1;
+            for (int i = 0; i < fileSize; i++)
+            {
+                //Buscamos el elemento a modificar
+                string xpath = "//Launcher/file[@id='" + fileID + "']";
+                string tagpath = "//Launcher/file/TagsID";
+                XmlNode root = xmlDoc.SelectSingleNode(xpath);
+                XmlNode rootTag = xmlDoc.SelectSingleNode(tagpath);
+
+                //si no existe un elemento con esa id, sumar 1
+                while (root == null)
+                {
+                    fileID++;
+                    xpath = "//Launcher/file[@id='" + fileID + "']";
+                    root = xmlDoc.SelectSingleNode(xpath);
+                }
+
+                //Solo iterar sobre los archivos que tengan de padre a la coleccion a editar
+                int idFather = int.Parse(gf.XMLDefaultReturn(root, "IDFather", "0"));
+                if (idFather != colID)
+                {
+                    fileID++;
+                    continue;
+                }
+
+                string name = gf.XMLDefaultReturn(root, "Name", "");
+                string imgPath = gf.XMLDefaultReturn(root, "Image", "");
+                int imgLayout = int.Parse(gf.XMLDefaultReturn(root, "ImageLayout", "0"));
+                string filePath = gf.XMLDefaultReturn(root, "FilePath", "");
+                string programPath = gf.XMLDefaultReturn(root, "ProgramPath", "");
+                string cmdLine = gf.XMLDefaultReturn(root, "CMDLine", "");
+                bool background = bool.Parse(gf.XMLDefaultReturn(root, "WithoutBackground", "false"));
+                int red = int.Parse(gf.XMLDefaultReturn(root, "BackgroundRed", "255"));
+                int green = int.Parse(gf.XMLDefaultReturn(root, "BackgroundGreen", "255"));
+                int blue = int.Parse(gf.XMLDefaultReturn(root, "BackgroundBlue", "255"));
+                int resolution = int.Parse(gf.XMLDefaultReturn(root, "CoverResolutionID", "0"));
+                int width = int.Parse(gf.XMLDefaultReturn(root, "CoverWidth", "200"));
+                int height = int.Parse(gf.XMLDefaultReturn(root, "CoverHeight", "200"));
+                bool urlCheck = bool.Parse(gf.XMLDefaultReturn(root, "URLCheck", "false"));
+                int[] tagsArray = new int[] { };
+                foreach (XmlNode tagid in rootTag)
+                {
+                    //hacer un append al array
+                    tagsArray = tagsArray.Append(int.Parse(tagid.InnerText)).ToArray();
+                }
+                bool fav = bool.Parse(gf.XMLDefaultReturn(root, "Favorite", "false"));
+
+                fileData[i] = new Files(fileID, idFather, name, imgPath, imgLayout, filePath, programPath, cmdLine, background, red, green, blue, resolution, width, height, urlCheck, tagsArray, fav);
+
+                fileID++;
+            }
+
+            Files[] arrangedFiles = fileData.Where(elemento => elemento != null).ToArray();
+
+            return arrangedFiles;
+        }
+
+        //Eliminar un elemento del archivo XML
+        public void DeleteFile(int fileID)
+        {
+            //Cargar el archivo XML
+            XmlDocument xmlDoc = new XmlDocument();
+            xmlDoc.Load(xmlFilesPath);
+
+            //Buscamos el elemento a eliminar
+            string xpath = "//Launcher/file[@id='" + fileID + "']"; //Buscar un elemento que se llame "ColeccionX" que tenga en el atributo id un 1
+            XmlNode root = xmlDoc.SelectSingleNode(xpath);
+
+            if (root != null)
+            {
+                //Eliminar la caratula solo si está ubicada en la carpeta "System"
+                string imgDir = root.SelectSingleNode("Image").InnerText;
+                if (imgDir != "")
+                {
+                    string folder = Path.GetDirectoryName(imgDir);
+                    string workFolder = Directory.GetCurrentDirectory() + "\\" + dirCoversPath;
+
+                    //Si la carpeta donde se ubica la imagen es System//Covers, eliminar el archivo
+                    if (folder == workFolder)
+                    {
+                        try
+                        {
+                            //Solo eliminara el archivo si existe
+                            if (File.Exists(imgDir))
+                            {
+                                // Eliminar el archivo
+                                File.Delete(imgDir);
+                            }
+                        }
+                        catch (IOException ex)
+                        {
+                            Console.WriteLine("Error al eliminar el archivo: " + ex.Message);
+                        }
+                    }
+                }
+
+                root.ParentNode.RemoveChild(root);
+            }
+
+            xmlDoc.Save(xmlFilesPath);
+        }
+        #endregion
+
+        #region get/set
+        //Devuelve el tamaño (cantidad/largo) de elementos en el archivo XML
+        public int GetFilesSize()
+        {
+            int size = 0;
+
+            try
+            {
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.Load(xmlFilesPath);
+                XmlNodeList filesElements = xmlDoc.SelectNodes("//*[@id]");
+                size = filesElements.Count;
+            }
+            catch (Exception)
+            {
+                Console.WriteLine("No se encontro el fichero de los archivos, se creara uno nuevo");
+                XmlWriterSettings settings = new XmlWriterSettings();
+                settings.Indent = true;
+
+                using (XmlWriter writer = XmlWriter.Create(xmlFilesPath, settings))
+                {
+                    //Crear el elemento raiz del archivo (obligatorio)
+                    writer.WriteStartElement("Launcher");
+                    writer.WriteEndElement();
+                }
+            }
+
+            return size;
+        }
+
+        //Devuelve si un archivo tiene el estado de favorito o no (buscando en el XML por su ID
+        public bool GetFileFav(int fileID)
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.Load(xmlFilesPath);
+
+            string xpath = "//Launcher/file[@id='" + fileID + "']";
+            XmlNode root = doc.SelectSingleNode(xpath);
+
+            bool returnFav = false;
+
+            if (root != null)
+            {
+                returnFav = bool.Parse(root.SelectSingleNode("Favorite").InnerText);
+            }
+
+            //Llamar a la funcion para que empiece el proceso
+            return returnFav;
+        }
+
+        //Establece en el archivo XML si un elemento tiene su estado de favorito
+        public void SetFileFav(int fileID)
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.Load(xmlFilesPath);
+
+            string xpath = "//Launcher/file[@id='" + fileID + "']";
+            XmlNode root = doc.SelectSingleNode(xpath);
+
+            if (root != null)
+            {
+                bool returnFav = bool.Parse(root.SelectSingleNode("Favorite").InnerText);
+
+                if (returnFav == false) { root.SelectSingleNode("Favorite").InnerText = "True"; }
+                else { root.SelectSingleNode("Favorite").InnerText = "False"; }
+
+                doc.Save(xmlFilesPath);
+            }
+        }
+
+        //Obtiene si un elemento tiene en True el url
+        public bool GetFileURL(int fileID)
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.Load(xmlFilesPath);
+
+            string xpath = "//Launcher/file[@id='" + fileID + "']";
+            XmlNode root = doc.SelectSingleNode(xpath);
+
+            bool returnURL = false;
+
+            if (root != null)
+            {
+                returnURL = bool.Parse(root.SelectSingleNode("URLCheck").InnerText);
+            }
+
+            //Llamar a la funcion para que empiece el proceso
+            return returnURL;
+        }
+
+        //Obtiene el lanzador de un elemento
+        public string GetFileProgram(int fileID)
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.Load(xmlFilesPath);
+
+            string xpath = "//Launcher/file[@id='" + fileID + "']";
+            XmlNode root = doc.SelectSingleNode(xpath);
+
+            string returnProgram = "";
+
+            if (root != null)
+            {
+                returnProgram = root.SelectSingleNode("ProgramPath").InnerText;
+            }
+
+            //Llamar a la funcion para que empiece el proceso
+            return returnProgram;
+        }
+
+        //Obtiene el directorio de un elemento
+        public string getFileDir(int fileID)
+        {
+            XmlDocument doc = new XmlDocument();
+            doc.Load(xmlFilesPath);
+
+            string xpath = "//Launcher/file[@id='" + fileID + "']";
+            XmlNode root = doc.SelectSingleNode(xpath);
+
+            string returnDir = "";
+
+            if (root != null)
+            {
+                returnDir = root.SelectSingleNode("FilePath").InnerText;
+            }
+
+            //Llamar a la funcion para que empiece el proceso
+            return returnDir;
+        }
+        #endregion
         #endregion
     }
 }

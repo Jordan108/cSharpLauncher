@@ -114,8 +114,8 @@ namespace C_Launcher
             textBoxSearch.LostFocus += new EventHandler(SearchBarAddText);
 
             //Carga la cantidad de colecciones y archivos existentes
-            colSize = LoadCollectionSize();
-            fileSize = LoadFilesSize();
+            colSize = new Collections().GetCollectionsSize();
+            fileSize = new Files().GetFilesSize();//LoadFilesSize();
 
             loadTreeView(colSize);
             loadPictureBox(colSize, fileSize, false);
@@ -145,10 +145,12 @@ namespace C_Launcher
                 string xpath = "//Launcher/collection[@id='" + viewDepth + "']";
                 XmlNode root = doc.SelectSingleNode(xpath);
 
-                defaultRes = int.Parse(XMLDefaultReturn(root, "CoverSonResolutionID", "0"));
-                defaultWidth = int.Parse(XMLDefaultReturn(root, "CoverSonWidth", "200"));
-                defaultHeight = int.Parse(XMLDefaultReturn(root, "CoverSonHeight", "200"));
-                defaultImageLayout = int.Parse(XMLDefaultReturn(root, "SonImageLayout", "0"));
+                GeneralFunctions gf = new GeneralFunctions();
+
+                defaultRes = int.Parse(gf.XMLDefaultReturn(root, "CoverSonResolutionID", "0"));
+                defaultWidth = int.Parse(gf.XMLDefaultReturn(root, "CoverSonWidth", "200"));
+                defaultHeight = int.Parse(gf.XMLDefaultReturn(root, "CoverSonHeight", "200"));
+                defaultImageLayout = int.Parse(gf.XMLDefaultReturn(root, "SonImageLayout", "0"));
             }
 
 
@@ -174,10 +176,12 @@ namespace C_Launcher
                 string xpath = "//Launcher/collection[@id='" + viewDepth + "']";
                 XmlNode root = doc.SelectSingleNode(xpath);
 
-                defaultRes = int.Parse(XMLDefaultReturn(root, "CoverSonResolutionID", "0"));
-                defaultWidth = int.Parse(XMLDefaultReturn(root, "CoverSonWidth", "200"));
-                defaultHeight = int.Parse(XMLDefaultReturn(root, "CoverSonHeight", "200"));
-                defaultImageLayout = int.Parse(XMLDefaultReturn(root, "SonImageLayout", "0"));
+                GeneralFunctions gf = new GeneralFunctions();
+
+                defaultRes = int.Parse(gf.XMLDefaultReturn(root, "CoverSonResolutionID", "0"));
+                defaultWidth = int.Parse(gf.XMLDefaultReturn(root, "CoverSonWidth", "200"));
+                defaultHeight = int.Parse(gf.XMLDefaultReturn(root, "CoverSonHeight", "200"));
+                defaultImageLayout = int.Parse(gf.XMLDefaultReturn(root, "SonImageLayout", "0"));
             }
 
             NewCollection newCollection = new NewCollection(viewDepth, defaultRes, defaultWidth, defaultHeight, defaultImageLayout);
@@ -205,12 +209,14 @@ namespace C_Launcher
                 string xpath = "//Launcher/collection[@id='" + viewDepth + "']";
                 XmlNode root = doc.SelectSingleNode(xpath);
 
-                defaultRes = int.Parse(XMLDefaultReturn(root, "CoverSonResolutionID", "0"));
-                defaultWidth = int.Parse(XMLDefaultReturn(root, "CoverSonWidth", "200"));
-                defaultHeight = int.Parse(XMLDefaultReturn(root, "CoverSonHeight", "200"));
-                defaultImageLayout = int.Parse(XMLDefaultReturn(root, "SonImageLayout", "0"));
-                defaultProgramPath = XMLDefaultReturn(root, "SonProgramPath", "");
-                defaultCMDLine = XMLDefaultReturn(root, "SonCMDLine", "");
+                GeneralFunctions gf = new GeneralFunctions();
+
+                defaultRes = int.Parse(gf.XMLDefaultReturn(root, "CoverSonResolutionID", "0"));
+                defaultWidth = int.Parse(gf.XMLDefaultReturn(root, "CoverSonWidth", "200"));
+                defaultHeight = int.Parse(gf.XMLDefaultReturn(root, "CoverSonHeight", "200"));
+                defaultImageLayout = int.Parse(gf.XMLDefaultReturn(root, "SonImageLayout", "0"));
+                defaultProgramPath = gf.XMLDefaultReturn(root, "SonProgramPath", "");
+                defaultCMDLine = gf.XMLDefaultReturn(root, "SonCMDLine", "");
             }
 
             NewFile newFile = new NewFile(viewDepth, defaultRes, defaultWidth, defaultHeight, defaultImageLayout, defaultProgramPath, defaultCMDLine);
@@ -231,13 +237,13 @@ namespace C_Launcher
 
             //PictureBox pictureBox = (PictureBox)sender;
             if (boxType == "file") {
-                Files file = searchFileData(int.Parse(id));
+                Files file = new Files().LoadFileData(int.Parse(id));//searchFileData(int.Parse(id));
 
                 NewFile editFile = new NewFile(file);
                 editFile.ReturnedObject += NewFile_ReturnedObject;
                 editFile.ShowDialog();
             } else if (boxType == "collection") {
-                Collections col = searchCollectionData(int.Parse(id));
+                Collections col = new Collections().LoadCollectionData(int.Parse(id));//searchCollectionData(int.Parse(id));
 
                 NewCollection editCollection = new NewCollection(col);
                 editCollection.ReturnedObject += NewCollection_ReturnedObject;
@@ -330,13 +336,15 @@ namespace C_Launcher
                 string xpath = "//Launcher/collection[@id='" + id + "']";
                 XmlNode root = doc.SelectSingleNode(xpath);
 
-                defaultRes = int.Parse(XMLDefaultReturn(root, "CoverSonResolutionID", "0"));
-                defaultWidth = int.Parse(XMLDefaultReturn(root, "CoverSonWidth", "200"));
-                defaultHeight = int.Parse(XMLDefaultReturn(root, "CoverSonHeight", "200"));
-                defaultImageLayout = int.Parse(XMLDefaultReturn(root, "SonImageLayout", "0"));
+                GeneralFunctions gf = new GeneralFunctions();
+
+                defaultRes = int.Parse(gf.XMLDefaultReturn(root, "CoverSonResolutionID", "0"));
+                defaultWidth = int.Parse(gf.XMLDefaultReturn(root, "CoverSonWidth", "200"));
+                defaultHeight = int.Parse(gf.XMLDefaultReturn(root, "CoverSonHeight", "200"));
+                defaultImageLayout = int.Parse(gf.XMLDefaultReturn(root, "SonImageLayout", "0"));
             }
 
-            Files[] files = searchFilesInCollection(int.Parse(id));
+            Files[] files = new Files().LoadFilesInCollection(int.Parse(id), fileSize);//searchFilesInCollection(int.Parse(id));
 
             if (files.Length <= 0)
             {
@@ -372,11 +380,22 @@ namespace C_Launcher
             {
                 if (boxType == "file") 
                 {
-                    deleteFile(int.Parse(id));
+                    Files classFile = new Files();
+                    classFile.DeleteFile(int.Parse(id));//Eliminar el archivo
+
+                    colSize = new Collections().GetCollectionsSize();//LoadCollectionSize();
+                    fileSize = new Files().GetFilesSize(); //LoadFilesSize();
+                    loadPictureBox(colSize, fileSize, false);
                 }
                 else if (boxType == "collection")
                 {
-                    deleteCollection(int.Parse(id));
+                    Collections classCollections = new Collections();
+                    classCollections.DeleteCollection(int.Parse(id));
+
+                    colSize = new Collections().GetCollectionsSize(); //LoadCollectionSize();
+                    fileSize = new Files().GetFilesSize(); //LoadFilesSize();
+
+                    loadView(colSize, fileSize);
                 }
             }
 
@@ -392,13 +411,19 @@ namespace C_Launcher
 
             if (boxType == "file")
             {
-                setFileFav(idBox);
+                //setFileFav(idBox);
+                Files classFiles = new Files();
+                classFiles.SetFileFav(idBox);
+
                 Console.WriteLine("set fav " + boxType + " | " + idBox);
                 if (viewDepth == -1) loadView(colSize, fileSize);
             }
             else if (boxType == "collection")
             {
-                setColeFav(idBox);
+                //setColeFav(idBox);
+                Collections classCollection = new Collections();
+                classCollection.SetColeFav(idBox);
+
                 Console.WriteLine("set fav " + boxType + " | " + idBox);
                 if (viewDepth == -1) loadView(colSize, fileSize);
             }
@@ -409,7 +434,7 @@ namespace C_Launcher
         {
             PictureBox pic = (PictureBox)contextMenuPictureBox.SourceControl;
             int idBox = int.Parse(pic.Tag.ToString());//no se puede transformar un objeto a int, pero si a un string
-            string programExe = getFileProgram(idBox);
+            string programExe = new Files().GetFileProgram(idBox);//getFileProgram(idBox);
 
             //bool url = true;
 
@@ -468,7 +493,7 @@ namespace C_Launcher
             if (boxType != "automaticFile" && boxType != "automaticFolder")
             {
                 int idBox = int.Parse(pic.Tag.ToString());//no se puede transformar un objeto a int, pero si a un string
-                fileDir = getFileDir(idBox);
+                fileDir = new Files().getFileDir(idBox);//getFileDir(idBox);
             } else
             {
                 fileDir = pic.Tag.ToString();
@@ -648,7 +673,11 @@ namespace C_Launcher
         #region Manejar interaccion entre ventanas
         private void NewCollection_ReturnedObject(object sender, Collections e)
         {
-            SaveXMLCollection(e);
+            //SaveXMLCollection(e);
+            Collections classCollection = new Collections();
+            classCollection.SaveCollection(e);
+            //Actualizar cantidad de colecciones
+            colSize = new Collections().GetCollectionsSize(); //LoadCollectionSize();
             loadView(colSize, fileSize);
         }
 
@@ -677,7 +706,12 @@ namespace C_Launcher
         private void NewFile_ReturnedObject(object sender, Files e)
         {
             //Guarda los archivos XML
-            SaveXMLFile(e);
+            //SaveXMLFile(e);
+            Files classFile = new Files();
+            classFile.SaveFile(e);
+
+            //Actualizar la cantidad de archivos
+            fileSize = new Files().GetFilesSize(); //LoadFilesSize();
             //Carga de nuevo el flow layout
             loadView(colSize, fileSize);
         }
@@ -687,8 +721,12 @@ namespace C_Launcher
             for (int i = 0; i < e.Length; i++)
             {
                 //Guarda 1x1 los archivos
-                SaveXMLFile(e[i]);
+                //SaveXMLFile(e[i]);
+                Files classFile = new Files();
+                classFile.SaveFile(e[i]);
             }
+            //Actualizar la cantidad de archivos
+            fileSize = new Files().GetFilesSize(); //LoadFilesSize();
             //Carga de nuevo el flow layout
             loadView(colSize, fileSize);
         }
@@ -869,8 +907,10 @@ namespace C_Launcher
                 {
                     //Dentro de la funcion se buscara los procesos asociados al archivo y llamara a start process
                     Console.WriteLine("Buscar id: " + idBox);
-                    searchFileProcess(idBox);
+                    Files classFile = new Files();
+                    classFile = classFile.LoadFileData(idBox);
 
+                    startProcess(classFile.FilePath, classFile.ProgramPath, classFile.CMDLine, classFile.URLCheck);
                 }
                 else if (boxType == "collection")
                 {
@@ -893,14 +933,14 @@ namespace C_Launcher
                         // Obtiene una lista de todos los archivos en la carpeta
                         string[] archivos = Directory.GetFiles(rutaEscaneo);
                         string[] subDir = Directory.GetDirectories(rutaEscaneo);
-                        int scanStart = getColeScanStartNumber(viewDepth);
+                        int scanStart = new Collections().GetColeScanStartNumber(viewDepth);
 
                         //Buscar dentro de esa coleccion un archivo e intentar abrirlo (si scanStart != 0)
                         if (archivos.Length > 0 && subDir.Length == 0 && scanStart != 0)
                         {
                             //Filtrar los archivos por una extension especifica
                             //archivos.Where(x => x.EndsWith(".html") || x.EndsWith(".lnk") || x.EndsWith(".url")).ToArray();
-                            string[] extensions = getColeScanExtension(viewDepth);
+                            string[] extensions = new Collections().GetColeScanExtension(viewDepth);
                             //string[] filter = archivos.Where(x => x.EndsWith(".html")).ToArray();
 
                             string[] filter = archivos.Where(archivo =>
@@ -1008,9 +1048,9 @@ namespace C_Launcher
                     string program = "";
 
                     //Dentro de la funcion se buscara los procesos asociados al archivo y llamara a start process
-                    fav = getFileFav(idBox);
-                    program = getFileProgram(idBox);
-                    url = getFileURL(idBox);
+                    fav = new Files().GetFileFav(idBox);//getFileFav(idBox);
+                    program = new Files().GetFileProgram(idBox);
+                    url = new Files().GetFileURL(idBox);// getFileURL(idBox);
 
                     //Mostrar elemento en el explorador de archivos (solo si no son URL)
                     if (url == false) {
@@ -1042,7 +1082,7 @@ namespace C_Launcher
                     ToolStripEditAll.Image = Image.FromFile(imgResourceIcons[5]);
                     ToolStripEditAll.Click += new EventHandler(ToolStripEditMultiplePictureBox_Click);
 
-                    fav = getColeFav(idBox);
+                    fav = new Collections().GetColeFav(idBox);
                     contextMenuStrip.Items.Add(ToolStripEditAll);
                 }
 
@@ -1291,10 +1331,11 @@ namespace C_Launcher
 
             //Luego carga todos los archivos en los arrays
             Collections[] colls = new Collections[colSize];
-            colls = LoadCollections(colSize);
+            colls = new Collections().LoadCollections(colSize);
 
             Files[] files = new Files[fileSize];
-            files = LoadFiles(fileSize);
+            //Files classFile = new Files();
+            files = new Files().LoadFiles(fileSize); //LoadFiles(fileSize);
 
             //Scanneds[] scanneds = new Scanneds[scanSize];
             //scanneds = LoadScanneds(scanSize);
@@ -1903,8 +1944,10 @@ namespace C_Launcher
                             string xpath = "//Launcher/resolution[@id='" + files[f].ResolutionID + "']";
                             XmlNode root = doc.SelectSingleNode(xpath);
 
-                            fileW = int.Parse(XMLDefaultReturn(root, "Width", "200"));
-                            fileH = int.Parse(XMLDefaultReturn(root, "Height", "200"));
+                            GeneralFunctions gf = new GeneralFunctions();
+
+                            fileW = int.Parse(gf.XMLDefaultReturn(root, "Width", "200"));
+                            fileH = int.Parse(gf.XMLDefaultReturn(root, "Height", "200"));
                         } catch (Exception ex)
                         {
                             Console.WriteLine("\n///////\nNo se pudo cargar la resolucion del archivo xml\nerror\n"+ex);
@@ -2101,7 +2144,7 @@ namespace C_Launcher
         {
             //Cargar todas las colecciones
             Collections[] colls = new Collections[colSize];
-            colls = LoadCollections(colSize);
+            colls = new Collections().LoadCollections(colSize);
             treeViewMain.SelectedNode = null;
             treeViewMain.Nodes.Clear();//Limpiar todo el treeview
 
@@ -2307,7 +2350,10 @@ namespace C_Launcher
 
                     string xpath = "//Launcher/collection[@id='" + viewDepth + "']";
                     XmlNode root = doc.SelectSingleNode(xpath);
-                    int id = int.Parse(XMLDefaultReturn(root, "IDFather", "0"));
+
+                    GeneralFunctions gf = new GeneralFunctions();
+
+                    int id = int.Parse(gf.XMLDefaultReturn(root, "IDFather", "0"));
                     viewDepth = id;
                 }
                 
@@ -2331,14 +2377,14 @@ namespace C_Launcher
         //Volver a cargar la vista
         private void btnReloadView_Click(object sender, EventArgs e)
         {
-            colSize = LoadCollectionSize();
-            fileSize = LoadFilesSize();
+            colSize = new Collections().GetCollectionsSize();//LoadCollectionSize();
+            fileSize = new Files().GetFilesSize(); //LoadFilesSize();
             loadView(colSize, fileSize);
         }
         #endregion
 
         #region Manejar datos XML
-        private string XMLDefaultReturn(XmlNode node,string singleNode, string defaultValue)
+        /*private string XMLDefaultReturn(XmlNode node,string singleNode, string defaultValue)
         {
             XmlNode selectedNode = node.SelectSingleNode(singleNode);
             if (selectedNode != null)
@@ -2346,7 +2392,7 @@ namespace C_Launcher
                 return selectedNode.InnerText;
             }
             return defaultValue;
-        }
+        }*/
 
         #region Directorios escaneados
         private void SaveXMLScanned(Scanneds Class)
@@ -2430,19 +2476,21 @@ namespace C_Launcher
                 //Si root es null, significa que estamos tratando de editar un scanDir por primera vez (el null se maneja en ToolStripEditPictureBox_Click)
                 if (root == null) return null;
 
-                string name = XMLDefaultReturn(root, "Name", "");
-                string imgPath = XMLDefaultReturn(root, "Image", "");
-                int imgLayout = int.Parse(XMLDefaultReturn(root, "ImageLayout", "0"));
-                bool background = bool.Parse(XMLDefaultReturn(root, "WithoutBackground", "false"));
-                int red = int.Parse(XMLDefaultReturn(root, "BackgroundRed", "255"));
-                int green = int.Parse(XMLDefaultReturn(root, "BackgroundGreen", "255"));
-                int blue = int.Parse(XMLDefaultReturn(root, "BackgroundBlue", "255"));
-                int resolution = int.Parse(XMLDefaultReturn(root, "CoverResolutionID", "0"));
-                int width = int.Parse(XMLDefaultReturn(root, "CoverWidth", "200"));
-                int height = int.Parse(XMLDefaultReturn(root, "CoverHeight", "200"));
+                GeneralFunctions gf = new GeneralFunctions();
+
+                string name = gf.XMLDefaultReturn(root, "Name", "");
+                string imgPath = gf.XMLDefaultReturn(root, "Image", "");
+                int imgLayout = int.Parse(gf.XMLDefaultReturn(root, "ImageLayout", "0"));
+                bool background = bool.Parse(gf.XMLDefaultReturn(root, "WithoutBackground", "false"));
+                int red = int.Parse(gf.XMLDefaultReturn(root, "BackgroundRed", "255"));
+                int green = int.Parse(gf.XMLDefaultReturn(root, "BackgroundGreen", "255"));
+                int blue = int.Parse(gf.XMLDefaultReturn(root, "BackgroundBlue", "255"));
+                int resolution = int.Parse(gf.XMLDefaultReturn(root, "CoverResolutionID", "0"));
+                int width = int.Parse(gf.XMLDefaultReturn(root, "CoverWidth", "200"));
+                int height = int.Parse(gf.XMLDefaultReturn(root, "CoverHeight", "200"));
 
 
-                int scanStartNumber = int.Parse(XMLDefaultReturn(root, "StartNumber", "1"));
+                int scanStartNumber = int.Parse(gf.XMLDefaultReturn(root, "StartNumber", "1"));
                 string[] scanExtension = { };
                 if (rootScanExtension != null)
                 {
@@ -2461,9 +2509,9 @@ namespace C_Launcher
 
         #endregion
 
-        #region Elementos
+        #region Elementos (Pendiente a eliminar)
         //Cargar el tamaño de elementos con id que existen en el xml de archivos
-        private int LoadFilesSize()
+        /*private int LoadFilesSize()
         {
             int size = 0;
 
@@ -2489,10 +2537,10 @@ namespace C_Launcher
             }
 
             return size;
-        }
+        }*/
 
         //Cargar todos los archivos del xml en un objeto files array
-        private Files[] LoadFiles(int arraySize)
+        /*private Files[] LoadFiles(int arraySize)
         {
             Files[] fileData = new Files[arraySize];
 
@@ -2522,9 +2570,9 @@ namespace C_Launcher
             }
 
             return fileData;
-        }
-
-        private void SaveXMLFile(Files file)
+        }*/
+        //Guarda el archivo en xml
+        /*private void SaveXMLFile(Files file)
         {
             //Verificar que el archivo xml exista (y si no es asi, crearlo y formatearlo)
             /*if (!File.Exists(xmlFilesPath))
@@ -2612,57 +2660,16 @@ namespace C_Launcher
 
             XmlElement fileFavorite = xmlDoc.CreateElement("Favorite"); fileFavorite.InnerText = Class.Favorite.ToString(); file.AppendChild(fileFavorite);
 
-            xmlDoc.Save(xmlFilesPath);*/
+            xmlDoc.Save(xmlFilesPath);
             Files classFile = new Files();
             classFile.SaveFiles(file);
 
             //Actualizar la cantidad de archivos
-            fileSize = LoadFilesSize();
+            fileSize = new Files().GetFilesSize(); //LoadFilesSize();
             //viewDepth = Class.IDFather;
-        }
+        }*/
 
-        //Cargar los datos de un archivo especifico
-        private void searchFileProcess(int fileID)
-        {
-
-            XmlDocument doc = new XmlDocument();
-            doc.Load(xmlFilesPath);
-
-            string xpath = "//Launcher/file[@id='" + fileID + "']";
-            XmlNode root = doc.SelectSingleNode(xpath);
-
-            string filePath = "";
-            string programPath = "";
-            string cmdLine = "";
-            bool urlCheck = false;
-
-            if (root != null)
-            {
-                filePath = XMLDefaultReturn(root, "FilePath", "");
-                programPath = XMLDefaultReturn(root, "ProgramPath", "");
-                cmdLine = XMLDefaultReturn(root, "CMDLine", "");
-                urlCheck = bool.Parse(XMLDefaultReturn(root, "URLCheck", "false"));
-                /*foreach (XmlNode rootxml in root.ChildNodes)
-                {
-                    // Hacer algo con el nodo, por ejemplo imprimir su nombre
-                    //Console.WriteLine(rootxml.Name + " | " + rootxml.InnerText);
-                    switch (rootxml.Name)
-                    {
-                        case "FilePath": filePath = rootxml.InnerText; break;
-                        case "ProgramPath": programPath = rootxml.InnerText; break;
-                        case "CMDLine": cmdLine = rootxml.InnerText; break;
-                        case "URLCheck": urlCheck = bool.Parse(rootxml.InnerText); break;
-                    }
-                }*/
-            }
-
-            //Llamar a la funcion para que empiece el proceso
-            startProcess(filePath, programPath, cmdLine, urlCheck);
-
-            //return fileData;
-        }
-        
-        private bool getFileFav(int fileID)
+        /*private bool getFileFav(int fileID)
         {
             XmlDocument doc = new XmlDocument();
             doc.Load(xmlFilesPath);
@@ -2755,9 +2762,9 @@ namespace C_Launcher
 
             //Llamar a la funcion para que empiece el proceso
             return returnDir;
-        }
+        }*/
 
-        private Files searchFileData(int fileID)
+        /*private Files searchFileData(int fileID)
         {
             XmlDocument doc = new XmlDocument();
             doc.Load(xmlFilesPath);
@@ -2792,9 +2799,9 @@ namespace C_Launcher
             Files FileReturn = new Files(fileID, idFather, name, imgPath, imgLayout, filePath, programPath, cmdLine, background,red, green, blue, resolution, width, height, urlCheck, tagsArray, fav);
 
             return FileReturn;
-        }
+        }*/
 
-        private void deleteFile(int fileID)
+        /*private void deleteFile(int fileID)
         {
             //Cargar el archivo XML
             XmlDocument xmlDoc = new XmlDocument();
@@ -2838,14 +2845,14 @@ namespace C_Launcher
             xmlDoc.Save(xmlFilesPath);
 
             colSize = LoadCollectionSize();
-            fileSize = LoadFilesSize();
+            fileSize = new Files().GetFilesSize(); //LoadFilesSize();
             loadPictureBox(colSize, fileSize, false);
-        }
+        }*/
         #endregion
 
-        #region Colecciones
+        #region Colecciones (Pendiente a eliminar)
         //Cargar el tamaño de elementos con id que existen en el xml de colecciones
-        private int LoadCollectionSize()
+        /*private int LoadCollectionSize()
         {
             int size = 0;
 
@@ -2871,9 +2878,9 @@ namespace C_Launcher
             }
 
             return size;
-        }
+        }*/
 
-        private bool getColeFav(int colID)
+        /*private bool getColeFav(int colID)
         {
             XmlDocument doc = new XmlDocument();
             doc.Load(xmlColPath);
@@ -2890,9 +2897,9 @@ namespace C_Launcher
 
             //Llamar a la funcion para que empiece el proceso
             return returnFav;
-        }
+        }*/
 
-        private void setColeFav(int colID)
+        /*private void setColeFav(int colID)
         {
             XmlDocument doc = new XmlDocument();
             doc.Load(xmlColPath);
@@ -2909,9 +2916,9 @@ namespace C_Launcher
 
                 doc.Save(xmlColPath);
             }
-        }
+        }*/
 
-        private string[] getColeScanExtension(int colID)
+        /*private string[] getColeScanExtension(int colID)
         {
             XmlDocument doc = new XmlDocument();
             doc.Load(xmlColPath);
@@ -2937,9 +2944,9 @@ namespace C_Launcher
             string[] returnExt = extValues.ToArray();
 
             return returnExt;
-        }
+        }*/
 
-        private int getColeScanStartNumber(int colID)
+        /*private int getColeScanStartNumber(int colID)
         {
             XmlDocument doc = new XmlDocument();
             doc.Load(xmlColPath);
@@ -2956,9 +2963,9 @@ namespace C_Launcher
                 
             //Llamar a la funcion para que empiece el proceso
             return returnNumber;
-        }
+        }*/
 
-        private void SaveXMLCollection(Collections Class)
+        /*private void SaveXMLCollection(Collections Class)
         {
             //Verificar que el archivo xml exista (y si no es asi, crearlo y formatearlo)
             if (!File.Exists(xmlColPath))
@@ -3014,8 +3021,9 @@ namespace C_Launcher
             }
 
             //Guardar la imagen
+            GeneralFunctions gf = new GeneralFunctions();
             string coverDir = "";
-            if (Class.ImagePath != "") coverDir = saveCover(Class.Name, Class.ImagePath, Class.ID == -1, "collection_");//si Class.ID == 1, se esta creando un elemento desde 0
+            if (Class.ImagePath != "") coverDir = gf.SaveCover(Class.Name, Class.ImagePath, Class.ID == -1, "collection_");//si Class.ID == 1, se esta creando un elemento desde 0
 
 
             //Elementos de esa coleccion
@@ -3068,12 +3076,14 @@ namespace C_Launcher
 
             xmlDoc.Save(xmlColPath);
 
+            Collections classCollection = new Collections();
+            classCollection.SaveCollections();
             //Actualizar cantidad de colecciones
-            colSize = LoadCollectionSize();
-        }
+            colSize = new Collections().GetCollectionsSize(); //LoadCollectionSize();
+        }*/
 
         //cargar las colecciones del xml en un objeto collections array
-        private Collections[] LoadCollections(int arraySize)
+        /*private Collections[] LoadCollections(int arraySize)
         {
             Collections[] colData = new Collections[arraySize];
 
@@ -3104,10 +3114,11 @@ namespace C_Launcher
             }
 
             return colData;
-        }
+        }*/
 
         //Cargar una coleccion desde el xml (sirve para no repetir el mismo script en todas las funciones)
-        private Collections searchCollectionData(int colID)
+
+        /*private Collections searchCollectionData(int colID)
         {
             XmlDocument doc = new XmlDocument();
             doc.Load(xmlColPath);
@@ -3169,9 +3180,9 @@ namespace C_Launcher
             Collections colReturn = new Collections(colID, idFather, name, imgPath, imgLayout, background, red, green, blue, resolution, width, height, sonRes, sonWidth, sonHeight, sonLayout, sonProgramPath, sonCMDLine, tagsArray, tagsScan, fav, scanFold, scanPath, scanStartNumber, scanExtension);
 
             return colReturn;
-        }
+        }*/
 
-        private Files[] searchFilesInCollection(int colID)
+        /*private Files[] searchFilesInCollection(int colID)
         {
             Files[] fileData = new Files[fileSize];
 
@@ -3233,9 +3244,9 @@ namespace C_Launcher
             Files[] arrangedFiles = fileData.Where(elemento => elemento != null).ToArray();
 
             return arrangedFiles;
-        }
+        }*/
 
-        private void deleteCollection(int colID)
+        /*private void deleteCollection(int colID)
         {
             //cargar xml con linq
             XDocument xmlDoc = XDocument.Load(xmlColPath);
@@ -3243,7 +3254,7 @@ namespace C_Launcher
             Console.Write($"\n/////////////////////////////////////////////\nColeccion a eliminar {colID}\n////////////////////////////////////////////////////\n");
             // Eliminar la coleccion principal
            /* var deleteColl = xmlDoc.Descendants("collection")
-                .Where(e => e.Attribute("id").Value == colID.ToString()).Remove();*/
+                .Where(e => e.Attribute("id").Value == colID.ToString()).Remove();
 
             XElement deleteColl = xmlDoc.Root.Elements("collection")
             .FirstOrDefault(e => e.Attribute("id")?.Value == colID.ToString());
@@ -3290,7 +3301,14 @@ namespace C_Launcher
             foreach (var file in filesToDelete)
             {
                 //Eliminar el elemento
-                deleteFile(int.Parse(file.Attribute("id").Value));
+                //deleteFile(int.Parse(file.Attribute("id").Value));
+
+                Files classFile = new Files();
+                classFile.DeleteFile(int.Parse(file.Attribute("id").Value));//Eliminar el archivo
+
+                colSize = new Collections().GetCollectionsSize(); //LoadCollectionSize();
+                fileSize = new Files().GetFilesSize(); //LoadFilesSize();
+                loadPictureBox(colSize, fileSize, false);
             }
             
 
@@ -3313,15 +3331,15 @@ namespace C_Launcher
             xmlDoc.Save(xmlColPath);
 
 
-            colSize = LoadCollectionSize();
-            fileSize = LoadFilesSize();
+            colSize = new Collections().GetCollectionsSize(); //LoadCollectionSize();
+            fileSize = new Files().GetFilesSize(); //LoadFilesSize();
 
             loadView(colSize, fileSize);
-        }
+        }*/
         #endregion
 
         #region Settings
-        //Cargar las configuraciones de settings
+        //Cargar las configuraciones de settings ( se tienen que ajustar algunos elementos del formulario)
         private void loadSettingXML()
         {
             //cargar las configuraciones en el objeto de la clase
@@ -3449,7 +3467,7 @@ namespace C_Launcher
         }
 
         //Guardar las configuraciones de settings
-        private void saveSettingsXML()
+        /*private void saveSettingsXML()
         {
             Settings classSettings = new Settings();
             classSettings.SaveSettings(settings);
@@ -3510,25 +3528,8 @@ namespace C_Launcher
             //Guardar como se muestran los elementos al utilizar la barra de busqueda
             XmlElement searchT = xmlDoc.CreateElement("SearchFilter"); searchT.InnerText = searchType.ToString(); set.AppendChild(searchT);
 
-            xmlDoc.Save(xmlSettingsPath);*/
-        }
-
-        private void labelTest_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void labelDepth_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void menuStripMain_Paint(object sender, PaintEventArgs e)
-        {
-        }
-
-
-
+            xmlDoc.Save(xmlSettingsPath);
+        }*/
 
 
         #endregion
@@ -3690,7 +3691,7 @@ namespace C_Launcher
             return false;
         }
 
-        private string returnImagePath(string outputFolder, string fileName, string extension)
+        /*private string returnImagePath(string outputFolder, string fileName, string extension)
         {
             string destinationFile = outputFolder + "\\" + extension + fileName + ".png";
             int i = 0;
@@ -3700,9 +3701,9 @@ namespace C_Launcher
                 destinationFile = outputFolder + "\\"+ extension + fileName + "(" + i + ").png";//Se le cambia la extension a png
             }
             return destinationFile;
-        }
+        }*/
 
-        private string saveCover(string coverName, string originalImageDir, bool newCover, string coverType)
+        /*private string saveCover(string coverName, string originalImageDir, bool newCover, string coverType)
         {
             //Evitar que se guarde la imagen con caracteres invalidos
             string cleanName = Path.GetInvalidFileNameChars().Aggregate(coverName, (current, c) => current.Replace(c.ToString(), string.Empty));
@@ -3783,14 +3784,16 @@ namespace C_Launcher
             }
 
             return imgPath;
-        }
+        }*/
         #endregion
 
 
         //Guardar los settings
         private void Home_FormClosed(object sender, FormClosedEventArgs e)
         {
-            saveSettingsXML();
+            //saveSettingsXML();
+            Settings classSettings = new Settings();
+            classSettings.SaveSettings(settings);
         }
     }
 }

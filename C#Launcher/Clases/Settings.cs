@@ -101,6 +101,8 @@ namespace CoverPadLauncher.Clases
         #region funciones de guardado/cargado
         public void LoadSettings()
         {
+            GeneralFunctions gf = new GeneralFunctions();//Para llamar a XMLDefaultReturn
+
             XmlDocument doc = new XmlDocument();
             doc.Load(xmlSettingsPath);
 
@@ -108,32 +110,32 @@ namespace CoverPadLauncher.Clases
             XmlNode root = doc.SelectSingleNode(xpath);
             XmlNode rootWin = doc.SelectSingleNode(xpath+"/WindowSize");
 
-            int themeID = int.Parse(XMLDefaultReturn(root, "ThemeID", "0"));
-            bool pictureBoxName = bool.Parse(XMLDefaultReturn(root, "BoxName", "false"));
+            int themeID = int.Parse(gf.XMLDefaultReturn(root, "ThemeID", "0"));
+            bool pictureBoxName = bool.Parse(gf.XMLDefaultReturn(root, "BoxName", "false"));
 
             //Cargar la ultima profundidad utilizada
-            int lastDepth = int.Parse(XMLDefaultReturn(root, "LastDepth", "0"));
+            int lastDepth = int.Parse(gf.XMLDefaultReturn(root, "LastDepth", "0"));
             if (lastDepth < -1) lastDepth = 0;//Si es menor a -1(favoritos) dejarlo en 0
 
             //Cargar las opciones de la ventana (estan en un sub nodo)
             //Ancho de la ventana
-            int windowsWidth = int.Parse(XMLDefaultReturn(rootWin, "Width", "688"));
+            int windowsWidth = int.Parse(gf.XMLDefaultReturn(rootWin, "Width", "688"));
             if (windowsWidth < 300) windowsWidth = 300;
-            int windowsHeight = int.Parse(XMLDefaultReturn(rootWin, "Height", "412"));
+            int windowsHeight = int.Parse(gf.XMLDefaultReturn(rootWin, "Height", "412"));
             if (windowsHeight < 300) windowsHeight = 300;
-            int windowsMaxScreen = int.Parse(XMLDefaultReturn(rootWin, "MxScreen", "0"));
+            int windowsMaxScreen = int.Parse(gf.XMLDefaultReturn(rootWin, "MxScreen", "0"));
             if (windowsMaxScreen < 0 || windowsMaxScreen > 1) windowsMaxScreen = 1;
 
             //Cargar el ancho del treenode
-            int treeViewWidth = int.Parse(XMLDefaultReturn(root, "TreeWidth", "100"));
+            int treeViewWidth = int.Parse(gf.XMLDefaultReturn(root, "TreeWidth", "100"));
             if (treeViewWidth < 97) treeViewWidth = 97;
 
             //Cargar el orden de los paneles
-            int panelOrder = int.Parse(XMLDefaultReturn(root, "PanelOrder", "0"));
+            int panelOrder = int.Parse(gf.XMLDefaultReturn(root, "PanelOrder", "0"));
             if (panelOrder < 0) panelOrder = 0;
 
             //Cargar el tipo de filtro a utilizar en la barra de busqueda
-            int searchFilter = int.Parse(XMLDefaultReturn(root, "SearchFilter", "0"));
+            int searchFilter = int.Parse(gf.XMLDefaultReturn(root, "SearchFilter", "0"));
 
 
             //Actualizar los atributos de la clase
@@ -205,7 +207,7 @@ namespace CoverPadLauncher.Clases
         }
 
         //Esta funcion deberia pasarla a una clase de funciones
-        private string XMLDefaultReturn(XmlNode node, string singleNode, string defaultValue)
+        /*private string XMLDefaultReturn(XmlNode node, string singleNode, string defaultValue)
         {
             XmlNode selectedNode = node.SelectSingleNode(singleNode);
             if (selectedNode != null)
@@ -213,7 +215,7 @@ namespace CoverPadLauncher.Clases
                 return selectedNode.InnerText;
             }
             return defaultValue;
-        }
+        }*/
         #endregion
     }
 }

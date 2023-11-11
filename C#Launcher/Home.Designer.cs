@@ -136,7 +136,7 @@
             this.menuStripMain.Size = new System.Drawing.Size(901, 24);
             this.menuStripMain.TabIndex = 3;
             this.menuStripMain.Text = "menuStrip1";
-            this.menuStripMain.Paint += new System.Windows.Forms.PaintEventHandler(this.menuStripMain_Paint);
+            //this.menuStripMain.Paint += new System.Windows.Forms.PaintEventHandler(this.menuStripMain_Paint);
             // 
             // archivoToolStripMenuItem
             // 
@@ -266,7 +266,7 @@
             this.labelDepth.TabIndex = 5;
             this.labelDepth.Text = "Inicio";
             this.labelDepth.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
-            this.labelDepth.Click += new System.EventHandler(this.labelDepth_Click);
+            //this.labelDepth.Click += new System.EventHandler(this.labelDepth_Click);
             // 
             // flowLayoutPanelMain
             // 
