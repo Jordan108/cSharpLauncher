@@ -12,6 +12,9 @@ namespace CoverPadLauncher.Clases
 {
     public class Configurations
     {
+        private string xmlSettingsPath = "System\\Settings.xml";
+
+        //Atributos
         private int themeID;//El id del tema
         private bool pictureBoxName;//Mostrar siempre el rectangulo con el nombre de un pictureBox
         private int lastDepth; //ultima profundidad abierta (ultima coleccion)
@@ -21,9 +24,6 @@ namespace CoverPadLauncher.Clases
         private int treeViewWidth;//Ancho del treeview
         private int panelOrder;//Orden de los paneles
         private int searchFilter;//Tipo de filtro de busqueda
-
-        private string xmlSettingsPath = "System\\Settings.xml";
-
 
         //Constructor que llama los datos desde el XML
         public Configurations() 
