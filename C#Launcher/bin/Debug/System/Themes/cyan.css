@@ -30,22 +30,30 @@
 /*Reemplaza los valores de las propiedades, pero no las elimines*/
 .theme {
   /*Colores*/
-  --color-bg-panel:           var(--main-bg-color);
+  --color-bg-panel:           var(--main-bg-color);/*Color de fondo donde estan los paneles*/
 
+  /*Seccion superior donde se ubica el nombre de la profundidad*/
   --color-bg-top:             var(--main-bg-color-dark);
   --color-text-top:           var(--default-text-color);
 
+  /*Panel izquierdo donde se muestran los nombres de las colecciones*/
   --color-bg-treeview:        var(--main-bg-color-light);
   --color-text-treeview:      var(--default-text-color);
   --color-bg-treeview-border: var(--main-bg-color-dark);
 
+  /*Barra de herramientas*/
   --color-bg-navbar:          var(--main-bg-color-dark);
   --color-text-navbar:        var(--default-text-color);
+  --color-menu-strip:         var(--main-bg-color-dark);
 
+  /*Texto descriptivo*/
   --color-text-label:         var(--default-text-color);
 
+  /*Colores de las tablas de seleccion*/
   --color-bg-grid:            var(--main-bg-color-dark);
   --color-bg-grid-cell:       var(--main-bg-color);
+
   
-  --color-selected-panel:   #ffffff;
+  
+  --color-selected-panel:   #ffffff;/*Color del borde de un panel al estar el mouse encima*/
 }
