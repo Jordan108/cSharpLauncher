@@ -13,8 +13,18 @@ namespace CoverPadLauncher.Clases
         //Atributos
         private Color panelBackground;
         private Color panelTopBackground;
+
         private Color navbarBackground;
+        private Color navbarSelectedBackground;
+        private Color navbarText;
+
+        private Color textBoxSearchBackground;
+        private Color textBoxSearchText;
+        private Color textBoxSearchTextEmpty;
+                
         private Color treeViewBackground;
+        private Color treeViewHoverBackground;
+        private Color treeViewSelectedBackground;
         private Color treeViewBorderBackground;
 
         //Constructor
@@ -27,8 +37,19 @@ namespace CoverPadLauncher.Clases
         #region Encapsulamiento
         public Color PanelBackground { get { return panelBackground; } }
         public Color PanelTopBackground { get { return panelTopBackground; } }
+
+        public Color TextBoxSearchBackground { get { return textBoxSearchBackground; } }
+        public Color TextBoxSearchText { get { return textBoxSearchText; } }
+        public Color TextBoxSearchTextEmpty { get { return textBoxSearchTextEmpty; } }
+
         public Color NavbarBackground { get { return navbarBackground; } }
+        public Color NavbarSelectedBackground { get { return navbarSelectedBackground; } }
+        public Color NavbarText { get { return navbarText; } }
+
         public Color TreeViewBackground { get { return treeViewBackground; } }
+        public Color TreeViewHoverBackground { get { return treeViewHoverBackground; } }
+        public Color TreeViewSelectedBackground { get { return treeViewSelectedBackground; } }
+
         public Color TreeViewBorderBackground { get {  return treeViewBorderBackground; } }
         #endregion
 
@@ -42,8 +63,18 @@ namespace CoverPadLauncher.Clases
             //Color loadColor = Color.FromArgb(32, 32, 32);
             this.panelBackground = ObtainColorCSS("--color-bg-panel", themeDir);//loadColor;
             this.panelTopBackground = ObtainColorCSS("--color-bg-top", themeDir);
+
             this.navbarBackground = ObtainColorCSS("--color-bg-navbar", themeDir);
+            this.navbarSelectedBackground = ObtainColorCSS("--color-bg-navbar-selected", themeDir);
+            this.navbarText = ObtainColorCSS("--color-text-navbar", themeDir);
+
+            this.textBoxSearchBackground = ObtainColorCSS("--color-bg-searchBox", themeDir);
+            this.textBoxSearchText = ObtainColorCSS("--color-text-searchBox", themeDir);
+            this.textBoxSearchTextEmpty = ObtainColorCSS("--color-text-empty-searchBox", themeDir);
+
             this.treeViewBackground = ObtainColorCSS("--color-bg-treeview", themeDir);
+            this.treeViewHoverBackground = ObtainColorCSS("--color-bg-treeview-hover", themeDir);
+            this.treeViewSelectedBackground = ObtainColorCSS("--color-bg-treeview-selected", themeDir);
             this.treeViewBorderBackground = ObtainColorCSS("--color-bg-treeview-border", themeDir);
         }
 

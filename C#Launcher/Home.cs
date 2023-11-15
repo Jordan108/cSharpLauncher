@@ -87,6 +87,12 @@ namespace C_Launcher
 
 
             flowLayoutPanelMain.BackColor = theme.PanelBackground;
+
+            //searchBox
+            textBoxSearch.BackColor = theme.TextBoxSearchBackground;
+            textBoxSearch.ForeColor = theme.TextBoxSearchTextEmpty;//Empieza con texto default (buscar...); el color cambia con sus funciones SearchBarAddText SearchBarRemoveText
+
+
             panelTop.BackColor = theme.PanelTopBackground;
             menuStripMain.BackColor = theme.NavbarBackground;
 
@@ -123,7 +129,6 @@ namespace C_Launcher
 
             //Establecer barra de busqueda
             textBoxSearch.Text = "Buscar...";
-            textBoxSearch.ForeColor = System.Drawing.Color.Gray;
             textBoxSearch.KeyDown += new KeyEventHandler(SearchBarEnter);
             textBoxSearch.GotFocus += new EventHandler(SearchBarRemoveText);
             textBoxSearch.LostFocus += new EventHandler(SearchBarAddText);
@@ -134,7 +139,8 @@ namespace C_Launcher
 
             loadTreeView(colSize);
             loadPictureBox(colSize, fileSize, false);
-            menuStripMain.Renderer = new MyRenderer();
+            menuStripMain.Renderer = new MyRenderer(theme.NavbarBackground, theme.NavbarSelectedBackground, theme.NavbarText);
+            
 
             treeViewMain.DrawMode = TreeViewDrawMode.OwnerDrawAll;
             treeViewMain.DrawNode += new DrawTreeNodeEventHandler(treeViewMain_DrawNode);
@@ -648,16 +654,27 @@ namespace C_Launcher
         #region Renderer
         private class MyRenderer : ToolStripProfessionalRenderer
         {
-            public MyRenderer() : base(new MyColors()) { }
-
             Color defaultBG = Color.FromArgb(36, 40, 47);
             Color selectedBG = Color.FromArgb(23, 29, 37);
+            Color text = Color.White;
+            public MyRenderer(Color _background, Color _selectedBackground, Color _text) : base(new MyColors()) { 
+                this.defaultBG = _background;
+                this.selectedBG = _selectedBackground;
+                this.text = _text;
+
+                Console.WriteLine($"renderer defaultBG {this.defaultBG}");
+                Console.WriteLine($"renderer selectedBG {this.selectedBG}");
+                Console.WriteLine($"renderer text {this.text}");
+            }
+
+            readonly static Themes theme = new Themes("System\\Themes\\cyan.css");
+
 
             //Establecer color del fondo
             protected override void OnRenderMenuItemBackground(ToolStripItemRenderEventArgs e)
             {
                 Rectangle rc = new Rectangle(Point.Empty, e.Item.Size);
-                Color c = e.Item.Selected ? defaultBG : selectedBG;
+                Color c = e.Item.Selected ? selectedBG : defaultBG ;
                 using (SolidBrush brush = new SolidBrush(c)) e.Graphics.FillRectangle(brush, rc);
             }
 
@@ -667,7 +684,7 @@ namespace C_Launcher
             //Cambiar el color del texto
             protected override void OnRenderItemText(ToolStripItemTextRenderEventArgs e)
             {
-                e.TextColor = Color.White; // Establecer el nuevo color de texto
+                e.TextColor = text;//Color.White; // Establecer el nuevo color de texto
                 base.OnRenderItemText(e);
             }
         }
@@ -1137,7 +1154,8 @@ namespace C_Launcher
             if (textBoxSearch.Text == "Buscar...")
             {
                 textBoxSearch.Text = "";
-                textBoxSearch.ForeColor = System.Drawing.Color.White;
+                Color text = new Themes("System\\Themes\\cyan.css").TextBoxSearchText;
+                textBoxSearch.ForeColor = text;
             }
         }
 
@@ -1147,7 +1165,8 @@ namespace C_Launcher
             if (textBoxSearch.Text.Length  == 0)
             {
                 textBoxSearch.Text = "Buscar...";
-                textBoxSearch.ForeColor = System.Drawing.Color.Gray;
+                Color text = new Themes("System\\Themes\\cyan.css").TextBoxSearchTextEmpty;
+                textBoxSearch.ForeColor = text;
             }
         }
 
@@ -2080,6 +2099,11 @@ namespace C_Launcher
         {
             TreeNode node = e.Node;//Obtener el nodo que se va a dibujar
 
+            //Establecer los colores
+            Color defaultColor = new Themes("System\\Themes\\cyan.css").TreeViewBackground;
+            Color hoverColor = new Themes("System\\Themes\\cyan.css").TreeViewHoverBackground;
+            Color selectedColor = new Themes("System\\Themes\\cyan.css").TreeViewSelectedBackground;
+
             //Determina si el nodo esta seleccionado
             bool selected = (e.State & TreeNodeStates.Selected) != 0;
             bool hover = (node == lastHoveredNode);
@@ -2088,7 +2112,9 @@ namespace C_Launcher
             int offset = node.Level * 20; //Ajusta la posicion del texto del nodo en funcion del nivel en el que este
 
             //Recoger el area de dibujo del nodo
-            Rectangle bounds = e.Bounds;
+            //Rectangle bounds = e.Bounds;
+            // Obtener el área de dibujo del nodo con el ancho total del control
+            Rectangle bounds = new Rectangle(treeViewMain.Bounds.X, e.Bounds.Y, treeViewMain.Width, e.Bounds.Height);
 
             // Establece el color de fondo dependiendo del estado del nodo.
             //Color backColor = selected ? SystemColors.Highlight : SystemColors.Window;
@@ -2096,16 +2122,16 @@ namespace C_Launcher
             Color backgroundColor;
             if (selected)//Nodo seleccionado
             {
-                backgroundColor = Color.FromArgb(65, 72, 85);//SystemColors.Highlight;
+                backgroundColor = selectedColor;// Color.FromArgb(65, 72, 85);//SystemColors.Highlight;
             }
             else if (hover)//Nodo con el mouse encima
             {
                 //color hovermouse
-                backgroundColor = Color.FromArgb(73, 81, 95); //Color.LightGray;
+                backgroundColor = hoverColor;// Color.FromArgb(73, 81, 95); //Color.LightGray;
             }
             else //Default
             {
-                backgroundColor = Color.FromArgb(94, 105, 123);//SystemColors.Window;
+                backgroundColor = defaultColor;//Color.FromArgb(94, 105, 123);//SystemColors.Window;
             }
 
             //Establece el color de primer plano dependiendo del estado del nodo
@@ -2123,7 +2149,6 @@ namespace C_Launcher
             bounds.X += offset;
             // Dibuja el texto del nodo
             TextRenderer.DrawText(e.Graphics, node.Text, treeViewMain.Font, bounds, foreColor, TextFormatFlags.VerticalCenter);
-
         }
 
         private void treeViewMain_MouseMove(object sender, MouseEventArgs e)
@@ -2135,14 +2160,18 @@ namespace C_Launcher
                 // El mouse ha entrado o salido de un nodo
                 if (lastHoveredNode != null)
                 {
+                    Rectangle lastNodeBounds = new Rectangle(treeViewMain.Bounds.X, lastHoveredNode.Bounds.Y, treeViewMain.Width, lastHoveredNode.Bounds.Height);
+                    //Rectangle lastNodeBounds = lastHoveredNode.Bounds;
+                    treeViewMain.Invalidate(lastNodeBounds); //volver a dibujar para restaurar el fondo del nodo anterior; // con lastNodeBound solo invalido la area especifica a redibujar
                     lastHoveredNode = null;
-                    treeViewMain.Invalidate(); //volver a dibujar para restaurar el fondo del nodo anterior
                 }
 
                 if (node != null)
                 {
                     lastHoveredNode = node;
-                    treeViewMain.Invalidate(); //volver a dibujar para cambiar el fondo del nodo actual
+                    //Rectangle currentNodeBounds = node.Bounds;
+                    Rectangle nodeBounds = new Rectangle(treeViewMain.Bounds.X, node.Bounds.Y, treeViewMain.Width, node.Bounds.Height);
+                    treeViewMain.Invalidate(nodeBounds); //volver a dibujar para cambiar el fondo del nodo actual; // con currentNodeBounds solo invalido la area especifica a redibujar
                 }
             }
         }
@@ -2151,8 +2180,8 @@ namespace C_Launcher
         {
             if (lastHoveredNode != null)
             {
+                treeViewMain.Invalidate(lastHoveredNode.Bounds); //volver a dibujar para restaurar el fondo del nodo anterior
                 lastHoveredNode = null;
-                treeViewMain.Invalidate(); //volver a dibujar para restaurar el fondo del nodo anterior
             }
         }
 
