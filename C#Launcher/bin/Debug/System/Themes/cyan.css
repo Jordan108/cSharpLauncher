@@ -32,9 +32,11 @@
   /*Colores*/
   --color-bg-panel:               var(--main-bg-color);
 
+  /*Seccion superior donde se ubica el nombre de la profundidad*/
   --color-bg-top:                 var(--main-bg-color-dark);
   --color-text-top:               var(--default-text-color);
 
+  /*Panel izquierdo donde se muestran los nombres de las colecciones*/
   --color-bg-treeview:            var(--main-bg-color-light);
   --color-bg-treeview-hover:      #185d9e;
   --color-bg-treeview-selected:   rgb(21, 71, 117);
@@ -45,14 +47,18 @@
   --color-text-searchBox:         var(--default-text-color);
   --color-text-empty-searchBox: #000000;
 
+  /*Barra de herramientas*/
   --color-bg-navbar:              var(--main-bg-color-dark);
   --color-bg-navbar-selected:     var(--main-bg-color-light);
   --color-text-navbar:            var(--default-text-color);
 
+  /*Texto descriptivo*/
   --color-text-label:             var(--default-text-color);
 
+  /*Colores de las tablas de seleccion*/
   --color-bg-grid:                var(--main-bg-color-dark);
   --color-bg-grid-cell:           var(--main-bg-color);
   
+  /*Color del borde de un panel al estar el mouse encima*/
   --color-selected-panel:       #ffffff;
 }
