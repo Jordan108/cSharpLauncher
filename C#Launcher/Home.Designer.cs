@@ -53,6 +53,7 @@
             this.flowLayoutPanelMain = new System.Windows.Forms.FlowLayoutPanel();
             this.treeViewMain = new System.Windows.Forms.TreeView();
             this.splitter1 = new System.Windows.Forms.Splitter();
+            this.importaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelTop.SuspendLayout();
             this.menuStripMain.SuspendLayout();
             this.SuspendLayout();
@@ -77,7 +78,7 @@
             this.btnBackView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
             this.btnBackView.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnBackView.ForeColor = System.Drawing.SystemColors.Window;
-            this.btnBackView.Location = new System.Drawing.Point(12, 29);
+            this.btnBackView.Location = new System.Drawing.Point(12, 27);
             this.btnBackView.Name = "btnBackView";
             this.btnBackView.Size = new System.Drawing.Size(48, 23);
             this.btnBackView.TabIndex = 0;
@@ -90,7 +91,7 @@
             this.btnHomeView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
             this.btnHomeView.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnHomeView.ForeColor = System.Drawing.SystemColors.Window;
-            this.btnHomeView.Location = new System.Drawing.Point(66, 29);
+            this.btnHomeView.Location = new System.Drawing.Point(66, 27);
             this.btnHomeView.Name = "btnHomeView";
             this.btnHomeView.Size = new System.Drawing.Size(48, 23);
             this.btnHomeView.TabIndex = 1;
@@ -103,7 +104,7 @@
             this.btnReloadView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
             this.btnReloadView.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btnReloadView.ForeColor = System.Drawing.SystemColors.Window;
-            this.btnReloadView.Location = new System.Drawing.Point(120, 29);
+            this.btnReloadView.Location = new System.Drawing.Point(120, 27);
             this.btnReloadView.Name = "btnReloadView";
             this.btnReloadView.Size = new System.Drawing.Size(60, 23);
             this.btnReloadView.TabIndex = 2;
@@ -247,7 +248,8 @@
             // herramientasToolStripMenuItem
             // 
             this.herramientasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.configuracionesToolStripMenuItem});
+            this.configuracionesToolStripMenuItem,
+            this.importaToolStripMenuItem});
             this.herramientasToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Window;
             this.herramientasToolStripMenuItem.Name = "herramientasToolStripMenuItem";
             this.herramientasToolStripMenuItem.Size = new System.Drawing.Size(90, 22);
@@ -256,7 +258,7 @@
             // configuracionesToolStripMenuItem
             // 
             this.configuracionesToolStripMenuItem.Name = "configuracionesToolStripMenuItem";
-            this.configuracionesToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.configuracionesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.configuracionesToolStripMenuItem.Text = "Configuraciones";
             this.configuracionesToolStripMenuItem.Click += new System.EventHandler(this.configuracionesToolStripMenuItem_Click);
             // 
@@ -312,6 +314,13 @@
             this.splitter1.TabIndex = 3;
             this.splitter1.TabStop = false;
             // 
+            // importaToolStripMenuItem
+            // 
+            this.importaToolStripMenuItem.Name = "importaToolStripMenuItem";
+            this.importaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.importaToolStripMenuItem.Text = "Importar Juegos";
+            this.importaToolStripMenuItem.Click += new System.EventHandler(this.importaToolStripMenuItem_Click);
+            // 
             // Home
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -362,5 +371,6 @@
         private System.Windows.Forms.ToolStripMenuItem administrarEtiquetasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem herramientasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem configuracionesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem importaToolStripMenuItem;
     }
 }

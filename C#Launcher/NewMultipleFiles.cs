@@ -475,6 +475,12 @@ namespace C_Launcher
             }
         }
 
+        //Buscar caratulas de los juegos utilizando SteamGridDatabase
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
+
         #endregion
 
         #region Manejar archivos XML

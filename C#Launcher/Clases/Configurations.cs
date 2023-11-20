@@ -15,7 +15,7 @@ namespace CoverPadLauncher.Clases
         private string xmlSettingsPath = "System\\Settings.xml";
 
         //Atributos
-        private int themeID;//El id del tema
+        private string themeName;//El id del tema
         private bool pictureBoxName;//Mostrar siempre el rectangulo con el nombre de un pictureBox
         private int lastDepth; //ultima profundidad abierta (ultima coleccion)
         private int windowsWidth;//Ancho de la ventana
@@ -32,9 +32,9 @@ namespace CoverPadLauncher.Clases
         }
 
         //Constructor al que le pasamos los datos
-        public Configurations(int themeId, bool pictureBoxName, int lastDepth, int windowsWidth, int windowsHeight, int windowsMaxScreen, int treeViewWidth, int panelOrder, int searchFilter)
+        public Configurations(string themeName, bool pictureBoxName, int lastDepth, int windowsWidth, int windowsHeight, int windowsMaxScreen, int treeViewWidth, int panelOrder, int searchFilter)
         {
-            this.themeID = themeId;
+            this.themeName = themeName;
             this.pictureBoxName = pictureBoxName;
             this.lastDepth = lastDepth;
             this.windowsWidth = windowsWidth;
@@ -46,9 +46,9 @@ namespace CoverPadLauncher.Clases
         }
 
         #region Encapsulamiento
-        public int ThemeID { 
-            get { return themeID; } 
-            set { themeID = value; } 
+        public string ThemeName { 
+            get { return themeName; } 
+            set { themeName = value; } 
         }
 
         public bool PictureBoxName {
@@ -110,7 +110,7 @@ namespace CoverPadLauncher.Clases
             XmlNode root = doc.SelectSingleNode(xpath);
             XmlNode rootWin = doc.SelectSingleNode(xpath+"/WindowSize");
 
-            int themeID = int.Parse(gf.XMLDefaultReturn(root, "ThemeID", "0"));
+            string themeName = gf.XMLDefaultReturn(root, "ThemeName", "Default");
             bool pictureBoxName = bool.Parse(gf.XMLDefaultReturn(root, "BoxName", "false"));
 
             //Cargar la ultima profundidad utilizada
@@ -139,7 +139,7 @@ namespace CoverPadLauncher.Clases
 
 
             //Actualizar los atributos de la clase
-            this.themeID = themeID;
+            this.themeName = themeName;
             this.pictureBoxName = pictureBoxName;
             this.lastDepth = lastDepth;
             this.windowsWidth = windowsWidth;
@@ -190,7 +190,7 @@ namespace CoverPadLauncher.Clases
 
             //Elementos de settings
             //Crea el nombre del elemento a agregar; agrega los datos; agrega los elementos
-            XmlElement settThemeID = xmlDoc.CreateElement("ThemeID"); settThemeID.InnerText = settings.ThemeID.ToString(); sett.AppendChild(settThemeID);
+            XmlElement settThemeID = xmlDoc.CreateElement("ThemeName"); settThemeID.InnerText = settings.ThemeName; sett.AppendChild(settThemeID);
             XmlElement settBoxName = xmlDoc.CreateElement("BoxName"); settBoxName.InnerText = settings.PictureBoxName.ToString(); sett.AppendChild(settBoxName);
             XmlElement settLastDepth = xmlDoc.CreateElement("LastDepth"); settLastDepth.InnerText = settings.LastDepth.ToString(); sett.AppendChild(settLastDepth);
             //Guardar la resolucion (ancho, alto, Pantalla completa)

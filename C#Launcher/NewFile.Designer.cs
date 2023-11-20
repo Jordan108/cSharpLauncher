@@ -65,6 +65,7 @@
             this.dataGridViewTags = new System.Windows.Forms.DataGridView();
             this.Column2 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCover)).BeginInit();
             this.groupBoxImageFormat.SuspendLayout();
             this.panelImageLimit.SuspendLayout();
@@ -523,6 +524,16 @@
             this.Column1.ReadOnly = true;
             this.Column1.Width = 150;
             // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(612, 254);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(151, 23);
+            this.button1.TabIndex = 46;
+            this.button1.Text = "Buscar Caratula Online";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
             // NewFile
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -530,6 +541,7 @@
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(61)))), ((int)(((byte)(72)))));
             this.ClientSize = new System.Drawing.Size(815, 587);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.dataGridViewTags);
             this.Controls.Add(this.buttonEraseCover);
             this.Controls.Add(this.BackgroundColorCheck);
@@ -615,5 +627,6 @@
         private System.Windows.Forms.DataGridView dataGridViewTags;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
+        private System.Windows.Forms.Button button1;
     }
 }

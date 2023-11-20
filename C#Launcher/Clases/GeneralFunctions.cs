@@ -128,5 +128,36 @@ namespace CoverPadLauncher.Clases
             }
             return false;
         }
+
+        //rescata un valor desde el json env.json
+        public string EnvVariable(string key)
+        {
+            // Verifica si el archivo existe
+            if (!File.Exists("env.txt"))
+            {
+                Console.WriteLine($"El archivo env.txt no existe.");
+                return null;
+            }
+
+            // Lee todas las líneas del archivo
+            string[] lineas = File.ReadAllLines("env.txt");
+
+            // Itera sobre cada línea para buscar la clave
+            foreach (string linea in lineas)
+            {
+                // Divide la línea en clave y valor usando el carácter '=' como separador
+                string[] partes = linea.Split('=');
+
+                // Verifica si la clave actual coincide con la clave buscada (ignorando mayúsculas y minúsculas)
+                if (partes.Length == 2 && partes[0].Trim().Equals(key, StringComparison.OrdinalIgnoreCase))
+                {
+                    // Devuelve el valor asociado a la clave
+                    return partes[1].Trim();
+                }
+            }
+
+            // Si la clave no se encontró, devuelve null
+            return null;
+        }
     }
 }

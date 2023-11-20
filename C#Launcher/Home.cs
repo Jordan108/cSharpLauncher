@@ -57,7 +57,10 @@ namespace C_Launcher
             "System\\Resources\\FavoriteIcon.png",//6
             "System\\Resources\\FavoriteIcon2.png",//7
             "System\\Resources\\UbicationIcon.png", //8
-            "System\\Resources\\OpenIcon.png" //9
+            "System\\Resources\\OpenIcon.png", //9
+            "System\\Resources\\BackIcon.png",//10
+            "System\\Resources\\HomeIcon.png",//11
+            "System\\Resources\\ReloadIcon.png"//12
         };
 
         //Escaneo de directorio
@@ -79,27 +82,39 @@ namespace C_Launcher
             verifySystemDir();
             //Cargar las opciones
             loadConfigurationsXML();
+            loadTheme();
 
-            #region Cargar el tema (provisional)
-            Themes theme = new Themes("System\\Themes\\cyan.css");
+            //Establecerle iconos a los botones
+            try
+            {
+                // Cargar la imagen desde la ruta especificada
+                Image imagen = Image.FromFile(imgResourceIcons[10]);
+                btnBackView.Image = imagen;// Establecer la imagen como icono del botón
+                btnBackView.BackColor = Color.Transparent;
+                btnBackView.FlatAppearance.BorderSize = 0;
+                btnBackView.Text = "";//El texto lo ocupo de referencia en el editor solamente
+                btnBackView.Size = imagen.Size;// Ajustar el tamaño del botón para que se ajuste a la imagen
 
-            viewDepth = config.LastDepth;//Ultima profundidad
+                imagen = Image.FromFile(imgResourceIcons[11]);
+                btnHomeView.Image = imagen;// Establecer la imagen como icono del botón
+                btnHomeView.BackColor = Color.Transparent;
+                btnHomeView.FlatAppearance.BorderSize = 0;
+                btnHomeView.Text = "";//El texto lo ocupo de referencia en el editor solamente
+                btnHomeView.Size = imagen.Size;// Ajustar el tamaño del botón para que se ajuste a la imagen
 
+                imagen = Image.FromFile(imgResourceIcons[12]);
+                btnReloadView.Image = imagen;// Establecer la imagen como icono del botón
+                btnReloadView.BackColor = Color.Transparent;
+                btnReloadView.FlatAppearance.BorderSize = 0;
+                btnReloadView.Text = "";//El texto lo ocupo de referencia en el editor solamente
+                btnReloadView.Size = imagen.Size;// Ajustar el tamaño del botón para que se ajuste a la imagen
+            }
+            catch (Exception ex)
+            {
+                // Manejar cualquier error al cargar la imagen
+                MessageBox.Show($"Error al cargar imagenes a los botones", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
-            flowLayoutPanelMain.BackColor = theme.PanelBackground;
-
-            //searchBox
-            textBoxSearch.BackColor = theme.TextBoxSearchBackground;
-            textBoxSearch.ForeColor = theme.TextBoxSearchTextEmpty;//Empieza con texto default (buscar...); el color cambia con sus funciones SearchBarAddText SearchBarRemoveText
-
-
-            panelTop.BackColor = theme.PanelTopBackground;
-            menuStripMain.BackColor = theme.NavbarBackground;
-
-            //TreeView
-            treeViewMain.BackColor = theme.TreeViewBackground;
-            splitter1.BackColor = theme.TreeViewBorderBackground;
-            #endregion
 
             //Tool strip (click derecho)
             //flow Layout Panel Tool Strip
@@ -139,7 +154,7 @@ namespace C_Launcher
 
             loadTreeView(colSize);
             loadPictureBox(colSize, fileSize, false);
-            menuStripMain.Renderer = new MyRenderer(theme.NavbarBackground, theme.NavbarSelectedBackground, theme.NavbarText);
+            
             
 
             treeViewMain.DrawMode = TreeViewDrawMode.OwnerDrawAll;
@@ -1188,6 +1203,32 @@ namespace C_Launcher
         }
         #endregion
 
+        //Controlar los temas
+        private void loadTheme()
+        {
+            Themes theme = new Themes($"System\\Themes\\{config.ThemeName}.css");
+
+            viewDepth = config.LastDepth;//Ultima profundidad
+
+
+            flowLayoutPanelMain.BackColor = theme.PanelBackground;
+
+            //searchBox
+            textBoxSearch.BackColor = theme.TextBoxSearchBackground;
+            textBoxSearch.ForeColor = theme.TextBoxSearchTextEmpty;//Empieza con texto default (buscar...); el color cambia con sus funciones SearchBarAddText SearchBarRemoveText
+
+
+            panelTop.BackColor = theme.PanelTopBackground;
+            menuStripMain.BackColor = theme.NavbarBackground;
+
+            //TreeView
+            treeViewMain.BackColor = theme.TreeViewBackground;
+            splitter1.BackColor = theme.TreeViewBorderBackground;
+
+            //establecer el renderer de la barra de herramientas
+            menuStripMain.Renderer = new MyRenderer(theme.NavbarBackground, theme.NavbarSelectedBackground, theme.NavbarText);
+        }
+
         //Dibujar el rectangulo negro y el nombre del pictureBox
         private void pictureBox_Paint(object sender, PaintEventArgs e)
         {
@@ -1299,6 +1340,7 @@ namespace C_Launcher
         {
             loadPictureBox(colSize, fileSize, false);
             loadTreeView(colSize);
+            //loadTheme();//Se recarga el tema solo al abrir el programa o al guardar las configuraciones (pide muchos recursos recargarlo constantemente)
         }
 
         private void loadDepthName(int Father, Collections[] colls)
@@ -2100,9 +2142,9 @@ namespace C_Launcher
             TreeNode node = e.Node;//Obtener el nodo que se va a dibujar
 
             //Establecer los colores
-            Color defaultColor = new Themes("System\\Themes\\cyan.css").TreeViewBackground;
-            Color hoverColor = new Themes("System\\Themes\\cyan.css").TreeViewHoverBackground;
-            Color selectedColor = new Themes("System\\Themes\\cyan.css").TreeViewSelectedBackground;
+            Color defaultColor = new Themes($"System\\Themes\\{config.ThemeName}.css").TreeViewBackground;
+            Color hoverColor = new Themes($"System\\Themes\\{config.ThemeName}.css").TreeViewHoverBackground;
+            Color selectedColor = new Themes($"System\\Themes\\{config.ThemeName}.css").TreeViewSelectedBackground;
 
             //Determina si el nodo esta seleccionado
             bool selected = (e.State & TreeNodeStates.Selected) != 0;
@@ -2122,12 +2164,12 @@ namespace C_Launcher
             Color backgroundColor;
             if (selected)//Nodo seleccionado
             {
-                backgroundColor = selectedColor;// Color.FromArgb(65, 72, 85);//SystemColors.Highlight;
+                backgroundColor = selectedColor;
             }
             else if (hover)//Nodo con el mouse encima
             {
                 //color hovermouse
-                backgroundColor = hoverColor;// Color.FromArgb(73, 81, 95); //Color.LightGray;
+                backgroundColor = hoverColor;
             }
             else //Default
             {
@@ -2180,7 +2222,7 @@ namespace C_Launcher
         {
             if (lastHoveredNode != null)
             {
-                treeViewMain.Invalidate(lastHoveredNode.Bounds); //volver a dibujar para restaurar el fondo del nodo anterior
+                treeViewMain.Invalidate();//(lastHoveredNode.Bounds); //volver a dibujar para restaurar el fondo del nodo anterior
                 lastHoveredNode = null;
             }
         }
@@ -2637,6 +2679,12 @@ namespace C_Launcher
         private void Configuration_ReturnedObject(object sender, Configurations e)
         {
             config = e;
+            loadTheme();//Recargar el tema
+        }
+
+        private void importaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
         #endregion
 

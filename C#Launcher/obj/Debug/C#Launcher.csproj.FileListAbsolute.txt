@@ -60,3 +60,7 @@ D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\obj\Debug\CoverPadLau
 D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\obj\Debug\CoverPadLauncher.Configuration.resources
 D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\bin\Debug\MediaToolkit.dll
 D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\obj\Debug\C_Launcher.Home.resources
+D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\bin\Debug\craftersmine.SteamGridDB.Net.dll
+D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\bin\Debug\Newtonsoft.Json.dll
+D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\bin\Debug\craftersmine.SteamGridDB.Net.xml
+D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\bin\Debug\Newtonsoft.Json.xml
