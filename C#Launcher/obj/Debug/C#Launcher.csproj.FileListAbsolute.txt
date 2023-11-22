@@ -64,3 +64,4 @@ D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\bin\Debug\craftersmin
 D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\bin\Debug\Newtonsoft.Json.dll
 D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\bin\Debug\craftersmine.SteamGridDB.Net.xml
 D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\bin\Debug\Newtonsoft.Json.xml
+D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\obj\Debug\CoverPadLauncher.SearchCoversOnline.resources

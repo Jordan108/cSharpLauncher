@@ -138,6 +138,12 @@
     <Compile Include="Resolution.Designer.cs">
       <DependentUpon>Resolution.cs</DependentUpon>
     </Compile>
+    <Compile Include="SearchCoversOnline.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SearchCoversOnline.Designer.cs">
+      <DependentUpon>SearchCoversOnline.cs</DependentUpon>
+    </Compile>
     <Compile Include="Tags.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -174,6 +180,9 @@
     </Compile>
     <EmbeddedResource Include="Resolution.resx">
       <DependentUpon>Resolution.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SearchCoversOnline.resx">
+      <DependentUpon>SearchCoversOnline.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Tags.resx">
       <DependentUpon>Tags.cs</DependentUpon>
