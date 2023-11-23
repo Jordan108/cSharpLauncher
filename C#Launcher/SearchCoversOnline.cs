@@ -1,20 +1,13 @@
 ﻿using CoverPadLauncher.Clases;
 using craftersmine.SteamGridDBNet;
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Security.Policy;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Net.WebRequestMethods;
@@ -23,12 +16,30 @@ namespace CoverPadLauncher
 {
     public partial class SearchCoversOnline : Form
     {
+        private int type;//El tipo de multimedia a buscar (juegos, peliculas/series)
+
+        private string[] names = new string[3];
+        private string[] routes = new string[3];
+
+        //private string[] coversUrl = new string[0];
+
         public SearchCoversOnline()
         {
             InitializeComponent();
+
+            names[0] = "Scott_Pilgrim";
+            names[1] = "Megaman Zero";
+            names[2] = "Megaman Zero 2";
+
+            routes[0] = "c:/Scott_Pilgrim.mp4";
+            routes[1] = "c:/MegamanZero.gba";
+            routes[2] = "c:/MegamanZero2.gba";
+
+            tabControl.TabPages[1].Enabled = false;
+            tabControl.TabPages[2].Enabled = false;
         }
 
-        private async void SearchSteamGridDB()
+        private async Task<string[]> SearchSteamGridDB(string gameName)
         {
             string apikey = new GeneralFunctions().EnvVariable("SteamGridDbApiKey");//EnvVariable("SteamGridDbApiKey");
             //GeneralFunctions gf = new GeneralFunctions();
@@ -38,10 +49,11 @@ namespace CoverPadLauncher
             try
             {
                 //Buscar el juego por palabra clave (buscara todas las coincidencias)
-                var games = await instance.SearchForGamesAsync(testBox.Text);
+                var games = await instance.SearchForGamesAsync(gameName);
+
 
                 //SteamGridDb Game, bool nsfw, bool humorous, bool epilepsy, int page, SteamGridDbTags, SteamGridDbStyles, SteamGridDbDimensions, SteamGridDbFormats, SteamGridDbTypes
-                var grids = await instance.GetGridsForGameAsync(games[0], false, false, false, 0, SteamGridDbTags.None, SteamGridDbStyles.AllGrids, SteamGridDbDimensions.W600H900, SteamGridDbFormats.All, SteamGridDbTypes.All);
+                var grids = await instance.GetGridsForGameAsync(games[0], false, false, false, 0, SteamGridDbTags.None, SteamGridDbStyles.AllGrids, SteamGridDbDimensions.W600H900, SteamGridDbFormats.All, SteamGridDbTypes.Static);
 
 
                 foreach (var grid in grids)
@@ -49,33 +61,17 @@ namespace CoverPadLauncher
                     Console.WriteLine(grid.FullImageUrl);
                 }
 
-                if (grids != null && grids.Count() > 0)
+                string[] returnstring = new string[grids.Count()];
+                //Array.Resize(ref coversUrl, grids.Count());
+
+                for (int i = 0; i< returnstring.Length; i++)
                 {
-                    //Tomando la primera imagen de la lista
-                    string imageUrl = grids[0].FullImageUrl;
-
-                    grids = null;
-
-                    // Descargar la imagen desde la URL
-                    using (WebClient webClient = new WebClient())
-                    {
-                        byte[] imageBytes = webClient.DownloadData(imageUrl);
-
-                        // Crear un MemoryStream desde los bytes
-                        using (MemoryStream ms = new MemoryStream(imageBytes))
-                        {
-                            // Crear una imagen desde el MemoryStream
-                            Image image = Image.FromStream(ms);
-
-                            // Mostrar la imagen en el PictureBox u otro control
-                            pictureBox1.BackgroundImage = image;
-
-                            image.Dispose();
-
-                            // Realizar otras operaciones según sea necesario...
-                        }
-                    }
+                    returnstring[i] = grids[i].FullImageUrl;
                 }
+
+                return returnstring;
+
+
                 //Console.WriteLine($"grids encontradas: {grids[0]}");
 
                 //var game = await instance.GetGameByIdAsync(1226);//Tambien se pueden buscar por ID de steamGridDB
@@ -100,7 +96,7 @@ namespace CoverPadLauncher
             }
         }
 
-        private async void SearchTheMovieDB()
+        private void SearchTheMovieDB(string movieName)
         {
             try
             {
@@ -115,7 +111,7 @@ namespace CoverPadLauncher
                 new MediaTypeWithQualityHeaderValue("application/json"));
 
                 // List data response.
-                HttpResponseMessage response = client.GetAsync("?api_key=15d2ea6d0dc1d476efbca3eba2b9bbfb&query=scott").Result;
+                HttpResponseMessage response = client.GetAsync($"?api_key=1{apikey}&query={movieName}").Result;
                 if (response.IsSuccessStatusCode)
                 {
                     // Parse the response body.
@@ -155,12 +151,156 @@ namespace CoverPadLauncher
 
         private void button1_Click(object sender, EventArgs e)
         {
-            SearchSteamGridDB();
+            SearchSteamGridDB("Scott pilgrim");
+        }
+
+        //Al cambiar de pestaña, cargar el datagrid de nombres (para poder cargarlo ahora
+        private void buttonContinueType_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < names.Length; i++)
+            {
+                dataGridViewNames.Rows.Add(names[i], routes[i]);
+            }
+
+            //Cambiar de pestaña
+            tabControl.TabPages[0].Enabled = false;
+            tabControl.TabPages[1].Enabled = true;
+            tabControl.SelectedTab = tabControl.TabPages[1];
+        }
+
+        //Al cambiar de pestaña, utilizar los valores del datagrid para actualizar el array que se utilizara para buscar las caratulas
+        private async void buttonContinueName_Click(object sender, EventArgs e)
+        {
+            //Actualizar el array
+            for (int i = 0; i < dataGridViewNames.RowCount; i++)
+            {
+                names[i] = dataGridViewNames.Rows[i].Cells[0].Value.ToString();
+            }
+
+            //Buscar las caratulas
+            //por pruebas, buscare por defecto de juegos
+            for (int j = 0; j < names.Length; j++)
+            {
+                //Buscar las url de las caratulas
+                string[] covers = await SearchSteamGridDB(names[j]);
+
+
+                //Establecerlo en el dataGridView
+                dataGridViewCovers.Rows.Add(names[j], covers.Length, covers.Length > 0 ? 1 : 0);
+                dataGridViewCovers.Rows[j].Tag = covers;
+            }
+
+            //Se selecciona por defecto la primera fila y muestro el contenido de esta
+            labelCoverArraySelected.Text = $"{dataGridViewCovers.Rows[0].Cells[2].Value}/{dataGridViewCovers.Rows[0].Cells[1].Value}";
+
+
+            //Establecer la caratula por url
+            if (dataGridViewCovers.Rows[0].Tag is string[] coverArray)
+            {
+                //Si no se encuentran caratulas estara vacio
+                if (coverArray.Length > 0) SetPictureBoxCover(coverArray[0]);
+            }
+
+            //Cambiar de pestaña
+            tabControl.TabPages[1].Enabled = false;
+            tabControl.TabPages[2].Enabled = true; 
+            tabControl.SelectedTab = tabControl.TabPages[2];
+        }
+
+        private void SetPictureBoxCover(string imageURL)
+        {
+            try
+            {
+                // Descargar la imagen desde la URL
+                using (WebClient webClient = new WebClient())
+                {
+                    byte[] imageBytes = webClient.DownloadData(imageURL);
+
+                    // Crear un MemoryStream desde los bytes
+                    using (MemoryStream ms = new MemoryStream(imageBytes))
+                    {
+                        // Crear una imagen desde el MemoryStream
+                        Image image = Image.FromStream(ms);
+
+                        // Mostrar la imagen en el PictureBox u otro control
+                        pictureBoxCover.BackgroundImage = image;
+
+                        //image.Dispose();
+
+                        // Realizar otras operaciones según sea necesario...
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"No se pudo establecer la caratula de la url: \n{imageURL}\n debido a: {ex}");
+            }
+            
         }
 
         private void button2_Click(object sender, EventArgs e)
         {
-            SearchTheMovieDB();
+            SearchTheMovieDB("Scott pilgrim");
+        }
+
+        private void buttonCoverNext_Click(object sender, EventArgs e)
+        {
+            int sR = dataGridViewCovers.CurrentCell.RowIndex;//Fila seleccionada
+
+            int arrayLength = int.Parse(dataGridViewCovers.Rows[sR].Cells[1].Value.ToString());
+            int actualCover = int.Parse(dataGridViewCovers.Rows[sR].Cells[2].Value.ToString());
+
+            if (actualCover < arrayLength)
+            {
+                actualCover++;
+                dataGridViewCovers.Rows[sR].Cells[2].Value = actualCover.ToString();
+
+
+                if (dataGridViewCovers.Rows[sR].Tag is string[] coverArray)
+                {
+                    //Si no se encuentran caratulas estara vacio
+                    if (coverArray.Length > 0) SetPictureBoxCover(coverArray[actualCover-1]);
+                    labelCoverArraySelected.Text = $"{actualCover}/{arrayLength}";
+                }
+            }
+        }
+
+        private void buttonCoverBack_Click(object sender, EventArgs e)
+        {
+            int sR = dataGridViewCovers.CurrentCell.RowIndex;//Fila seleccionada
+
+            int actualCover = int.Parse(dataGridViewCovers.Rows[sR].Cells[2].Value.ToString());
+
+            if (actualCover > 1)
+            {
+                actualCover--;
+                dataGridViewCovers.Rows[sR].Cells[2].Value = actualCover.ToString();
+
+                if (dataGridViewCovers.Rows[sR].Tag is string[] coverArray)
+                {
+                    //Si no se encuentran caratulas estara vacio
+                    if (coverArray.Length > 0) SetPictureBoxCover(coverArray[actualCover-1]);
+                    labelCoverArraySelected.Text = $"{actualCover}/{dataGridViewCovers.Rows[sR].Cells[1].Value}";
+                }
+            }
+        }
+
+        //Cuando se cambie de fila en el dataGrid de caratulas, actualizar todo
+        private void dataGridViewCovers_SelectionChanged(object sender, EventArgs e)
+        {
+            int sR = dataGridViewCovers.CurrentCell.RowIndex;//Fila actual
+            int actualCover = int.Parse(dataGridViewCovers.Rows[sR].Cells[2].Value.ToString());
+
+            //Actualizar la cantidad de caratulas encontradas
+            labelCoverArraySelected.Text = $"{actualCover}/{dataGridViewCovers.Rows[sR].Cells[1].Value}";
+
+
+            //Establecer la caratula por url
+            if (dataGridViewCovers.Rows[sR].Tag is string[] coverArray)
+            {
+                //Si no se encuentran caratulas estara vacio
+                if (coverArray.Length > 0) SetPictureBoxCover(coverArray[actualCover-1]);
+            }
         }
     }
 }
