@@ -1,4 +1,5 @@
 ﻿using C_Launcher.Clases;
+using CoverPadLauncher;
 using ImageMagick;
 using System;
 using System.Drawing;
@@ -475,8 +476,26 @@ namespace C_Launcher
             }
         }
 
-        //Buscar caratulas de los juegos utilizando SteamGridDatabase
-        private void button1_Click(object sender, EventArgs e)
+        //Buscar las caratulas online
+        private void buttonSearchCoversOnline_Click(object sender, EventArgs e)
+        {
+            //Crear un array de los elementos y pasarselos al windowsForm
+            string[,] passElement = new string[dataGridViewFiles.RowCount, 2];
+
+            for (int i = 0; i < dataGridViewFiles.RowCount; i++)
+            {
+                passElement[i, 0] = dataGridViewFiles.Rows[i].Cells[0].Value.ToString();//Nombre elemento
+                passElement[i, 1] = dataGridViewFiles.Rows[i].Cells[2].Value.ToString();//Direccion
+            }
+
+            
+
+            SearchCoversOnline sco = new SearchCoversOnline(passElement);
+            sco.ReturnedObject += SearchCoverOnline_ReturnedObject;
+            sco.ShowDialog();
+        }
+
+        private void SearchCoverOnline_ReturnedObject(object sender, string[,] e)
         {
 
         }

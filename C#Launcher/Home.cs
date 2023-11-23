@@ -109,7 +109,7 @@ namespace C_Launcher
                 btnReloadView.Text = "";//El texto lo ocupo de referencia en el editor solamente
                 btnReloadView.Size = imagen.Size;// Ajustar el tamaño del botón para que se ajuste a la imagen
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 // Manejar cualquier error al cargar la imagen
                 MessageBox.Show($"Error al cargar imagenes a los botones", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);

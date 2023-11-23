@@ -12,6 +12,7 @@ using System.Windows.Forms;
 using System.Xml;
 using craftersmine.SteamGridDBNet;
 using System.Net;
+using CoverPadLauncher;
 
 //using static System.Net.Mime.MediaTypeNames; //ELIMINAR
 //using static System.Net.WebRequestMethods; //ELIMINAR
@@ -766,86 +767,43 @@ namespace C_Launcher
 
         }
 
-        private async void button1_Click(object sender, EventArgs e)
+        private void buttonCoverOnline_Click(object sender, EventArgs e)
         {
-            //GeneralFunctions gf = new GeneralFunctions();
-            //string apiKey = gf.EnvVariable("SteamGridDbApiKey");
+            SearchCoversOnline sco = new SearchCoversOnline(textBoxName.Text, textBoxFilePath.Text);
+            sco.ReturnedObject += SearchCoverOnline_ReturnedObject;
+            sco.ShowDialog();
+        }
 
-            string apikey = new GeneralFunctions().EnvVariable("SteamGridDbApiKey");//EnvVariable("SteamGridDbApiKey");
-            //GeneralFunctions gf = new GeneralFunctions();
-            SteamGridDb instance = new SteamGridDb(apikey);
+        private void SearchCoverOnline_ReturnedObject(object sender, string[,] e)
+        {
+            //Se pasa un string bidimensional, pero solo es un elemento
+            textBoxName.Text = e[0,0];
+            pictureBoxCover.Tag = e[0, 1];
 
-            //Utilizar try para errores del tipo: no se encontro, sin autorizacion etc...
+            //Descargar la caratula online
             try
             {
-                //Buscar el juego por palabra clave (buscara todas las coincidencias)
-                var games = await instance.SearchForGamesAsync(textBoxName.Text);
-
-                //SteamGridDb Game, bool nsfw, bool humorous, bool epilepsy, int page, SteamGridDbTags, SteamGridDbStyles, SteamGridDbDimensions, SteamGridDbFormats, SteamGridDbTypes
-                var grids = await instance.GetGridsForGameAsync(games[0], false, false, false, 0, SteamGridDbTags.None, SteamGridDbStyles.AllGrids, SteamGridDbDimensions.W600H900, SteamGridDbFormats.All, SteamGridDbTypes.All);
-
-                
-                foreach(var grid in grids)
+                // Descargar la imagen desde la URL
+                using (WebClient webClient = new WebClient())
                 {
-                    Console.WriteLine(grid.FullImageUrl);
-                }
+                    byte[] imageBytes = webClient.DownloadData(e[0, 1]);
 
-                if (grids != null && grids.Count() > 0)
-                {
-                    //Tomando la primera imagen de la lista
-                    string imageUrl = grids[0].FullImageUrl;
-
-                    // Descargar la imagen desde la URL
-                    using (WebClient webClient = new WebClient())
+                    // Crear un MemoryStream desde los bytes
+                    using (MemoryStream ms = new MemoryStream(imageBytes))
                     {
-                        byte[] imageBytes = webClient.DownloadData(imageUrl);
+                        // Crear una imagen desde el MemoryStream
+                        Image image = Image.FromStream(ms);
 
-                        // Crear un MemoryStream desde los bytes
-                        using (MemoryStream ms = new MemoryStream(imageBytes))
-                        {
-                            // Crear una imagen desde el MemoryStream
-                            Image image = Image.FromStream(ms);
+                        // Mostrar la imagen en el PictureBox u otro control
+                        pictureBoxCover.BackgroundImage = image;
 
-                            // Mostrar la imagen en el PictureBox u otro control
-                            pictureBoxCover.BackgroundImage = image;
-
-                            // Realizar otras operaciones según sea necesario...
-                        }
+                        // Realizar otras operaciones según sea necesario...
                     }
                 }
-                //Console.WriteLine($"grids encontradas: {grids[0]}");
-
-                //var game = await instance.GetGameByIdAsync(1226);//Tambien se pueden buscar por ID de steamGridDB
-                //game = await instance.GetGameBySteamIdAsync(105600);//Tambien se pueden buscar por ID de juego de steam
-
-
-                // You can get Grids, Heroes, Logos and Icons by calling needed methods
-                // Here, we will get all available grids for game Terraria, with all styles, dimensions, etc by using SteamGridDB game ID
-                /*var grids = await instance.GetGridsByGameIdAsync(1226);
-                grids = await instance.GetGridsByPlatformGameIdAsync(SteamGridDbGamePlatform.Steam, 105600);
-
-                // And here we will get all available Terraria logos with "Custom" style
-                var logos = await instance.GetLogosByGameIdAsync(1226, styles: SteamGridDbStyles.Custom);
-                // Here we will get all available animated Terraria logos
-                logos = await instance.GetLogosByPlatformGameIdAsync(SteamGridDbGamePlatform.Steam, 105600, types: SteamGridDbTypes.Animated);
-                */
             }
-            catch (Exception er)
+            catch (Exception ex)
             {
-                // Here we can catch all errors that might occur while doing all above.
-                // For SteamGridDB specific errors like Unauthorized, Not Found, Forbidden and Bad Request there is specific exceptions with additional info from SteamGridDB
-                // Here are they
-                //   SteamGridDbUnauthorizedException
-                //   SteamGridDbNotFoundException
-                //   SteamGridDbForbiddenException
-                //   SteamGridDbBadRequestException
-                // They are all derived from SteamGridDbException, which represents a generic SteamGridDB exception
-                // Also they have properties such as ExceptionType enum, with error type
-                // And SteamGridDbErrorMessages string array with SteamGridDB error response messages for additional info
-                //
-                // Also there is InvalidMimeTypeException which might occur when you try to upload invalid file type
-                Console.WriteLine(er);
-                throw;
+                Console.WriteLine($"No se pudo establecer la caratula de la url: \n{e[0, 1]}\n debido a: {ex}");
             }
         }
 

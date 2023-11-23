@@ -60,7 +60,7 @@
             this.labelGlobalImageFormat = new System.Windows.Forms.Label();
             this.buttonGlobalImageFormat = new System.Windows.Forms.Button();
             this.addResolution = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.buttonSearchCoversOnline = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFiles)).BeginInit();
             this.SuspendLayout();
             // 
@@ -424,15 +424,15 @@
             this.addResolution.UseVisualStyleBackColor = false;
             this.addResolution.Click += new System.EventHandler(this.addResolution_Click);
             // 
-            // button1
+            // buttonSearchCoversOnline
             // 
-            this.button1.Location = new System.Drawing.Point(859, 19);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 44;
-            this.button1.Text = "Buscar Caratulas";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.buttonSearchCoversOnline.Location = new System.Drawing.Point(791, 19);
+            this.buttonSearchCoversOnline.Name = "buttonSearchCoversOnline";
+            this.buttonSearchCoversOnline.Size = new System.Drawing.Size(130, 23);
+            this.buttonSearchCoversOnline.TabIndex = 44;
+            this.buttonSearchCoversOnline.Text = "Buscar Caratulas Online";
+            this.buttonSearchCoversOnline.UseVisualStyleBackColor = true;
+            this.buttonSearchCoversOnline.Click += new System.EventHandler(this.buttonSearchCoversOnline_Click);
             // 
             // NewMultipleFiles
             // 
@@ -441,7 +441,7 @@
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(61)))), ((int)(((byte)(72)))));
             this.ClientSize = new System.Drawing.Size(1452, 631);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.buttonSearchCoversOnline);
             this.Controls.Add(this.addResolution);
             this.Controls.Add(this.buttonGlobalImageFormat);
             this.Controls.Add(this.labelGlobalImageFormat);
@@ -506,6 +506,6 @@
         private System.Windows.Forms.DataGridViewComboBoxColumn ColumnFormat;
         private System.Windows.Forms.DataGridViewCheckBoxColumn checkBackgroundColor;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnColor;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button buttonSearchCoversOnline;
     }
 }

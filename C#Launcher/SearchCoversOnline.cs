@@ -1,7 +1,9 @@
-﻿using CoverPadLauncher.Clases;
+﻿using C_Launcher.Clases;
+using CoverPadLauncher.Clases;
 using craftersmine.SteamGridDBNet;
 using Newtonsoft.Json.Linq;
 using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -16,25 +18,52 @@ namespace CoverPadLauncher
 {
     public partial class SearchCoversOnline : Form
     {
-        private int type;//El tipo de multimedia a buscar (juegos, peliculas/series)
+        public event EventHandler<string[,]> ReturnedObject;
 
-        private string[] names = new string[3];
-        private string[] routes = new string[3];
+        private int type = 0;//El tipo de multimedia a buscar (juegos, peliculas/series)
+
+        private string[] names;
+        private string[] routes;
 
         //private string[] coversUrl = new string[0];
 
         public SearchCoversOnline()
         {
             InitializeComponent();
+            CustomComponent();
+        }
 
-            names[0] = "Scott_Pilgrim";
-            names[1] = "Megaman Zero";
-            names[2] = "Megaman Zero 2";
+        //Constructor al crear un solo elemento
+        public SearchCoversOnline(string nameFile, string dirFile)
+        {
+            InitializeComponent();
+            CustomComponent();
+            
+            Array.Resize(ref names, 1);
+            Array.Resize(ref routes, 1);
 
-            routes[0] = "c:/Scott_Pilgrim.mp4";
-            routes[1] = "c:/MegamanZero.gba";
-            routes[2] = "c:/MegamanZero2.gba";
+            names[0] = nameFile;
+            routes[0] = dirFile;
+        }
 
+        //Constructor de multiples elementos
+        public SearchCoversOnline(string[,] arrayPass)
+        {
+            InitializeComponent();
+            CustomComponent();
+
+            Array.Resize(ref names, arrayPass.GetLength(0));
+            Array.Resize(ref routes, arrayPass.GetLength(0));
+
+            for(int i = 0; i < arrayPass.GetLength(0); i++) 
+            {
+                names[i] = arrayPass[i,0];
+                routes[i] = arrayPass[i,1];
+            }
+        }
+
+        private void CustomComponent()
+        {
             tabControl.TabPages[1].Enabled = false;
             tabControl.TabPages[2].Enabled = false;
         }
@@ -96,8 +125,9 @@ namespace CoverPadLauncher
             }
         }
 
-        private void SearchTheMovieDB(string movieName)
+        private string[] SearchTheMovieDB(string movieName, string type)
         {
+            //type = tv ; movie
             try
             {
                 //la api key la saque de: https://codepen.io/pixelnik/pen/pgWQBZ (es temporal mientras consigo la propia)
@@ -111,7 +141,7 @@ namespace CoverPadLauncher
                 new MediaTypeWithQualityHeaderValue("application/json"));
 
                 // List data response.
-                HttpResponseMessage response = client.GetAsync($"?api_key=1{apikey}&query={movieName}").Result;
+                HttpResponseMessage response = client.GetAsync($"?api_key={apikey}&query={movieName}").Result;
                 if (response.IsSuccessStatusCode)
                 {
                     // Parse the response body.
@@ -119,9 +149,29 @@ namespace CoverPadLauncher
                     JObject jsonResponse = JObject.Parse(apiResponse);//Serializar el objetoJson
 
                     //Crear un array de los posters
+                    
                     var results = jsonResponse["results"];
 
-                    foreach (var film in results)
+                    Console.WriteLine($"Results json: \n{results}\n\n\n");
+                    List<string> posterPaths = new List<string>();
+
+                    //Adaptar el objeto a un arrayString
+                    for (int i = 0; i < results.Count(); i++)
+                    {
+                        var film = results[i];
+
+                        if (film["poster_path"] != null && !string.IsNullOrEmpty(film["poster_path"].ToString()))
+                        {
+                            Console.WriteLine($"Film Poster: \n{film["poster_path"]}\n\n\n");
+                            posterPaths.Add($"http://image.tmdb.org/t/p/w500{film["poster_path"]}");
+                        }
+                    }
+
+                    string[] returnString = posterPaths.ToArray();
+
+                    return returnString;
+
+                    /*foreach (var film in results)
                     {
                         // Verificar si el objeto tiene la propiedad "poster_path"
                         if (film["poster_path"] != null && !string.IsNullOrEmpty(film["poster_path"].ToString()))
@@ -130,29 +180,25 @@ namespace CoverPadLauncher
 
                             Console.WriteLine($"Poster Path: http://image.tmdb.org/t/p/w500{film["poster_path"]}");
                         }
-                    }
+                    }*/
 
-                    //var jsonResponse = (JObject)JsonConvert.DeserializeObject(apiResponse); //JsonConvert.DeserializeObject(apiResponse);
-
-
-                    //Console.WriteLine("jsonResponse: "+ jsonResponse["poster_path"].Value<string>());
                 }
                 else
                 {
                     Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
                 }
-                client.Dispose();
+
+                //client.Dispose();
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error: {ex.Message}");
             }
+
+            return null;
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            SearchSteamGridDB("Scott pilgrim");
-        }
+        
 
         //Al cambiar de pestaña, cargar el datagrid de nombres (para poder cargarlo ahora
         private void buttonContinueType_Click(object sender, EventArgs e)
@@ -178,17 +224,35 @@ namespace CoverPadLauncher
             }
 
             //Buscar las caratulas
-            //por pruebas, buscare por defecto de juegos
-            for (int j = 0; j < names.Length; j++)
+            switch (type)
             {
-                //Buscar las url de las caratulas
-                string[] covers = await SearchSteamGridDB(names[j]);
+                //Buscar juegos (SteamGridDB)
+                case 0:
+                    for (int j = 0; j < names.Length; j++)
+                    {
+                        //Buscar las url de las caratulas
+                        string[] covers = await SearchSteamGridDB(names[j]);
 
 
-                //Establecerlo en el dataGridView
-                dataGridViewCovers.Rows.Add(names[j], covers.Length, covers.Length > 0 ? 1 : 0);
-                dataGridViewCovers.Rows[j].Tag = covers;
+                        //Establecerlo en el dataGridView
+                        dataGridViewCovers.Rows.Add(names[j], covers.Length, covers.Length > 0 ? 1 : 0);
+                        dataGridViewCovers.Rows[j].Tag = covers;
+                    }
+                    break;
+                case 1:
+                    for (int j = 0; j < names.Length; j++)
+                    {
+                        //Buscar las url de las caratulas
+                        string[] covers = SearchTheMovieDB(names[j], "movie");
+
+
+                        //Establecerlo en el dataGridView
+                        dataGridViewCovers.Rows.Add(names[j], covers.Length, covers.Length > 0 ? 1 : 0);
+                        dataGridViewCovers.Rows[j].Tag = covers;
+                    }
+                    break;
             }
+            
 
             //Se selecciona por defecto la primera fila y muestro el contenido de esta
             labelCoverArraySelected.Text = $"{dataGridViewCovers.Rows[0].Cells[2].Value}/{dataGridViewCovers.Rows[0].Cells[1].Value}";
@@ -238,10 +302,7 @@ namespace CoverPadLauncher
             
         }
 
-        private void button2_Click(object sender, EventArgs e)
-        {
-            SearchTheMovieDB("Scott pilgrim");
-        }
+        
 
         private void buttonCoverNext_Click(object sender, EventArgs e)
         {
@@ -301,6 +362,41 @@ namespace CoverPadLauncher
                 //Si no se encuentran caratulas estara vacio
                 if (coverArray.Length > 0) SetPictureBoxCover(coverArray[actualCover-1]);
             }
+        }
+
+        private void radioButtonFilms_CheckedChanged(object sender, EventArgs e)
+        {
+            type = 1;
+        }
+
+        private void radioButtonGames_CheckedChanged(object sender, EventArgs e)
+        {
+            type = 0;
+        }
+
+        private void buttonFinish_Click(object sender, EventArgs e)
+        {
+            int rowCount = dataGridViewCovers.RowCount;
+            string[,] passFile = new string[rowCount, 2];
+            for (int i=0; i < rowCount; i++)
+            {
+                //Extraer el nuevo nombre del elemento (por que se puede cambiar en la pestaña de confirmacion de nombre
+                passFile[i,0] = dataGridViewCovers.Rows[i].Cells[0].Value.ToString();
+
+                //Extraer la url elegida
+                if (dataGridViewCovers.Rows[i].Tag is string[] coverArray)
+                {
+                    //Si no se encuentran caratulas estara vacio
+                    if (coverArray.Length > 0)
+                    {
+                        int actualCover = int.Parse(dataGridViewCovers.Rows[i].Cells[2].Value.ToString());
+                        passFile[i, 1] = coverArray[actualCover - 1];
+                    }
+                } 
+            }
+
+            ReturnedObject?.Invoke(this, passFile);
+            this.Close();
         }
     }
 }
