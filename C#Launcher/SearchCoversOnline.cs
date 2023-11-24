@@ -12,7 +12,6 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using static System.Net.WebRequestMethods;
 
 namespace CoverPadLauncher
 {
@@ -127,7 +126,6 @@ namespace CoverPadLauncher
 
         private string[] SearchTheMovieDB(string movieName, string type)
         {
-            //type = tv ; movie
             try
             {
                 //la api key la saque de: https://codepen.io/pixelnik/pen/pgWQBZ (es temporal mientras consigo la propia)
@@ -136,15 +134,13 @@ namespace CoverPadLauncher
                 HttpClient client = new HttpClient();
                 client.BaseAddress = new Uri("https://api.themoviedb.org/3/search/movie");
 
-                // Add an Accept header for JSON format.
-                client.DefaultRequestHeaders.Accept.Add(
-                new MediaTypeWithQualityHeaderValue("application/json"));
+                //Header en formato json
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                // List data response.
                 HttpResponseMessage response = client.GetAsync($"?api_key={apikey}&query={movieName}").Result;
                 if (response.IsSuccessStatusCode)
                 {
-                    // Parse the response body.
+                    //Analizar la respuesta
                     var apiResponse = response.Content.ReadAsStringAsync().Result;
                     JObject jsonResponse = JObject.Parse(apiResponse);//Serializar el objetoJson
 
@@ -171,17 +167,6 @@ namespace CoverPadLauncher
 
                     return returnString;
 
-                    /*foreach (var film in results)
-                    {
-                        // Verificar si el objeto tiene la propiedad "poster_path"
-                        if (film["poster_path"] != null && !string.IsNullOrEmpty(film["poster_path"].ToString()))
-                        {
-                            //string posterPath = film["poster_path"].ToString();
-
-                            Console.WriteLine($"Poster Path: http://image.tmdb.org/t/p/w500{film["poster_path"]}");
-                        }
-                    }*/
-
                 }
                 else
                 {
@@ -198,7 +183,88 @@ namespace CoverPadLauncher
             return null;
         }
 
-        
+        private async Task<string[]> SearchMangaDex(string mangaName)
+        {
+            try
+            {
+                Console.WriteLine("search manga id api");
+                //Primero, se tiene que identificar la id del manga al buscar un nombre
+                HttpClient clientID = new HttpClient();
+                clientID.BaseAddress = new Uri("https://api.mangadex.org/manga");
+                clientID.DefaultRequestHeaders.Add("User-Agent", "CoverPadLauncher");//Tengo que establecer el user agent o la api rechaza la solicitud por que webos
+                HttpResponseMessage responseID = clientID.GetAsync($"?title={mangaName}").Result;//Parametros de la api
+
+                if (responseID.IsSuccessStatusCode)
+                {
+                Console.WriteLine("search manga id success response; IDResponse: \n\n");
+
+                    //Analizar la respuesta
+                    var apiIDResponse = responseID.Content.ReadAsStringAsync().Result;
+                    JObject jsonIDResponse = JObject.Parse(apiIDResponse);//Serializar el objetoJson
+
+                    Console.WriteLine(jsonIDResponse);
+                    
+                    //Navegar  dentro de la respuesta de la api y rescatar la primera id
+                    string mangaId = jsonIDResponse["data"][0]["id"].ToString();//Si queremos revisar todas las id, podemos navegar en jsonIDResponse["data"][i] y revisar los nombres en jsonIDResponse["data"][i]["attributes"]["title"]["en"]
+
+                    Console.WriteLine($"Manga ID: {mangaId}");
+                    
+
+                    //Ahora teniendo el id del manga, volvemos a hacer un request de la api pero esta vez, para rescatar las caratulas asociadas a esa id
+                    HttpClient clientCover = new HttpClient();
+                    clientCover.BaseAddress = new Uri("https://api.mangadex.org/cover");
+                    clientCover.DefaultRequestHeaders.Add("User-Agent", "CoverPadLauncher");//Tengo que establecer el user agent o la api rechaza la solicitud por que webos
+                    HttpResponseMessage responseCover = clientCover.GetAsync($"?limit={10}&manga%5B%5D={mangaId}&order%5BcreatedAt%5D=asc&order%5BupdatedAt%5D=asc&order%5Bvolume%5D=asc").Result;//limit=Cantidad max de covers
+
+                    Console.WriteLine("Response: ", await responseCover.Content.ReadAsStringAsync());
+
+                    if (responseCover.IsSuccessStatusCode)
+                    {
+                        //Analizar la respuesta
+                        var apiCoverResponse = responseCover.Content.ReadAsStringAsync().Result;
+                        JObject jsonCoverResponse = JObject.Parse(apiCoverResponse);//Serializar el objetoJson
+
+                        //Las caratulas estan separadas
+                        var resultsData = jsonCoverResponse["data"];
+
+                        List<string> coversPaths = new List<string>();
+
+                        for (int i = 0; i < resultsData.Count(); i++)
+                        {
+                            var manga = resultsData[i];
+
+                            if (manga["attributes"]["fileName"] != null && !string.IsNullOrEmpty(manga["attributes"]["fileName"].ToString()))
+                            {
+                                Console.WriteLine($"Manga Cover: \n{manga["attributes"]["fileName"]}\n\n\n");
+
+                                coversPaths.Add($"https://uploads.mangadex.org/covers/{mangaId}/{manga["attributes"]["fileName"]}");
+                            }
+                        }
+                        
+
+                        string[] returnString = coversPaths.ToArray();
+
+                        return returnString;
+                    }
+                    
+                } else
+                {
+                    Console.WriteLine($"No hubo respuesta de api id: {responseID}");
+                    return null;
+                }
+            } catch (HttpRequestException ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+
+                //Agregar mas detalles
+                if (ex.InnerException != null)
+                {
+                    Console.WriteLine($"Inner Exception: {ex.InnerException.Message}");
+                }
+            }
+
+            return null;
+        }
 
         //Al cambiar de pestaña, cargar el datagrid de nombres (para poder cargarlo ahora
         private void buttonContinueType_Click(object sender, EventArgs e)
@@ -233,18 +299,41 @@ namespace CoverPadLauncher
                         //Buscar las url de las caratulas
                         string[] covers = await SearchSteamGridDB(names[j]);
 
-
                         //Establecerlo en el dataGridView
                         dataGridViewCovers.Rows.Add(names[j], covers.Length, covers.Length > 0 ? 1 : 0);
                         dataGridViewCovers.Rows[j].Tag = covers;
                     }
                     break;
+                //Buscar Peliculas
                 case 1:
                     for (int j = 0; j < names.Length; j++)
                     {
                         //Buscar las url de las caratulas
                         string[] covers = SearchTheMovieDB(names[j], "movie");
 
+                        //Establecerlo en el dataGridView
+                        dataGridViewCovers.Rows.Add(names[j], covers.Length, covers.Length > 0 ? 1 : 0);
+                        dataGridViewCovers.Rows[j].Tag = covers;
+                    }
+                    break;
+                //Buscar Series
+                case 2:
+                    for (int j = 0; j < names.Length; j++)
+                    {
+                        //Buscar las url de las caratulas
+                        string[] covers = SearchTheMovieDB(names[j], "tv");
+
+                        //Establecerlo en el dataGridView
+                        dataGridViewCovers.Rows.Add(names[j], covers.Length, covers.Length > 0 ? 1 : 0);
+                        dataGridViewCovers.Rows[j].Tag = covers;
+                    }
+                    break;
+                //Buscar mangas
+                case 3:
+                    for (int j = 0; j < names.Length; j++)
+                    {
+                        //Buscar las url de las caratulas
+                        string[] covers = await SearchMangaDex(names[j]);
 
                         //Establecerlo en el dataGridView
                         dataGridViewCovers.Rows.Add(names[j], covers.Length, covers.Length > 0 ? 1 : 0);
@@ -301,8 +390,6 @@ namespace CoverPadLauncher
             }
             
         }
-
-        
 
         private void buttonCoverNext_Click(object sender, EventArgs e)
         {
@@ -364,14 +451,24 @@ namespace CoverPadLauncher
             }
         }
 
+        private void radioButtonGames_CheckedChanged(object sender, EventArgs e)
+        {
+            type = 0;
+        }
+
         private void radioButtonFilms_CheckedChanged(object sender, EventArgs e)
         {
             type = 1;
         }
 
-        private void radioButtonGames_CheckedChanged(object sender, EventArgs e)
+        private void radioButtonSeries_CheckedChanged(object sender, EventArgs e)
         {
-            type = 0;
+            type = 2;
+        }
+
+        private void radioButtonMangas_CheckedChanged(object sender, EventArgs e)
+        {
+            type = 3;
         }
 
         private void buttonFinish_Click(object sender, EventArgs e)
@@ -398,5 +495,7 @@ namespace CoverPadLauncher
             ReturnedObject?.Invoke(this, passFile);
             this.Close();
         }
+
+        
     }
 }

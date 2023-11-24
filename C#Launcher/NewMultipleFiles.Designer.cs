@@ -61,7 +61,13 @@
             this.buttonGlobalImageFormat = new System.Windows.Forms.Button();
             this.addResolution = new System.Windows.Forms.Button();
             this.buttonSearchCoversOnline = new System.Windows.Forms.Button();
+            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.panelImageLimit = new System.Windows.Forms.Panel();
+            this.pictureBoxCover = new System.Windows.Forms.PictureBox();
+            this.buttonSearchCover = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFiles)).BeginInit();
+            this.panelImageLimit.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCover)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridViewFiles
@@ -87,9 +93,10 @@
             this.dataGridViewFiles.Location = new System.Drawing.Point(8, 77);
             this.dataGridViewFiles.Margin = new System.Windows.Forms.Padding(2);
             this.dataGridViewFiles.Name = "dataGridViewFiles";
+            this.dataGridViewFiles.RowHeadersVisible = false;
             this.dataGridViewFiles.RowHeadersWidth = 62;
             this.dataGridViewFiles.RowTemplate.Height = 28;
-            this.dataGridViewFiles.Size = new System.Drawing.Size(1437, 521);
+            this.dataGridViewFiles.Size = new System.Drawing.Size(653, 521);
             this.dataGridViewFiles.TabIndex = 0;
             this.dataGridViewFiles.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewFiles_CellClick);
             this.dataGridViewFiles.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewFiles_CellEndEdit);
@@ -194,11 +201,11 @@
             // 
             this.labelFather.AutoSize = true;
             this.labelFather.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelFather.Location = new System.Drawing.Point(59, 9);
+            this.labelFather.Location = new System.Drawing.Point(38, 9);
             this.labelFather.Name = "labelFather";
-            this.labelFather.Size = new System.Drawing.Size(73, 13);
+            this.labelFather.Size = new System.Drawing.Size(136, 13);
             this.labelFather.TabIndex = 4;
-            this.labelFather.Text = "Padre archivo";
+            this.labelFather.Text = "Coleccion de los elementos";
             // 
             // comboBoxFather
             // 
@@ -241,7 +248,7 @@
             // 
             this.label1.AutoSize = true;
             this.label1.ForeColor = System.Drawing.SystemColors.Window;
-            this.label1.Location = new System.Drawing.Point(229, 9);
+            this.label1.Location = new System.Drawing.Point(220, 9);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(91, 13);
             this.label1.TabIndex = 29;
@@ -317,7 +324,7 @@
             this.buttonDeleteGlobalLauncher.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
             this.buttonDeleteGlobalLauncher.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonDeleteGlobalLauncher.ForeColor = System.Drawing.SystemColors.Window;
-            this.buttonDeleteGlobalLauncher.Location = new System.Drawing.Point(548, 49);
+            this.buttonDeleteGlobalLauncher.Location = new System.Drawing.Point(551, 49);
             this.buttonDeleteGlobalLauncher.Margin = new System.Windows.Forms.Padding(2);
             this.buttonDeleteGlobalLauncher.Name = "buttonDeleteGlobalLauncher";
             this.buttonDeleteGlobalLauncher.Size = new System.Drawing.Size(49, 24);
@@ -331,7 +338,7 @@
             this.buttonGlobalCMD.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
             this.buttonGlobalCMD.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonGlobalCMD.ForeColor = System.Drawing.SystemColors.Window;
-            this.buttonGlobalCMD.Location = new System.Drawing.Point(632, 49);
+            this.buttonGlobalCMD.Location = new System.Drawing.Point(635, 49);
             this.buttonGlobalCMD.Margin = new System.Windows.Forms.Padding(2);
             this.buttonGlobalCMD.Name = "buttonGlobalCMD";
             this.buttonGlobalCMD.Size = new System.Drawing.Size(67, 24);
@@ -367,7 +374,7 @@
             this.buttonGlobalLauncher.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
             this.buttonGlobalLauncher.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonGlobalLauncher.ForeColor = System.Drawing.SystemColors.Window;
-            this.buttonGlobalLauncher.Location = new System.Drawing.Point(469, 49);
+            this.buttonGlobalLauncher.Location = new System.Drawing.Point(471, 48);
             this.buttonGlobalLauncher.Name = "buttonGlobalLauncher";
             this.buttonGlobalLauncher.Size = new System.Drawing.Size(75, 24);
             this.buttonGlobalLauncher.TabIndex = 39;
@@ -426,7 +433,7 @@
             // 
             // buttonSearchCoversOnline
             // 
-            this.buttonSearchCoversOnline.Location = new System.Drawing.Point(791, 19);
+            this.buttonSearchCoversOnline.Location = new System.Drawing.Point(767, 49);
             this.buttonSearchCoversOnline.Name = "buttonSearchCoversOnline";
             this.buttonSearchCoversOnline.Size = new System.Drawing.Size(130, 23);
             this.buttonSearchCoversOnline.TabIndex = 44;
@@ -434,13 +441,51 @@
             this.buttonSearchCoversOnline.UseVisualStyleBackColor = true;
             this.buttonSearchCoversOnline.Click += new System.EventHandler(this.buttonSearchCoversOnline_Click);
             // 
+            // dateTimePicker1
+            // 
+            this.dateTimePicker1.Location = new System.Drawing.Point(390, 380);
+            this.dateTimePicker1.Name = "dateTimePicker1";
+            this.dateTimePicker1.Size = new System.Drawing.Size(200, 20);
+            this.dateTimePicker1.TabIndex = 45;
+            // 
+            // panelImageLimit
+            // 
+            this.panelImageLimit.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(40)))), ((int)(((byte)(47)))));
+            this.panelImageLimit.Controls.Add(this.pictureBoxCover);
+            this.panelImageLimit.Location = new System.Drawing.Point(684, 151);
+            this.panelImageLimit.Name = "panelImageLimit";
+            this.panelImageLimit.Size = new System.Drawing.Size(300, 300);
+            this.panelImageLimit.TabIndex = 46;
+            // 
+            // pictureBoxCover
+            // 
+            this.pictureBoxCover.BackColor = System.Drawing.Color.Black;
+            this.pictureBoxCover.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
+            this.pictureBoxCover.Location = new System.Drawing.Point(0, 0);
+            this.pictureBoxCover.Name = "pictureBoxCover";
+            this.pictureBoxCover.Size = new System.Drawing.Size(200, 200);
+            this.pictureBoxCover.TabIndex = 13;
+            this.pictureBoxCover.TabStop = false;
+            // 
+            // buttonSearchCover
+            // 
+            this.buttonSearchCover.Location = new System.Drawing.Point(684, 458);
+            this.buttonSearchCover.Name = "buttonSearchCover";
+            this.buttonSearchCover.Size = new System.Drawing.Size(300, 23);
+            this.buttonSearchCover.TabIndex = 47;
+            this.buttonSearchCover.Text = "Buscar Caratula de fila seleccionada";
+            this.buttonSearchCover.UseVisualStyleBackColor = true;
+            // 
             // NewMultipleFiles
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(61)))), ((int)(((byte)(72)))));
-            this.ClientSize = new System.Drawing.Size(1452, 631);
+            this.ClientSize = new System.Drawing.Size(1010, 631);
+            this.Controls.Add(this.buttonSearchCover);
+            this.Controls.Add(this.panelImageLimit);
+            this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.buttonSearchCoversOnline);
             this.Controls.Add(this.addResolution);
             this.Controls.Add(this.buttonGlobalImageFormat);
@@ -467,6 +512,8 @@
             this.Name = "NewMultipleFiles";
             this.Text = "Nuevos Elementos";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFiles)).EndInit();
+            this.panelImageLimit.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCover)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -507,5 +554,9 @@
         private System.Windows.Forms.DataGridViewCheckBoxColumn checkBackgroundColor;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnColor;
         private System.Windows.Forms.Button buttonSearchCoversOnline;
+        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.Panel panelImageLimit;
+        private System.Windows.Forms.PictureBox pictureBoxCover;
+        private System.Windows.Forms.Button buttonSearchCover;
     }
 }

@@ -50,6 +50,8 @@
             this.Nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnSelected = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.radioButtonSeries = new System.Windows.Forms.RadioButton();
+            this.radioButtonMangas = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCover)).BeginInit();
             this.tabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -105,6 +107,8 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.radioButtonMangas);
+            this.groupBox1.Controls.Add(this.radioButtonSeries);
             this.groupBox1.Controls.Add(this.radioButtonFilms);
             this.groupBox1.Controls.Add(this.radioButtonGames);
             this.groupBox1.Location = new System.Drawing.Point(20, 29);
@@ -119,9 +123,9 @@
             this.radioButtonFilms.AutoSize = true;
             this.radioButtonFilms.Location = new System.Drawing.Point(7, 54);
             this.radioButtonFilms.Name = "radioButtonFilms";
-            this.radioButtonFilms.Size = new System.Drawing.Size(101, 17);
+            this.radioButtonFilms.Size = new System.Drawing.Size(67, 17);
             this.radioButtonFilms.TabIndex = 1;
-            this.radioButtonFilms.Text = "Peliculas/Series";
+            this.radioButtonFilms.Text = "Peliculas";
             this.radioButtonFilms.UseVisualStyleBackColor = true;
             this.radioButtonFilms.CheckedChanged += new System.EventHandler(this.radioButtonFilms_CheckedChanged);
             // 
@@ -290,6 +294,30 @@
             this.ColumnSelected.ReadOnly = true;
             this.ColumnSelected.Width = 60;
             // 
+            // radioButtonSeries
+            // 
+            this.radioButtonSeries.AutoSize = true;
+            this.radioButtonSeries.Location = new System.Drawing.Point(7, 78);
+            this.radioButtonSeries.Name = "radioButtonSeries";
+            this.radioButtonSeries.Size = new System.Drawing.Size(54, 17);
+            this.radioButtonSeries.TabIndex = 2;
+            this.radioButtonSeries.TabStop = true;
+            this.radioButtonSeries.Text = "Series";
+            this.radioButtonSeries.UseVisualStyleBackColor = true;
+            this.radioButtonSeries.CheckedChanged += new System.EventHandler(this.radioButtonSeries_CheckedChanged);
+            // 
+            // radioButtonMangas
+            // 
+            this.radioButtonMangas.AutoSize = true;
+            this.radioButtonMangas.Location = new System.Drawing.Point(7, 102);
+            this.radioButtonMangas.Name = "radioButtonMangas";
+            this.radioButtonMangas.Size = new System.Drawing.Size(63, 17);
+            this.radioButtonMangas.TabIndex = 3;
+            this.radioButtonMangas.TabStop = true;
+            this.radioButtonMangas.Text = "Mangas";
+            this.radioButtonMangas.UseVisualStyleBackColor = true;
+            this.radioButtonMangas.CheckedChanged += new System.EventHandler(this.radioButtonMangas_CheckedChanged);
+            // 
             // SearchCoversOnline
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -336,5 +364,7 @@
         private System.Windows.Forms.Button buttonCoverBack;
         private System.Windows.Forms.Button buttonCoverNext;
         private System.Windows.Forms.Label labelCoverArraySelected;
+        private System.Windows.Forms.RadioButton radioButtonMangas;
+        private System.Windows.Forms.RadioButton radioButtonSeries;
     }
 }

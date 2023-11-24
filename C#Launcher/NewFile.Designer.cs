@@ -456,7 +456,7 @@
             this.BackgroundColorCheck.AutoSize = true;
             this.BackgroundColorCheck.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BackgroundColorCheck.ForeColor = System.Drawing.SystemColors.Window;
-            this.BackgroundColorCheck.Location = new System.Drawing.Point(402, 232);
+            this.BackgroundColorCheck.Location = new System.Drawing.Point(528, 258);
             this.BackgroundColorCheck.Name = "BackgroundColorCheck";
             this.BackgroundColorCheck.Size = new System.Drawing.Size(115, 17);
             this.BackgroundColorCheck.TabIndex = 32;
@@ -526,7 +526,7 @@
             // 
             // buttonCoverOnline
             // 
-            this.buttonCoverOnline.Location = new System.Drawing.Point(612, 254);
+            this.buttonCoverOnline.Location = new System.Drawing.Point(400, 228);
             this.buttonCoverOnline.Name = "buttonCoverOnline";
             this.buttonCoverOnline.Size = new System.Drawing.Size(151, 23);
             this.buttonCoverOnline.TabIndex = 46;

@@ -497,7 +497,13 @@ namespace C_Launcher
 
         private void SearchCoverOnline_ReturnedObject(object sender, string[,] e)
         {
-
+            for (int i=0; i < dataGridViewFiles.RowCount; i++)
+            {
+                //Nombre elemento
+                dataGridViewFiles.Rows[i].Cells[0].Value = e[i, 0];
+                //Ruta caratula
+                dataGridViewFiles.Rows[i].Cells[2].Value = e[i, 1];
+            }
         }
 
         #endregion
