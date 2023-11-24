@@ -183,6 +183,64 @@ namespace CoverPadLauncher
             return null;
         }
 
+        private string[] SearchComicsVine(string comicName)
+        {
+            try
+            {
+                string apikey = new GeneralFunctions().EnvVariable("ComicVineApiKey");
+
+                HttpClient client = new HttpClient();
+                client.BaseAddress = new Uri("http://comicvine.gamespot.com/api/volumes");
+                client.DefaultRequestHeaders.Add("User-Agent", "CoverPadLauncher");//Tengo que establecer el user agent o la api rechaza la solicitud por que webos
+
+                //Header en formato json
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = client.GetAsync($"?api_key={apikey}&filter=name:{comicName}&sort=name&format=json").Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    //Analizar la respuesta
+                    var apiResponse = response.Content.ReadAsStringAsync().Result;
+                    JObject jsonResponse = JObject.Parse(apiResponse);//Serializar el objetoJson
+
+                    //Crear un array de la data de las caratulas
+                    var results = jsonResponse["results"];
+
+                    Console.WriteLine($"Results json: \n{results}\n\n\n");
+                    List<string> coversPaths = new List<string>();
+
+                    //Adaptar el objeto a un arrayString
+                    for (int i = 0; i < results.Count(); i++)
+                    {
+                        //var film = results[i]["image"]["original_url"];
+
+                        if (results[i]["image"]["original_url"] != null && !string.IsNullOrEmpty(results[i]["image"]["original_url"].ToString()))
+                        {
+                            Console.WriteLine($"Film Poster: \n{results[i]["image"]["original_url"]}\n\n\n");
+                            coversPaths.Add($"{results[i]["image"]["original_url"]}");
+                        }
+                    }
+
+                    string[] returnString = coversPaths.ToArray();
+
+                    return returnString;
+
+                }
+                else
+                {
+                    Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
+                }
+
+                //client.Dispose();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+            }
+
+            return null;
+        }
+
         private async Task<string[]> SearchMangaDex(string mangaName)
         {
             try
@@ -340,6 +398,18 @@ namespace CoverPadLauncher
                         dataGridViewCovers.Rows[j].Tag = covers;
                     }
                     break;
+                //Buscar comics
+                case 4:
+                    for (int j = 0; j < names.Length; j++)
+                    {
+                        //Buscar las url de las caratulas
+                        string[] covers = SearchComicsVine(names[j]);
+
+                        //Establecerlo en el dataGridView
+                        dataGridViewCovers.Rows.Add(names[j], covers.Length, covers.Length > 0 ? 1 : 0);
+                        dataGridViewCovers.Rows[j].Tag = covers;
+                    }
+                    break;
             }
             
 
@@ -469,6 +539,11 @@ namespace CoverPadLauncher
         private void radioButtonMangas_CheckedChanged(object sender, EventArgs e)
         {
             type = 3;
+        }
+
+        private void radioButtonComics_CheckedChanged(object sender, EventArgs e)
+        {
+            type = 4;
         }
 
         private void buttonFinish_Click(object sender, EventArgs e)

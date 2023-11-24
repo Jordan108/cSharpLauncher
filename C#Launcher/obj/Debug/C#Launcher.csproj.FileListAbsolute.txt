@@ -18,7 +18,6 @@ D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\obj\Debug\C_Launcher.
 D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\obj\Debug\C_Launcher.NewCollection.resources
 D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\obj\Debug\C_Launcher.Resolution.resources
 C:\Users\Duoc\Documents\GitHub\cSharpLauncher\C#Launcher\obj\Debug\C#Launcher.csproj.AssemblyReference.cache
-C:\Users\Duoc\Documents\GitHub\cSharpLauncher\C#Launcher\obj\Debug\C_Launcher.Form1.resources
 C:\Users\Duoc\Documents\GitHub\cSharpLauncher\C#Launcher\obj\Debug\C_Launcher.Home.resources
 C:\Users\Duoc\Documents\GitHub\cSharpLauncher\C#Launcher\obj\Debug\C_Launcher.NewCollection.resources
 C:\Users\Duoc\Documents\GitHub\cSharpLauncher\C#Launcher\obj\Debug\C_Launcher.NewFile.resources
@@ -65,3 +64,12 @@ D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\bin\Debug\Newtonsoft.
 D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\bin\Debug\craftersmine.SteamGridDB.Net.xml
 D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\bin\Debug\Newtonsoft.Json.xml
 D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\obj\Debug\CoverPadLauncher.SearchCoversOnline.resources
+C:\Users\Duoc\Documents\GitHub\cSharpLauncher\C#Launcher\bin\Debug\craftersmine.SteamGridDB.Net.dll
+C:\Users\Duoc\Documents\GitHub\cSharpLauncher\C#Launcher\bin\Debug\MediaToolkit.dll
+C:\Users\Duoc\Documents\GitHub\cSharpLauncher\C#Launcher\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Duoc\Documents\GitHub\cSharpLauncher\C#Launcher\bin\Debug\craftersmine.SteamGridDB.Net.xml
+C:\Users\Duoc\Documents\GitHub\cSharpLauncher\C#Launcher\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Duoc\Documents\GitHub\cSharpLauncher\C#Launcher\obj\Debug\CoverPadLauncher.Configuration.resources
+C:\Users\Duoc\Documents\GitHub\cSharpLauncher\C#Launcher\obj\Debug\CoverPadLauncher.EditScaned.resources
+C:\Users\Duoc\Documents\GitHub\cSharpLauncher\C#Launcher\obj\Debug\CoverPadLauncher.SearchCoversOnline.resources
+C:\Users\Duoc\Documents\GitHub\cSharpLauncher\C#Launcher\obj\Debug\CoverPadLauncher.Tags.resources
