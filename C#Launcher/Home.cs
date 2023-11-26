@@ -28,6 +28,7 @@ namespace C_Launcher
     {
         private PictureBox[] picBoxArr = new PictureBox[0];//Crear el array de picBox que se mantendra en memoria
         //Crea el array de las colecciones y los archivos (solo contendran las colecciones que se mostraran en en la vista)
+        private Color pictureBoxHover = Color.White;
 
         //Valores de settings
         //private int WinWidht, WinHeight = 900;
@@ -899,7 +900,7 @@ namespace C_Launcher
             g.DrawString(picName, font, FontBrush, fontRect, drawFormat);
 
             //Dibujar un rectangulo blanco encima de un picture box
-            Pen borderPen = new Pen(Color.White);
+            Pen borderPen = new Pen(pictureBoxHover);
             borderPen.Width = 2;
             g.DrawRectangle(borderPen, borderPen.Width - 1, borderPen.Width - 1, pictureBox.Width - (borderPen.Width), pictureBox.Height - (borderPen.Width));
 
@@ -1228,6 +1229,9 @@ namespace C_Launcher
 
             //establecer el renderer de la barra de herramientas
             menuStripMain.Renderer = new MyRenderer(theme.NavbarBackground, theme.NavbarSelectedBackground, theme.NavbarText);
+
+            //PictureBox
+            pictureBoxHover = theme.CoverSelected;
         }
 
         //Dibujar el rectangulo negro y el nombre del pictureBox

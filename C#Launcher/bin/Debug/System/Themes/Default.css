@@ -29,8 +29,11 @@
 
 /*Reemplaza los valores de las propiedades, pero no las elimines*/
 .theme {
-  /*Colores*/
+  /*Color de fondo en la ventana principal*/
   --color-bg-panel:               var(--main-bg-color);
+
+  /*Color de fondo de ventanas externas*/
+  --color-bg-window:              #373d48;
 
   /*Seccion superior donde se ubica el nombre de la profundidad*/
   --color-bg-top:                 var(--main-bg-color-dark);
@@ -77,8 +80,12 @@
 
   /*Colores de las tablas de seleccion*/
   --color-bg-grid:                var(--main-bg-color-dark);
-  --color-bg-grid-cell:           var(--main-bg-color);
+  --color-bg-grid-cell:           var(--main-bg-color-dark);
+  --color-text-grid-cell:         var(--default-text-color);
+  --color-bg-grid-cell-selected:  var(--main-bg-color-light);
+  --color-text-grid-cell-selected:  var(--default-text-color);
+  --color-bg-grid-border:         var(--main-bg-color-dark);
   
-  /*Color del borde de un panel al estar el mouse encima*/
-  --color-selected-panel:       #ffffff;
+  /*Color del borde de una caratula al tener el mouse encima*/
+  --color-border-cover:       #ffffff;
 }

@@ -56,7 +56,7 @@
             this.buttonSetColor = new System.Windows.Forms.Button();
             this.buttonSave = new System.Windows.Forms.Button();
             this.comboBoxResolution = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.labelResolution = new System.Windows.Forms.Label();
             this.buttonColorPickIMG = new System.Windows.Forms.Button();
             this.addResolution = new System.Windows.Forms.Button();
             this.BackgroundColorCheck = new System.Windows.Forms.CheckBox();
@@ -384,7 +384,7 @@
             this.buttonSetColor.ForeColor = System.Drawing.SystemColors.Window;
             this.buttonSetColor.Location = new System.Drawing.Point(400, 255);
             this.buttonSetColor.Name = "buttonSetColor";
-            this.buttonSetColor.Size = new System.Drawing.Size(93, 23);
+            this.buttonSetColor.Size = new System.Drawing.Size(116, 23);
             this.buttonSetColor.TabIndex = 25;
             this.buttonSetColor.Text = " Color de fondo";
             this.buttonSetColor.UseVisualStyleBackColor = false;
@@ -416,22 +416,22 @@
             this.comboBoxResolution.TabIndex = 27;
             this.comboBoxResolution.SelectedIndexChanged += new System.EventHandler(this.comboBoxResolution_SelectedIndexChanged);
             // 
-            // label1
+            // labelResolution
             // 
-            this.label1.AutoSize = true;
-            this.label1.ForeColor = System.Drawing.SystemColors.Window;
-            this.label1.Location = new System.Drawing.Point(84, 255);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(60, 13);
-            this.label1.TabIndex = 28;
-            this.label1.Text = "Resolucion";
+            this.labelResolution.AutoSize = true;
+            this.labelResolution.ForeColor = System.Drawing.SystemColors.Window;
+            this.labelResolution.Location = new System.Drawing.Point(84, 255);
+            this.labelResolution.Name = "labelResolution";
+            this.labelResolution.Size = new System.Drawing.Size(60, 13);
+            this.labelResolution.TabIndex = 28;
+            this.labelResolution.Text = "Resolucion";
             // 
             // buttonColorPickIMG
             // 
             this.buttonColorPickIMG.BackColor = System.Drawing.Color.Black;
             this.buttonColorPickIMG.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonColorPickIMG.ForeColor = System.Drawing.SystemColors.Window;
-            this.buttonColorPickIMG.Location = new System.Drawing.Point(499, 255);
+            this.buttonColorPickIMG.Location = new System.Drawing.Point(522, 255);
             this.buttonColorPickIMG.Name = "buttonColorPickIMG";
             this.buttonColorPickIMG.Size = new System.Drawing.Size(23, 23);
             this.buttonColorPickIMG.TabIndex = 29;
@@ -457,7 +457,7 @@
             this.BackgroundColorCheck.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(61)))), ((int)(((byte)(72)))));
             this.BackgroundColorCheck.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BackgroundColorCheck.ForeColor = System.Drawing.SystemColors.Window;
-            this.BackgroundColorCheck.Location = new System.Drawing.Point(528, 258);
+            this.BackgroundColorCheck.Location = new System.Drawing.Point(549, 258);
             this.BackgroundColorCheck.Name = "BackgroundColorCheck";
             this.BackgroundColorCheck.Size = new System.Drawing.Size(115, 17);
             this.BackgroundColorCheck.TabIndex = 32;
@@ -527,12 +527,15 @@
             // 
             // buttonCoverOnline
             // 
+            this.buttonCoverOnline.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
+            this.buttonCoverOnline.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonCoverOnline.ForeColor = System.Drawing.SystemColors.Window;
             this.buttonCoverOnline.Location = new System.Drawing.Point(400, 228);
             this.buttonCoverOnline.Name = "buttonCoverOnline";
-            this.buttonCoverOnline.Size = new System.Drawing.Size(151, 23);
+            this.buttonCoverOnline.Size = new System.Drawing.Size(145, 23);
             this.buttonCoverOnline.TabIndex = 46;
             this.buttonCoverOnline.Text = "Buscar Caratula Online";
-            this.buttonCoverOnline.UseVisualStyleBackColor = true;
+            this.buttonCoverOnline.UseVisualStyleBackColor = false;
             this.buttonCoverOnline.Click += new System.EventHandler(this.buttonCoverOnline_Click);
             // 
             // NewFile
@@ -548,7 +551,7 @@
             this.Controls.Add(this.BackgroundColorCheck);
             this.Controls.Add(this.addResolution);
             this.Controls.Add(this.buttonColorPickIMG);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.labelResolution);
             this.Controls.Add(this.comboBoxResolution);
             this.Controls.Add(this.buttonSave);
             this.Controls.Add(this.buttonSetColor);
@@ -619,7 +622,7 @@
         private System.Windows.Forms.Button buttonSetColor;
         private System.Windows.Forms.Button buttonSave;
         private System.Windows.Forms.ComboBox comboBoxResolution;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelResolution;
         private System.Windows.Forms.Button buttonColorPickIMG;
         private System.Windows.Forms.Button addResolution;
         private System.Windows.Forms.CheckBox BackgroundColorCheck;

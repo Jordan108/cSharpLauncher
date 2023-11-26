@@ -19,6 +19,9 @@ namespace CoverPadLauncher.Clases
         //flowLayoutPanel
         private Color panelBackground;
 
+        //Windows background
+        private Color windowBackground;
+
         //Panel Top
         private Color panelTopBackground;
         private Color panelTopText;
@@ -65,6 +68,14 @@ namespace CoverPadLauncher.Clases
         private Color treeViewBorderBackground;
         private Color treeViewText;
 
+        //DataGridView
+        private Color dataGridBackground;
+        private Color dataGridCellBackground;
+        private Color dataGridCellText;
+        private Color dataGridSelectedBackground;
+        private Color dataGridSelectedText;
+        private Color dataGridBorder;
+
         //Constructor
         public Themes(string themeDir)
         {
@@ -75,6 +86,9 @@ namespace CoverPadLauncher.Clases
 
         //flowLayoutPanel
         public Color PanelBackground { get { return panelBackground; } }
+
+        //Fondo de ventanas
+        public Color WindowBackground { get { return windowBackground; } }
 
         //Panel Top
         public Color PanelTopBackground { get { return panelTopBackground; } }
@@ -121,6 +135,14 @@ namespace CoverPadLauncher.Clases
         public Color TreeViewSelectedBackground { get { return treeViewSelectedBackground; } }
         public Color TreeViewBorderBackground { get {  return treeViewBorderBackground; } }
         public Color TreeViewText { get { return treeViewText; } }
+
+        //DataGridView
+        public Color DataGridBackground { get { return dataGridBackground; } }
+        public Color DataGridCellBackground { get { return dataGridCellBackground; } }
+        public Color DataGridCellText { get { return dataGridCellText; } }
+        public Color DataGridSelectedBackground { get { return dataGridSelectedBackground; } }
+        public Color DataGridSelectedText { get { return dataGridSelectedText;  } }
+        public Color DataGridBorder { get { return dataGridBorder; } }
         #endregion
 
         //Funciones
@@ -135,6 +157,9 @@ namespace CoverPadLauncher.Clases
             //Establecer los atributos del color; Se carga el tema desde un css
             //flowLayoutPanel
             this.panelBackground = ObtainColorCSS("--color-bg-panel", themeDir, mainColor);//loadColor;
+
+            //Fondo de las ventanas
+            this.windowBackground = ObtainColorCSS("--color-bg-window", themeDir, Color.FromArgb(55, 61, 72));
 
             //Panel Top
             this.panelTopBackground = ObtainColorCSS("--color-bg-top", themeDir, darkColor);
@@ -181,6 +206,14 @@ namespace CoverPadLauncher.Clases
             this.treeViewSelectedBackground = ObtainColorCSS("--color-bg-treeview-selected", themeDir, Color.FromArgb(65, 72, 85));
             this.treeViewBorderBackground = ObtainColorCSS("--color-bg-treeview-border", themeDir, darkColor);
             this.treeViewText = ObtainColorCSS("--color-text-treeview", themeDir, defaultText);
+
+            //DataGridView
+            this.dataGridBackground = ObtainColorCSS("--color-bg-grid", themeDir, darkColor);
+            this.dataGridCellBackground = ObtainColorCSS("--color-bg-grid-cell", themeDir, darkColor);
+            this.dataGridCellText = ObtainColorCSS("--color-text-grid-cell", themeDir, defaultText);
+            this.dataGridSelectedBackground = ObtainColorCSS("--color-bg-grid-cell-selected", themeDir, lightColor);
+            this.dataGridSelectedText = ObtainColorCSS("--color-text-grid-cell-selected", themeDir, defaultText);
+            this.dataGridBorder = ObtainColorCSS("--color-bg-grid-border", themeDir, darkColor);
         }
 
         //Metodo para obtener el valor de color de una variable en el archivo CSS

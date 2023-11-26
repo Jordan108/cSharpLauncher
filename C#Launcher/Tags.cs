@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using System.Xml;
 using System.IO;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
+using System.Drawing;
 
 namespace CoverPadLauncher
 {
@@ -18,6 +19,14 @@ namespace CoverPadLauncher
         {
             InitializeComponent();
             loadXMLTags();
+
+            dataGridViewTags.BackgroundColor = Color.BlueViolet;//Fondo
+            dataGridViewTags.GridColor = Color.Blue;//Borde
+            dataGridViewTags.DefaultCellStyle.BackColor = Color.Red;//Fondo celda default
+            dataGridViewTags.DefaultCellStyle.ForeColor = Color.White;//texto celda default
+            dataGridViewTags.DefaultCellStyle.SelectionBackColor = Color.Yellow;//Fondo celda seleccionada
+            dataGridViewTags.DefaultCellStyle.SelectionForeColor = Color.Black;//texto celda seleccionada
+
         }
 
         private void loadXMLTags()

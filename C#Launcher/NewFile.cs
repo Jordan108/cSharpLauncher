@@ -189,6 +189,9 @@ namespace C_Launcher
             this.pictureBoxCover.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBoxCover_MouseMove);
             this.pictureBoxCover.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBoxCover_MouseUp);
 
+            //Cargar el tema
+            LoadTheme();
+
             loadXMLTagsDGV();//Cargar todas las etiquetas existentes y ponerlas dentro del datagridview
 
             #region Combobox
@@ -307,6 +310,83 @@ namespace C_Launcher
                 pictureBoxCover.BackgroundImageLayout = ImageLayout.Stretch;
             }
             #endregion
+        }
+
+        private void LoadTheme()
+        {
+            Configurations config = new Configurations();
+            Themes theme = new Themes($"System\\Themes\\{config.ThemeName}.css");
+
+            BackColor = theme.WindowBackground;
+
+            //Textbox
+            textBoxName.BackColor = theme.TextBoxBackground;
+            textBoxName.ForeColor = theme.TextBoxText;
+            textBoxFilePath.BackColor = theme.TextBoxBackground;
+            textBoxFilePath.ForeColor = theme.TextBoxText;
+            textBoxProgramPath.BackColor = theme.TextBoxBackground;
+            textBoxProgramPath.ForeColor = theme.TextBoxText;
+            textBoxCMD.BackColor = theme.TextBoxBackground;
+            textBoxCMD.ForeColor = theme.TextBoxText;
+
+            //Textos
+            labelName.ForeColor = theme.LabelText;
+            labelFather.ForeColor = theme.LabelText;
+            labelFilePath.ForeColor = theme.LabelText;
+            labelProgramPath.ForeColor = theme.LabelText;
+            labelCMD.ForeColor = theme.LabelText;
+            checkBoxFavorite.ForeColor = theme.LabelText;
+            checkBoxURL.ForeColor = theme.LabelText;
+            BackgroundColorCheck.ForeColor = theme.LabelText;
+            labelResolution.ForeColor = theme.LabelText;
+            groupBoxSize.ForeColor = theme.LabelText;
+            labelWidth.ForeColor = theme.LabelText;
+            labelHeight.ForeColor = theme.LabelText;
+            groupBoxImageFormat.ForeColor = theme.LabelText;
+            radioButtonZoom.ForeColor = theme.LabelText;
+            radioButtonEstreched.ForeColor = theme.LabelText;
+
+            //Combobox
+            comboBoxFather.BackColor = theme.ComboboxBackground;
+            comboBoxFather.ForeColor = theme.ComboboxText;
+            comboBoxResolution.BackColor = theme.ComboboxBackground;
+            comboBoxResolution.ForeColor = theme.ComboboxText;
+
+            //Botones
+            buttonSearchFile.BackColor = theme.ButtonBackground;
+            buttonSearchFile.ForeColor = theme.ButtonText;
+            buttonSearchProgram.BackColor = theme.ButtonBackground;
+            buttonSearchProgram.ForeColor = theme.ButtonText;
+            addResolution.BackColor = theme.ButtonBackground;
+            addResolution.ForeColor = theme.ButtonText;
+            buttonSearchCover.BackColor = theme.ButtonBackground;
+            buttonSearchCover.ForeColor = theme.ButtonText;
+            buttonCoverOnline.BackColor = theme.ButtonBackground;
+            buttonCoverOnline.ForeColor = theme.ButtonText;
+            buttonEraseCover.BackColor = theme.ButtonBackground;
+            buttonEraseCover.ForeColor = theme.ButtonText;
+            buttonSetColor.BackColor = theme.ButtonBackground;
+            buttonSetColor.ForeColor = theme.ButtonText;
+            buttonSave.BackColor = theme.ButtonBackground;
+            buttonSave.ForeColor = theme.ButtonText;
+
+            //Numeric UpDown
+            numericWidthImage.BackColor = theme.NumericBackground;
+            numericWidthImage.ForeColor = theme.NumericText;
+            numericHeightImage.BackColor = theme.NumericBackground;
+            numericHeightImage.ForeColor = theme.NumericText;
+
+            //DataGridView
+            dataGridViewTags.BackgroundColor = theme.DataGridBackground;
+            dataGridViewTags.GridColor = theme.DataGridBorder;
+            dataGridViewTags.DefaultCellStyle.BackColor = theme.DataGridCellBackground;
+            dataGridViewTags.DefaultCellStyle.ForeColor = theme.DataGridCellText;
+            dataGridViewTags.DefaultCellStyle.SelectionBackColor = theme.DataGridSelectedBackground;
+            dataGridViewTags.DefaultCellStyle.SelectionForeColor = theme.DataGridSelectedText;
+
+
+            panelImageLimit.BackColor = theme.CoverPreviewBackground;
+
         }
 
         private void loadXMLTagsDGV()
