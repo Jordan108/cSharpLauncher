@@ -12,6 +12,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static System.Net.WebRequestMethods;
 
 namespace CoverPadLauncher
 {
@@ -84,10 +85,10 @@ namespace CoverPadLauncher
                 var grids = await instance.GetGridsForGameAsync(games[0], false, false, false, 0, SteamGridDbTags.None, SteamGridDbStyles.AllGrids, SteamGridDbDimensions.W600H900, SteamGridDbFormats.All, SteamGridDbTypes.Static);
 
 
-                foreach (var grid in grids)
+                /*foreach (var grid in grids)
                 {
                     Console.WriteLine(grid.FullImageUrl);
-                }
+                }*/
 
                 string[] returnstring = new string[grids.Count()];
                 //Array.Resize(ref coversUrl, grids.Count());
@@ -95,6 +96,7 @@ namespace CoverPadLauncher
                 for (int i = 0; i< returnstring.Length; i++)
                 {
                     returnstring[i] = grids[i].FullImageUrl;
+                    updateProgressBar(i, returnstring.Length);
                 }
 
                 return returnstring;
@@ -161,6 +163,8 @@ namespace CoverPadLauncher
                             Console.WriteLine($"Film Poster: \n{film["poster_path"]}\n\n\n");
                             posterPaths.Add($"http://image.tmdb.org/t/p/w500{film["poster_path"]}");
                         }
+
+                        updateProgressBar(i, results.Count());
                     }
 
                     string[] returnString = posterPaths.ToArray();
@@ -177,7 +181,7 @@ namespace CoverPadLauncher
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Error: {ex.Message}");
+                Console.WriteLine($"Error en SearchTheMovieDB: {ex.Message}");
             }
 
             return null;
@@ -219,6 +223,8 @@ namespace CoverPadLauncher
                             Console.WriteLine($"Film Poster: \n{results[i]["image"]["original_url"]}\n\n\n");
                             coversPaths.Add($"{results[i]["image"]["original_url"]}");
                         }
+
+                        updateProgressBar(i, results.Count());
                     }
 
                     string[] returnString = coversPaths.ToArray();
@@ -241,11 +247,133 @@ namespace CoverPadLauncher
             return null;
         }
 
+        private string[] SearchOpenLibrary(string bookName)
+        {
+            try
+            {
+                HttpClient client = new HttpClient();
+                client.BaseAddress = new Uri("https://openlibrary.org/search.json");
+                client.DefaultRequestHeaders.Add("User-Agent", "CoverPadLauncher");//Por si acaso
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));//Header en formato json
+
+                HttpResponseMessage response = client.GetAsync($"?q={bookName}").Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    Console.WriteLine("OpenLibrary Response success");
+
+                    //Analizar la respuesta
+                    var apiResponse = response.Content.ReadAsStringAsync().Result;
+                    JObject jsonResponse = JObject.Parse(apiResponse);//Serializar el objetoJson
+
+                    //Crear un array de la data de las caratulas
+                    var results = jsonResponse["docs"];//Cada objeto sera un libro diferente
+
+                    List<string> coversPaths = new List<string>();
+
+                    //Adaptar el objeto a un arrayString
+                    int bookLimit = 10;//Cantidad maxima de libros a rescatar
+                    for (int b = 0; b < results.Count(); b++)
+                    {
+                        int limitType = 1;//Solo uno por tipo (o si no tendrias como 5 caratulas iguales)
+                        //Las caratulas estan dentro de diferentes objetos que podrian o no existir, por lo que se intentara iterar dentro de cada uno verificando que exista y tenga contenido
+                        //Caratulas tipo oclc
+                        if (results[b]["oclc"] != null && results[b]["oclc"].Count() > 0)
+                        {
+                            for(int c=0; c < results[b]["oclc"].Count(); c++)
+                            {
+                                if (!URLImageExists($"https://covers.openlibrary.org/b/oclc/{results[b]["oclc"][c]}-L.jpg?default=false"))
+                                {
+                                    Console.WriteLine($"https://covers.openlibrary.org/b/oclc/{results[b]["oclc"][c]}-L.jpg devolvio 404");
+                                    limitType++;//si no se encuentran caratulas, no se cuenta para el limite
+                                    continue;//Algunas imagenes no existen xd
+                                }
+                                Console.WriteLine($"Se añadio https://covers.openlibrary.org/b/oclc/{results[b]["oclc"][c]}-L.jpg");
+                                coversPaths.Add($"https://covers.openlibrary.org/b/oclc/{results[b]["oclc"][c]}-L.jpg");
+                                if (c > limitType) break;
+                            }
+                        }
+                        //Caratulas de tipo isbn
+                        if (results[b]["isbn"] != null && results[b]["isbn"].Count() > 0)
+                        {
+                            for (int c = 0; c < results[b]["isbn"].Count(); c++)
+                            {
+                                if (!URLImageExists($"https://covers.openlibrary.org/b/isbn/{results[b]["isbn"][c]}-L.jpg?default=false"))
+                                {
+                                    Console.WriteLine($"https://covers.openlibrary.org/b/isbn/{results[b]["isbn"][c]}-L.jpg devolvio 404");
+                                    limitType++;//si no se encuentran caratulas, no se cuenta para el limite
+                                    continue;//Algunas imagenes no existen xd
+                                }
+                                Console.WriteLine($"Se añadio https://covers.openlibrary.org/b/isbn/{results[b]["isbn"][c]}-L.jpg");
+                                coversPaths.Add($"https://covers.openlibrary.org/b/isbn/{results[b]["isbn"][c]}-L.jpg");
+                                if (c > limitType) break;
+                            }
+                        }
+                        //Caratulas de tipo isbn
+                        if (results[b]["lccn"] != null && results[b]["lccn"].Count() > 0)
+                        {
+                            for (int c = 0; c < results[b]["lccn"].Count(); c++)
+                            {
+                                if (!URLImageExists($"https://covers.openlibrary.org/b/lccn/{results[b]["lccn"][c]}-L.jpg?default=false"))
+                                {
+                                    Console.WriteLine($"https://covers.openlibrary.org/b/lccn/{results[b]["lccn"][c]}-L.jpg devolvio 404");
+                                    limitType++;//si no se encuentran caratulas, no se cuenta para el limite
+                                    continue;//Algunas imagenes no existen xd
+                                }
+                                Console.WriteLine($"Se añadio https://covers.openlibrary.org/b/lccn/{results[b]["lccn"][c]}-L.jpg");
+                                coversPaths.Add($"https://covers.openlibrary.org/b/lccn/{results[b]["lccn"][c]}-L.jpg");
+                                if (c > limitType) break;
+                            }
+                        }
+                        
+                        if (b > bookLimit) break;
+                        updateProgressBar(b, bookLimit);
+                    }
+
+
+                    string[] returnString = coversPaths.ToArray();
+
+                    return returnString;
+
+                }
+                else
+                {
+                    Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
+                }
+
+                //client.Dispose();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error en SearchOpenLibrary: {ex.Message}");
+            }
+
+            return null;
+        }
+
+        private static bool URLImageExists(string imageUrl)
+        {
+            try
+            {
+                HttpWebRequest request = (HttpWebRequest)WebRequest.Create(imageUrl);
+                request.Method = "HEAD"; // Utiliza el método HEAD en lugar de GET
+
+                using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+                {
+                    // Verifica si la respuesta es satisfactoria (código 200-299)
+                    return (int)response.StatusCode >= 200 && (int)response.StatusCode < 300;
+                }
+            }
+            catch (WebException ex)
+            {
+                //Cualquier error con la imagen devolvera un false
+                return false;
+            }
+        }
+
         private async Task<string[]> SearchMangaDex(string mangaName)
         {
             try
             {
-                Console.WriteLine("search manga id api");
                 //Primero, se tiene que identificar la id del manga al buscar un nombre
                 HttpClient clientID = new HttpClient();
                 clientID.BaseAddress = new Uri("https://api.mangadex.org/manga");
@@ -254,7 +382,6 @@ namespace CoverPadLauncher
 
                 if (responseID.IsSuccessStatusCode)
                 {
-                Console.WriteLine("search manga id success response; IDResponse: \n\n");
 
                     //Analizar la respuesta
                     var apiIDResponse = responseID.Content.ReadAsStringAsync().Result;
@@ -264,9 +391,6 @@ namespace CoverPadLauncher
                     
                     //Navegar  dentro de la respuesta de la api y rescatar la primera id
                     string mangaId = jsonIDResponse["data"][0]["id"].ToString();//Si queremos revisar todas las id, podemos navegar en jsonIDResponse["data"][i] y revisar los nombres en jsonIDResponse["data"][i]["attributes"]["title"]["en"]
-
-                    Console.WriteLine($"Manga ID: {mangaId}");
-                    
 
                     //Ahora teniendo el id del manga, volvemos a hacer un request de la api pero esta vez, para rescatar las caratulas asociadas a esa id
                     HttpClient clientCover = new HttpClient();
@@ -299,7 +423,6 @@ namespace CoverPadLauncher
                             }
                         }
                         
-
                         string[] returnString = coversPaths.ToArray();
 
                         return returnString;
@@ -410,8 +533,23 @@ namespace CoverPadLauncher
                         dataGridViewCovers.Rows[j].Tag = covers;
                     }
                     break;
+
+                //Buscar libros
+                case 5:
+                    for (int j = 0; j < names.Length; j++)
+                    {
+                        //Buscar las url de las caratulas
+                        string[] covers = SearchOpenLibrary(names[j]);
+
+                        //Establecerlo en el dataGridView
+                        dataGridViewCovers.Rows.Add(names[j], covers.Length, covers.Length > 0 ? 1 : 0);
+                        dataGridViewCovers.Rows[j].Tag = covers;
+                    }
+                    break;
             }
-            
+
+            //Mostrar la barra de progreso
+            progressBarDownload.Visible = true;
 
             //Se selecciona por defecto la primera fila y muestro el contenido de esta
             labelCoverArraySelected.Text = $"{dataGridViewCovers.Rows[0].Cells[2].Value}/{dataGridViewCovers.Rows[0].Cells[1].Value}";
@@ -434,10 +572,13 @@ namespace CoverPadLauncher
         {
             try
             {
+                //Algunas url pueden contener redirecciones, asi que verifico
+                string finalImageUrl = GetFinalImageUrl(imageURL);
+
                 // Descargar la imagen desde la URL
                 using (WebClient webClient = new WebClient())
                 {
-                    byte[] imageBytes = webClient.DownloadData(imageURL);
+                    byte[] imageBytes = webClient.DownloadData(finalImageUrl);
 
                     // Crear un MemoryStream desde los bytes
                     using (MemoryStream ms = new MemoryStream(imageBytes))
@@ -459,6 +600,18 @@ namespace CoverPadLauncher
                 Console.WriteLine($"No se pudo establecer la caratula de la url: \n{imageURL}\n debido a: {ex}");
             }
             
+        }
+
+        private static string GetFinalImageUrl(string imageUrl)
+        {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(imageUrl);
+            request.AllowAutoRedirect = true; // Habilita el seguimiento de redirecciones
+
+            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            {
+                // La propiedad ResponseUri contiene la URL final después de seguir las redirecciones
+                return response.ResponseUri.ToString();
+            }
         }
 
         private void buttonCoverNext_Click(object sender, EventArgs e)
@@ -546,6 +699,18 @@ namespace CoverPadLauncher
             type = 4;
         }
 
+        private void radioButtonBooks_CheckedChanged(object sender, EventArgs e)
+        {
+            type = 5;
+        }
+
+        private void updateProgressBar(int actualProgress, int maxProgress)
+        {
+            int progress = actualProgress / maxProgress;
+            if (progress > 100) progress = 100;
+            progressBarDownload.Value = progress;
+        }
+
         private void buttonFinish_Click(object sender, EventArgs e)
         {
             int rowCount = dataGridViewCovers.RowCount;
@@ -570,7 +735,5 @@ namespace CoverPadLauncher
             ReturnedObject?.Invoke(this, passFile);
             this.Close();
         }
-
-        
     }
 }

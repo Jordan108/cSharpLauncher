@@ -1210,19 +1210,20 @@ namespace C_Launcher
 
             viewDepth = config.LastDepth;//Ultima profundidad
 
-
             flowLayoutPanelMain.BackColor = theme.PanelBackground;
 
             //searchBox
             textBoxSearch.BackColor = theme.TextBoxSearchBackground;
             textBoxSearch.ForeColor = theme.TextBoxSearchTextEmpty;//Empieza con texto default (buscar...); el color cambia con sus funciones SearchBarAddText SearchBarRemoveText
 
-
             panelTop.BackColor = theme.PanelTopBackground;
+            labelDepth.ForeColor = theme.PanelTopText;
+
             menuStripMain.BackColor = theme.NavbarBackground;
 
             //TreeView
             treeViewMain.BackColor = theme.TreeViewBackground;
+
             splitter1.BackColor = theme.TreeViewBorderBackground;
 
             //establecer el renderer de la barra de herramientas
@@ -1535,6 +1536,7 @@ namespace C_Launcher
                         int r = 0;
                         int g = 0;
                         int b = 0;
+                        bool transparent = false;
                         int res = 0;
                         int w = colls[actualColl].SonWidth;
                         int h = colls[actualColl].SonHeight;
@@ -1569,13 +1571,12 @@ namespace C_Launcher
                             r = int.Parse(match.CRed);
                             g = int.Parse(match.CGreen);
                             b = int.Parse(match.CBlue);
+                            transparent = bool.Parse(match.BoolBackground);
                             res = int.Parse(match.ResID);
                             w = int.Parse(match.Width);
                             h = int.Parse(match.Height);
                         }
                         #endregion
-
-                        Console.WriteLine(archivo);
 
                         picBoxArr[pL] = new PictureBox
                         {
@@ -1585,6 +1586,11 @@ namespace C_Launcher
                             BackColor = Color.FromArgb(r, g, b),
                             Tag = archivo,//Aqui se guarda en que espacio del array estamos buscando//colls[i].ID,
                         };
+
+                        if (transparent)
+                        {
+                            picBoxArr[pL].BackColor = Color.Transparent;
+                        }
 
                         #region Caratula
                         #region Cargar la imagen
@@ -1693,6 +1699,7 @@ namespace C_Launcher
                         int r = 0;
                         int g = 0;
                         int b = 0;
+                        bool transparent = false;
                         int res = 0;
                         int w = colls[actualColl].SonWidth;
                         int h = colls[actualColl].SonHeight;
@@ -1731,6 +1738,7 @@ namespace C_Launcher
                             r = int.Parse(match.CRed);
                             g = int.Parse(match.CGreen);
                             b = int.Parse(match.CBlue);
+                            transparent = bool.Parse(match.BoolBackground);
                             res = int.Parse(match.ResID);
                             w = int.Parse(match.Width);
                             h = int.Parse(match.Height);
@@ -1747,6 +1755,11 @@ namespace C_Launcher
                             BackColor = Color.FromArgb(r, g, b),
                             Tag = subcarpeta,//Aqui se guarda en que espacio del array estamos buscando//colls[i].ID,
                         };
+
+                        if (transparent)
+                        {
+                            picBoxArr[pL].BackColor = Color.Transparent;
+                        }
 
                         #region Caratula
                         #region Cargar la imagen
@@ -1883,32 +1896,19 @@ namespace C_Launcher
                 if (addCollection)
                 {
                     //Image imagen = Image.FromFile(colls[i].ImagePath);
-                    //Definir el picture box
-                    int red = 255;
-                    int green = 255;
-                    int blue = 255;
-
-                    if (colls[i].Background == true)
-                    {
-                        red = flowLayoutPanelMain.BackColor.R;
-                        green = flowLayoutPanelMain.BackColor.G;
-                        blue = flowLayoutPanelMain.BackColor.B;
-                    } else
-                    {
-                        red = colls[i].ColorRed;
-                        green = colls[i].ColorGreen;
-                        blue = colls[i].ColorBlue;
-                    }
-
-
                     picBoxArr[pL] = new PictureBox
                     {
                         AccessibleDescription = "collection",//Aqui se indica que tipo de picture box es (coleccion / archivo)
                         Name = colls[i].Name,//Aqui se guarda el nombre de la coleccion
                         Size = new Size(colls[i].Width, colls[i].Height),
-                        BackColor = Color.FromArgb(red, green, blue),
+                        BackColor = Color.FromArgb(colls[i].ColorRed, colls[i].ColorGreen, colls[i].ColorBlue),
                         Tag = colls[i].ID,//Aqui se guarda en que espacio del array estamos buscando//colls[i].ID,
                     };
+
+                    if (colls[i].Background == true)
+                    {
+                        picBoxArr[pL].BackColor = Color.Transparent;
+                    }
 
                     //Establecer formato de imagen (como tiene validaciones, no puedo meterlo en el paquete de arriba)
                     if (colls[i].ImagePath != "")
@@ -2038,28 +2038,12 @@ namespace C_Launcher
                     }
 
                     //Definir el picture box
-                    int red = 255;
-                    int green = 255;
-                    int blue = 255;
-
-                    if (files[f].Background == true)
-                    {
-                        red = flowLayoutPanelMain.BackColor.R;
-                        green = flowLayoutPanelMain.BackColor.G;
-                        blue = flowLayoutPanelMain.BackColor.B;
-                    }
-                    else
-                    {
-                        red = files[f].ColorRed;
-                        green = files[f].ColorGreen;
-                        blue = files[f].ColorBlue;
-                    }
                     picBoxArr[pL] = new PictureBox
                     {
                         AccessibleDescription = "file",//Aqui se indica que tipo de picture box es (coleccion / elemento(archivo))//,
                         Name = files[f].Name,
                         Size = new Size(fileW, fileH),
-                        BackColor = Color.FromArgb(red, green, blue),
+                        BackColor = Color.FromArgb(files[f].ColorRed, files[f].ColorGreen, files[f].ColorBlue),
                         /*
                         BackgroundImage = imagen,
                         */
@@ -2067,7 +2051,13 @@ namespace C_Launcher
                         Tag = files[f].ID,//Aqui indico que espacio de su array estamos buscando //Aqui se guarda la id del archivo, para que cuando se haga click, se busque en el array lo que tiene y se abra
                     };
 
-                    //Establecer formato de imagen (como tiene validaciones, no puedo meterlo en el paquete de arriba)
+                    //Establecer un color translucido
+                    if (files[f].Background == true)
+                    {
+                        picBoxArr[pL].BackColor = Color.Transparent;
+                    }
+
+                        //Establecer formato de imagen (como tiene validaciones, no puedo meterlo en el paquete de arriba)
                     if (files[f].ImagePath != "")
                     {
                         try
@@ -2145,6 +2135,7 @@ namespace C_Launcher
             Color defaultColor = new Themes($"System\\Themes\\{config.ThemeName}.css").TreeViewBackground;
             Color hoverColor = new Themes($"System\\Themes\\{config.ThemeName}.css").TreeViewHoverBackground;
             Color selectedColor = new Themes($"System\\Themes\\{config.ThemeName}.css").TreeViewSelectedBackground;
+            Color foreColor = new Themes($"System\\Themes\\{config.ThemeName}.css").TreeViewText;
 
             //Determina si el nodo esta seleccionado
             bool selected = (e.State & TreeNodeStates.Selected) != 0;
@@ -2175,9 +2166,6 @@ namespace C_Launcher
             {
                 backgroundColor = defaultColor;//Color.FromArgb(94, 105, 123);//SystemColors.Window;
             }
-
-            //Establece el color de primer plano dependiendo del estado del nodo
-            Color foreColor = Color.White;//selected ? Color.White : Color.FromArgb(65, 72, 85);
 
             //Dibuja el fondo del nodo
             using (Brush backgroundBrush = new SolidBrush(backgroundColor))

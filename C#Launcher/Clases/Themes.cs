@@ -2,84 +2,189 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
+using System.Reflection.Emit;
+using System.Runtime.ConstrainedExecution;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace CoverPadLauncher.Clases
 {
     public class Themes
     {
         //Atributos
-        private Color panelBackground;
-        private Color panelTopBackground;
 
+        //flowLayoutPanel
+        private Color panelBackground;
+
+        //Panel Top
+        private Color panelTopBackground;
+        private Color panelTopText;
+
+        //navBar
         private Color navbarBackground;
         private Color navbarSelectedBackground;
         private Color navbarText;
 
+        //textBox
+        private Color textBoxBackground;
+        private Color textBoxText;
+
+        //searchBox
         private Color textBoxSearchBackground;
         private Color textBoxSearchText;
         private Color textBoxSearchTextEmpty;
-                
+
+        //Combobox
+        private Color comboboxBackground;
+        private Color comboboxText;
+
+        //Botones
+        private Color buttonBackground;
+        private Color buttonText;
+
+        //Control numerico
+        private Color numericBackground;
+        private Color numericText;
+
+        //Fondo de la vista previa de la caratula
+        private Color coverPreviewBackground;
+
+        //default label
+        private Color labelText;
+
+        //cover selected border
+        private Color coverSelected;
+
+        //TreeView
         private Color treeViewBackground;
         private Color treeViewHoverBackground;
         private Color treeViewSelectedBackground;
         private Color treeViewBorderBackground;
+        private Color treeViewText;
 
         //Constructor
         public Themes(string themeDir)
         {
             LoadTheme(themeDir);
-            //"System\\Themes\\cyan.css"
         }
 
         #region Encapsulamiento
-        public Color PanelBackground { get { return panelBackground; } }
-        public Color PanelTopBackground { get { return panelTopBackground; } }
 
+        //flowLayoutPanel
+        public Color PanelBackground { get { return panelBackground; } }
+
+        //Panel Top
+        public Color PanelTopBackground { get { return panelTopBackground; } }
+        public Color PanelTopText { get { return panelTopText; } }
+
+        //searchBox
         public Color TextBoxSearchBackground { get { return textBoxSearchBackground; } }
         public Color TextBoxSearchText { get { return textBoxSearchText; } }
         public Color TextBoxSearchTextEmpty { get { return textBoxSearchTextEmpty; } }
 
+        //textBox
+        public Color TextBoxBackground { get { return textBoxBackground; } }
+        public Color TextBoxText { get { return textBoxText; } }
+
+        //Combobox
+        public Color ComboboxBackground { get { return comboboxBackground; } }
+        public Color ComboboxText { get { return comboboxText; } }
+
+        //Botones
+        public Color ButtonBackground { get { return buttonBackground; } }
+        public Color ButtonText { get { return buttonText; } }
+
+        //navBar
         public Color NavbarBackground { get { return navbarBackground; } }
         public Color NavbarSelectedBackground { get { return navbarSelectedBackground; } }
         public Color NavbarText { get { return navbarText; } }
 
+        //Control numerico
+        public Color NumericBackground { get { return numericBackground; } }
+        public Color NumericText { get { return numericText; } }
+
+        //Fondo de la vista previa de la caratula
+        public Color CoverPreviewBackground { get { return coverPreviewBackground; } }
+
+        //default label
+        public Color LabelText { get { return labelText; } }
+
+        //cover selected border
+        public Color CoverSelected { get { return coverSelected; } }
+
+        //TreeView
         public Color TreeViewBackground { get { return treeViewBackground; } }
         public Color TreeViewHoverBackground { get { return treeViewHoverBackground; } }
         public Color TreeViewSelectedBackground { get { return treeViewSelectedBackground; } }
-
         public Color TreeViewBorderBackground { get {  return treeViewBorderBackground; } }
+        public Color TreeViewText { get { return treeViewText; } }
         #endregion
 
         //Funciones
         public void LoadTheme(string themeDir)
         {
-            //Se carga el tema desde un css
+            //Colores por defecto
+            Color mainColor = Color.FromArgb(36, 40, 47);
+            Color lightColor = Color.FromArgb(94, 105, 123);
+            Color darkColor = Color.FromArgb(23, 29, 37);
+            Color defaultText = Color.White;
 
+            //Establecer los atributos del color; Se carga el tema desde un css
+            //flowLayoutPanel
+            this.panelBackground = ObtainColorCSS("--color-bg-panel", themeDir, mainColor);//loadColor;
 
-            //Establecer los atributos del color
-            //Color loadColor = Color.FromArgb(32, 32, 32);
-            this.panelBackground = ObtainColorCSS("--color-bg-panel", themeDir);//loadColor;
-            this.panelTopBackground = ObtainColorCSS("--color-bg-top", themeDir);
+            //Panel Top
+            this.panelTopBackground = ObtainColorCSS("--color-bg-top", themeDir, darkColor);
+            this.panelTopText = ObtainColorCSS("--color-text-top", themeDir, defaultText);
 
-            this.navbarBackground = ObtainColorCSS("--color-bg-navbar", themeDir);
-            this.navbarSelectedBackground = ObtainColorCSS("--color-bg-navbar-selected", themeDir);
-            this.navbarText = ObtainColorCSS("--color-text-navbar", themeDir);
+            //navBar
+            this.navbarBackground = ObtainColorCSS("--color-bg-navbar", themeDir, darkColor);
+            this.navbarSelectedBackground = ObtainColorCSS("--color-bg-navbar-selected", themeDir, lightColor);
+            this.navbarText = ObtainColorCSS("--color-text-navbar", themeDir, defaultText);
 
-            this.textBoxSearchBackground = ObtainColorCSS("--color-bg-searchBox", themeDir);
-            this.textBoxSearchText = ObtainColorCSS("--color-text-searchBox", themeDir);
-            this.textBoxSearchTextEmpty = ObtainColorCSS("--color-text-empty-searchBox", themeDir);
+            //textBox
+            this.textBoxBackground = ObtainColorCSS("--color-bg-textBox", themeDir, mainColor);
+            this.textBoxText = ObtainColorCSS("--color-text-textBox", themeDir, defaultText);
 
-            this.treeViewBackground = ObtainColorCSS("--color-bg-treeview", themeDir);
-            this.treeViewHoverBackground = ObtainColorCSS("--color-bg-treeview-hover", themeDir);
-            this.treeViewSelectedBackground = ObtainColorCSS("--color-bg-treeview-selected", themeDir);
-            this.treeViewBorderBackground = ObtainColorCSS("--color-bg-treeview-border", themeDir);
+            //Combobox
+            this.comboboxBackground = ObtainColorCSS("--color-bg-comboBox", themeDir, lightColor);
+            this.comboboxText = ObtainColorCSS("--color-text-comboBox", themeDir, defaultText);
+
+            //Botones
+            this.buttonBackground = ObtainColorCSS("--color-bg-button", themeDir, lightColor);
+            this.buttonText = ObtainColorCSS("--color-text-button", themeDir, defaultText);
+
+            //Control numerico
+            this.numericBackground = ObtainColorCSS("--color-bg-numericUpDown", themeDir, mainColor);
+            this.numericText = ObtainColorCSS("--color-text-numericUpDown", themeDir, defaultText);
+
+            //Fondo de la vista previa de la caratula
+            this.coverPreviewBackground = ObtainColorCSS("--color-bg-coverPanelPreview", themeDir, mainColor);
+
+            //default label
+            this.labelText = ObtainColorCSS("--color-text-label", themeDir, defaultText);
+
+            //cover selected border
+            this.coverSelected = ObtainColorCSS("--color-border-cover", themeDir, Color.White);
+
+            //searchBox
+            this.textBoxSearchBackground = ObtainColorCSS("--color-bg-searchBox", themeDir, mainColor);
+            this.textBoxSearchText = ObtainColorCSS("--color-text-searchBox", themeDir, defaultText);
+            this.textBoxSearchTextEmpty = ObtainColorCSS("--color-text-empty-searchBox", themeDir, Color.FromArgb(128, 128, 128));
+
+            //TreeView
+            this.treeViewBackground = ObtainColorCSS("--color-bg-treeview", themeDir, lightColor);
+            this.treeViewHoverBackground = ObtainColorCSS("--color-bg-treeview-hover", themeDir,Color.FromArgb(73, 81, 95));
+            this.treeViewSelectedBackground = ObtainColorCSS("--color-bg-treeview-selected", themeDir, Color.FromArgb(65, 72, 85));
+            this.treeViewBorderBackground = ObtainColorCSS("--color-bg-treeview-border", themeDir, darkColor);
+            this.treeViewText = ObtainColorCSS("--color-text-treeview", themeDir, defaultText);
         }
 
         //Metodo para obtener el valor de color de una variable en el archivo CSS
-        private static Color ObtainColorCSS(string variable, string rutaArchivo)
+        private static Color ObtainColorCSS(string variable, string rutaArchivo, Color defaultColor)
         {
             //Debido a que el usuario puede manipular a su gusto el archivo css, si encuentra un error devolvera un color blanco
             try
@@ -105,7 +210,7 @@ namespace CoverPadLauncher.Clases
                         {
                             // Si el valor es otra variable, busca su valor recursivamente (8 es el despues de rgb(var(; -2 son los ultimos 2 parentesis ))
                             var variableReferenciada = valorVariable.Substring(8, valorVariable.Length - 10).Trim();//el -10 es la suma de la longitud de rgb(var()) (son 10 caracteres)
-                            return ObtainColorCSS(variableReferenciada, rutaArchivo);
+                            return ObtainColorCSS(variableReferenciada, rutaArchivo, defaultColor);
                         }
                         else
                         {
@@ -127,17 +232,17 @@ namespace CoverPadLauncher.Clases
                     {
                         // Si el valor es otra variable, busca su valor recursivamente 
                         var variableReferenciada = valorVariable.Substring(4, valorVariable.Length - 5).Trim();
-                        return ObtainColorCSS(variableReferenciada, rutaArchivo);
+                        return ObtainColorCSS(variableReferenciada, rutaArchivo, defaultColor);
                     }
 
                     // Si no coincide con ningún formato conocido, devuelve blanco
-                    return Color.White;
+                    return defaultColor;
                 }
                 Console.WriteLine("\nMatch Fail\n");
                 // Si no se encuentra la variable, devuelve blanco
-                return Color.White;
+                return defaultColor;
             } catch (Exception) {
-                return Color.White;
+                return defaultColor;
             }
             
         }

@@ -49,11 +49,11 @@
             this.administrarEtiquetasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.herramientasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.configuracionesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.importaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.labelDepth = new System.Windows.Forms.Label();
             this.flowLayoutPanelMain = new System.Windows.Forms.FlowLayoutPanel();
             this.treeViewMain = new System.Windows.Forms.TreeView();
             this.splitter1 = new System.Windows.Forms.Splitter();
-            this.importaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelTop.SuspendLayout();
             this.menuStripMain.SuspendLayout();
             this.SuspendLayout();
@@ -61,12 +61,12 @@
             // panelTop
             // 
             this.panelTop.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(29)))), ((int)(((byte)(37)))));
+            this.panelTop.Controls.Add(this.labelDepth);
             this.panelTop.Controls.Add(this.btnBackView);
             this.panelTop.Controls.Add(this.btnHomeView);
             this.panelTop.Controls.Add(this.btnReloadView);
             this.panelTop.Controls.Add(this.textBoxSearch);
             this.panelTop.Controls.Add(this.menuStripMain);
-            this.panelTop.Controls.Add(this.labelDepth);
             this.panelTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.panelTop.Location = new System.Drawing.Point(0, 0);
             this.panelTop.Name = "panelTop";
@@ -258,17 +258,25 @@
             // configuracionesToolStripMenuItem
             // 
             this.configuracionesToolStripMenuItem.Name = "configuracionesToolStripMenuItem";
-            this.configuracionesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.configuracionesToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.configuracionesToolStripMenuItem.Text = "Configuraciones";
             this.configuracionesToolStripMenuItem.Click += new System.EventHandler(this.configuracionesToolStripMenuItem_Click);
+            // 
+            // importaToolStripMenuItem
+            // 
+            this.importaToolStripMenuItem.Name = "importaToolStripMenuItem";
+            this.importaToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.importaToolStripMenuItem.Text = "Importar Juegos";
+            this.importaToolStripMenuItem.Click += new System.EventHandler(this.importaToolStripMenuItem_Click);
             // 
             // labelDepth
             // 
             this.labelDepth.Anchor = System.Windows.Forms.AnchorStyles.None;
             this.labelDepth.AutoSize = true;
+            this.labelDepth.BackColor = System.Drawing.Color.Transparent;
             this.labelDepth.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.labelDepth.ForeColor = System.Drawing.Color.White;
-            this.labelDepth.Location = new System.Drawing.Point(434, 29);
+            this.labelDepth.Location = new System.Drawing.Point(433, 31);
             this.labelDepth.Name = "labelDepth";
             this.labelDepth.Size = new System.Drawing.Size(68, 25);
             this.labelDepth.TabIndex = 5;
@@ -313,13 +321,6 @@
             this.splitter1.Size = new System.Drawing.Size(5, 586);
             this.splitter1.TabIndex = 3;
             this.splitter1.TabStop = false;
-            // 
-            // importaToolStripMenuItem
-            // 
-            this.importaToolStripMenuItem.Name = "importaToolStripMenuItem";
-            this.importaToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.importaToolStripMenuItem.Text = "Importar Juegos";
-            this.importaToolStripMenuItem.Click += new System.EventHandler(this.importaToolStripMenuItem_Click);
             // 
             // Home
             // 

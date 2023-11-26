@@ -1,0 +1,84 @@
+/*Declaracion de variables*/
+:root {
+  /*
+    De momento, existen algunas restricciones con el uso de los archivos CSS,
+    -Solo se pueden ocupar colores planos
+    -Solo se pueden utilizar estas fuentes: x,x,x,x,
+    -Solo se admiten colores en rgb y en hexadecimal
+  */
+
+  /*Define aqui tus variables (puedes modificar los valores de las siguientes variables o directamente eliminarlas sin problemas)*/
+  --main-bg-color: #24282f;
+  --main-bg-color-light: #5e697b;
+  --main-bg-color-dark: #171d25;
+
+  --default-text-color: #ffffff;
+  
+  --default-font: "JetBrains Mono", monospace;
+  --default-font: "Inter", sans-serif; /*Note and Settings Text*/
+  --font-monospace: "JetBrains Mono", monospace; /*Code block text*/
+  --font-monospace: "Source Code Pro", monospace; /*Code block text*/
+
+  /*
+    Como ocupar las variables
+    
+    dentro de '.theme', utilizar la siguiente expresion
+    var(nombreVariable); 
+  */
+}
+
+/*Reemplaza los valores de las propiedades, pero no las elimines*/
+.theme {
+  /*Colores*/
+  --color-bg-panel:               var(--main-bg-color);
+
+  /*Seccion superior donde se ubica el nombre de la profundidad*/
+  --color-bg-top:                 var(--main-bg-color-dark);
+  --color-text-top:               var(--default-text-color);
+
+  /*Panel izquierdo donde se muestran los nombres de las colecciones*/
+  --color-bg-treeview:            var(--main-bg-color-light);
+  --color-bg-treeview-hover:      #49515f;
+  --color-bg-treeview-selected:   #414855;
+  --color-text-treeview:          var(--default-text-color);
+  --color-bg-treeview-border:     var(--main-bg-color-dark);
+
+  /*Barra de busqueda*/
+  --color-bg-searchBox:           var(--main-bg-color);
+  --color-text-searchBox:         var(--default-text-color);
+  --color-text-empty-searchBox: #808080;
+
+  /*Barras de texto*/
+  --color-bg-textBox:             var(--main-bg-color);
+  --color-text-textBox:           var(--default-text-color);
+
+  /*Cuadros de lista*/
+  --color-bg-comboBox:            var(--main-bg-color-light);
+  --color-text-comboBox:          var(--default-text-color);
+
+  /*Botones*/
+  --color-bg-button:              var(--main-bg-color-light);
+  --color-text-button:            var(--default-text-color);
+
+  /*Control numerico*/
+  --color-bg-numericUpDown:       var(--main-bg-color);
+  --color-text-numericUpDown:     var(--default-text-color);
+
+  /*Fondo de la vista previa de la caratula*/
+  --color-bg-coverPanelPreview:   var(--main-bg-color);
+
+  /*Barra de herramientas*/
+  --color-bg-navbar:              var(--main-bg-color-dark);
+  --color-bg-navbar-selected:     var(--main-bg-color-light);
+  --color-text-navbar:            var(--default-text-color);
+
+  /*Texto descriptivo*/
+  --color-text-label:             var(--default-text-color);
+
+  /*Colores de las tablas de seleccion*/
+  --color-bg-grid:                var(--main-bg-color-dark);
+  --color-bg-grid-cell:           var(--main-bg-color);
+  
+  /*Color del borde de un panel al estar el mouse encima*/
+  --color-selected-panel:       #ffffff;
+}

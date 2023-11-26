@@ -454,6 +454,7 @@
             // BackgroundColorCheck
             // 
             this.BackgroundColorCheck.AutoSize = true;
+            this.BackgroundColorCheck.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(61)))), ((int)(((byte)(72)))));
             this.BackgroundColorCheck.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BackgroundColorCheck.ForeColor = System.Drawing.SystemColors.Window;
             this.BackgroundColorCheck.Location = new System.Drawing.Point(528, 258);
@@ -461,7 +462,7 @@
             this.BackgroundColorCheck.Size = new System.Drawing.Size(115, 17);
             this.BackgroundColorCheck.TabIndex = 32;
             this.BackgroundColorCheck.Text = "Fondo transparente";
-            this.BackgroundColorCheck.UseVisualStyleBackColor = true;
+            this.BackgroundColorCheck.UseVisualStyleBackColor = false;
             // 
             // buttonSearchProgram
             // 

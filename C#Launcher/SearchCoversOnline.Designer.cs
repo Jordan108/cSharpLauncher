@@ -33,11 +33,14 @@
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.buttonContinueType = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.radioButtonBooks = new System.Windows.Forms.RadioButton();
+            this.radioButtonComics = new System.Windows.Forms.RadioButton();
             this.radioButtonMangas = new System.Windows.Forms.RadioButton();
             this.radioButtonSeries = new System.Windows.Forms.RadioButton();
             this.radioButtonFilms = new System.Windows.Forms.RadioButton();
             this.radioButtonGames = new System.Windows.Forms.RadioButton();
             this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.progressBarDownload = new System.Windows.Forms.ProgressBar();
             this.label1 = new System.Windows.Forms.Label();
             this.buttonContinueName = new System.Windows.Forms.Button();
             this.dataGridViewNames = new System.Windows.Forms.DataGridView();
@@ -52,7 +55,6 @@
             this.Nombre = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnCount = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnSelected = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.radioButtonComics = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCover)).BeginInit();
             this.tabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
@@ -67,10 +69,9 @@
             // 
             this.pictureBoxCover.BackColor = System.Drawing.Color.Transparent;
             this.pictureBoxCover.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Zoom;
-            this.pictureBoxCover.Location = new System.Drawing.Point(664, 45);
-            this.pictureBoxCover.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.pictureBoxCover.Location = new System.Drawing.Point(443, 29);
             this.pictureBoxCover.Name = "pictureBoxCover";
-            this.pictureBoxCover.Size = new System.Drawing.Size(450, 462);
+            this.pictureBoxCover.Size = new System.Drawing.Size(300, 300);
             this.pictureBoxCover.TabIndex = 3;
             this.pictureBoxCover.TabStop = false;
             // 
@@ -79,32 +80,29 @@
             this.tabControl.Controls.Add(this.tabPage1);
             this.tabControl.Controls.Add(this.tabPage2);
             this.tabControl.Controls.Add(this.tabPage3);
-            this.tabControl.Location = new System.Drawing.Point(-6, -36);
-            this.tabControl.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tabControl.Location = new System.Drawing.Point(-4, 12);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(1136, 783);
+            this.tabControl.Size = new System.Drawing.Size(757, 474);
             this.tabControl.TabIndex = 4;
             // 
             // tabPage1
             // 
             this.tabPage1.Controls.Add(this.buttonContinueType);
             this.tabPage1.Controls.Add(this.groupBox1);
-            this.tabPage1.Location = new System.Drawing.Point(4, 29);
-            this.tabPage1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
-            this.tabPage1.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.tabPage1.Size = new System.Drawing.Size(1128, 750);
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(749, 448);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Tipo";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
             // buttonContinueType
             // 
-            this.buttonContinueType.Location = new System.Drawing.Point(1008, 555);
-            this.buttonContinueType.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.buttonContinueType.Location = new System.Drawing.Point(672, 361);
             this.buttonContinueType.Name = "buttonContinueType";
-            this.buttonContinueType.Size = new System.Drawing.Size(112, 35);
+            this.buttonContinueType.Size = new System.Drawing.Size(75, 23);
             this.buttonContinueType.TabIndex = 1;
             this.buttonContinueType.Text = "Continuar";
             this.buttonContinueType.UseVisualStyleBackColor = true;
@@ -112,27 +110,50 @@
             // 
             // groupBox1
             // 
+            this.groupBox1.Controls.Add(this.radioButtonBooks);
             this.groupBox1.Controls.Add(this.radioButtonComics);
             this.groupBox1.Controls.Add(this.radioButtonMangas);
             this.groupBox1.Controls.Add(this.radioButtonSeries);
             this.groupBox1.Controls.Add(this.radioButtonFilms);
             this.groupBox1.Controls.Add(this.radioButtonGames);
-            this.groupBox1.Location = new System.Drawing.Point(30, 45);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBox1.Location = new System.Drawing.Point(20, 29);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.groupBox1.Size = new System.Drawing.Size(300, 277);
+            this.groupBox1.Size = new System.Drawing.Size(200, 180);
             this.groupBox1.TabIndex = 0;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "¿Que estas importando?";
             // 
+            // radioButtonBooks
+            // 
+            this.radioButtonBooks.AutoSize = true;
+            this.radioButtonBooks.Location = new System.Drawing.Point(7, 146);
+            this.radioButtonBooks.Name = "radioButtonBooks";
+            this.radioButtonBooks.Size = new System.Drawing.Size(53, 17);
+            this.radioButtonBooks.TabIndex = 5;
+            this.radioButtonBooks.TabStop = true;
+            this.radioButtonBooks.Text = "Libros";
+            this.radioButtonBooks.UseVisualStyleBackColor = true;
+            this.radioButtonBooks.CheckedChanged += new System.EventHandler(this.radioButtonBooks_CheckedChanged);
+            // 
+            // radioButtonComics
+            // 
+            this.radioButtonComics.AutoSize = true;
+            this.radioButtonComics.Location = new System.Drawing.Point(7, 123);
+            this.radioButtonComics.Margin = new System.Windows.Forms.Padding(2);
+            this.radioButtonComics.Name = "radioButtonComics";
+            this.radioButtonComics.Size = new System.Drawing.Size(59, 17);
+            this.radioButtonComics.TabIndex = 4;
+            this.radioButtonComics.TabStop = true;
+            this.radioButtonComics.Text = "Comics";
+            this.radioButtonComics.UseVisualStyleBackColor = true;
+            this.radioButtonComics.CheckedChanged += new System.EventHandler(this.radioButtonComics_CheckedChanged);
+            // 
             // radioButtonMangas
             // 
             this.radioButtonMangas.AutoSize = true;
-            this.radioButtonMangas.Location = new System.Drawing.Point(10, 157);
-            this.radioButtonMangas.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.radioButtonMangas.Location = new System.Drawing.Point(7, 102);
             this.radioButtonMangas.Name = "radioButtonMangas";
-            this.radioButtonMangas.Size = new System.Drawing.Size(91, 24);
+            this.radioButtonMangas.Size = new System.Drawing.Size(63, 17);
             this.radioButtonMangas.TabIndex = 3;
             this.radioButtonMangas.TabStop = true;
             this.radioButtonMangas.Text = "Mangas";
@@ -142,10 +163,9 @@
             // radioButtonSeries
             // 
             this.radioButtonSeries.AutoSize = true;
-            this.radioButtonSeries.Location = new System.Drawing.Point(10, 120);
-            this.radioButtonSeries.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.radioButtonSeries.Location = new System.Drawing.Point(7, 78);
             this.radioButtonSeries.Name = "radioButtonSeries";
-            this.radioButtonSeries.Size = new System.Drawing.Size(79, 24);
+            this.radioButtonSeries.Size = new System.Drawing.Size(54, 17);
             this.radioButtonSeries.TabIndex = 2;
             this.radioButtonSeries.TabStop = true;
             this.radioButtonSeries.Text = "Series";
@@ -155,10 +175,9 @@
             // radioButtonFilms
             // 
             this.radioButtonFilms.AutoSize = true;
-            this.radioButtonFilms.Location = new System.Drawing.Point(10, 83);
-            this.radioButtonFilms.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.radioButtonFilms.Location = new System.Drawing.Point(7, 54);
             this.radioButtonFilms.Name = "radioButtonFilms";
-            this.radioButtonFilms.Size = new System.Drawing.Size(96, 24);
+            this.radioButtonFilms.Size = new System.Drawing.Size(67, 17);
             this.radioButtonFilms.TabIndex = 1;
             this.radioButtonFilms.Text = "Peliculas";
             this.radioButtonFilms.UseVisualStyleBackColor = true;
@@ -168,10 +187,9 @@
             // 
             this.radioButtonGames.AutoSize = true;
             this.radioButtonGames.Checked = true;
-            this.radioButtonGames.Location = new System.Drawing.Point(10, 46);
-            this.radioButtonGames.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.radioButtonGames.Location = new System.Drawing.Point(7, 30);
             this.radioButtonGames.Name = "radioButtonGames";
-            this.radioButtonGames.Size = new System.Drawing.Size(86, 24);
+            this.radioButtonGames.Size = new System.Drawing.Size(59, 17);
             this.radioButtonGames.TabIndex = 0;
             this.radioButtonGames.TabStop = true;
             this.radioButtonGames.Text = "Juegos";
@@ -180,34 +198,40 @@
             // 
             // tabPage2
             // 
+            this.tabPage2.Controls.Add(this.progressBarDownload);
             this.tabPage2.Controls.Add(this.label1);
             this.tabPage2.Controls.Add(this.buttonContinueName);
             this.tabPage2.Controls.Add(this.dataGridViewNames);
-            this.tabPage2.Location = new System.Drawing.Point(4, 29);
-            this.tabPage2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.tabPage2.Size = new System.Drawing.Size(1128, 696);
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(749, 448);
             this.tabPage2.TabIndex = 2;
             this.tabPage2.Text = "Confirmar Nombre";
             this.tabPage2.UseVisualStyleBackColor = true;
             // 
+            // progressBarDownload
+            // 
+            this.progressBarDownload.Location = new System.Drawing.Point(27, 404);
+            this.progressBarDownload.Name = "progressBarDownload";
+            this.progressBarDownload.Size = new System.Drawing.Size(629, 23);
+            this.progressBarDownload.TabIndex = 8;
+            this.progressBarDownload.Visible = false;
+            // 
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(356, 23);
-            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.label1.Location = new System.Drawing.Point(237, 15);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(366, 20);
+            this.label1.Size = new System.Drawing.Size(244, 13);
             this.label1.TabIndex = 7;
             this.label1.Text = "Puedes cambiar el nombre de los elementos ahora";
             // 
             // buttonContinueName
             // 
-            this.buttonContinueName.Location = new System.Drawing.Point(993, 622);
-            this.buttonContinueName.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.buttonContinueName.Location = new System.Drawing.Point(662, 404);
             this.buttonContinueName.Name = "buttonContinueName";
-            this.buttonContinueName.Size = new System.Drawing.Size(112, 35);
+            this.buttonContinueName.Size = new System.Drawing.Size(75, 23);
             this.buttonContinueName.TabIndex = 6;
             this.buttonContinueName.Text = "Continuar";
             this.buttonContinueName.UseVisualStyleBackColor = true;
@@ -221,13 +245,12 @@
             this.dataGridViewNames.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.ColumnName,
             this.ColumnDir});
-            this.dataGridViewNames.Location = new System.Drawing.Point(40, 66);
-            this.dataGridViewNames.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.dataGridViewNames.Location = new System.Drawing.Point(27, 43);
             this.dataGridViewNames.MultiSelect = false;
             this.dataGridViewNames.Name = "dataGridViewNames";
             this.dataGridViewNames.RowHeadersVisible = false;
             this.dataGridViewNames.RowHeadersWidth = 62;
-            this.dataGridViewNames.Size = new System.Drawing.Size(1050, 546);
+            this.dataGridViewNames.Size = new System.Drawing.Size(700, 355);
             this.dataGridViewNames.TabIndex = 5;
             // 
             // ColumnName
@@ -253,11 +276,10 @@
             this.tabPage3.Controls.Add(this.buttonFinish);
             this.tabPage3.Controls.Add(this.dataGridViewCovers);
             this.tabPage3.Controls.Add(this.pictureBoxCover);
-            this.tabPage3.Location = new System.Drawing.Point(4, 29);
-            this.tabPage3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
-            this.tabPage3.Size = new System.Drawing.Size(1128, 696);
+            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage3.Size = new System.Drawing.Size(749, 448);
             this.tabPage3.TabIndex = 1;
             this.tabPage3.Text = "Descargar";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -265,19 +287,17 @@
             // labelCoverArraySelected
             // 
             this.labelCoverArraySelected.AutoSize = true;
-            this.labelCoverArraySelected.Location = new System.Drawing.Point(878, 542);
-            this.labelCoverArraySelected.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
+            this.labelCoverArraySelected.Location = new System.Drawing.Point(585, 352);
             this.labelCoverArraySelected.Name = "labelCoverArraySelected";
-            this.labelCoverArraySelected.Size = new System.Drawing.Size(31, 20);
+            this.labelCoverArraySelected.Size = new System.Drawing.Size(24, 13);
             this.labelCoverArraySelected.TabIndex = 8;
             this.labelCoverArraySelected.Text = "1/1";
             // 
             // buttonCoverBack
             // 
-            this.buttonCoverBack.Location = new System.Drawing.Point(789, 532);
-            this.buttonCoverBack.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.buttonCoverBack.Location = new System.Drawing.Point(526, 346);
             this.buttonCoverBack.Name = "buttonCoverBack";
-            this.buttonCoverBack.Size = new System.Drawing.Size(38, 38);
+            this.buttonCoverBack.Size = new System.Drawing.Size(25, 25);
             this.buttonCoverBack.TabIndex = 7;
             this.buttonCoverBack.Text = "<";
             this.buttonCoverBack.UseVisualStyleBackColor = true;
@@ -285,10 +305,9 @@
             // 
             // buttonCoverNext
             // 
-            this.buttonCoverNext.Location = new System.Drawing.Point(962, 532);
-            this.buttonCoverNext.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.buttonCoverNext.Location = new System.Drawing.Point(641, 346);
             this.buttonCoverNext.Name = "buttonCoverNext";
-            this.buttonCoverNext.Size = new System.Drawing.Size(38, 38);
+            this.buttonCoverNext.Size = new System.Drawing.Size(25, 25);
             this.buttonCoverNext.TabIndex = 6;
             this.buttonCoverNext.Text = ">";
             this.buttonCoverNext.UseVisualStyleBackColor = true;
@@ -296,10 +315,9 @@
             // 
             // buttonFinish
             // 
-            this.buttonFinish.Location = new System.Drawing.Point(1002, 622);
-            this.buttonFinish.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.buttonFinish.Location = new System.Drawing.Point(668, 404);
             this.buttonFinish.Name = "buttonFinish";
-            this.buttonFinish.Size = new System.Drawing.Size(112, 35);
+            this.buttonFinish.Size = new System.Drawing.Size(75, 23);
             this.buttonFinish.TabIndex = 5;
             this.buttonFinish.Text = "Finalizar";
             this.buttonFinish.UseVisualStyleBackColor = true;
@@ -314,12 +332,11 @@
             this.Nombre,
             this.ColumnCount,
             this.ColumnSelected});
-            this.dataGridViewCovers.Location = new System.Drawing.Point(24, 45);
-            this.dataGridViewCovers.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.dataGridViewCovers.Location = new System.Drawing.Point(16, 29);
             this.dataGridViewCovers.MultiSelect = false;
             this.dataGridViewCovers.Name = "dataGridViewCovers";
             this.dataGridViewCovers.RowHeadersWidth = 62;
-            this.dataGridViewCovers.Size = new System.Drawing.Size(600, 546);
+            this.dataGridViewCovers.Size = new System.Drawing.Size(400, 355);
             this.dataGridViewCovers.TabIndex = 4;
             this.dataGridViewCovers.SelectionChanged += new System.EventHandler(this.dataGridViewCovers_SelectionChanged);
             // 
@@ -347,25 +364,12 @@
             this.ColumnSelected.ReadOnly = true;
             this.ColumnSelected.Width = 60;
             // 
-            // radioButtonComics
-            // 
-            this.radioButtonComics.AutoSize = true;
-            this.radioButtonComics.Location = new System.Drawing.Point(10, 190);
-            this.radioButtonComics.Name = "radioButtonComics";
-            this.radioButtonComics.Size = new System.Drawing.Size(86, 24);
-            this.radioButtonComics.TabIndex = 4;
-            this.radioButtonComics.TabStop = true;
-            this.radioButtonComics.Text = "Comics";
-            this.radioButtonComics.UseVisualStyleBackColor = true;
-            this.radioButtonComics.CheckedChanged += new System.EventHandler(this.radioButtonComics_CheckedChanged);
-            // 
             // SearchCoversOnline
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1126, 729);
+            this.ClientSize = new System.Drawing.Size(751, 474);
             this.Controls.Add(this.tabControl);
-            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.Name = "SearchCoversOnline";
             this.Text = "SearchCoversOnline";
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCover)).EndInit();
@@ -409,5 +413,7 @@
         private System.Windows.Forms.RadioButton radioButtonMangas;
         private System.Windows.Forms.RadioButton radioButtonSeries;
         private System.Windows.Forms.RadioButton radioButtonComics;
+        private System.Windows.Forms.RadioButton radioButtonBooks;
+        private System.Windows.Forms.ProgressBar progressBarDownload;
     }
 }
