@@ -51,12 +51,7 @@
             this.panelSonImageLimit = new System.Windows.Forms.Panel();
             this.pictureBoxCoverSon = new System.Windows.Forms.PictureBox();
             this.comboBoxSonResolution = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
-            this.groupBoxSon = new System.Windows.Forms.GroupBox();
-            this.labelSonHeight = new System.Windows.Forms.Label();
-            this.labelSonWidth = new System.Windows.Forms.Label();
-            this.numericSonHeight = new System.Windows.Forms.NumericUpDown();
-            this.numericSonWidth = new System.Windows.Forms.NumericUpDown();
+            this.labelContentRes = new System.Windows.Forms.Label();
             this.groupBoxSonFormat = new System.Windows.Forms.GroupBox();
             this.radioButtonSonEstreched = new System.Windows.Forms.RadioButton();
             this.radioButtonSonZoom = new System.Windows.Forms.RadioButton();
@@ -71,19 +66,26 @@
             this.dataGridViewScanOpenExtension = new System.Windows.Forms.DataGridView();
             this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.numericScanStart = new System.Windows.Forms.NumericUpDown();
-            this.label2 = new System.Windows.Forms.Label();
+            this.labelExecuteFile = new System.Windows.Forms.Label();
             this.buttonDeleteCover = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
+            this.buttonDeleteTestCover = new System.Windows.Forms.Button();
             this.dataGridViewTags = new System.Windows.Forms.DataGridView();
             this.Column2 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.dataGridViewTextBoxColumn1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Column3 = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.addResolution = new System.Windows.Forms.Button();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.labelContentLauncher = new System.Windows.Forms.Label();
+            this.labelContentCMD = new System.Windows.Forms.Label();
             this.textBoxSonProgramPath = new System.Windows.Forms.TextBox();
             this.textBoxDefaultCMD = new System.Windows.Forms.TextBox();
             this.buttonSearchProgram = new System.Windows.Forms.Button();
+            this.numericSonWidth = new System.Windows.Forms.NumericUpDown();
+            this.numericSonHeight = new System.Windows.Forms.NumericUpDown();
+            this.labelSonWidth = new System.Windows.Forms.Label();
+            this.labelSonHeight = new System.Windows.Forms.Label();
+            this.groupBoxSon = new System.Windows.Forms.GroupBox();
+            this.labelSonWarning = new System.Windows.Forms.Label();
+            this.buttonCoverOnline = new System.Windows.Forms.Button();
             this.groupBoxCover.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericColHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericColWidth)).BeginInit();
@@ -92,13 +94,13 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCoverCollection)).BeginInit();
             this.panelSonImageLimit.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCoverSon)).BeginInit();
-            this.groupBoxSon.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericSonHeight)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericSonWidth)).BeginInit();
             this.groupBoxSonFormat.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewScanOpenExtension)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericScanStart)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTags)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericSonWidth)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericSonHeight)).BeginInit();
+            this.groupBoxSon.SuspendLayout();
             this.SuspendLayout();
             // 
             // textBoxName
@@ -365,99 +367,15 @@
             this.comboBoxSonResolution.TabIndex = 11;
             this.comboBoxSonResolution.SelectedIndexChanged += new System.EventHandler(this.comboBoxSonResolution_SelectedIndexChanged);
             // 
-            // label1
+            // labelContentRes
             // 
-            this.label1.AutoSize = true;
-            this.label1.ForeColor = System.Drawing.SystemColors.Window;
-            this.label1.Location = new System.Drawing.Point(535, 302);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(127, 13);
-            this.label1.TabIndex = 12;
-            this.label1.Text = "Resolucion del contenido";
-            // 
-            // groupBoxSon
-            // 
-            this.groupBoxSon.Controls.Add(this.labelSonHeight);
-            this.groupBoxSon.Controls.Add(this.labelSonWidth);
-            this.groupBoxSon.Controls.Add(this.numericSonHeight);
-            this.groupBoxSon.Controls.Add(this.numericSonWidth);
-            this.groupBoxSon.ForeColor = System.Drawing.SystemColors.Window;
-            this.groupBoxSon.Location = new System.Drawing.Point(533, 345);
-            this.groupBoxSon.Name = "groupBoxSon";
-            this.groupBoxSon.Size = new System.Drawing.Size(200, 100);
-            this.groupBoxSon.TabIndex = 7;
-            this.groupBoxSon.TabStop = false;
-            this.groupBoxSon.Text = "Tamaño en pixeles (100-300)";
-            // 
-            // labelSonHeight
-            // 
-            this.labelSonHeight.AutoSize = true;
-            this.labelSonHeight.Location = new System.Drawing.Point(8, 59);
-            this.labelSonHeight.Name = "labelSonHeight";
-            this.labelSonHeight.Size = new System.Drawing.Size(28, 13);
-            this.labelSonHeight.TabIndex = 3;
-            this.labelSonHeight.Text = "Alto:";
-            // 
-            // labelSonWidth
-            // 
-            this.labelSonWidth.AutoSize = true;
-            this.labelSonWidth.Location = new System.Drawing.Point(8, 32);
-            this.labelSonWidth.Name = "labelSonWidth";
-            this.labelSonWidth.Size = new System.Drawing.Size(41, 13);
-            this.labelSonWidth.TabIndex = 2;
-            this.labelSonWidth.Text = "Ancho:";
-            // 
-            // numericSonHeight
-            // 
-            this.numericSonHeight.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(40)))), ((int)(((byte)(47)))));
-            this.numericSonHeight.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.numericSonHeight.ForeColor = System.Drawing.SystemColors.Window;
-            this.numericSonHeight.Location = new System.Drawing.Point(55, 59);
-            this.numericSonHeight.Maximum = new decimal(new int[] {
-            300,
-            0,
-            0,
-            0});
-            this.numericSonHeight.Minimum = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-            this.numericSonHeight.Name = "numericSonHeight";
-            this.numericSonHeight.Size = new System.Drawing.Size(120, 20);
-            this.numericSonHeight.TabIndex = 1;
-            this.numericSonHeight.Value = new decimal(new int[] {
-            200,
-            0,
-            0,
-            0});
-            this.numericSonHeight.ValueChanged += new System.EventHandler(this.numericSonHeight_ValueChanged);
-            // 
-            // numericSonWidth
-            // 
-            this.numericSonWidth.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(40)))), ((int)(((byte)(47)))));
-            this.numericSonWidth.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.numericSonWidth.ForeColor = System.Drawing.SystemColors.Window;
-            this.numericSonWidth.Location = new System.Drawing.Point(55, 32);
-            this.numericSonWidth.Maximum = new decimal(new int[] {
-            300,
-            0,
-            0,
-            0});
-            this.numericSonWidth.Minimum = new decimal(new int[] {
-            100,
-            0,
-            0,
-            0});
-            this.numericSonWidth.Name = "numericSonWidth";
-            this.numericSonWidth.Size = new System.Drawing.Size(120, 20);
-            this.numericSonWidth.TabIndex = 0;
-            this.numericSonWidth.Value = new decimal(new int[] {
-            200,
-            0,
-            0,
-            0});
-            this.numericSonWidth.ValueChanged += new System.EventHandler(this.numericSonWidth_ValueChanged);
+            this.labelContentRes.AutoSize = true;
+            this.labelContentRes.ForeColor = System.Drawing.SystemColors.Window;
+            this.labelContentRes.Location = new System.Drawing.Point(535, 302);
+            this.labelContentRes.Name = "labelContentRes";
+            this.labelContentRes.Size = new System.Drawing.Size(127, 13);
+            this.labelContentRes.TabIndex = 12;
+            this.labelContentRes.Text = "Resolucion del contenido";
             // 
             // groupBoxSonFormat
             // 
@@ -500,7 +418,7 @@
             this.buttonSearchCover.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
             this.buttonSearchCover.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonSearchCover.ForeColor = System.Drawing.SystemColors.Window;
-            this.buttonSearchCover.Location = new System.Drawing.Point(218, 192);
+            this.buttonSearchCover.Location = new System.Drawing.Point(219, 172);
             this.buttonSearchCover.Name = "buttonSearchCover";
             this.buttonSearchCover.Size = new System.Drawing.Size(118, 23);
             this.buttonSearchCover.TabIndex = 13;
@@ -513,9 +431,9 @@
             this.buttonBackgroundColor.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
             this.buttonBackgroundColor.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonBackgroundColor.ForeColor = System.Drawing.SystemColors.Window;
-            this.buttonBackgroundColor.Location = new System.Drawing.Point(341, 220);
+            this.buttonBackgroundColor.Location = new System.Drawing.Point(340, 200);
             this.buttonBackgroundColor.Name = "buttonBackgroundColor";
-            this.buttonBackgroundColor.Size = new System.Drawing.Size(99, 23);
+            this.buttonBackgroundColor.Size = new System.Drawing.Size(117, 23);
             this.buttonBackgroundColor.TabIndex = 14;
             this.buttonBackgroundColor.Text = "Color de fondo";
             this.buttonBackgroundColor.UseVisualStyleBackColor = false;
@@ -539,7 +457,7 @@
             this.buttonColorPickIMG.BackColor = System.Drawing.Color.Black;
             this.buttonColorPickIMG.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonColorPickIMG.ForeColor = System.Drawing.SystemColors.Window;
-            this.buttonColorPickIMG.Location = new System.Drawing.Point(446, 220);
+            this.buttonColorPickIMG.Location = new System.Drawing.Point(463, 200);
             this.buttonColorPickIMG.Name = "buttonColorPickIMG";
             this.buttonColorPickIMG.Size = new System.Drawing.Size(23, 23);
             this.buttonColorPickIMG.TabIndex = 16;
@@ -550,7 +468,7 @@
             this.BackgroundColorCheck.AutoSize = true;
             this.BackgroundColorCheck.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BackgroundColorCheck.ForeColor = System.Drawing.SystemColors.Window;
-            this.BackgroundColorCheck.Location = new System.Drawing.Point(342, 198);
+            this.BackgroundColorCheck.Location = new System.Drawing.Point(343, 226);
             this.BackgroundColorCheck.Name = "BackgroundColorCheck";
             this.BackgroundColorCheck.Size = new System.Drawing.Size(115, 17);
             this.BackgroundColorCheck.TabIndex = 33;
@@ -620,6 +538,8 @@
             // 
             // numericScanStart
             // 
+            this.numericScanStart.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(40)))), ((int)(((byte)(47)))));
+            this.numericScanStart.ForeColor = System.Drawing.SystemColors.Window;
             this.numericScanStart.Location = new System.Drawing.Point(641, 47);
             this.numericScanStart.Margin = new System.Windows.Forms.Padding(2);
             this.numericScanStart.Minimum = new decimal(new int[] {
@@ -631,23 +551,23 @@
             this.numericScanStart.Size = new System.Drawing.Size(42, 20);
             this.numericScanStart.TabIndex = 40;
             // 
-            // label2
+            // labelExecuteFile
             // 
-            this.label2.AutoSize = true;
-            this.label2.ForeColor = System.Drawing.SystemColors.Window;
-            this.label2.Location = new System.Drawing.Point(530, 50);
-            this.label2.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(97, 13);
-            this.label2.TabIndex = 41;
-            this.label2.Text = "Ejecutar archivo n°";
+            this.labelExecuteFile.AutoSize = true;
+            this.labelExecuteFile.ForeColor = System.Drawing.SystemColors.Window;
+            this.labelExecuteFile.Location = new System.Drawing.Point(530, 50);
+            this.labelExecuteFile.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
+            this.labelExecuteFile.Name = "labelExecuteFile";
+            this.labelExecuteFile.Size = new System.Drawing.Size(97, 13);
+            this.labelExecuteFile.TabIndex = 41;
+            this.labelExecuteFile.Text = "Ejecutar archivo n°";
             // 
             // buttonDeleteCover
             // 
             this.buttonDeleteCover.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
             this.buttonDeleteCover.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonDeleteCover.ForeColor = System.Drawing.SystemColors.Window;
-            this.buttonDeleteCover.Location = new System.Drawing.Point(218, 220);
+            this.buttonDeleteCover.Location = new System.Drawing.Point(219, 200);
             this.buttonDeleteCover.Margin = new System.Windows.Forms.Padding(2);
             this.buttonDeleteCover.Name = "buttonDeleteCover";
             this.buttonDeleteCover.Size = new System.Drawing.Size(118, 23);
@@ -656,18 +576,18 @@
             this.buttonDeleteCover.UseVisualStyleBackColor = false;
             this.buttonDeleteCover.Click += new System.EventHandler(this.buttonDeleteCover_Click);
             // 
-            // button2
+            // buttonDeleteTestCover
             // 
-            this.button2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
-            this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.button2.ForeColor = System.Drawing.SystemColors.Window;
-            this.button2.Location = new System.Drawing.Point(862, 220);
-            this.button2.Margin = new System.Windows.Forms.Padding(2);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(91, 23);
-            this.button2.TabIndex = 43;
-            this.button2.Text = "Borrar caratula";
-            this.button2.UseVisualStyleBackColor = false;
+            this.buttonDeleteTestCover.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
+            this.buttonDeleteTestCover.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonDeleteTestCover.ForeColor = System.Drawing.SystemColors.Window;
+            this.buttonDeleteTestCover.Location = new System.Drawing.Point(862, 220);
+            this.buttonDeleteTestCover.Margin = new System.Windows.Forms.Padding(2);
+            this.buttonDeleteTestCover.Name = "buttonDeleteTestCover";
+            this.buttonDeleteTestCover.Size = new System.Drawing.Size(91, 23);
+            this.buttonDeleteTestCover.TabIndex = 43;
+            this.buttonDeleteTestCover.Text = "Borrar caratula";
+            this.buttonDeleteTestCover.UseVisualStyleBackColor = false;
             // 
             // dataGridViewTags
             // 
@@ -736,25 +656,25 @@
             this.addResolution.UseVisualStyleBackColor = false;
             this.addResolution.Click += new System.EventHandler(this.addResolution_Click);
             // 
-            // label3
+            // labelContentLauncher
             // 
-            this.label3.AutoSize = true;
-            this.label3.ForeColor = System.Drawing.SystemColors.Window;
-            this.label3.Location = new System.Drawing.Point(645, 114);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(157, 13);
-            this.label3.TabIndex = 46;
-            this.label3.Text = "Ruta del lanzador del contenido";
+            this.labelContentLauncher.AutoSize = true;
+            this.labelContentLauncher.ForeColor = System.Drawing.SystemColors.Window;
+            this.labelContentLauncher.Location = new System.Drawing.Point(645, 114);
+            this.labelContentLauncher.Name = "labelContentLauncher";
+            this.labelContentLauncher.Size = new System.Drawing.Size(157, 13);
+            this.labelContentLauncher.TabIndex = 46;
+            this.labelContentLauncher.Text = "Ruta del lanzador del contenido";
             // 
-            // label4
+            // labelContentCMD
             // 
-            this.label4.AutoSize = true;
-            this.label4.ForeColor = System.Drawing.SystemColors.Window;
-            this.label4.Location = new System.Drawing.Point(645, 159);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(201, 13);
-            this.label4.TabIndex = 47;
-            this.label4.Text = "Parametros de lanzamiento del contenido";
+            this.labelContentCMD.AutoSize = true;
+            this.labelContentCMD.ForeColor = System.Drawing.SystemColors.Window;
+            this.labelContentCMD.Location = new System.Drawing.Point(645, 159);
+            this.labelContentCMD.Name = "labelContentCMD";
+            this.labelContentCMD.Size = new System.Drawing.Size(201, 13);
+            this.labelContentCMD.TabIndex = 47;
+            this.labelContentCMD.Text = "Parametros de lanzamiento del contenido";
             // 
             // textBoxSonProgramPath
             // 
@@ -789,6 +709,113 @@
             this.buttonSearchProgram.UseVisualStyleBackColor = false;
             this.buttonSearchProgram.Click += new System.EventHandler(this.buttonSearchProgram_Click);
             // 
+            // numericSonWidth
+            // 
+            this.numericSonWidth.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(40)))), ((int)(((byte)(47)))));
+            this.numericSonWidth.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.numericSonWidth.ForeColor = System.Drawing.SystemColors.Window;
+            this.numericSonWidth.Location = new System.Drawing.Point(55, 32);
+            this.numericSonWidth.Maximum = new decimal(new int[] {
+            300,
+            0,
+            0,
+            0});
+            this.numericSonWidth.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.numericSonWidth.Name = "numericSonWidth";
+            this.numericSonWidth.Size = new System.Drawing.Size(120, 20);
+            this.numericSonWidth.TabIndex = 0;
+            this.numericSonWidth.Value = new decimal(new int[] {
+            200,
+            0,
+            0,
+            0});
+            this.numericSonWidth.ValueChanged += new System.EventHandler(this.numericSonWidth_ValueChanged);
+            // 
+            // numericSonHeight
+            // 
+            this.numericSonHeight.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(40)))), ((int)(((byte)(47)))));
+            this.numericSonHeight.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.numericSonHeight.ForeColor = System.Drawing.SystemColors.Window;
+            this.numericSonHeight.Location = new System.Drawing.Point(55, 59);
+            this.numericSonHeight.Maximum = new decimal(new int[] {
+            300,
+            0,
+            0,
+            0});
+            this.numericSonHeight.Minimum = new decimal(new int[] {
+            100,
+            0,
+            0,
+            0});
+            this.numericSonHeight.Name = "numericSonHeight";
+            this.numericSonHeight.Size = new System.Drawing.Size(120, 20);
+            this.numericSonHeight.TabIndex = 1;
+            this.numericSonHeight.Value = new decimal(new int[] {
+            200,
+            0,
+            0,
+            0});
+            this.numericSonHeight.ValueChanged += new System.EventHandler(this.numericSonHeight_ValueChanged);
+            // 
+            // labelSonWidth
+            // 
+            this.labelSonWidth.AutoSize = true;
+            this.labelSonWidth.Location = new System.Drawing.Point(8, 32);
+            this.labelSonWidth.Name = "labelSonWidth";
+            this.labelSonWidth.Size = new System.Drawing.Size(41, 13);
+            this.labelSonWidth.TabIndex = 2;
+            this.labelSonWidth.Text = "Ancho:";
+            // 
+            // labelSonHeight
+            // 
+            this.labelSonHeight.AutoSize = true;
+            this.labelSonHeight.Location = new System.Drawing.Point(8, 59);
+            this.labelSonHeight.Name = "labelSonHeight";
+            this.labelSonHeight.Size = new System.Drawing.Size(28, 13);
+            this.labelSonHeight.TabIndex = 3;
+            this.labelSonHeight.Text = "Alto:";
+            // 
+            // groupBoxSon
+            // 
+            this.groupBoxSon.Controls.Add(this.labelSonHeight);
+            this.groupBoxSon.Controls.Add(this.labelSonWidth);
+            this.groupBoxSon.Controls.Add(this.numericSonHeight);
+            this.groupBoxSon.Controls.Add(this.numericSonWidth);
+            this.groupBoxSon.ForeColor = System.Drawing.SystemColors.Window;
+            this.groupBoxSon.Location = new System.Drawing.Point(533, 345);
+            this.groupBoxSon.Name = "groupBoxSon";
+            this.groupBoxSon.Size = new System.Drawing.Size(200, 100);
+            this.groupBoxSon.TabIndex = 7;
+            this.groupBoxSon.TabStop = false;
+            this.groupBoxSon.Text = "Tamaño en pixeles (100-300)";
+            // 
+            // labelSonWarning
+            // 
+            this.labelSonWarning.AutoSize = true;
+            this.labelSonWarning.ForeColor = System.Drawing.SystemColors.Window;
+            this.labelSonWarning.Location = new System.Drawing.Point(739, 202);
+            this.labelSonWarning.Name = "labelSonWarning";
+            this.labelSonWarning.Size = new System.Drawing.Size(225, 13);
+            this.labelSonWarning.TabIndex = 51;
+            this.labelSonWarning.Text = "La caratula seleccionada no sera almacenada";
+            // 
+            // buttonCoverOnline
+            // 
+            this.buttonCoverOnline.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
+            this.buttonCoverOnline.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonCoverOnline.ForeColor = System.Drawing.SystemColors.Window;
+            this.buttonCoverOnline.Location = new System.Drawing.Point(341, 172);
+            this.buttonCoverOnline.Name = "buttonCoverOnline";
+            this.buttonCoverOnline.Size = new System.Drawing.Size(145, 23);
+            this.buttonCoverOnline.TabIndex = 52;
+            this.buttonCoverOnline.Text = "Buscar Caratula Online";
+            this.buttonCoverOnline.UseVisualStyleBackColor = false;
+            this.buttonCoverOnline.Click += new System.EventHandler(this.buttonCoverOnline_Click);
+            // 
             // NewCollection
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -796,16 +823,18 @@
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(61)))), ((int)(((byte)(72)))));
             this.ClientSize = new System.Drawing.Size(1047, 561);
+            this.Controls.Add(this.buttonCoverOnline);
+            this.Controls.Add(this.labelSonWarning);
             this.Controls.Add(this.buttonSearchProgram);
             this.Controls.Add(this.textBoxDefaultCMD);
             this.Controls.Add(this.textBoxSonProgramPath);
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
+            this.Controls.Add(this.labelContentCMD);
+            this.Controls.Add(this.labelContentLauncher);
             this.Controls.Add(this.addResolution);
             this.Controls.Add(this.dataGridViewTags);
-            this.Controls.Add(this.button2);
+            this.Controls.Add(this.buttonDeleteTestCover);
             this.Controls.Add(this.buttonDeleteCover);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.labelExecuteFile);
             this.Controls.Add(this.numericScanStart);
             this.Controls.Add(this.dataGridViewScanOpenExtension);
             this.Controls.Add(this.buttonSearchDir);
@@ -818,7 +847,7 @@
             this.Controls.Add(this.buttonSearchCover);
             this.Controls.Add(this.groupBoxSonFormat);
             this.Controls.Add(this.groupBoxSon);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.labelContentRes);
             this.Controls.Add(this.comboBoxSonResolution);
             this.Controls.Add(this.panelSonImageLimit);
             this.Controls.Add(this.checkBoxFavorite);
@@ -847,15 +876,15 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCoverCollection)).EndInit();
             this.panelSonImageLimit.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCoverSon)).EndInit();
-            this.groupBoxSon.ResumeLayout(false);
-            this.groupBoxSon.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericSonHeight)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericSonWidth)).EndInit();
             this.groupBoxSonFormat.ResumeLayout(false);
             this.groupBoxSonFormat.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewScanOpenExtension)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericScanStart)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTags)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericSonWidth)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericSonHeight)).EndInit();
+            this.groupBoxSon.ResumeLayout(false);
+            this.groupBoxSon.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -884,12 +913,7 @@
         private System.Windows.Forms.Panel panelSonImageLimit;
         private System.Windows.Forms.PictureBox pictureBoxCoverSon;
         private System.Windows.Forms.ComboBox comboBoxSonResolution;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.GroupBox groupBoxSon;
-        private System.Windows.Forms.Label labelSonHeight;
-        private System.Windows.Forms.Label labelSonWidth;
-        private System.Windows.Forms.NumericUpDown numericSonHeight;
-        private System.Windows.Forms.NumericUpDown numericSonWidth;
+        private System.Windows.Forms.Label labelContentRes;
         private System.Windows.Forms.GroupBox groupBoxSonFormat;
         private System.Windows.Forms.RadioButton radioButtonSonEstreched;
         private System.Windows.Forms.RadioButton radioButtonSonZoom;
@@ -903,19 +927,26 @@
         private System.Windows.Forms.Button buttonSearchDir;
         private System.Windows.Forms.DataGridView dataGridViewScanOpenExtension;
         private System.Windows.Forms.NumericUpDown numericScanStart;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label labelExecuteFile;
         private System.Windows.Forms.Button buttonDeleteCover;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button buttonDeleteTestCover;
         private System.Windows.Forms.DataGridView dataGridViewTags;
         private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Column3;
         private System.Windows.Forms.Button addResolution;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label labelContentLauncher;
+        private System.Windows.Forms.Label labelContentCMD;
         private System.Windows.Forms.TextBox textBoxSonProgramPath;
         private System.Windows.Forms.TextBox textBoxDefaultCMD;
         private System.Windows.Forms.Button buttonSearchProgram;
+        private System.Windows.Forms.NumericUpDown numericSonWidth;
+        private System.Windows.Forms.NumericUpDown numericSonHeight;
+        private System.Windows.Forms.Label labelSonWidth;
+        private System.Windows.Forms.Label labelSonHeight;
+        private System.Windows.Forms.GroupBox groupBoxSon;
+        private System.Windows.Forms.Label labelSonWarning;
+        private System.Windows.Forms.Button buttonCoverOnline;
     }
 }

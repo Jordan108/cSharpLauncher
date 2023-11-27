@@ -45,7 +45,7 @@
             this.comboBoxFather = new System.Windows.Forms.ComboBox();
             this.buttonSave = new System.Windows.Forms.Button();
             this.comboBoxResolution = new System.Windows.Forms.ComboBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.labelGlobalRes = new System.Windows.Forms.Label();
             this.buttonGlobalResolution = new System.Windows.Forms.Button();
             this.buttonAddRow = new System.Windows.Forms.Button();
             this.buttonDeleteRow = new System.Windows.Forms.Button();
@@ -64,7 +64,9 @@
             this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
             this.panelImageLimit = new System.Windows.Forms.Panel();
             this.pictureBoxCover = new System.Windows.Forms.PictureBox();
-            this.buttonSearchCover = new System.Windows.Forms.Button();
+            this.buttonSearchCoverOnlineRow = new System.Windows.Forms.Button();
+            this.buttonSelectCover = new System.Windows.Forms.Button();
+            this.buttonDeleteCoverRow = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFiles)).BeginInit();
             this.panelImageLimit.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCover)).BeginInit();
@@ -226,7 +228,7 @@
             this.buttonSave.ForeColor = System.Drawing.SystemColors.Window;
             this.buttonSave.Location = new System.Drawing.Point(8, 603);
             this.buttonSave.Name = "buttonSave";
-            this.buttonSave.Size = new System.Drawing.Size(75, 23);
+            this.buttonSave.Size = new System.Drawing.Size(116, 23);
             this.buttonSave.TabIndex = 27;
             this.buttonSave.Text = "Guardar";
             this.buttonSave.UseVisualStyleBackColor = false;
@@ -244,15 +246,15 @@
             this.comboBoxResolution.Size = new System.Drawing.Size(136, 21);
             this.comboBoxResolution.TabIndex = 28;
             // 
-            // label1
+            // labelGlobalRes
             // 
-            this.label1.AutoSize = true;
-            this.label1.ForeColor = System.Drawing.SystemColors.Window;
-            this.label1.Location = new System.Drawing.Point(220, 9);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(91, 13);
-            this.label1.TabIndex = 29;
-            this.label1.Text = "Resolucion global";
+            this.labelGlobalRes.AutoSize = true;
+            this.labelGlobalRes.ForeColor = System.Drawing.SystemColors.Window;
+            this.labelGlobalRes.Location = new System.Drawing.Point(220, 9);
+            this.labelGlobalRes.Name = "labelGlobalRes";
+            this.labelGlobalRes.Size = new System.Drawing.Size(91, 13);
+            this.labelGlobalRes.TabIndex = 29;
+            this.labelGlobalRes.Text = "Resolucion global";
             // 
             // buttonGlobalResolution
             // 
@@ -303,7 +305,7 @@
             this.textBoxGlobalLauncher.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxGlobalLauncher.Name = "textBoxGlobalLauncher";
             this.textBoxGlobalLauncher.ReadOnly = true;
-            this.textBoxGlobalLauncher.Size = new System.Drawing.Size(129, 20);
+            this.textBoxGlobalLauncher.Size = new System.Drawing.Size(157, 20);
             this.textBoxGlobalLauncher.TabIndex = 33;
             this.textBoxGlobalLauncher.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.textBoxGlobalLauncher.MouseClick += new System.Windows.Forms.MouseEventHandler(this.textBoxGlobalLauncher_MouseClick);
@@ -312,7 +314,7 @@
             // 
             this.labelGlobalLauncher.AutoSize = true;
             this.labelGlobalLauncher.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelGlobalLauncher.Location = new System.Drawing.Point(476, 9);
+            this.labelGlobalLauncher.Location = new System.Drawing.Point(494, 7);
             this.labelGlobalLauncher.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelGlobalLauncher.Name = "labelGlobalLauncher";
             this.labelGlobalLauncher.Size = new System.Drawing.Size(121, 13);
@@ -324,10 +326,10 @@
             this.buttonDeleteGlobalLauncher.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
             this.buttonDeleteGlobalLauncher.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonDeleteGlobalLauncher.ForeColor = System.Drawing.SystemColors.Window;
-            this.buttonDeleteGlobalLauncher.Location = new System.Drawing.Point(551, 49);
+            this.buttonDeleteGlobalLauncher.Location = new System.Drawing.Point(561, 48);
             this.buttonDeleteGlobalLauncher.Margin = new System.Windows.Forms.Padding(2);
             this.buttonDeleteGlobalLauncher.Name = "buttonDeleteGlobalLauncher";
-            this.buttonDeleteGlobalLauncher.Size = new System.Drawing.Size(49, 24);
+            this.buttonDeleteGlobalLauncher.Size = new System.Drawing.Size(67, 24);
             this.buttonDeleteGlobalLauncher.TabIndex = 35;
             this.buttonDeleteGlobalLauncher.Text = "Borrar";
             this.buttonDeleteGlobalLauncher.UseVisualStyleBackColor = false;
@@ -338,7 +340,7 @@
             this.buttonGlobalCMD.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
             this.buttonGlobalCMD.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonGlobalCMD.ForeColor = System.Drawing.SystemColors.Window;
-            this.buttonGlobalCMD.Location = new System.Drawing.Point(635, 49);
+            this.buttonGlobalCMD.Location = new System.Drawing.Point(695, 48);
             this.buttonGlobalCMD.Margin = new System.Windows.Forms.Padding(2);
             this.buttonGlobalCMD.Name = "buttonGlobalCMD";
             this.buttonGlobalCMD.Size = new System.Drawing.Size(67, 24);
@@ -351,7 +353,7 @@
             // 
             this.labelGlobalCMD.AutoSize = true;
             this.labelGlobalCMD.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelGlobalCMD.Location = new System.Drawing.Point(601, 9);
+            this.labelGlobalCMD.Location = new System.Drawing.Point(653, 7);
             this.labelGlobalCMD.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelGlobalCMD.Name = "labelGlobalCMD";
             this.labelGlobalCMD.Size = new System.Drawing.Size(131, 13);
@@ -363,10 +365,10 @@
             this.textBoxGlobalCMD.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(36)))), ((int)(((byte)(40)))), ((int)(((byte)(47)))));
             this.textBoxGlobalCMD.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.textBoxGlobalCMD.ForeColor = System.Drawing.SystemColors.Window;
-            this.textBoxGlobalCMD.Location = new System.Drawing.Point(603, 22);
+            this.textBoxGlobalCMD.Location = new System.Drawing.Point(643, 22);
             this.textBoxGlobalCMD.Margin = new System.Windows.Forms.Padding(2);
             this.textBoxGlobalCMD.Name = "textBoxGlobalCMD";
-            this.textBoxGlobalCMD.Size = new System.Drawing.Size(129, 20);
+            this.textBoxGlobalCMD.Size = new System.Drawing.Size(165, 20);
             this.textBoxGlobalCMD.TabIndex = 38;
             // 
             // buttonGlobalLauncher
@@ -376,7 +378,7 @@
             this.buttonGlobalLauncher.ForeColor = System.Drawing.SystemColors.Window;
             this.buttonGlobalLauncher.Location = new System.Drawing.Point(471, 48);
             this.buttonGlobalLauncher.Name = "buttonGlobalLauncher";
-            this.buttonGlobalLauncher.Size = new System.Drawing.Size(75, 24);
+            this.buttonGlobalLauncher.Size = new System.Drawing.Size(85, 24);
             this.buttonGlobalLauncher.TabIndex = 39;
             this.buttonGlobalLauncher.Text = "Establecer";
             this.buttonGlobalLauncher.UseVisualStyleBackColor = false;
@@ -433,12 +435,15 @@
             // 
             // buttonSearchCoversOnline
             // 
-            this.buttonSearchCoversOnline.Location = new System.Drawing.Point(767, 49);
+            this.buttonSearchCoversOnline.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
+            this.buttonSearchCoversOnline.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonSearchCoversOnline.ForeColor = System.Drawing.SystemColors.Window;
+            this.buttonSearchCoversOnline.Location = new System.Drawing.Point(684, 457);
             this.buttonSearchCoversOnline.Name = "buttonSearchCoversOnline";
-            this.buttonSearchCoversOnline.Size = new System.Drawing.Size(130, 23);
+            this.buttonSearchCoversOnline.Size = new System.Drawing.Size(300, 23);
             this.buttonSearchCoversOnline.TabIndex = 44;
-            this.buttonSearchCoversOnline.Text = "Buscar Caratulas Online";
-            this.buttonSearchCoversOnline.UseVisualStyleBackColor = true;
+            this.buttonSearchCoversOnline.Text = "Buscar Caratulas Online de todas las filas";
+            this.buttonSearchCoversOnline.UseVisualStyleBackColor = false;
             this.buttonSearchCoversOnline.Click += new System.EventHandler(this.buttonSearchCoversOnline_Click);
             // 
             // dateTimePicker1
@@ -467,14 +472,44 @@
             this.pictureBoxCover.TabIndex = 13;
             this.pictureBoxCover.TabStop = false;
             // 
-            // buttonSearchCover
+            // buttonSearchCoverOnlineRow
             // 
-            this.buttonSearchCover.Location = new System.Drawing.Point(684, 458);
-            this.buttonSearchCover.Name = "buttonSearchCover";
-            this.buttonSearchCover.Size = new System.Drawing.Size(300, 23);
-            this.buttonSearchCover.TabIndex = 47;
-            this.buttonSearchCover.Text = "Buscar Caratula de fila seleccionada";
-            this.buttonSearchCover.UseVisualStyleBackColor = true;
+            this.buttonSearchCoverOnlineRow.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
+            this.buttonSearchCoverOnlineRow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonSearchCoverOnlineRow.ForeColor = System.Drawing.SystemColors.Window;
+            this.buttonSearchCoverOnlineRow.Location = new System.Drawing.Point(684, 486);
+            this.buttonSearchCoverOnlineRow.Name = "buttonSearchCoverOnlineRow";
+            this.buttonSearchCoverOnlineRow.Size = new System.Drawing.Size(300, 23);
+            this.buttonSearchCoverOnlineRow.TabIndex = 47;
+            this.buttonSearchCoverOnlineRow.Text = "Buscar Caratulas Online de la fila seleccionada";
+            this.buttonSearchCoverOnlineRow.UseVisualStyleBackColor = false;
+            this.buttonSearchCoverOnlineRow.Click += new System.EventHandler(this.buttonSearchCoverOnlineRow_Click);
+            // 
+            // buttonSelectCover
+            // 
+            this.buttonSelectCover.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
+            this.buttonSelectCover.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonSelectCover.ForeColor = System.Drawing.SystemColors.Window;
+            this.buttonSelectCover.Location = new System.Drawing.Point(684, 515);
+            this.buttonSelectCover.Name = "buttonSelectCover";
+            this.buttonSelectCover.Size = new System.Drawing.Size(300, 23);
+            this.buttonSelectCover.TabIndex = 48;
+            this.buttonSelectCover.Text = "Seleccionar Caratula de la fila seleccionada";
+            this.buttonSelectCover.UseVisualStyleBackColor = false;
+            this.buttonSelectCover.Click += new System.EventHandler(this.buttonSelectCover_Click);
+            // 
+            // buttonDeleteCoverRow
+            // 
+            this.buttonDeleteCoverRow.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
+            this.buttonDeleteCoverRow.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.buttonDeleteCoverRow.ForeColor = System.Drawing.SystemColors.Window;
+            this.buttonDeleteCoverRow.Location = new System.Drawing.Point(684, 575);
+            this.buttonDeleteCoverRow.Name = "buttonDeleteCoverRow";
+            this.buttonDeleteCoverRow.Size = new System.Drawing.Size(300, 23);
+            this.buttonDeleteCoverRow.TabIndex = 49;
+            this.buttonDeleteCoverRow.Text = "Borrar Caratula de la fila seleccionada";
+            this.buttonDeleteCoverRow.UseVisualStyleBackColor = false;
+            this.buttonDeleteCoverRow.Click += new System.EventHandler(this.buttonDeleteCoverRow_Click);
             // 
             // NewMultipleFiles
             // 
@@ -483,7 +518,9 @@
             this.AutoScroll = true;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(61)))), ((int)(((byte)(72)))));
             this.ClientSize = new System.Drawing.Size(1010, 631);
-            this.Controls.Add(this.buttonSearchCover);
+            this.Controls.Add(this.buttonDeleteCoverRow);
+            this.Controls.Add(this.buttonSelectCover);
+            this.Controls.Add(this.buttonSearchCoverOnlineRow);
             this.Controls.Add(this.panelImageLimit);
             this.Controls.Add(this.dateTimePicker1);
             this.Controls.Add(this.buttonSearchCoversOnline);
@@ -501,7 +538,7 @@
             this.Controls.Add(this.buttonDeleteRow);
             this.Controls.Add(this.buttonAddRow);
             this.Controls.Add(this.buttonGlobalResolution);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.labelGlobalRes);
             this.Controls.Add(this.comboBoxResolution);
             this.Controls.Add(this.buttonSave);
             this.Controls.Add(this.comboBoxFather);
@@ -526,7 +563,7 @@
         private System.Windows.Forms.ComboBox comboBoxFather;
         private System.Windows.Forms.Button buttonSave;
         private System.Windows.Forms.ComboBox comboBoxResolution;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelGlobalRes;
         private System.Windows.Forms.Button buttonGlobalResolution;
         private System.Windows.Forms.Button buttonAddRow;
         private System.Windows.Forms.Button buttonDeleteRow;
@@ -557,6 +594,8 @@
         private System.Windows.Forms.DateTimePicker dateTimePicker1;
         private System.Windows.Forms.Panel panelImageLimit;
         private System.Windows.Forms.PictureBox pictureBoxCover;
-        private System.Windows.Forms.Button buttonSearchCover;
+        private System.Windows.Forms.Button buttonSearchCoverOnlineRow;
+        private System.Windows.Forms.Button buttonSelectCover;
+        private System.Windows.Forms.Button buttonDeleteCoverRow;
     }
 }

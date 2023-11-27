@@ -1,4 +1,6 @@
 ﻿using C_Launcher.Clases;
+using CoverPadLauncher;
+using CoverPadLauncher.Clases;
 using ImageMagick;//ImageMagick para poder manejar imagenes webp
 using System;
 using System.Collections.Generic;
@@ -6,6 +8,7 @@ using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Windows.Forms;
 using System.Xml;
 
@@ -253,6 +256,8 @@ namespace C_Launcher
             this.pictureBoxCoverSon.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBoxCoverSon_MouseMove);
             this.pictureBoxCoverSon.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBoxCoverSon_MouseUp);
 
+            loadTheme();
+
             loadXMLTags();//Cargar todas las etiquetas existentes y ponerlas dentro del datagridview
 
             #region Combobox
@@ -368,6 +373,107 @@ namespace C_Launcher
                 pictureBoxCoverCollection.BackgroundImageLayout = ImageLayout.Stretch;
             }
             #endregion
+        }
+
+        private void loadTheme()
+        {
+            Configurations config = new Configurations();
+            Themes theme = new Themes($"System\\Themes\\{config.ThemeName}.css");
+
+            BackColor = theme.WindowBackground;
+
+            //TextBox
+            textBoxName.BackColor = theme.TextBoxBackground;
+            textBoxName.ForeColor = theme.TextBoxText;
+            textBoxScanFolder.BackColor = theme.TextBoxBackground;
+            textBoxScanFolder.ForeColor = theme.TextBoxText;
+            textBoxSonProgramPath.BackColor = theme.TextBoxBackground;
+            textBoxSonProgramPath.ForeColor = theme.TextBoxText;
+            textBoxDefaultCMD.BackColor = theme.TextBoxBackground;
+            textBoxDefaultCMD.ForeColor = theme.TextBoxText;
+
+            //Textos
+            labelSonWarning.ForeColor = theme.LabelText;
+            labelName.ForeColor = theme.LabelText;
+            labelFather.ForeColor = theme.LabelText;
+            checkBoxFavorite.ForeColor = theme.LabelText;
+            checkBoxScanFolder.ForeColor = theme.LabelText;
+            labelExecuteFile.ForeColor = theme.LabelText;
+            labelContentLauncher.ForeColor = theme.LabelText;
+            labelContentCMD.ForeColor = theme.LabelText;
+            BackgroundColorCheck.ForeColor = theme.LabelText;
+            labelResolutionCol.ForeColor = theme.LabelText;
+            labelContentRes.ForeColor = theme.LabelText;
+            groupBoxCover.ForeColor = theme.LabelText;
+            labelColWidth.ForeColor = theme.LabelText;
+            labelColHeight.ForeColor = theme.LabelText;
+            groupBoxSon.ForeColor = theme.LabelText;
+            labelSonWidth.ForeColor = theme.LabelText;
+            labelSonHeight.ForeColor = theme.LabelText;
+            groupBoxImageFormat.ForeColor = theme.LabelText;
+            radioButtonColZoom.ForeColor = theme.LabelText;
+            radioButtonColEstreched.ForeColor = theme.LabelText;
+            radioButtonSonZoom.ForeColor = theme.LabelText;
+            radioButtonSonEstreched.ForeColor = theme.LabelText;
+
+            //Combobox
+            comboBoxFather.BackColor = theme.ComboboxBackground;
+            comboBoxFather.ForeColor = theme.ComboboxText;
+            comboBoxResolutionCol.BackColor = theme.ComboboxBackground;
+            comboBoxResolutionCol.ForeColor = theme.ComboboxText;
+            comboBoxSonResolution.BackColor = theme.ComboboxBackground;
+            comboBoxSonResolution.ForeColor = theme.ComboboxText;
+
+            //Botones
+            buttonSearchDir.BackColor = theme.ButtonBackground;
+            buttonSearchDir.ForeColor = theme.ButtonText;
+            buttonSearchProgram.BackColor = theme.ButtonBackground;
+            buttonSearchProgram.ForeColor = theme.ButtonText;
+            buttonSearchCover.BackColor = theme.ButtonBackground;
+            buttonSearchCover.ForeColor = theme.ButtonText;
+            buttonDeleteCover.BackColor = theme.ButtonBackground;
+            buttonDeleteCover.ForeColor = theme.ButtonText;
+            buttonBackgroundColor.BackColor = theme.ButtonBackground;
+            buttonBackgroundColor.ForeColor = theme.ButtonText;
+            buttonSearchSonCoverDefault.BackColor = theme.ButtonBackground;
+            buttonSearchSonCoverDefault.ForeColor = theme.ButtonText;
+            buttonDeleteTestCover.BackColor = theme.ButtonBackground;
+            buttonDeleteTestCover.ForeColor = theme.ButtonText;
+            addResolution.BackColor = theme.ButtonBackground;
+            addResolution.ForeColor = theme.ButtonText;
+            buttonSave.BackColor = theme.ButtonBackground;
+            buttonSave.ForeColor = theme.ButtonText;
+
+            //Numeric UpDown
+            numericScanStart.BackColor = theme.NumericBackground;
+            numericScanStart.ForeColor = theme.NumericText;
+            numericColWidth.BackColor = theme.NumericBackground;
+            numericColWidth.ForeColor = theme.NumericText;
+            numericColHeight.BackColor = theme.NumericBackground;
+            numericColHeight.ForeColor = theme.NumericText;
+            numericSonWidth.BackColor = theme.NumericBackground;
+            numericSonWidth.ForeColor = theme.NumericText;
+            numericSonHeight.BackColor = theme.NumericBackground;
+            numericSonHeight.ForeColor = theme.NumericText;
+
+            //DataGridView
+            dataGridViewTags.BackgroundColor = theme.DataGridBackground;
+            dataGridViewTags.GridColor = theme.DataGridBorder;
+            dataGridViewTags.DefaultCellStyle.BackColor = theme.DataGridCellBackground;
+            dataGridViewTags.DefaultCellStyle.ForeColor = theme.DataGridCellText;
+            dataGridViewTags.DefaultCellStyle.SelectionBackColor = theme.DataGridSelectedBackground;
+            dataGridViewTags.DefaultCellStyle.SelectionForeColor = theme.DataGridSelectedText;
+
+            dataGridViewScanOpenExtension.BackgroundColor = theme.DataGridBackground;
+            dataGridViewScanOpenExtension.GridColor = theme.DataGridBorder;
+            dataGridViewScanOpenExtension.DefaultCellStyle.BackColor = theme.DataGridCellBackground;
+            dataGridViewScanOpenExtension.DefaultCellStyle.ForeColor = theme.DataGridCellText;
+            dataGridViewScanOpenExtension.DefaultCellStyle.SelectionBackColor = theme.DataGridSelectedBackground;
+            dataGridViewScanOpenExtension.DefaultCellStyle.SelectionForeColor = theme.DataGridSelectedText;
+
+            //Paneles de las caratulas
+            panelImageLimit.BackColor = theme.CoverPreviewBackground;
+            panelSonImageLimit.BackColor = theme.CoverPreviewBackground;
         }
 
         #region Manejar archivos XML
@@ -1014,6 +1120,46 @@ namespace C_Launcher
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 textBoxSonProgramPath.Text = openFileDialog.FileName;
+            }
+        }
+
+        private void buttonCoverOnline_Click(object sender, EventArgs e)
+        {
+            SearchCoversOnline sco = new SearchCoversOnline(textBoxName.Text, "Coleccion");
+            sco.ReturnedObject += SearchCoverOnline_ReturnedObject;
+            sco.ShowDialog();
+        }
+
+        private void SearchCoverOnline_ReturnedObject(object sender, string[,] e)
+        {
+            //Se pasa un string bidimensional, pero solo es un elemento
+            textBoxName.Text = e[0, 0];
+            pictureBoxCoverCollection.Tag = e[0, 1];
+
+            //Descargar la caratula online
+            try
+            {
+                // Descargar la imagen desde la URL
+                using (WebClient webClient = new WebClient())
+                {
+                    byte[] imageBytes = webClient.DownloadData(e[0, 1]);
+
+                    // Crear un MemoryStream desde los bytes
+                    using (MemoryStream ms = new MemoryStream(imageBytes))
+                    {
+                        // Crear una imagen desde el MemoryStream
+                        Image image = Image.FromStream(ms);
+
+                        // Mostrar la imagen en el PictureBox u otro control
+                        pictureBoxCoverCollection.BackgroundImage = image;
+
+                        // Realizar otras operaciones según sea necesario...
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"No se pudo establecer la caratula de la url: \n{e[0, 1]}\n debido a: {ex}");
             }
         }
 

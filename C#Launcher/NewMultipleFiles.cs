@@ -1,11 +1,13 @@
 ﻿using C_Launcher.Clases;
 using CoverPadLauncher;
+using CoverPadLauncher.Clases;
 using ImageMagick;
 using System;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Windows.Forms;
 using System.Xml;
 
@@ -93,6 +95,8 @@ namespace C_Launcher
 
         private void CustomComponent()
         {
+
+            loadTheme();
 
             #region Combobox
             #region idFather
@@ -205,6 +209,74 @@ namespace C_Launcher
             #endregion
 
             #endregion
+        }
+
+        private void loadTheme()
+        {
+            Configurations config = new Configurations();
+            Themes theme = new Themes($"System\\Themes\\{config.ThemeName}.css");
+
+            BackColor = theme.WindowBackground;
+
+            //TextBox
+            textBoxGlobalLauncher.BackColor = theme.TextBoxBackground;
+            textBoxGlobalLauncher.ForeColor = theme.TextBoxText;
+            textBoxGlobalCMD.BackColor = theme.TextBoxBackground;
+            textBoxGlobalCMD.ForeColor = theme.TextBoxText;
+
+            //Textos
+            labelFather.ForeColor = theme.LabelText;
+            labelGlobalRes.ForeColor = theme.LabelText;
+            labelGlobalImageFormat.ForeColor = theme.LabelText;
+            labelGlobalLauncher.ForeColor = theme.LabelText;
+            labelGlobalCMD.ForeColor = theme.LabelText;
+
+            //Combobox
+            comboBoxFather.BackColor = theme.ComboboxBackground;
+            comboBoxFather.ForeColor = theme.ComboboxText;
+            comboBoxResolution.BackColor = theme.ComboboxBackground;
+            comboBoxResolution.ForeColor = theme.ComboboxText;
+            comboBoxImageFormat.BackColor = theme.ComboboxBackground;
+            comboBoxImageFormat.ForeColor = theme.ComboboxText;
+
+            //Botones
+            buttonAddRow.BackColor = theme.ButtonBackground;
+            buttonAddRow.ForeColor = theme.ButtonText;
+            buttonDeleteRow.BackColor = theme.ButtonBackground;
+            buttonDeleteRow.ForeColor = theme.ButtonText;
+            addResolution.BackColor = theme.ButtonBackground;
+            addResolution.ForeColor = theme.ButtonText;
+            buttonGlobalResolution.BackColor = theme.ButtonBackground;
+            buttonGlobalResolution.ForeColor = theme.ButtonText;
+            buttonGlobalImageFormat.BackColor = theme.ButtonBackground;
+            buttonGlobalImageFormat.ForeColor = theme.ButtonText;
+            buttonGlobalLauncher.BackColor = theme.ButtonBackground;
+            buttonGlobalLauncher.ForeColor = theme.ButtonText;
+            buttonDeleteGlobalLauncher.BackColor = theme.ButtonBackground;
+            buttonDeleteGlobalLauncher.ForeColor = theme.ButtonText;
+            buttonGlobalCMD.BackColor = theme.ButtonBackground;
+            buttonGlobalCMD.ForeColor = theme.ButtonText;
+            buttonSearchCoversOnline.BackColor = theme.ButtonBackground;
+            buttonSearchCoversOnline.ForeColor = theme.ButtonText;
+            buttonSearchCoverOnlineRow.BackColor = theme.ButtonBackground;
+            buttonSearchCoverOnlineRow.ForeColor = theme.ButtonText;
+            buttonSelectCover.BackColor = theme.ButtonBackground;
+            buttonSelectCover.ForeColor = theme.ButtonText;
+            buttonDeleteCoverRow.BackColor = theme.ButtonBackground;
+            buttonDeleteCoverRow.ForeColor = theme.ButtonText;
+            buttonSave.BackColor = theme.ButtonBackground;
+            buttonSave.ForeColor = theme.ButtonText;
+
+            //Datagridview
+            dataGridViewFiles.BackgroundColor = theme.DataGridBackground;
+            dataGridViewFiles.GridColor = theme.DataGridBorder;
+            dataGridViewFiles.DefaultCellStyle.BackColor = theme.DataGridCellBackground;
+            dataGridViewFiles.DefaultCellStyle.ForeColor = theme.DataGridCellText;
+            dataGridViewFiles.DefaultCellStyle.SelectionBackColor = theme.DataGridSelectedBackground;
+            dataGridViewFiles.DefaultCellStyle.SelectionForeColor = theme.DataGridSelectedText;
+
+            //Panel de las caratulas
+            panelImageLimit.BackColor = theme.CoverPreviewBackground;
         }
 
         #region Manejar dataGridView
@@ -488,8 +560,6 @@ namespace C_Launcher
                 passElement[i, 1] = dataGridViewFiles.Rows[i].Cells[2].Value.ToString();//Direccion
             }
 
-            
-
             SearchCoversOnline sco = new SearchCoversOnline(passElement);
             sco.ReturnedObject += SearchCoverOnline_ReturnedObject;
             sco.ShowDialog();
@@ -504,6 +574,146 @@ namespace C_Launcher
                 //Ruta caratula
                 dataGridViewFiles.Rows[i].Cells[2].Value = e[i, 1];
             }
+        }
+
+        private void buttonSearchCoverOnlineRow_Click(object sender, EventArgs e)
+        {
+            int sR = dataGridViewFiles.CurrentCell.RowIndex;//Fila seleccionada
+
+            //Crear un array de los elementos y pasarselos al windowsForm
+            string[,] passElement = new string[1, 2];
+
+            passElement[0, 0] = dataGridViewFiles.Rows[sR].Cells[0].Value.ToString();//Nombre elemento
+            passElement[0, 1] = dataGridViewFiles.Rows[sR].Cells[2].Value.ToString();//Direccion
+
+
+
+            SearchCoversOnline sco = new SearchCoversOnline(passElement);
+            sco.ReturnedObject += SearchCoverOnlineRow_ReturnedObject;
+            sco.ShowDialog();
+        }
+
+        private void SearchCoverOnlineRow_ReturnedObject(object sender, string[,] e)
+        {
+            int sR = dataGridViewFiles.CurrentCell.RowIndex;//Fila seleccionada
+            //Nombre elemento
+            dataGridViewFiles.Rows[sR].Cells[0].Value = e[0, 0];
+            //Ruta caratula
+            dataGridViewFiles.Rows[sR].Cells[2].Value = e[0, 1];
+
+            //Actualizar la caratula
+            try
+            {
+                // Descargar la imagen desde la URL
+                using (WebClient webClient = new WebClient())
+                {
+                    byte[] imageBytes = webClient.DownloadData(e[0, 1]);
+
+                    // Crear un MemoryStream desde los bytes
+                    using (MemoryStream ms = new MemoryStream(imageBytes))
+                    {
+                        // Crear una imagen desde el MemoryStream
+                        Image image = Image.FromStream(ms);
+
+                        // Mostrar la imagen en el PictureBox u otro control
+                        pictureBoxCover.BackgroundImage = image;
+
+                        // Realizar otras operaciones según sea necesario...
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"No se pudo establecer la caratula de la url: \n{e[0, 1]}\n debido a: {ex}");
+            }
+        }
+
+        private void buttonSelectCover_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Archivos de imagen (*.png;*.jpg;*.jpeg;*.webp;)|*.png;*.jpg;*.jpeg;*.webp;";
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                Image image;
+                image = loadImage(openFileDialog.FileName);
+                pictureBoxCover.BackgroundImage = image;
+                pictureBoxCover.Tag = openFileDialog.FileName;
+                image = null;
+            }
+            openFileDialog.Dispose();
+        }
+
+        //Para reducir el tamaño de las imagenes del picture box
+        private Image loadImage(string imagePath)
+        {
+            // Image image = null;
+
+            // Carga la imagen original.
+            Image originalImage;
+            //Detectar si la imagen es webp (puede dar problemas, por lo que se tiene que utilizar imagemagick
+            string ex = Path.GetExtension(imagePath);
+            if (ex.ToLower() == ".webp")
+            {
+                using (MagickImage img = new MagickImage(imagePath))
+                {
+                    // Convierte la imagen WebP a un formato compatible con PictureBox (por ejemplo, JPEG)
+                    // Para mostrar la imagen en el PictureBox
+                    img.Format = MagickFormat.Jpeg;
+
+                    // Convierte la imagen en un flujo de memoria
+                    using (var memoryStream = new System.IO.MemoryStream())
+                    {
+                        img.Write(memoryStream);
+
+                        // Carga el flujo de memoria en el PictureBox
+                        originalImage = System.Drawing.Image.FromStream(memoryStream);//img;
+                        //pictureBox1.Image = System.Drawing.Image.FromStream(memoryStream);
+                    }
+                }
+            }
+            else
+            {
+                // Carga la imagen original desde la ruta
+                originalImage = Image.FromFile(imagePath);
+            }
+
+            // Calcula el nuevo tamaño manteniendo la relación de aspecto.
+            int maxWidth = 300;
+            int maxHeight = 300;
+            int newWidth, newHeight;
+
+            //Ajusta el tamaño de la imagen acordando un maximo entre 300x300 manteniendo una relacion de aspecto
+            if (originalImage.Width > maxWidth || originalImage.Height > maxHeight)
+            {
+                double widthRatio = (double)maxWidth / originalImage.Width;
+                double heightRatio = (double)maxHeight / originalImage.Height;
+                double ratio = Math.Min(widthRatio, heightRatio);
+
+                newWidth = (int)(originalImage.Width * ratio);
+                newHeight = (int)(originalImage.Height * ratio);
+            }
+            else
+            {
+                newWidth = originalImage.Width;
+                newHeight = originalImage.Height;
+            }
+
+            // Crea una nueva imagen con el tamaño ajustado.
+            Image resizedImage = new Bitmap(newWidth, newHeight);
+
+            // Dibuja la imagen original en la nueva imagen ajustandole el tamaño
+            using (Graphics graphics = Graphics.FromImage(resizedImage))
+            {
+                graphics.DrawImage(originalImage, 0, 0, newWidth, newHeight);
+            }
+
+            return resizedImage;
+        }
+
+        private void buttonDeleteCoverRow_Click(object sender, EventArgs e)
+        {
+            pictureBoxCover.BackgroundImage = null;
+            pictureBoxCover.Tag = null;
         }
 
         #endregion
