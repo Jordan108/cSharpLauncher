@@ -863,6 +863,7 @@
             this.Controls.Add(this.textBoxName);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "NewCollection";
             this.Text = "Nueva Coleccion";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.NewCollection_FormClosed);

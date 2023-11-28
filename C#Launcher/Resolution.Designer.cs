@@ -175,6 +175,7 @@
             this.Controls.Add(this.buttonSearchSonCoverTest);
             this.Controls.Add(this.panelSonImageLimit);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.MaximizeBox = false;
             this.Name = "Resolution";
             this.Text = "Resoluciones";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Resolution_FormClosed);

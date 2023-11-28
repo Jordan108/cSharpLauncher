@@ -29,11 +29,11 @@
         private void InitializeComponent()
         {
             this.dataGridViewTags = new System.Windows.Forms.DataGridView();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.textBoxTagName = new System.Windows.Forms.TextBox();
             this.addTag = new System.Windows.Forms.Button();
             this.deleteTag = new System.Windows.Forms.Button();
             this.saveForm = new System.Windows.Forms.Button();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTags)).BeginInit();
             this.SuspendLayout();
             // 
@@ -55,6 +55,13 @@
             this.dataGridViewTags.Size = new System.Drawing.Size(203, 426);
             this.dataGridViewTags.TabIndex = 0;
             this.dataGridViewTags.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewTags_CellClick);
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "Etiqueta";
+            this.Column1.Name = "Column1";
+            this.Column1.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.Column1.Width = 200;
             // 
             // textBoxTagName
             // 
@@ -105,13 +112,6 @@
             this.saveForm.UseVisualStyleBackColor = false;
             this.saveForm.Click += new System.EventHandler(this.saveForm_Click);
             // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "Etiqueta";
-            this.Column1.Name = "Column1";
-            this.Column1.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.Column1.Width = 200;
-            // 
             // Tags
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -123,8 +123,10 @@
             this.Controls.Add(this.addTag);
             this.Controls.Add(this.textBoxTagName);
             this.Controls.Add(this.dataGridViewTags);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.MaximizeBox = false;
             this.Name = "Tags";
-            this.Text = "Tags";
+            this.Text = "Administrar etiquetas";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewTags)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

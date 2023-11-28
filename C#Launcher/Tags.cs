@@ -5,6 +5,7 @@ using System.Xml;
 using System.IO;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 using System.Drawing;
+using CoverPadLauncher.Clases;
 
 namespace CoverPadLauncher
 {
@@ -18,15 +19,36 @@ namespace CoverPadLauncher
         public Tags()
         {
             InitializeComponent();
+            loadTheme();
             loadXMLTags();
+        }
 
-            dataGridViewTags.BackgroundColor = Color.BlueViolet;//Fondo
-            dataGridViewTags.GridColor = Color.Blue;//Borde
-            dataGridViewTags.DefaultCellStyle.BackColor = Color.Red;//Fondo celda default
-            dataGridViewTags.DefaultCellStyle.ForeColor = Color.White;//texto celda default
-            dataGridViewTags.DefaultCellStyle.SelectionBackColor = Color.Yellow;//Fondo celda seleccionada
-            dataGridViewTags.DefaultCellStyle.SelectionForeColor = Color.Black;//texto celda seleccionada
+        private void loadTheme()
+        {
+            Configurations config = new Configurations();
+            Themes theme = new Themes($"System\\Themes\\{config.ThemeName}.css");
 
+            BackColor = theme.WindowBackground;
+
+            //Textbox
+            textBoxTagName.BackColor = theme.TextBoxBackground;
+            textBoxTagName.ForeColor = theme.TextBoxText;
+
+            //Botones
+            addTag.BackColor = theme.ButtonBackground;
+            addTag.ForeColor = theme.ButtonText;
+            deleteTag.BackColor = theme.ButtonBackground;
+            deleteTag.ForeColor = theme.ButtonText;
+            saveForm.BackColor = theme.ButtonBackground;
+            saveForm.ForeColor = theme.ButtonText;
+
+            //DataGridView
+            dataGridViewTags.BackgroundColor = theme.DataGridBackground;
+            dataGridViewTags.GridColor = theme.DataGridBorder;
+            dataGridViewTags.DefaultCellStyle.BackColor = theme.DataGridCellBackground;
+            dataGridViewTags.DefaultCellStyle.ForeColor = theme.DataGridCellText;
+            dataGridViewTags.DefaultCellStyle.SelectionBackColor = theme.DataGridSelectedBackground;
+            dataGridViewTags.DefaultCellStyle.SelectionForeColor = theme.DataGridSelectedText;
         }
 
         private void loadXMLTags()

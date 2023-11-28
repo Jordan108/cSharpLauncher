@@ -30,7 +30,7 @@
         {
             this.buttonSave = new System.Windows.Forms.Button();
             this.buttonCancel = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
+            this.labelTheme = new System.Windows.Forms.Label();
             this.comboBoxThemes = new System.Windows.Forms.ComboBox();
             this.checkBoxPictureBoxRectangle = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
@@ -61,19 +61,22 @@
             this.buttonCancel.UseVisualStyleBackColor = false;
             this.buttonCancel.Click += new System.EventHandler(this.buttonCancel_Click);
             // 
-            // label1
+            // labelTheme
             // 
-            this.label1.AutoSize = true;
-            this.label1.ForeColor = System.Drawing.SystemColors.Window;
-            this.label1.Location = new System.Drawing.Point(13, 47);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(40, 13);
-            this.label1.TabIndex = 2;
-            this.label1.Text = "Tema: ";
+            this.labelTheme.AutoSize = true;
+            this.labelTheme.ForeColor = System.Drawing.SystemColors.Window;
+            this.labelTheme.Location = new System.Drawing.Point(13, 47);
+            this.labelTheme.Name = "labelTheme";
+            this.labelTheme.Size = new System.Drawing.Size(40, 13);
+            this.labelTheme.TabIndex = 2;
+            this.labelTheme.Text = "Tema: ";
             // 
             // comboBoxThemes
             // 
+            this.comboBoxThemes.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
             this.comboBoxThemes.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboBoxThemes.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.comboBoxThemes.ForeColor = System.Drawing.SystemColors.Window;
             this.comboBoxThemes.FormattingEnabled = true;
             this.comboBoxThemes.Location = new System.Drawing.Point(59, 45);
             this.comboBoxThemes.Name = "comboBoxThemes";
@@ -102,9 +105,11 @@
             this.ClientSize = new System.Drawing.Size(800, 450);
             this.Controls.Add(this.checkBoxPictureBoxRectangle);
             this.Controls.Add(this.comboBoxThemes);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.labelTheme);
             this.Controls.Add(this.buttonCancel);
             this.Controls.Add(this.buttonSave);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.MaximizeBox = false;
             this.Name = "Configuration";
             this.Text = "Configuración";
             this.ResumeLayout(false);
@@ -116,7 +121,7 @@
 
         private System.Windows.Forms.Button buttonSave;
         private System.Windows.Forms.Button buttonCancel;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelTheme;
         private System.Windows.Forms.ComboBox comboBoxThemes;
         private System.Windows.Forms.CheckBox checkBoxPictureBoxRectangle;
     }

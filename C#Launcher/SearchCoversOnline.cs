@@ -66,6 +66,56 @@ namespace CoverPadLauncher
         {
             tabControl.TabPages[1].Enabled = false;
             tabControl.TabPages[2].Enabled = false;
+            loadTheme();
+        }
+
+        private void loadTheme()
+        {
+            Configurations config = new Configurations();
+            Themes theme = new Themes($"System\\Themes\\{config.ThemeName}.css");
+
+            //Fondos
+            BackColor = theme.WindowBackground;
+            tabPage1.BackColor = theme.WindowBackground;
+            tabPage2.BackColor = theme.WindowBackground;
+            tabPage3.BackColor = theme.WindowBackground;
+
+            //Textos
+            groupBox1.ForeColor = theme.LabelText;
+            radioButtonGames.ForeColor = theme.LabelText;
+            radioButtonFilms.ForeColor = theme.LabelText;
+            radioButtonSeries.ForeColor = theme.LabelText;
+            radioButtonMangas.ForeColor = theme.LabelText;
+            radioButtonComics.ForeColor = theme.LabelText;
+            radioButtonBooks.ForeColor = theme.LabelText;
+            labelChangeNameWarning.ForeColor = theme.LabelText;
+            labelCoverArraySelected.ForeColor = theme.LabelText;
+
+            //Botones
+            buttonContinueType.BackColor = theme.ButtonBackground;
+            buttonContinueType.ForeColor = theme.ButtonText;
+            buttonContinueName.BackColor = theme.ButtonBackground;
+            buttonContinueName.ForeColor = theme.ButtonText;
+            buttonCoverBack.BackColor = theme.ButtonBackground;
+            buttonCoverBack.ForeColor = theme.ButtonText;
+            buttonCoverNext.BackColor = theme.ButtonBackground;
+            buttonCoverNext.ForeColor = theme.ButtonText;
+            buttonFinish.BackColor = theme.ButtonBackground;
+            buttonFinish.ForeColor = theme.ButtonText;
+            //Datagridview
+            dataGridViewNames.BackgroundColor = theme.DataGridBackground;
+            dataGridViewNames.GridColor = theme.DataGridBorder;
+            dataGridViewNames.DefaultCellStyle.BackColor = theme.DataGridCellBackground;
+            dataGridViewNames.DefaultCellStyle.ForeColor = theme.DataGridCellText;
+            dataGridViewNames.DefaultCellStyle.SelectionBackColor = theme.DataGridSelectedBackground;
+            dataGridViewNames.DefaultCellStyle.SelectionForeColor = theme.DataGridSelectedText;
+
+            dataGridViewCovers.BackgroundColor = theme.DataGridBackground;
+            dataGridViewCovers.GridColor = theme.DataGridBorder;
+            dataGridViewCovers.DefaultCellStyle.BackColor = theme.DataGridCellBackground;
+            dataGridViewCovers.DefaultCellStyle.ForeColor = theme.DataGridCellText;
+            dataGridViewCovers.DefaultCellStyle.SelectionBackColor = theme.DataGridSelectedBackground;
+            dataGridViewCovers.DefaultCellStyle.SelectionForeColor = theme.DataGridSelectedText;
         }
 
         private async Task<string[]> SearchSteamGridDB(string gameName)

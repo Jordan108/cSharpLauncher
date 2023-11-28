@@ -544,8 +544,9 @@
             this.Controls.Add(this.comboBoxFather);
             this.Controls.Add(this.labelFather);
             this.Controls.Add(this.dataGridViewFiles);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.SizableToolWindow;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
             this.Margin = new System.Windows.Forms.Padding(2);
+            this.MaximizeBox = false;
             this.Name = "NewMultipleFiles";
             this.Text = "Nuevos Elementos";
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFiles)).EndInit();

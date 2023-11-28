@@ -575,6 +575,7 @@
             this.Controls.Add(this.labelName);
             this.Controls.Add(this.textBoxName);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.MaximizeBox = false;
             this.Name = "NewFile";
             this.Text = "Nuevo Elemento";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.NewFile_FormClosed);

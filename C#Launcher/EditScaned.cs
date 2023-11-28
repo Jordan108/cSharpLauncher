@@ -138,7 +138,7 @@ namespace CoverPadLauncher
             this.pictureBoxCover.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBoxCover_MouseMove);
             this.pictureBoxCover.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBoxCover_MouseUp);
 
-
+            loadTheme();
 
             #region Combobox
             #region resoluciones
@@ -213,6 +213,63 @@ namespace CoverPadLauncher
                 pictureBoxCover.BackgroundImageLayout = ImageLayout.Stretch;
             }
             #endregion
+        }
+
+        private void loadTheme()
+        {
+            Configurations config = new Configurations();
+            Themes theme = new Themes($"System\\Themes\\{config.ThemeName}.css");
+
+            BackColor = theme.WindowBackground;
+
+            //TextBox
+            textBoxName.BackColor = theme.TextBoxBackground;
+            textBoxName.ForeColor = theme.TextBoxText;
+
+            //Textos
+            labelName.ForeColor = theme.LabelText;
+            labelScanStart.ForeColor = theme.LabelText;
+            BackgroundColorCheck.ForeColor = theme.LabelText;
+            labelResolution.ForeColor = theme.LabelText;
+            checkBoxImageLocation.ForeColor = theme.LabelText;
+            groupBoxSize.ForeColor = theme.LabelText;
+            labelWidth.ForeColor = theme.LabelText;
+            labelHeight.ForeColor = theme.LabelText;
+            groupBoxImageFormat.ForeColor = theme.LabelText;
+            radioButtonZoom.ForeColor = theme.LabelText;
+            radioButtonEstreched.ForeColor = theme.LabelText;
+
+            //Combobox
+            comboBoxResolution.BackColor = theme.ComboboxBackground;
+            comboBoxResolution.ForeColor = theme.ComboboxText;
+
+            //Botones
+            buttonSearchCover.BackColor = theme.ButtonBackground;
+            buttonSearchCover.ForeColor = theme.ButtonText;
+            buttonSetColor.BackColor = theme.ButtonBackground;
+            buttonSetColor.ForeColor = theme.ButtonText;
+            addResolution.BackColor = theme.ButtonBackground;
+            addResolution.ForeColor = theme.ButtonText;
+            buttonSave.BackColor = theme.ButtonBackground;
+            buttonSave.ForeColor = theme.ButtonText;
+
+            //Numeric upDown
+            numericScanStart.BackColor = theme.NumericBackground;
+            numericScanStart.ForeColor = theme.NumericText;
+            numericWidthImage.BackColor = theme.NumericBackground;
+            numericWidthImage.ForeColor = theme.NumericText;
+            numericHeightImage.BackColor = theme.NumericBackground;
+            numericHeightImage.ForeColor = theme.NumericText;
+
+            //DataGridView
+            dataGridViewScanOpenExtension.BackgroundColor = theme.DataGridBackground;
+            dataGridViewScanOpenExtension.GridColor = theme.DataGridBorder;
+            dataGridViewScanOpenExtension.DefaultCellStyle.BackColor = theme.DataGridCellBackground;
+            dataGridViewScanOpenExtension.DefaultCellStyle.ForeColor = theme.DataGridCellText;
+            dataGridViewScanOpenExtension.DefaultCellStyle.SelectionBackColor = theme.DataGridSelectedBackground;
+            dataGridViewScanOpenExtension.DefaultCellStyle.SelectionForeColor = theme.DataGridSelectedText;
+
+            panelImageLimit.BackColor = theme.CoverPreviewBackground;
         }
 
         private Image loadImage(string imagePath)

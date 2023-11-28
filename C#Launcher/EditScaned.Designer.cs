@@ -29,14 +29,14 @@
         private void InitializeComponent()
         {
             this.textBoxName = new System.Windows.Forms.TextBox();
-            this.label1 = new System.Windows.Forms.Label();
+            this.labelName = new System.Windows.Forms.Label();
             this.panelImageLimit = new System.Windows.Forms.Panel();
             this.pictureBoxCover = new System.Windows.Forms.PictureBox();
             this.buttonSearchCover = new System.Windows.Forms.Button();
             this.buttonSetColor = new System.Windows.Forms.Button();
             this.buttonColorPickIMG = new System.Windows.Forms.Button();
             this.BackgroundColorCheck = new System.Windows.Forms.CheckBox();
-            this.label2 = new System.Windows.Forms.Label();
+            this.labelResolution = new System.Windows.Forms.Label();
             this.comboBoxResolution = new System.Windows.Forms.ComboBox();
             this.addResolution = new System.Windows.Forms.Button();
             this.groupBoxSize = new System.Windows.Forms.GroupBox();
@@ -70,15 +70,15 @@
             this.textBoxName.Size = new System.Drawing.Size(232, 20);
             this.textBoxName.TabIndex = 0;
             // 
-            // label1
+            // labelName
             // 
-            this.label1.AutoSize = true;
-            this.label1.ForeColor = System.Drawing.SystemColors.Window;
-            this.label1.Location = new System.Drawing.Point(9, 28);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(44, 13);
-            this.label1.TabIndex = 1;
-            this.label1.Text = "Nombre";
+            this.labelName.AutoSize = true;
+            this.labelName.ForeColor = System.Drawing.SystemColors.Window;
+            this.labelName.Location = new System.Drawing.Point(9, 28);
+            this.labelName.Name = "labelName";
+            this.labelName.Size = new System.Drawing.Size(44, 13);
+            this.labelName.TabIndex = 1;
+            this.labelName.Text = "Nombre";
             // 
             // panelImageLimit
             // 
@@ -149,15 +149,15 @@
             this.BackgroundColorCheck.Text = "Fondo transparente";
             this.BackgroundColorCheck.UseVisualStyleBackColor = true;
             // 
-            // label2
+            // labelResolution
             // 
-            this.label2.AutoSize = true;
-            this.label2.ForeColor = System.Drawing.SystemColors.Window;
-            this.label2.Location = new System.Drawing.Point(12, 182);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(60, 13);
-            this.label2.TabIndex = 34;
-            this.label2.Text = "Resolucion";
+            this.labelResolution.AutoSize = true;
+            this.labelResolution.ForeColor = System.Drawing.SystemColors.Window;
+            this.labelResolution.Location = new System.Drawing.Point(12, 182);
+            this.labelResolution.Name = "labelResolution";
+            this.labelResolution.Size = new System.Drawing.Size(60, 13);
+            this.labelResolution.TabIndex = 34;
+            this.labelResolution.Text = "Resolucion";
             // 
             // comboBoxResolution
             // 
@@ -363,10 +363,11 @@
             // checkBoxImageLocation
             // 
             this.checkBoxImageLocation.AutoSize = true;
+            this.checkBoxImageLocation.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.checkBoxImageLocation.ForeColor = System.Drawing.SystemColors.Window;
             this.checkBoxImageLocation.Location = new System.Drawing.Point(302, 182);
             this.checkBoxImageLocation.Name = "checkBoxImageLocation";
-            this.checkBoxImageLocation.Size = new System.Drawing.Size(215, 17);
+            this.checkBoxImageLocation.Size = new System.Drawing.Size(212, 17);
             this.checkBoxImageLocation.TabIndex = 45;
             this.checkBoxImageLocation.Text = "Utilizar la imagen en su ubicacion actual";
             this.checkBoxImageLocation.UseVisualStyleBackColor = true;
@@ -386,16 +387,18 @@
             this.Controls.Add(this.groupBoxSize);
             this.Controls.Add(this.addResolution);
             this.Controls.Add(this.comboBoxResolution);
-            this.Controls.Add(this.label2);
+            this.Controls.Add(this.labelResolution);
             this.Controls.Add(this.BackgroundColorCheck);
             this.Controls.Add(this.buttonColorPickIMG);
             this.Controls.Add(this.buttonSetColor);
             this.Controls.Add(this.buttonSearchCover);
             this.Controls.Add(this.panelImageLimit);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.labelName);
             this.Controls.Add(this.textBoxName);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.MaximizeBox = false;
             this.Name = "EditScaned";
-            this.Text = "Editar escaneado";
+            this.Text = "Editar elemento escaneado";
             this.panelImageLimit.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCover)).EndInit();
             this.groupBoxSize.ResumeLayout(false);
@@ -414,14 +417,14 @@
         #endregion
 
         private System.Windows.Forms.TextBox textBoxName;
-        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.Label labelName;
         private System.Windows.Forms.Panel panelImageLimit;
         private System.Windows.Forms.PictureBox pictureBoxCover;
         private System.Windows.Forms.Button buttonSearchCover;
         private System.Windows.Forms.Button buttonSetColor;
         private System.Windows.Forms.Button buttonColorPickIMG;
         private System.Windows.Forms.CheckBox BackgroundColorCheck;
-        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.Label labelResolution;
         private System.Windows.Forms.ComboBox comboBoxResolution;
         private System.Windows.Forms.Button addResolution;
         private System.Windows.Forms.GroupBox groupBoxSize;

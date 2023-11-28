@@ -3,6 +3,8 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Xml;
 using System.IO;
+using System.Security.Cryptography;
+using CoverPadLauncher.Clases;
 
 namespace C_Launcher
 {
@@ -21,6 +23,8 @@ namespace C_Launcher
             this.pictureBoxCover.MouseDown += new System.Windows.Forms.MouseEventHandler(this.pictureBoxCover_MouseDown);
             this.pictureBoxCover.MouseMove += new System.Windows.Forms.MouseEventHandler(this.pictureBoxCover_MouseMove);
             this.pictureBoxCover.MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBoxCover_MouseUp);
+            //Cargar el tema
+            loadTheme();
             //Cargar las resoluciones en el dataGrid
             loadXMLResolutions();
         }
@@ -82,6 +86,34 @@ namespace C_Launcher
             
         }
 
+        private void loadTheme()
+        {
+            Configurations config = new Configurations();
+            Themes theme = new Themes($"System\\Themes\\{config.ThemeName}.css");
+
+            BackColor = theme.WindowBackground;
+
+            //Botones
+            buttonAddRow.BackColor = theme.ButtonBackground;
+            buttonAddRow.ForeColor = theme.ButtonText;
+            buttonDeleteRow.BackColor = theme.ButtonBackground;
+            buttonDeleteRow.ForeColor = theme.ButtonText;
+            buttonSearchSonCoverTest.BackColor = theme.ButtonBackground;
+            buttonSearchSonCoverTest.ForeColor = theme.ButtonText;
+            buttonSaveRes.BackColor = theme.ButtonBackground;
+            buttonSaveRes.ForeColor = theme.ButtonText;
+
+            //Datagrid
+            dataGridViewResolutions.BackgroundColor = theme.DataGridBackground;
+            dataGridViewResolutions.GridColor = theme.DataGridBorder;
+            dataGridViewResolutions.DefaultCellStyle.BackColor = theme.DataGridCellBackground;
+            dataGridViewResolutions.DefaultCellStyle.ForeColor = theme.DataGridCellText;
+            dataGridViewResolutions.DefaultCellStyle.SelectionBackColor = theme.DataGridSelectedBackground;
+            dataGridViewResolutions.DefaultCellStyle.SelectionForeColor = theme.DataGridSelectedText;
+
+            //CoverPanel
+            panelSonImageLimit.BackColor = theme.CoverPreviewBackground;
+        }
 
         #region Picture Box
         private void pictureBoxCover_MouseDown(object sender, MouseEventArgs e)

@@ -27,12 +27,14 @@ namespace CoverPadLauncher
         {
             Console.WriteLine($"Settings: {settings.PictureBoxName}");
             checkBoxPictureBoxRectangle.Checked = settings.PictureBoxName;
+            loadWindowTheme();
             loadThemes();
 
             //Cargar el tema en el combobox
             comboBoxThemes.SelectedItem = settings.ThemeName;
         }
 
+        //Cargar los temas existentes para el combobox
         private void loadThemes()
         {
             if (Directory.Exists(themeDir))
@@ -47,6 +49,28 @@ namespace CoverPadLauncher
                     comboBoxThemes.Items.Add(Path.GetFileNameWithoutExtension(theme));
                 }
             }
+        }
+
+        private void loadWindowTheme()
+        {
+            Configurations config = new Configurations();
+            Themes theme = new Themes($"System\\Themes\\{config.ThemeName}.css");
+
+            BackColor = theme.WindowBackground;
+
+            //Texto
+            labelTheme.ForeColor = theme.LabelText;
+            checkBoxPictureBoxRectangle.ForeColor = theme.LabelText;
+
+            //Combobox
+            comboBoxThemes.BackColor = theme.ComboboxBackground;
+            comboBoxThemes.BackColor = theme.ComboboxBackground;
+
+            //Botones
+            buttonSave.BackColor = theme.ButtonBackground;
+            buttonSave.ForeColor = theme.ButtonText;
+            buttonCancel.BackColor = theme.ButtonBackground;
+            buttonCancel.ForeColor = theme.ButtonText;
         }
 
         private void buttonSave_Click(object sender, EventArgs e)
