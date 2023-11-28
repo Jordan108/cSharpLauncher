@@ -30,6 +30,7 @@
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Home));
             this.panelTop = new System.Windows.Forms.Panel();
+            this.labelDepth = new System.Windows.Forms.Label();
             this.btnBackView = new System.Windows.Forms.Button();
             this.btnHomeView = new System.Windows.Forms.Button();
             this.btnReloadView = new System.Windows.Forms.Button();
@@ -50,7 +51,6 @@
             this.herramientasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.configuracionesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.importaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.labelDepth = new System.Windows.Forms.Label();
             this.flowLayoutPanelMain = new System.Windows.Forms.FlowLayoutPanel();
             this.treeViewMain = new System.Windows.Forms.TreeView();
             this.splitter1 = new System.Windows.Forms.Splitter();
@@ -73,11 +73,25 @@
             this.panelTop.Size = new System.Drawing.Size(901, 58);
             this.panelTop.TabIndex = 0;
             // 
+            // labelDepth
+            // 
+            this.labelDepth.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.labelDepth.AutoSize = true;
+            this.labelDepth.BackColor = System.Drawing.Color.Transparent;
+            this.labelDepth.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.labelDepth.ForeColor = System.Drawing.Color.White;
+            this.labelDepth.Location = new System.Drawing.Point(433, 31);
+            this.labelDepth.Name = "labelDepth";
+            this.labelDepth.Size = new System.Drawing.Size(68, 25);
+            this.labelDepth.TabIndex = 5;
+            this.labelDepth.Text = "Inicio";
+            this.labelDepth.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // btnBackView
             // 
             this.btnBackView.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(105)))), ((int)(((byte)(123)))));
             this.btnBackView.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnBackView.ForeColor = System.Drawing.SystemColors.Window;
+            this.btnBackView.ForeColor = System.Drawing.Color.White;
             this.btnBackView.Location = new System.Drawing.Point(12, 27);
             this.btnBackView.Name = "btnBackView";
             this.btnBackView.Size = new System.Drawing.Size(48, 23);
@@ -268,20 +282,6 @@
             this.importaToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
             this.importaToolStripMenuItem.Text = "Importar Juegos";
             this.importaToolStripMenuItem.Click += new System.EventHandler(this.importaToolStripMenuItem_Click);
-            // 
-            // labelDepth
-            // 
-            this.labelDepth.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.labelDepth.AutoSize = true;
-            this.labelDepth.BackColor = System.Drawing.Color.Transparent;
-            this.labelDepth.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.labelDepth.ForeColor = System.Drawing.Color.White;
-            this.labelDepth.Location = new System.Drawing.Point(433, 31);
-            this.labelDepth.Name = "labelDepth";
-            this.labelDepth.Size = new System.Drawing.Size(68, 25);
-            this.labelDepth.TabIndex = 5;
-            this.labelDepth.Text = "Inicio";
-            this.labelDepth.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // flowLayoutPanelMain
             // 

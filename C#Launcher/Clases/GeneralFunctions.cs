@@ -1,9 +1,11 @@
 ﻿using ImageMagick;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
@@ -40,6 +42,41 @@ namespace CoverPadLauncher.Clases
             //Evitar que se guarde la imagen con caracteres invalidos
             string cleanName = Path.GetInvalidFileNameChars().Aggregate(coverName, (current, c) => current.Replace(c.ToString(), string.Empty));
             string imgPath = "";
+            //Para descargar caratulas online
+            string tempOnlineImagePath = "System\\Covers\\http_temp_Cover.png";
+
+
+            //Primero, verificar si la caratula es online (si es asi, descargarla temporalmente en System//Covers)
+            if (originalImageDir.StartsWith("https://"))
+            {
+                try
+                {
+                    //Algunas url pueden contener redirecciones, asi que verifico
+                    string finalImageUrl = GetFinalImageUrl(originalImageDir);
+
+                    // Descargar la imagen desde la URL
+                    using (WebClient webClient = new WebClient())
+                    {
+                        byte[] imageBytes = webClient.DownloadData(finalImageUrl);
+
+                        // Crear un MemoryStream desde los bytes
+                        using (MemoryStream ms = new MemoryStream(imageBytes))
+                        {
+                            using (var onlineCover = Image.FromStream(ms)){
+                                //Guardarlo como png
+                                onlineCover.Save(tempOnlineImagePath, ImageFormat.Png);
+                                //Establecer originalImageDir como la caratula descargada
+                                originalImageDir = tempOnlineImagePath;
+                            }
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"No se pudo descargar la caratula de la url: \n{originalImageDir}\n debido a: {ex}");
+                }
+            }
+
             //Mover la imagen hacia la carpeta covers y transformarla a .png
             //Si estas creando un nuevo archivo, verificar si no existe un archivo con el mismo nombre, y si es asi, ponerle un iterador
             if (originalImageDir != "")
@@ -115,7 +152,26 @@ namespace CoverPadLauncher.Clases
 
             }
 
+            //Antes de devolver, si existe la imagen temporal de descarga online, eliminarlo
+            if (File.Exists(tempOnlineImagePath))
+            {
+                File.Delete(tempOnlineImagePath);
+            }
+
             return imgPath;
+        }
+
+        //Para descargar Imagenes online
+        public string GetFinalImageUrl(string imageUrl)
+        {
+            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(imageUrl);
+            request.AllowAutoRedirect = true; // Habilita el seguimiento de redirecciones
+
+            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            {
+                // La propiedad ResponseUri contiene la URL final después de seguir las redirecciones
+                return response.ResponseUri.ToString();
+            }
         }
 
         public bool CheckImage(string fileDir)

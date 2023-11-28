@@ -43,4 +43,25 @@
     <TagsID />
     <Favorite>False</Favorite>
   </file>
+  <file id="3">
+    <IDFather>0</IDFather>
+    <Name>Lethal company</Name>
+    <Image>System\Covers\element_Lethal company.png</Image>
+    <ImageLayout>0</ImageLayout>
+    <FilePath>steam://rungameid/1966720</FilePath>
+    <ProgramPath>
+    </ProgramPath>
+    <CMDLine>
+    </CMDLine>
+    <WithoutBackground>False</WithoutBackground>
+    <BackgroundRed>0</BackgroundRed>
+    <BackgroundGreen>0</BackgroundGreen>
+    <BackgroundBlue>0</BackgroundBlue>
+    <CoverResolutionID>0</CoverResolutionID>
+    <CoverWidth>200</CoverWidth>
+    <CoverHeight>200</CoverHeight>
+    <URLCheck>True</URLCheck>
+    <TagsID />
+    <Favorite>False</Favorite>
+  </file>
 </Launcher>

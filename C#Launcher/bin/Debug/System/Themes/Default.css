@@ -37,6 +37,7 @@
 
   /*Seccion superior donde se ubica el nombre de la profundidad*/
   --color-bg-top:                 var(--main-bg-color-dark);
+  --color-bg-top-button-hover:    #324157;
   --color-text-top:               var(--default-text-color);
 
   /*Panel izquierdo donde se muestran los nombres de las colecciones*/

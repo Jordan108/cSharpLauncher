@@ -28,7 +28,8 @@ namespace C_Launcher
     {
         private PictureBox[] picBoxArr = new PictureBox[0];//Crear el array de picBox que se mantendra en memoria
         //Crea el array de las colecciones y los archivos (solo contendran las colecciones que se mostraran en en la vista)
-        private Color pictureBoxHover = Color.White;
+
+        
 
         //Valores de settings
         //private int WinWidht, WinHeight = 900;
@@ -37,6 +38,8 @@ namespace C_Launcher
         private int viewDepth = 0;//-1 = favoritos | 0 = inicio
         //private int searchType = 0;//0 = Buscara desde esa coleccion para adentro | 1 = buscara solo en esa coleccion (no sub colecciones) | 2 = buscara en todos los ficheros xml
         private Configurations config;
+        Themes theme;
+        private Color pictureBoxHover = Color.White;
 
         //Rutas de los archivos XML
         private string xmlColPath = "System\\Collections.xml";
@@ -95,6 +98,9 @@ namespace C_Launcher
                 btnBackView.FlatAppearance.BorderSize = 0;
                 btnBackView.Text = "";//El texto lo ocupo de referencia en el editor solamente
                 btnBackView.Size = imagen.Size;// Ajustar el tamaño del botón para que se ajuste a la imagen
+                //Declarar efecto hover
+                btnBackView.FlatAppearance.MouseOverBackColor = theme.PanelTopButtonHover;
+                btnBackView.FlatAppearance.MouseDownBackColor = theme.PanelTopButtonHover;
 
                 imagen = Image.FromFile(imgResourceIcons[11]);
                 btnHomeView.Image = imagen;// Establecer la imagen como icono del botón
@@ -102,6 +108,9 @@ namespace C_Launcher
                 btnHomeView.FlatAppearance.BorderSize = 0;
                 btnHomeView.Text = "";//El texto lo ocupo de referencia en el editor solamente
                 btnHomeView.Size = imagen.Size;// Ajustar el tamaño del botón para que se ajuste a la imagen
+                //Declarar efecto hover
+                btnHomeView.FlatAppearance.MouseOverBackColor = theme.PanelTopButtonHover;
+                btnHomeView.FlatAppearance.MouseDownBackColor = theme.PanelTopButtonHover;
 
                 imagen = Image.FromFile(imgResourceIcons[12]);
                 btnReloadView.Image = imagen;// Establecer la imagen como icono del botón
@@ -109,6 +118,9 @@ namespace C_Launcher
                 btnReloadView.FlatAppearance.BorderSize = 0;
                 btnReloadView.Text = "";//El texto lo ocupo de referencia en el editor solamente
                 btnReloadView.Size = imagen.Size;// Ajustar el tamaño del botón para que se ajuste a la imagen
+                //Declarar efecto hover
+                btnReloadView.FlatAppearance.MouseOverBackColor = theme.PanelTopButtonHover;
+                btnReloadView.FlatAppearance.MouseDownBackColor = theme.PanelTopButtonHover;
             }
             catch (Exception)
             {
@@ -1089,7 +1101,16 @@ namespace C_Launcher
                     ToolStripAutomaticOpenContent.Image = Image.FromFile(imgResourceIcons[8]);
                     ToolStripAutomaticOpenContent.Click += new EventHandler(ToolStripOpenInExplorerContentAutomaticPictureBox_Click);
 
-                    contextMenuStrip.Items.AddRange(new ToolStripItem[] { ToolStripEdit, ToolStripAutomaticOpen, ToolStripAutomaticOpenContent });
+                    if (boxType == "automaticFile")
+                    {
+                        //Si es automatic file, no deberia aparecer "mostrar ubicacion del contenido"
+                        contextMenuStrip.Items.AddRange(new ToolStripItem[] { ToolStripEdit, ToolStripAutomaticOpen });
+                    } else
+                    {
+                        contextMenuStrip.Items.AddRange(new ToolStripItem[] { ToolStripEdit, ToolStripAutomaticOpen, ToolStripAutomaticOpenContent });
+                    }
+
+                    
                 }
                 
 
@@ -1207,7 +1228,7 @@ namespace C_Launcher
         //Controlar los temas
         private void loadTheme()
         {
-            Themes theme = new Themes($"System\\Themes\\{config.ThemeName}.css");
+            theme = new Themes($"System\\Themes\\{config.ThemeName}.css");
 
             viewDepth = config.LastDepth;//Ultima profundidad
 
@@ -2136,10 +2157,10 @@ namespace C_Launcher
             TreeNode node = e.Node;//Obtener el nodo que se va a dibujar
 
             //Establecer los colores
-            Color defaultColor = new Themes($"System\\Themes\\{config.ThemeName}.css").TreeViewBackground;
-            Color hoverColor = new Themes($"System\\Themes\\{config.ThemeName}.css").TreeViewHoverBackground;
-            Color selectedColor = new Themes($"System\\Themes\\{config.ThemeName}.css").TreeViewSelectedBackground;
-            Color foreColor = new Themes($"System\\Themes\\{config.ThemeName}.css").TreeViewText;
+            Color defaultColor = theme.TreeViewBackground;
+            Color hoverColor = theme.TreeViewHoverBackground;
+            Color selectedColor = theme.TreeViewSelectedBackground;
+            Color foreColor = theme.TreeViewText;
 
             //Determina si el nodo esta seleccionado
             bool selected = (e.State & TreeNodeStates.Selected) != 0;

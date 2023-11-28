@@ -118,6 +118,7 @@ namespace CoverPadLauncher
             dataGridViewCovers.DefaultCellStyle.SelectionForeColor = theme.DataGridSelectedText;
         }
 
+        #region API'S
         private async Task<string[]> SearchSteamGridDB(string gameName)
         {
             string apikey = new GeneralFunctions().EnvVariable("SteamGridDbApiKey");//EnvVariable("SteamGridDbApiKey");
@@ -496,6 +497,7 @@ namespace CoverPadLauncher
 
             return null;
         }
+        #endregion
 
         //Al cambiar de pestaña, cargar el datagrid de nombres (para poder cargarlo ahora
         private void buttonContinueType_Click(object sender, EventArgs e)
@@ -622,8 +624,9 @@ namespace CoverPadLauncher
         {
             try
             {
+                GeneralFunctions gf = new GeneralFunctions();
                 //Algunas url pueden contener redirecciones, asi que verifico
-                string finalImageUrl = GetFinalImageUrl(imageURL);
+                string finalImageUrl = gf.GetFinalImageUrl(imageURL);
 
                 // Descargar la imagen desde la URL
                 using (WebClient webClient = new WebClient())
@@ -652,7 +655,7 @@ namespace CoverPadLauncher
             
         }
 
-        private static string GetFinalImageUrl(string imageUrl)
+        /*private static string GetFinalImageUrl(string imageUrl)
         {
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(imageUrl);
             request.AllowAutoRedirect = true; // Habilita el seguimiento de redirecciones
@@ -662,7 +665,7 @@ namespace CoverPadLauncher
                 // La propiedad ResponseUri contiene la URL final después de seguir las redirecciones
                 return response.ResponseUri.ToString();
             }
-        }
+        }*/
 
         private void buttonCoverNext_Click(object sender, EventArgs e)
         {

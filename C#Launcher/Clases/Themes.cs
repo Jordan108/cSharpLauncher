@@ -24,6 +24,7 @@ namespace CoverPadLauncher.Clases
 
         //Panel Top
         private Color panelTopBackground;
+        private Color panelTopButtonHover;
         private Color panelTopText;
 
         //navBar
@@ -91,6 +92,7 @@ namespace CoverPadLauncher.Clases
         public Color WindowBackground { get { return windowBackground; } }
 
         //Panel Top
+        public Color PanelTopButtonHover { get { return panelTopButtonHover; } }
         public Color PanelTopBackground { get { return panelTopBackground; } }
         public Color PanelTopText { get { return panelTopText; } }
 
@@ -162,6 +164,7 @@ namespace CoverPadLauncher.Clases
             this.windowBackground = ObtainColorCSS("--color-bg-window", themeDir, Color.FromArgb(55, 61, 72));
 
             //Panel Top
+            this.panelTopButtonHover = ObtainColorCSS("--color-bg-top-button-hover", themeDir, Color.FromArgb(50, 65, 87));
             this.panelTopBackground = ObtainColorCSS("--color-bg-top", themeDir, darkColor);
             this.panelTopText = ObtainColorCSS("--color-text-top", themeDir, defaultText);
 
