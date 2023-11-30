@@ -87,6 +87,7 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Clases\Controles\MenuRenderer.cs" />
+    <Compile Include="Clases\EnvironmentKeys.cs" />
     <Compile Include="Clases\Files.cs" />
     <Compile Include="Clases\GeneralFunctions.cs" />
     <Compile Include="Clases\Resolutions.cs" />

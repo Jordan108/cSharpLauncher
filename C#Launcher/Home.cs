@@ -20,6 +20,7 @@ using MediaToolkit;
 using MediaToolkit.Model;
 using MediaToolkit.Options;
 using CoverPadLauncher.Clases.Controles;
+using System.Threading.Tasks;
 
 namespace C_Launcher
 {
@@ -318,7 +319,7 @@ namespace C_Launcher
                     }
                     
 
-                        scanned = new Scanneds(id, pic.Name, imgPath, 0, false, 0, 0, 0, 0, pic.Width, pic.Height, 1, def);
+                        scanned = new Scanneds(id, pic.Name, imgPath, 0, false, 0, 0, 0, 0, pic.Width, pic.Height, 0, def);
                 }
 
                 EditScaned editScan = new EditScaned(scanned);
@@ -417,15 +418,15 @@ namespace C_Launcher
             string message;
             if (boxType == "file")
             {
-                message = $"¿Estas seguro de querer eliminar el elemento {pic.Name}?";
+                message = $"¿Estas seguro de querer eliminar el elemento '{pic.Name}'?\n\n(Esto tambien eliminara la imagen almacenada en 'System/Covers')";
             } else
             {
-                message = $"¿Estas seguro de querer eliminar la coleccion {pic.Name}?\n(Esto tambien eliminara su contenido)";
+                message = $"¿Estas seguro de querer eliminar la coleccion '{pic.Name}'?\n\n(Esto tambien eliminara su contenido y las imagenes almacenadas en 'System/Covers')";
             }
 
             //PictureBox pictureBox = (PictureBox)sender;
             //var result = MessageBox.Show("Estas seguro de querer eliminar "+pic.Name.ToString(),"Eliminar", MessageBoxButtons.YesNo);
-            var result = MessageBox.Show(message, "Eliminar", MessageBoxButtons.YesNo);
+            var result = MessageBox.Show(message, "Eliminar", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (result == DialogResult.Yes)
             {
                 if (boxType == "file") 
@@ -998,6 +999,12 @@ namespace C_Launcher
                         string[] subDir = Directory.GetDirectories(rutaEscaneo);
                         int scanStart = new Collections().GetColeScanStartNumber(viewDepth);
 
+                        //Si el proceso de buscarlo por la coleccion fallo, buscarlo por scanned
+                        if (scanStart == 0 && scanDepth.Count > 0)
+                        {
+                            scanStart = new Scanneds().GetScannedScanStartNumber(rutaEscaneo);
+                        }
+
                         //Buscar dentro de esa coleccion un archivo e intentar abrirlo (si scanStart != 0)
                         if (archivos.Length > 0 && subDir.Length == 0 && scanStart != 0)
                         {
@@ -1031,11 +1038,17 @@ namespace C_Launcher
                             if (scanStart > archivos.Length) scanStart = archivos.Length;
 
                             scanStart -= 1; //le resta uno a scanStart por que sino abrira el segundo archivo que encuentre, no el primero
+                            
+                            foreach(var file in archivos)
+                            {
+                                Console.WriteLine($"archivo: {file}");
+                            }
 
                             startProcess(archivos[scanStart], "", "", false);
-                        } else
+                        } 
+                        else
                         {
-                            //viewDepth = -2;
+                            Console.WriteLine($"archivos lenght: {archivos.Length}\nSubdir lenght: {subDir}\nScan start: {scanStart}");
                             scanDepth.Add(rutaEscaneo);
                             loadPictureBox(colSize, fileSize, false);
                         }
@@ -1425,13 +1438,16 @@ namespace C_Launcher
             return false;
         }
 
+        
         //Cargar todos los picture box de esa profundidad
         private void loadPictureBox(int colSize, int fileSize, bool filter)
         {
+            labelDepth.Visible = false;
             flowLayoutPanelMain.SuspendLayout();
 
             //Primero remueve todos los paneles del control
             destroyPictureBox();
+            
 
             //Luego carga todos los archivos en los arrays
             Collections[] colls = new Collections[colSize];
@@ -1487,7 +1503,7 @@ namespace C_Launcher
             }
             else
             {
-                for(int i=0; i< colls.Length; i++)
+                for (int i = 0; i < colls.Length; i++)
                 {
                     if (colls[i].ID == viewDepth)
                     {
@@ -1501,20 +1517,21 @@ namespace C_Launcher
                         }
                         break;
                     }
-                    
+
                 }
-                
+
             }
 
             //Añadir rutas de escaneo
             if (scanDepth.Count > 0)
             {
-                //foreach(string name in scanDepth)
-                //{
-                string name = scanDepth.Last();
-                int pos = name.LastIndexOf("\\") + 1;
-                labelDepth.Text = labelDepth.Text + "/" + name.Substring(pos, name.Length - pos);
-                //}
+                string rootName = labelDepth.Text;
+                foreach (string name in scanDepth)
+                {
+                    //string name = scanDepth.Last();
+                    int pos = name.LastIndexOf("\\") + 1;
+                    labelDepth.Text = rootName + "/" + name.Substring(pos, name.Length - pos);
+                }
             }
 
             //Ajustar el texto en el centro
@@ -1626,7 +1643,14 @@ namespace C_Launcher
                             string extension = Path.GetExtension(archivo);
 
                             //dependiendo del tipo de archivo, el proceso para extraer una imagen preview es totalmente diferente
-                            if (extension == ".mp4" || extension == ".mkv" || extension == ".flv" || extension == ".avi" || extension == ".mov" || extension == ".wmv")//En teoria, esos son los tipos de archivos compatibles
+                            if (extension == ".png" || extension == ".jpg" || extension == ".jpeg" || extension == ".webp" || extension == ".gif")
+                            {
+                                Image thumbnail;
+                                thumbnail = loadImage(archivo);
+                                picBoxArr[pL].BackgroundImage = thumbnail;
+                                thumbnail = null;
+                            }
+                            else if (extension == ".mp4" || extension == ".mkv" || extension == ".flv" || extension == ".avi" || extension == ".mov" || extension == ".wmv")//En teoria, esos son los tipos de archivos compatibles
                             {
                                 //recojer la miniatura del video con MediaToolKit
                                 var inputFile = new MediaFile { Filename = archivo };//ruta del archivo
@@ -2149,6 +2173,7 @@ namespace C_Launcher
             #endregion
 
             flowLayoutPanelMain.ResumeLayout();
+            labelDepth.Visible = true;
         }
 
         #region TreeView
@@ -2636,54 +2661,11 @@ namespace C_Launcher
                     writer.WriteEndElement();
                 }
             }
-
-            //Verificar la existencia del xml settings
-            /*if (!File.Exists(xmlSettingsPath))
-            {
-                XmlWriterSettings settings = new XmlWriterSettings();
-                settings.Indent = true;
-
-                using (XmlWriter writer = XmlWriter.Create(xmlSettingsPath, settings))
-                {
-                    //Crear el elemento raiz del archivo (obligatorio)
-                    writer.WriteStartElement("Launcher");
-                    writer.WriteEndElement();
-                }
-
-                //Cargar el archivo XML
-                XmlDocument xmlDoc = new XmlDocument();
-                xmlDoc.Load(xmlSettingsPath);
-
-                XmlElement set;
-
-                //Crea una coleccion/archivo nueva
-                set = xmlDoc.CreateElement("settings");
-                xmlDoc.DocumentElement.AppendChild(set);//agrega la coleccion al documento
-
-                //Ultima profundidad/coleccion abierta
-                XmlElement lDepth = xmlDoc.CreateElement("LastDepth"); lDepth.InnerText = "0"; set.AppendChild(lDepth);
-
-               //Guardar la resolucion (ancho, alto, Pantalla completa)
-                XmlElement winSize = xmlDoc.CreateElement("WindowSize"); set.AppendChild(winSize);
-                    XmlElement winWidth = xmlDoc.CreateElement("Width"); winWidth.InnerText = WinWidht.ToString();  winSize.AppendChild(winWidth);
-                    XmlElement winHeight = xmlDoc.CreateElement("Height"); winHeight.InnerText = WinHeight.ToString();  winSize.AppendChild(winHeight);
-                    XmlElement winScreen = xmlDoc.CreateElement("MxScreen"); winScreen.InnerText = "1";  winSize.AppendChild(winScreen);
-
-                //Guardar tamaño de treenode
-                XmlElement treeWidth = xmlDoc.CreateElement("TreeWidth"); treeWidth.InnerText = "100"; set.AppendChild(treeWidth);
-
-                //Guardar como se ordenan los paneles
-                XmlElement pOrder = xmlDoc.CreateElement("PanelOrder"); pOrder.InnerText = "0"; set.AppendChild(pOrder);
-
-                xmlDoc.Save(xmlSettingsPath);
-            }*/
-
-            
-            
         }
 
         private void configuracionesToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            config.LastDepth = viewDepth;
             Configuration conf = new Configuration(config);
             conf.ReturnedObject += Configuration_ReturnedObject;
             conf.ShowDialog();
@@ -2693,6 +2675,7 @@ namespace C_Launcher
         {
             config = e;
             loadTheme();//Recargar el tema
+            loadPictureBox(colSize, fileSize, false); //Recargar la vista
         }
 
         private void importaToolStripMenuItem_Click(object sender, EventArgs e)

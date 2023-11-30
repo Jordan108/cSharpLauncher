@@ -121,7 +121,7 @@ namespace CoverPadLauncher
         #region API'S
         private async Task<string[]> SearchSteamGridDB(string gameName)
         {
-            string apikey = new GeneralFunctions().EnvVariable("SteamGridDbApiKey");//EnvVariable("SteamGridDbApiKey");
+            string apikey = new EnvironmentKeys().SteamGridDbApiKey;//new GeneralFunctions().EnvVariable("SteamGridDbApiKey");//EnvVariable("SteamGridDbApiKey");
             //GeneralFunctions gf = new GeneralFunctions();
             SteamGridDb instance = new SteamGridDb(apikey);
 
@@ -181,8 +181,7 @@ namespace CoverPadLauncher
         {
             try
             {
-                //la api key la saque de: https://codepen.io/pixelnik/pen/pgWQBZ (es temporal mientras consigo la propia)
-                string apikey = new GeneralFunctions().EnvVariable("TheMovieDbApiKey");
+                string apikey = new EnvironmentKeys().TheMovieDbApiKey;//new GeneralFunctions().EnvVariable("TheMovieDbApiKey");
 
                 HttpClient client = new HttpClient();
                 client.BaseAddress = new Uri("https://api.themoviedb.org/3/search/movie");
@@ -242,7 +241,7 @@ namespace CoverPadLauncher
         {
             try
             {
-                string apikey = new GeneralFunctions().EnvVariable("ComicVineApiKey");
+                string apikey = new EnvironmentKeys().ComicVineDbApiKey;//new GeneralFunctions().EnvVariable("ComicVineApiKey");
 
                 HttpClient client = new HttpClient();
                 client.BaseAddress = new Uri("http://comicvine.gamespot.com/api/volumes");

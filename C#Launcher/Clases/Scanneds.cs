@@ -144,7 +144,13 @@ namespace CoverPadLauncher.Clases
             //Editar/crear elemento
             string xpath = "//Launcher/scanned[@dir='" + Class.Dir + "']";
 
-            scan = xmlDoc.SelectSingleNode(xpath) as XmlElement;
+            scan = null;
+
+            try
+            {
+                scan = xmlDoc.SelectSingleNode(xpath) as XmlElement;
+            } catch { }
+
             //Si no lo encuentra en el archivo, crearlo
             if (scan == null)
             {
@@ -195,8 +201,15 @@ namespace CoverPadLauncher.Clases
 
                 string xpath = "//Launcher/scanned[@dir='" + dirID + "']";
 
-                XmlNode root = doc.SelectSingleNode(xpath);
-                XmlNode rootScanExtension = doc.SelectSingleNode(xpath + "/OpenExtension");
+                XmlNode root = null;
+                XmlNode rootScanExtension = null;
+
+                try
+                {
+                    root = doc.SelectSingleNode(xpath);
+                    rootScanExtension  = doc.SelectSingleNode(xpath + "/OpenExtension");
+                }
+                catch { }
 
                 //Si root es null, significa que estamos tratando de editar un scanDir por primera vez (el null se maneja en ToolStripEditPictureBox_Click)
                 if (root == null) return null;
@@ -215,7 +228,7 @@ namespace CoverPadLauncher.Clases
                 int height = int.Parse(gf.XMLDefaultReturn(root, "CoverHeight", "200"));
 
 
-                int scanStartNumber = int.Parse(gf.XMLDefaultReturn(root, "StartNumber", "1"));
+                int scanStartNumber = int.Parse(gf.XMLDefaultReturn(root, "StartNumber", "0"));
                 string[] scanExtension = { };
                 if (rootScanExtension != null)
                 {
@@ -230,6 +243,28 @@ namespace CoverPadLauncher.Clases
                 return ScanReturn;
             }
             return null;
+        }
+
+        public int GetScannedScanStartNumber(string dirID)
+        {
+            
+
+            int returnNumber = 0;
+
+            try
+            {
+                XmlDocument doc = new XmlDocument();
+                doc.Load(xmlScannedPath);
+
+                string xpath = "//Launcher/scanned[@dir='" + dirID + "']";
+                XmlNode root = doc.SelectSingleNode(xpath);
+
+                returnNumber = int.Parse(root.SelectSingleNode("StartNumber").InnerText);
+            }
+            catch (Exception) { }
+
+            //Llamar a la funcion para que empiece el proceso
+            return returnNumber;
         }
         #endregion
     }

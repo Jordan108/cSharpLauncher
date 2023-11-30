@@ -186,7 +186,7 @@ namespace CoverPadLauncher.Clases
         }
 
         //rescata un valor desde el json env.json
-        public string EnvVariable(string key)
+        /*public string EnvVariable(string key)
         {
             // Verifica si el archivo existe
             if (!File.Exists("env.txt"))
@@ -214,6 +214,6 @@ namespace CoverPadLauncher.Clases
 
             // Si la clave no se encontró, devuelve null
             return null;
-        }
+        }*/
     }
 }

@@ -1,26 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Launcher>
-  <file id="1">
-    <IDFather>0</IDFather>
-    <Name>b</Name>
-    <Image>System\Covers\element_a.png</Image>
-    <ImageLayout>0</ImageLayout>
-    <FilePath>D:\Bibliotecas\Juegos\Citra\nightly\citra-qt.exe</FilePath>
-    <ProgramPath>
-    </ProgramPath>
-    <CMDLine>
-    </CMDLine>
-    <WithoutBackground>False</WithoutBackground>
-    <BackgroundRed>0</BackgroundRed>
-    <BackgroundGreen>0</BackgroundGreen>
-    <BackgroundBlue>0</BackgroundBlue>
-    <CoverResolutionID>0</CoverResolutionID>
-    <CoverWidth>200</CoverWidth>
-    <CoverHeight>200</CoverHeight>
-    <URLCheck>False</URLCheck>
-    <TagsID />
-    <Favorite>True</Favorite>
-  </file>
   <file id="2">
     <IDFather>1</IDFather>
     <Name>ola</Name>
@@ -40,27 +19,6 @@
     <CoverWidth>200</CoverWidth>
     <CoverHeight>200</CoverHeight>
     <URLCheck>False</URLCheck>
-    <TagsID />
-    <Favorite>False</Favorite>
-  </file>
-  <file id="3">
-    <IDFather>0</IDFather>
-    <Name>Lethal company</Name>
-    <Image>System\Covers\element_Lethal company.png</Image>
-    <ImageLayout>0</ImageLayout>
-    <FilePath>steam://rungameid/1966720</FilePath>
-    <ProgramPath>
-    </ProgramPath>
-    <CMDLine>
-    </CMDLine>
-    <WithoutBackground>False</WithoutBackground>
-    <BackgroundRed>0</BackgroundRed>
-    <BackgroundGreen>0</BackgroundGreen>
-    <BackgroundBlue>0</BackgroundBlue>
-    <CoverResolutionID>0</CoverResolutionID>
-    <CoverWidth>200</CoverWidth>
-    <CoverHeight>200</CoverHeight>
-    <URLCheck>True</URLCheck>
     <TagsID />
     <Favorite>False</Favorite>
   </file>

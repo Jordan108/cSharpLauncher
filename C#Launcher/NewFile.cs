@@ -806,7 +806,7 @@ namespace C_Launcher
         private void buttonSearchCover_Click(object sender, EventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = "Archivos de imagen (*.png;*.jpg;*.jpeg;*.webp;)|*.png;*.jpg;*.jpeg;*.webp;";
+            openFileDialog.Filter = "Archivos de imagen (*.png;*.jpg;*.jpeg;*.webp;*.gif)|*.png;*.jpg;*.jpeg;*.webp;*.gif";
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 Image image;

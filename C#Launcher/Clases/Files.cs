@@ -410,25 +410,30 @@ namespace C_Launcher.Clases
                 string imgDir = root.SelectSingleNode("Image").InnerText;
                 if (imgDir != "")
                 {
-                    string folder = Path.GetDirectoryName(imgDir);
+                    string folder = Directory.GetCurrentDirectory() + "\\" + Path.GetDirectoryName(imgDir);
                     string workFolder = Directory.GetCurrentDirectory() + "\\" + dirCoversPath;
 
                     //Si la carpeta donde se ubica la imagen es System//Covers, eliminar el archivo
                     if (folder == workFolder)
                     {
+                        string fullImagePath = Directory.GetCurrentDirectory() + "\\" + imgDir;
                         try
                         {
                             //Solo eliminara el archivo si existe
-                            if (File.Exists(imgDir))
+                            if (File.Exists(fullImagePath))
                             {
+
                                 // Eliminar el archivo
-                                File.Delete(imgDir);
+                                File.Delete(fullImagePath);
                             }
                         }
                         catch (IOException ex)
                         {
                             Console.WriteLine("Error al eliminar el archivo: " + ex.Message);
                         }
+                    } else
+                    {
+                        Console.WriteLine($"la imagen: {imgDir}\nQue esta en: {folder}\nNo se encuentra en: {workFolder}");
                     }
                 }
 

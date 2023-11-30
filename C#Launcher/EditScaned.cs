@@ -814,7 +814,7 @@ namespace CoverPadLauncher
             int scanStartNumber = 1;
 
             scanStartNumber = Convert.ToInt32(Math.Round(numericScanStart.Value));
-            if (scanStartNumber == 0) scanStartNumber = 1;
+            //if (scanStartNumber == 0) scanStartNumber = 1;
 
             string[] scanOpenExtension;
             List<string> dgScanValue = new List<string>();

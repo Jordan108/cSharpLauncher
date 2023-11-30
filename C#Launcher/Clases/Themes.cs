@@ -237,7 +237,6 @@ namespace CoverPadLauncher.Clases
                 {
                     var valorVariable = match.Groups[1].Value.Trim();
 
-                    Console.WriteLine($"\nMatch succes, value {valorVariable}\n");
 
                     //Dependiendo de si el color es rgb o hexadecimal el proceso es diferente
                     if (valorVariable.StartsWith("rgb("))
@@ -274,7 +273,6 @@ namespace CoverPadLauncher.Clases
                     // Si no coincide con ningún formato conocido, devuelve blanco
                     return defaultColor;
                 }
-                Console.WriteLine("\nMatch Fail\n");
                 // Si no se encuentra la variable, devuelve blanco
                 return defaultColor;
             } catch (Exception) {
