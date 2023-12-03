@@ -36,7 +36,7 @@ namespace C_Launcher
 
     public partial class Home : Form
     {
-        private static string AppVersion = "0.8.0";
+        private static string AppVersion = "0.9.0";
         //private static string UptVersion = "0.0.1";
 
         private PictureBox[] picBoxArr = new PictureBox[0];//Crear el array de picBox que se mantendra en memoria
