@@ -8,7 +8,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <Compile Remove="CoverPadLauncher-Updater\**" />
+    <EmbeddedResource Remove="CoverPadLauncher-Updater\**" />
+    <None Remove="CoverPadLauncher-Updater\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 
 </Project>

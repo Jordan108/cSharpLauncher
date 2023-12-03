@@ -36,7 +36,8 @@ namespace C_Launcher
 
     public partial class Home : Form
     {
-        private static string AppVersion = "0.9.0";
+        private static string AppVersion = "0.8.0";
+        //private static string UptVersion = "0.0.1";
 
         private PictureBox[] picBoxArr = new PictureBox[0];//Crear el array de picBox que se mantendra en memoria
         //Crea el array de las colecciones y los archivos (solo contendran las colecciones que se mostraran en en la vista)
@@ -204,6 +205,7 @@ namespace C_Launcher
             
         }
 
+        #region Descargar actualizaciones
         private bool checkUpdate()
         {
             string nameUser = "Jordan108";
@@ -231,9 +233,20 @@ namespace C_Launcher
                         var result = MessageBox.Show(message, "Actualizar", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
                         if (result == DialogResult.Yes)
                         {
-                            //Si se confirma la actualizacion, llamar al updater
                             string updaterPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\Updater.exe";
-                            //Process.Start(updaterPath, $"{zipUrl} {downloadPath} {extractPath}");
+
+                            //Ahora se comprueba que existe el updater antes de abrirlo, sino, se descarga el actualizador
+                            if (!File.Exists(updaterPath))
+                            {
+                                downloadUpdater();
+                            }
+                            //Por verificacion, ver si existe el zip del updater para eliminarlo
+                            if (File.Exists(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), $"CoverPadLauncher-Updater.zip")))
+                            {
+                                File.Delete(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), $"CoverPadLauncher-Updater.zip"));
+                            }
+                            //Si se confirma la actualizacion, llamar al updater
+                            
                             Process.Start(updaterPath);
                             //Cerrar CoverPadLauncher para que el updater pueda extraer el zip
                             Environment.Exit(0);
@@ -247,6 +260,59 @@ namespace C_Launcher
             }
             return false;
         }
+        private void downloadUpdater()
+        {
+            string nameUser = "Jordan108";
+            string nameRepo = "CoverPadLauncher-Updater";
+            string zipPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), $"CoverPadLauncher-Updater.zip");
+            //string extractPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+
+            try
+            {
+                HttpClient client = new HttpClient();
+                client.BaseAddress = new Uri($"https://api.github.com/repos/{nameUser}/{nameRepo}/releases/latest");
+                client.DefaultRequestHeaders.Add("User-Agent", "CoverPadLauncher");//Tengo que establecer el user agent o la api rechaza la solicitud por que webos
+
+                //Header en formato json
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = client.GetAsync("").Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    //Analizar la respuesta
+                    var apiResponse = response.Content.ReadAsStringAsync().Result;
+                    JObject release = JObject.Parse(apiResponse);//Serializar el objetoJson
+
+                    //latestVersion = release["tag_name"].ToString();
+
+                    string zipUrl = release["assets"][0]["browser_download_url"].ToString();
+
+                    using (WebClient webClient = new WebClient())
+                    {
+                        Console.WriteLine($"Descargando Actualizador desde: {zipUrl} - {zipPath}");
+                        webClient.DownloadFile(new Uri(zipUrl), zipPath);
+                    }
+
+                    //System.IO.Compression.ZipFile.ExtractToDirectory(apiResponse, zipPath);
+                    ZipArchive zipArchive = ZipFile.OpenRead(zipPath);
+                    foreach (ZipArchiveEntry entry in zipArchive.Entries)
+                    {
+                        entry.ExtractToFile(entry.Name, true);
+                    }
+                    zipArchive.Dispose();
+                    File.Delete(zipPath);
+                    
+
+                    //ahora el proceso vuelve a continuar en checkUpdate();
+                }
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"Error al intentar descargar la actualizacion\n{e}");
+            }
+        }
+
+        #endregion
 
         #region ToolStrip
         #region panel ToolStrip

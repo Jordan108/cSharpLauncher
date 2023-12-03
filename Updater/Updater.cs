@@ -18,12 +18,14 @@ namespace Updater
             string zipPath = Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), $"CoverPadLauncher-Update.zip");
             string extractPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
 
-            downloadZip(zipPath, extractPath);
+            Console.WriteLine("Iniciando descarga...");
+            downloadZip(zipPath);
+            Console.WriteLine("Extrayendo el zip...");
             ExtractZip(zipPath, extractPath);
 
         }
 
-        static void downloadZip(string zipPath, string extractPath)
+        static void downloadZip(string zipPath)
         {
             string nameUser = "Jordan108";
             string nameRepo = "cSharpLauncher";
@@ -51,11 +53,9 @@ namespace Updater
                     using (WebClient webClient = new WebClient())
                     {
                         Console.WriteLine($"Descargando desde: {zipUrl} - {zipPath}");
-                        webClient.DownloadFile(zipUrl, zipPath);
+                        Console.WriteLine("Puede llegar a tardar un poco...");
 
-                        // Reiniciar la aplicacion
-                        //System.Diagnostics.Process.Start(System.Reflection.Assembly.GetExecutingAssembly().Location);
-                        //Environment.Exit(0);
+                        webClient.DownloadFile(new Uri(zipUrl), zipPath);
                     }
                 }
             }
@@ -65,15 +65,15 @@ namespace Updater
             }
         }
 
+
         static void ExtractZip(string zipPath, string extractPath)
         {
             //Primero extraer el zip
-            Console.WriteLine("Extrayendo el zip...");
+            
             ZipFile.ExtractToDirectory(zipPath, extractPath, true);
             Console.WriteLine("Limpiando...");
             //Luego de extraerlo, eliminarlo
             File.Delete(zipPath);
-
             //Despues abrir coverpad y cerrar el updater
             Console.WriteLine("Abriendo CoverPad Launcher ...");
             string updaterPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\CoverPadLauncher.exe";
