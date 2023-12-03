@@ -4,8 +4,9 @@ using System.IO.Compression;
 using System.Net.Http.Headers;
 using System.Net;
 using System.Reflection;
-using Newtonsoft.Json.Linq;
+//using Newtonsoft.Json.Linq;
 using System.Diagnostics;
+using System.Text.Json;
 
 namespace Updater
 { 
@@ -44,11 +45,15 @@ namespace Updater
                 {
                     //Analizar la respuesta
                     var apiResponse = response.Content.ReadAsStringAsync().Result;
-                    JObject release = JObject.Parse(apiResponse);//Serializar el objetoJson
-                   
+                    //JObject release = JObject.Parse(apiResponse);//Serializar el objetoJson
+                    // Utilizando System.Text.Json para parsear el JSON
+                    JsonDocument document = JsonDocument.Parse(apiResponse);
+                    // Obtener la raíz del documento JSON
+                    JsonElement root = document.RootElement;
                     //latestVersion = release["tag_name"].ToString();
-
-                    string zipUrl = release["assets"][0]["browser_download_url"].ToString();
+                    // Acceder a los datos utilizando System.Text.Json
+                    string zipUrl = root.GetProperty("assets")[0].GetProperty("browser_download_url").GetString();
+                    //string zipUrl = release["assets"][0]["browser_download_url"].ToString();
 
                     using (WebClient webClient = new WebClient())
                     {

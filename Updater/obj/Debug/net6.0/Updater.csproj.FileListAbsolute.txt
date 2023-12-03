@@ -13,5 +13,3 @@ D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\Updater\obj\Debug\net6.0\refint\
 D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\Updater\obj\Debug\net6.0\Updater.pdb
 D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\Updater\obj\Debug\net6.0\Updater.genruntimeconfig.cache
 D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\Updater\obj\Debug\net6.0\ref\Updater.dll
-D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\Updater\bin\Debug\net6.0\Newtonsoft.Json.dll
-D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\Updater\obj\Debug\net6.0\Updater.csproj.CopyComplete

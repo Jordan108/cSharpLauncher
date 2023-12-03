@@ -1,10 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "N7Vlo/746UxnofbVxItPpvUlD6ulvNCCpTTQ7XCCqEsbK+RpTUY7oxKz6n9VbM2jFyxjkJMYxm4zk4CeDFB9qA==",
+  "dgSpecHash": "P706j35uDgVehYzzPN6jQtdYPmTsTVaRK7/PT3A0D7y8Bscj7RgQsRTpC2bujk1E3j2BanM8kLtZAt4EfWSG3Q==",
   "success": true,
   "projectFilePath": "D:\\Bibliotecas\\Documentos\\GitHub\\cSharpLauncher\\Updater\\Updater.csproj",
-  "expectedPackageFiles": [
-    "C:\\Users\\Jordan\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
-  ],
+  "expectedPackageFiles": [],
   "logs": []
 }
