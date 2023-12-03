@@ -33,6 +33,7 @@
             this.labelTheme = new System.Windows.Forms.Label();
             this.comboBoxThemes = new System.Windows.Forms.ComboBox();
             this.checkBoxPictureBoxRectangle = new System.Windows.Forms.CheckBox();
+            this.checkBoxUpdateCheck = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // buttonSave
@@ -97,12 +98,26 @@
             this.checkBoxPictureBoxRectangle.UseVisualStyleBackColor = true;
             this.checkBoxPictureBoxRectangle.CheckedChanged += new System.EventHandler(this.checkBoxPictureBoxRectangle_CheckedChanged);
             // 
+            // checkBoxUpdateCheck
+            // 
+            this.checkBoxUpdateCheck.AutoSize = true;
+            this.checkBoxUpdateCheck.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.checkBoxUpdateCheck.ForeColor = System.Drawing.SystemColors.Window;
+            this.checkBoxUpdateCheck.Location = new System.Drawing.Point(16, 95);
+            this.checkBoxUpdateCheck.Name = "checkBoxUpdateCheck";
+            this.checkBoxUpdateCheck.Size = new System.Drawing.Size(173, 17);
+            this.checkBoxUpdateCheck.TabIndex = 5;
+            this.checkBoxUpdateCheck.Text = "Buscar actualizaciones al iniciar";
+            this.checkBoxUpdateCheck.UseVisualStyleBackColor = true;
+            this.checkBoxUpdateCheck.CheckedChanged += new System.EventHandler(this.checkBoxUpdateCheck_CheckedChanged);
+            // 
             // Configuration
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(61)))), ((int)(((byte)(72)))));
             this.ClientSize = new System.Drawing.Size(800, 450);
+            this.Controls.Add(this.checkBoxUpdateCheck);
             this.Controls.Add(this.checkBoxPictureBoxRectangle);
             this.Controls.Add(this.comboBoxThemes);
             this.Controls.Add(this.labelTheme);
@@ -124,5 +139,6 @@
         private System.Windows.Forms.Label labelTheme;
         private System.Windows.Forms.ComboBox comboBoxThemes;
         private System.Windows.Forms.CheckBox checkBoxPictureBoxRectangle;
+        private System.Windows.Forms.CheckBox checkBoxUpdateCheck;
     }
 }

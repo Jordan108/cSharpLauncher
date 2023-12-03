@@ -31,8 +31,17 @@
             this.pictureBoxCover = new System.Windows.Forms.PictureBox();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.labelApi = new System.Windows.Forms.Label();
+            this.groupBoxSteamDBRes = new System.Windows.Forms.GroupBox();
+            this.radioButton1024x1024 = new System.Windows.Forms.RadioButton();
+            this.radioButton512x512 = new System.Windows.Forms.RadioButton();
+            this.radioButton660x930 = new System.Windows.Forms.RadioButton();
+            this.radioButton342x482 = new System.Windows.Forms.RadioButton();
+            this.radioButton920x430 = new System.Windows.Forms.RadioButton();
+            this.radioButton460x215 = new System.Windows.Forms.RadioButton();
+            this.radioButton600x900 = new System.Windows.Forms.RadioButton();
             this.buttonContinueType = new System.Windows.Forms.Button();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBoxApi = new System.Windows.Forms.GroupBox();
             this.radioButtonBooks = new System.Windows.Forms.RadioButton();
             this.radioButtonComics = new System.Windows.Forms.RadioButton();
             this.radioButtonMangas = new System.Windows.Forms.RadioButton();
@@ -58,7 +67,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCover)).BeginInit();
             this.tabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
-            this.groupBox1.SuspendLayout();
+            this.groupBoxSteamDBRes.SuspendLayout();
+            this.groupBoxApi.SuspendLayout();
             this.tabPage2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewNames)).BeginInit();
             this.tabPage3.SuspendLayout();
@@ -88,8 +98,10 @@
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.labelApi);
+            this.tabPage1.Controls.Add(this.groupBoxSteamDBRes);
             this.tabPage1.Controls.Add(this.buttonContinueType);
-            this.tabPage1.Controls.Add(this.groupBox1);
+            this.tabPage1.Controls.Add(this.groupBoxApi);
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
@@ -98,9 +110,114 @@
             this.tabPage1.Text = "Tipo";
             this.tabPage1.UseVisualStyleBackColor = true;
             // 
+            // labelApi
+            // 
+            this.labelApi.AutoSize = true;
+            this.labelApi.Location = new System.Drawing.Point(6, 3);
+            this.labelApi.Name = "labelApi";
+            this.labelApi.Size = new System.Drawing.Size(191, 13);
+            this.labelApi.TabIndex = 3;
+            this.labelApi.Text = "Api suministrada por SteamGridDB.com";
+            this.labelApi.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
+            // 
+            // groupBoxSteamDBRes
+            // 
+            this.groupBoxSteamDBRes.Controls.Add(this.radioButton1024x1024);
+            this.groupBoxSteamDBRes.Controls.Add(this.radioButton512x512);
+            this.groupBoxSteamDBRes.Controls.Add(this.radioButton660x930);
+            this.groupBoxSteamDBRes.Controls.Add(this.radioButton342x482);
+            this.groupBoxSteamDBRes.Controls.Add(this.radioButton920x430);
+            this.groupBoxSteamDBRes.Controls.Add(this.radioButton460x215);
+            this.groupBoxSteamDBRes.Controls.Add(this.radioButton600x900);
+            this.groupBoxSteamDBRes.Location = new System.Drawing.Point(418, 105);
+            this.groupBoxSteamDBRes.Name = "groupBoxSteamDBRes";
+            this.groupBoxSteamDBRes.Size = new System.Drawing.Size(281, 192);
+            this.groupBoxSteamDBRes.TabIndex = 2;
+            this.groupBoxSteamDBRes.TabStop = false;
+            this.groupBoxSteamDBRes.Text = "Resoluciones";
+            // 
+            // radioButton1024x1024
+            // 
+            this.radioButton1024x1024.AutoSize = true;
+            this.radioButton1024x1024.Location = new System.Drawing.Point(7, 162);
+            this.radioButton1024x1024.Name = "radioButton1024x1024";
+            this.radioButton1024x1024.Size = new System.Drawing.Size(158, 17);
+            this.radioButton1024x1024.TabIndex = 6;
+            this.radioButton1024x1024.Text = "1024x1024 (Cuadricular 1:1)";
+            this.radioButton1024x1024.UseVisualStyleBackColor = true;
+            this.radioButton1024x1024.CheckedChanged += new System.EventHandler(this.radioButton1024x1024_CheckedChanged);
+            // 
+            // radioButton512x512
+            // 
+            this.radioButton512x512.AutoSize = true;
+            this.radioButton512x512.Location = new System.Drawing.Point(7, 139);
+            this.radioButton512x512.Name = "radioButton512x512";
+            this.radioButton512x512.Size = new System.Drawing.Size(146, 17);
+            this.radioButton512x512.TabIndex = 5;
+            this.radioButton512x512.Text = "512x512 (Cuadricular 1:1)";
+            this.radioButton512x512.UseVisualStyleBackColor = true;
+            this.radioButton512x512.CheckedChanged += new System.EventHandler(this.radioButton512x512_CheckedChanged);
+            // 
+            // radioButton660x930
+            // 
+            this.radioButton660x930.AutoSize = true;
+            this.radioButton660x930.Location = new System.Drawing.Point(7, 115);
+            this.radioButton660x930.Name = "radioButton660x930";
+            this.radioButton660x930.Size = new System.Drawing.Size(155, 17);
+            this.radioButton660x930.TabIndex = 4;
+            this.radioButton660x930.Text = "660x930 (Galaxy 2.0 22:31)";
+            this.radioButton660x930.UseVisualStyleBackColor = true;
+            this.radioButton660x930.CheckedChanged += new System.EventHandler(this.radioButton660x930_CheckedChanged);
+            // 
+            // radioButton342x482
+            // 
+            this.radioButton342x482.AutoSize = true;
+            this.radioButton342x482.Location = new System.Drawing.Point(7, 91);
+            this.radioButton342x482.Name = "radioButton342x482";
+            this.radioButton342x482.Size = new System.Drawing.Size(155, 17);
+            this.radioButton342x482.TabIndex = 3;
+            this.radioButton342x482.Text = "342x482 (Galaxy 2.0 22:31)";
+            this.radioButton342x482.UseVisualStyleBackColor = true;
+            this.radioButton342x482.CheckedChanged += new System.EventHandler(this.radioButton342x482_CheckedChanged);
+            // 
+            // radioButton920x430
+            // 
+            this.radioButton920x430.AutoSize = true;
+            this.radioButton920x430.Location = new System.Drawing.Point(7, 67);
+            this.radioButton920x430.Name = "radioButton920x430";
+            this.radioButton920x430.Size = new System.Drawing.Size(152, 17);
+            this.radioButton920x430.TabIndex = 2;
+            this.radioButton920x430.Text = "920x430 (Horizontal 92:43)";
+            this.radioButton920x430.UseVisualStyleBackColor = true;
+            this.radioButton920x430.CheckedChanged += new System.EventHandler(this.radioButton920x430_CheckedChanged);
+            // 
+            // radioButton460x215
+            // 
+            this.radioButton460x215.AutoSize = true;
+            this.radioButton460x215.Location = new System.Drawing.Point(7, 44);
+            this.radioButton460x215.Name = "radioButton460x215";
+            this.radioButton460x215.Size = new System.Drawing.Size(152, 17);
+            this.radioButton460x215.TabIndex = 1;
+            this.radioButton460x215.Text = "460x215 (Horizontal 92:43)";
+            this.radioButton460x215.UseVisualStyleBackColor = true;
+            this.radioButton460x215.CheckedChanged += new System.EventHandler(this.radioButton460x215_CheckedChanged);
+            // 
+            // radioButton600x900
+            // 
+            this.radioButton600x900.AutoSize = true;
+            this.radioButton600x900.Checked = true;
+            this.radioButton600x900.Location = new System.Drawing.Point(7, 20);
+            this.radioButton600x900.Name = "radioButton600x900";
+            this.radioButton600x900.Size = new System.Drawing.Size(128, 17);
+            this.radioButton600x900.TabIndex = 0;
+            this.radioButton600x900.TabStop = true;
+            this.radioButton600x900.Text = "600x900 (Vertical 2:3)";
+            this.radioButton600x900.UseVisualStyleBackColor = true;
+            this.radioButton600x900.CheckedChanged += new System.EventHandler(this.radioButton600x900_CheckedChanged);
+            // 
             // buttonContinueType
             // 
-            this.buttonContinueType.Location = new System.Drawing.Point(664, 361);
+            this.buttonContinueType.Location = new System.Drawing.Point(668, 417);
             this.buttonContinueType.Name = "buttonContinueType";
             this.buttonContinueType.Size = new System.Drawing.Size(75, 23);
             this.buttonContinueType.TabIndex = 1;
@@ -108,20 +225,20 @@
             this.buttonContinueType.UseVisualStyleBackColor = true;
             this.buttonContinueType.Click += new System.EventHandler(this.buttonContinueType_Click);
             // 
-            // groupBox1
+            // groupBoxApi
             // 
-            this.groupBox1.Controls.Add(this.radioButtonBooks);
-            this.groupBox1.Controls.Add(this.radioButtonComics);
-            this.groupBox1.Controls.Add(this.radioButtonMangas);
-            this.groupBox1.Controls.Add(this.radioButtonSeries);
-            this.groupBox1.Controls.Add(this.radioButtonFilms);
-            this.groupBox1.Controls.Add(this.radioButtonGames);
-            this.groupBox1.Location = new System.Drawing.Point(20, 29);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(200, 180);
-            this.groupBox1.TabIndex = 0;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "¿Que estas importando?";
+            this.groupBoxApi.Controls.Add(this.radioButtonBooks);
+            this.groupBoxApi.Controls.Add(this.radioButtonComics);
+            this.groupBoxApi.Controls.Add(this.radioButtonMangas);
+            this.groupBoxApi.Controls.Add(this.radioButtonSeries);
+            this.groupBoxApi.Controls.Add(this.radioButtonFilms);
+            this.groupBoxApi.Controls.Add(this.radioButtonGames);
+            this.groupBoxApi.Location = new System.Drawing.Point(25, 105);
+            this.groupBoxApi.Name = "groupBoxApi";
+            this.groupBoxApi.Size = new System.Drawing.Size(200, 180);
+            this.groupBoxApi.TabIndex = 0;
+            this.groupBoxApi.TabStop = false;
+            this.groupBoxApi.Text = "¿Que estas importando?";
             // 
             // radioButtonBooks
             // 
@@ -177,9 +294,9 @@
             this.radioButtonFilms.AutoSize = true;
             this.radioButtonFilms.Location = new System.Drawing.Point(7, 54);
             this.radioButtonFilms.Name = "radioButtonFilms";
-            this.radioButtonFilms.Size = new System.Drawing.Size(67, 17);
+            this.radioButtonFilms.Size = new System.Drawing.Size(69, 17);
             this.radioButtonFilms.TabIndex = 1;
-            this.radioButtonFilms.Text = "Peliculas";
+            this.radioButtonFilms.Text = "Películas";
             this.radioButtonFilms.UseVisualStyleBackColor = true;
             this.radioButtonFilms.CheckedChanged += new System.EventHandler(this.radioButtonFilms_CheckedChanged);
             // 
@@ -205,7 +322,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(749, 482);
+            this.tabPage2.Size = new System.Drawing.Size(749, 459);
             this.tabPage2.TabIndex = 2;
             this.tabPage2.Text = "Confirmar Nombre";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -221,7 +338,7 @@
             // labelChangeNameWarning
             // 
             this.labelChangeNameWarning.AutoSize = true;
-            this.labelChangeNameWarning.Location = new System.Drawing.Point(237, 15);
+            this.labelChangeNameWarning.Location = new System.Drawing.Point(235, 27);
             this.labelChangeNameWarning.Name = "labelChangeNameWarning";
             this.labelChangeNameWarning.Size = new System.Drawing.Size(244, 13);
             this.labelChangeNameWarning.TabIndex = 7;
@@ -279,7 +396,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(749, 482);
+            this.tabPage3.Size = new System.Drawing.Size(749, 459);
             this.tabPage3.TabIndex = 1;
             this.tabPage3.Text = "Descargar";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -377,8 +494,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCover)).EndInit();
             this.tabControl.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
-            this.groupBox1.ResumeLayout(false);
-            this.groupBox1.PerformLayout();
+            this.tabPage1.PerformLayout();
+            this.groupBoxSteamDBRes.ResumeLayout(false);
+            this.groupBoxSteamDBRes.PerformLayout();
+            this.groupBoxApi.ResumeLayout(false);
+            this.groupBoxApi.PerformLayout();
             this.tabPage2.ResumeLayout(false);
             this.tabPage2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewNames)).EndInit();
@@ -393,7 +513,7 @@
         private System.Windows.Forms.PictureBox pictureBoxCover;
         private System.Windows.Forms.TabControl tabControl;
         private System.Windows.Forms.TabPage tabPage1;
-        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.GroupBox groupBoxApi;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.Button buttonContinueType;
         private System.Windows.Forms.RadioButton radioButtonFilms;
@@ -417,5 +537,14 @@
         private System.Windows.Forms.RadioButton radioButtonComics;
         private System.Windows.Forms.RadioButton radioButtonBooks;
         private System.Windows.Forms.ProgressBar progressBarDownload;
+        private System.Windows.Forms.GroupBox groupBoxSteamDBRes;
+        private System.Windows.Forms.RadioButton radioButton1024x1024;
+        private System.Windows.Forms.RadioButton radioButton512x512;
+        private System.Windows.Forms.RadioButton radioButton660x930;
+        private System.Windows.Forms.RadioButton radioButton342x482;
+        private System.Windows.Forms.RadioButton radioButton920x430;
+        private System.Windows.Forms.RadioButton radioButton460x215;
+        private System.Windows.Forms.RadioButton radioButton600x900;
+        private System.Windows.Forms.Label labelApi;
     }
 }

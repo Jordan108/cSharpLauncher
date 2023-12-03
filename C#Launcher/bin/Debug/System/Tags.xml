@@ -1,9 +1,2 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Launcher>
-  <tag id="1">
-    <Name>ses</Name>
-  </tag>
-  <tag id="2">
-    <Name>sos</Name>
-  </tag>
-</Launcher>
+<Launcher />

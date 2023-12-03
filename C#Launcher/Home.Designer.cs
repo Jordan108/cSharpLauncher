@@ -50,10 +50,10 @@
             this.administrarEtiquetasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.herramientasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.configuracionesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.importaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.flowLayoutPanelMain = new System.Windows.Forms.FlowLayoutPanel();
             this.treeViewMain = new System.Windows.Forms.TreeView();
             this.splitter1 = new System.Windows.Forms.Splitter();
+            this.buscarActualizacionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelTop.SuspendLayout();
             this.menuStripMain.SuspendLayout();
             this.SuspendLayout();
@@ -201,14 +201,14 @@
             this.fechaDeCreacionToolStripMenuItem.Checked = true;
             this.fechaDeCreacionToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.fechaDeCreacionToolStripMenuItem.Name = "fechaDeCreacionToolStripMenuItem";
-            this.fechaDeCreacionToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.fechaDeCreacionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.fechaDeCreacionToolStripMenuItem.Text = "Fecha de creacion";
             this.fechaDeCreacionToolStripMenuItem.Click += new System.EventHandler(this.fechaDeCreacionToolStripMenuItem_Click);
             // 
             // nombreToolStripMenuItem
             // 
             this.nombreToolStripMenuItem.Name = "nombreToolStripMenuItem";
-            this.nombreToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
+            this.nombreToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.nombreToolStripMenuItem.Text = "Nombre";
             this.nombreToolStripMenuItem.Click += new System.EventHandler(this.nombreToolStripMenuItem_Click);
             // 
@@ -263,7 +263,7 @@
             // 
             this.herramientasToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.configuracionesToolStripMenuItem,
-            this.importaToolStripMenuItem});
+            this.buscarActualizacionToolStripMenuItem});
             this.herramientasToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Window;
             this.herramientasToolStripMenuItem.Name = "herramientasToolStripMenuItem";
             this.herramientasToolStripMenuItem.Size = new System.Drawing.Size(90, 22);
@@ -272,16 +272,9 @@
             // configuracionesToolStripMenuItem
             // 
             this.configuracionesToolStripMenuItem.Name = "configuracionesToolStripMenuItem";
-            this.configuracionesToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
+            this.configuracionesToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
             this.configuracionesToolStripMenuItem.Text = "Configuraciones";
             this.configuracionesToolStripMenuItem.Click += new System.EventHandler(this.configuracionesToolStripMenuItem_Click);
-            // 
-            // importaToolStripMenuItem
-            // 
-            this.importaToolStripMenuItem.Name = "importaToolStripMenuItem";
-            this.importaToolStripMenuItem.Size = new System.Drawing.Size(161, 22);
-            this.importaToolStripMenuItem.Text = "Importar Juegos";
-            this.importaToolStripMenuItem.Click += new System.EventHandler(this.importaToolStripMenuItem_Click);
             // 
             // flowLayoutPanelMain
             // 
@@ -322,6 +315,13 @@
             this.splitter1.TabIndex = 3;
             this.splitter1.TabStop = false;
             // 
+            // buscarActualizacionToolStripMenuItem
+            // 
+            this.buscarActualizacionToolStripMenuItem.Name = "buscarActualizacionToolStripMenuItem";
+            this.buscarActualizacionToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.buscarActualizacionToolStripMenuItem.Text = "Buscar actualizacion";
+            this.buscarActualizacionToolStripMenuItem.Click += new System.EventHandler(this.buscarActualizacionToolStripMenuItem_Click);
+            // 
             // Home
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -335,9 +335,10 @@
             this.MainMenuStrip = this.menuStripMain;
             this.MinimumSize = new System.Drawing.Size(352, 294);
             this.Name = "Home";
-            this.Text = "Cover Pad Launcher 0.1.0";
+            this.Text = "Cover Pad Launcher";
             this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.Home_FormClosed);
+            this.Shown += new System.EventHandler(this.Home_Shown);
             this.panelTop.ResumeLayout(false);
             this.panelTop.PerformLayout();
             this.menuStripMain.ResumeLayout(false);
@@ -372,6 +373,6 @@
         private System.Windows.Forms.ToolStripMenuItem administrarEtiquetasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem herramientasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem configuracionesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem importaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem buscarActualizacionToolStripMenuItem;
     }
 }

@@ -51,8 +51,8 @@
             this.labelScanStart = new System.Windows.Forms.Label();
             this.numericScanStart = new System.Windows.Forms.NumericUpDown();
             this.dataGridViewScanOpenExtension = new System.Windows.Forms.DataGridView();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.checkBoxImageLocation = new System.Windows.Forms.CheckBox();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.panelImageLimit.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCover)).BeginInit();
             this.groupBoxSize.SuspendLayout();
@@ -109,7 +109,7 @@
             this.buttonSearchCover.Name = "buttonSearchCover";
             this.buttonSearchCover.Size = new System.Drawing.Size(115, 23);
             this.buttonSearchCover.TabIndex = 25;
-            this.buttonSearchCover.Text = "Seleccionar Caratula";
+            this.buttonSearchCover.Text = "Seleccionar caratula";
             this.buttonSearchCover.UseVisualStyleBackColor = false;
             this.buttonSearchCover.Click += new System.EventHandler(this.buttonSearchCover_Click);
             // 
@@ -157,7 +157,7 @@
             this.labelResolution.Name = "labelResolution";
             this.labelResolution.Size = new System.Drawing.Size(60, 13);
             this.labelResolution.TabIndex = 34;
-            this.labelResolution.Text = "Resolucion";
+            this.labelResolution.Text = "Resolución";
             // 
             // comboBoxResolution
             // 
@@ -354,12 +354,6 @@
             this.dataGridViewScanOpenExtension.Size = new System.Drawing.Size(104, 115);
             this.dataGridViewScanOpenExtension.TabIndex = 44;
             // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "Extension";
-            this.Column1.MinimumWidth = 8;
-            this.Column1.Name = "Column1";
-            // 
             // checkBoxImageLocation
             // 
             this.checkBoxImageLocation.AutoSize = true;
@@ -369,8 +363,14 @@
             this.checkBoxImageLocation.Name = "checkBoxImageLocation";
             this.checkBoxImageLocation.Size = new System.Drawing.Size(212, 17);
             this.checkBoxImageLocation.TabIndex = 45;
-            this.checkBoxImageLocation.Text = "Utilizar la imagen en su ubicacion actual";
+            this.checkBoxImageLocation.Text = "Utilizar la imagen en su ubicación actual";
             this.checkBoxImageLocation.UseVisualStyleBackColor = true;
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "Extensión";
+            this.Column1.MinimumWidth = 8;
+            this.Column1.Name = "Column1";
             // 
             // EditScaned
             // 
@@ -439,7 +439,7 @@
         private System.Windows.Forms.Label labelScanStart;
         private System.Windows.Forms.NumericUpDown numericScanStart;
         private System.Windows.Forms.DataGridView dataGridViewScanOpenExtension;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.CheckBox checkBoxImageLocation;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
     }
 }

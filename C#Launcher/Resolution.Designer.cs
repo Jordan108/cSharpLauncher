@@ -52,7 +52,7 @@
             this.buttonSearchSonCoverTest.Name = "buttonSearchSonCoverTest";
             this.buttonSearchSonCoverTest.Size = new System.Drawing.Size(170, 23);
             this.buttonSearchSonCoverTest.TabIndex = 17;
-            this.buttonSearchSonCoverTest.Text = "Seleccionar Caratula de prueba";
+            this.buttonSearchSonCoverTest.Text = "Seleccionar caratula de prueba";
             this.buttonSearchSonCoverTest.UseVisualStyleBackColor = false;
             this.buttonSearchSonCoverTest.Click += new System.EventHandler(this.buttonSearchSonCoverTest_Click);
             // 

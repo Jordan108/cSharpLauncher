@@ -19,10 +19,17 @@ namespace CoverPadLauncher.Clases
 
         public string XMLDefaultReturn(XmlNode node, string singleNode, string defaultValue)
         {
-            XmlNode selectedNode = node.SelectSingleNode(singleNode);
-            if (selectedNode != null)
+            
+            try
             {
-                return selectedNode.InnerText;
+                XmlNode selectedNode = node.SelectSingleNode(singleNode);
+                if (selectedNode != null)
+                {
+                    return selectedNode.InnerText;
+                }
+            } catch (Exception)
+            {
+                Console.WriteLine("Devolviendo valor por default");
             }
             return defaultValue;
         }

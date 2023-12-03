@@ -1,14 +1,38 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Launcher>
-  <file id="2">
-    <IDFather>1</IDFather>
+  <file id="1">
+    <IDFather>0</IDFather>
     <Name>ola</Name>
     <Image>
     </Image>
     <ImageLayout>0</ImageLayout>
     <FilePath>
     </FilePath>
-    <ProgramPath>D:\Bibliotecas\Juegos\Citra\nightly\citra-qt.exe</ProgramPath>
+    <ProgramPath>
+    </ProgramPath>
+    <CMDLine>
+    </CMDLine>
+    <WithoutBackground>False</WithoutBackground>
+    <BackgroundRed>0</BackgroundRed>
+    <BackgroundGreen>0</BackgroundGreen>
+    <BackgroundBlue>0</BackgroundBlue>
+    <CoverResolutionID>0</CoverResolutionID>
+    <CoverWidth>200</CoverWidth>
+    <CoverHeight>200</CoverHeight>
+    <URLCheck>False</URLCheck>
+    <TagsID />
+    <Favorite>False</Favorite>
+  </file>
+  <file id="2">
+    <IDFather>1</IDFather>
+    <Name>ola</Name>
+    <Image>
+    </Image>
+    <ImageLayout>1</ImageLayout>
+    <FilePath>
+    </FilePath>
+    <ProgramPath>
+    </ProgramPath>
     <CMDLine>
     </CMDLine>
     <WithoutBackground>False</WithoutBackground>

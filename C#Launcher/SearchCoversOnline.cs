@@ -21,6 +21,7 @@ namespace CoverPadLauncher
         public event EventHandler<string[,]> ReturnedObject;
 
         private int type = 0;//El tipo de multimedia a buscar (juegos, peliculas/series)
+        private int steamDBDimension = 0;//0-600x900 1-460x214 2-920x430 3-342x482 4-660x930 5-512x512 6-1024x1024
 
         private string[] names;
         private string[] routes;
@@ -81,7 +82,7 @@ namespace CoverPadLauncher
             tabPage3.BackColor = theme.WindowBackground;
 
             //Textos
-            groupBox1.ForeColor = theme.LabelText;
+            groupBoxApi.ForeColor = theme.LabelText;
             radioButtonGames.ForeColor = theme.LabelText;
             radioButtonFilms.ForeColor = theme.LabelText;
             radioButtonSeries.ForeColor = theme.LabelText;
@@ -90,6 +91,15 @@ namespace CoverPadLauncher
             radioButtonBooks.ForeColor = theme.LabelText;
             labelChangeNameWarning.ForeColor = theme.LabelText;
             labelCoverArraySelected.ForeColor = theme.LabelText;
+            groupBoxSteamDBRes.ForeColor = theme.LabelText;
+            radioButton600x900.ForeColor = theme.LabelText;
+            radioButton460x215.ForeColor = theme.LabelText;
+            radioButton920x430.ForeColor = theme.LabelText;
+            radioButton342x482.ForeColor = theme.LabelText;
+            radioButton660x930.ForeColor = theme.LabelText;
+            radioButton512x512.ForeColor = theme.LabelText;
+            radioButton1024x1024.ForeColor = theme.LabelText;
+            labelApi.ForeColor = theme.LabelText;
 
             //Botones
             buttonContinueType.BackColor = theme.ButtonBackground;
@@ -102,6 +112,7 @@ namespace CoverPadLauncher
             buttonCoverNext.ForeColor = theme.ButtonText;
             buttonFinish.BackColor = theme.ButtonBackground;
             buttonFinish.ForeColor = theme.ButtonText;
+
             //Datagridview
             dataGridViewNames.BackgroundColor = theme.DataGridBackground;
             dataGridViewNames.GridColor = theme.DataGridBorder;
@@ -131,15 +142,21 @@ namespace CoverPadLauncher
                 //Buscar el juego por palabra clave (buscara todas las coincidencias)
                 var games = await instance.SearchForGamesAsync(gameName);
 
+                SteamGridDbDimensions dimension = SteamGridDbDimensions.W600H900;//PorDefault
+
+                switch (steamDBDimension)
+                {
+                    //El caso 0 o default ya esta descrito en la inilizacion de la variable
+                    case 1: dimension = SteamGridDbDimensions.W460H215; break;
+                    case 2: dimension = SteamGridDbDimensions.W920H430; break;
+                    case 3: dimension = SteamGridDbDimensions.W342H482; break;
+                    case 4: dimension = SteamGridDbDimensions.W660H930; break;
+                    case 5: dimension = SteamGridDbDimensions.W512H512; break;
+                    case 6: dimension = SteamGridDbDimensions.W1024H1024; break;
+                }
 
                 //SteamGridDb Game, bool nsfw, bool humorous, bool epilepsy, int page, SteamGridDbTags, SteamGridDbStyles, SteamGridDbDimensions, SteamGridDbFormats, SteamGridDbTypes
-                var grids = await instance.GetGridsForGameAsync(games[0], false, false, false, 0, SteamGridDbTags.None, SteamGridDbStyles.AllGrids, SteamGridDbDimensions.W600H900, SteamGridDbFormats.All, SteamGridDbTypes.Static);
-
-
-                /*foreach (var grid in grids)
-                {
-                    Console.WriteLine(grid.FullImageUrl);
-                }*/
+                var grids = await instance.GetGridsForGameAsync(games[0], false, false, false, 0, SteamGridDbTags.None, SteamGridDbStyles.AllGrids, dimension, SteamGridDbFormats.All, SteamGridDbTypes.Static);
 
                 string[] returnstring = new string[grids.Count()];
                 //Array.Resize(ref coversUrl, grids.Count());
@@ -654,18 +671,6 @@ namespace CoverPadLauncher
             
         }
 
-        /*private static string GetFinalImageUrl(string imageUrl)
-        {
-            HttpWebRequest request = (HttpWebRequest)WebRequest.Create(imageUrl);
-            request.AllowAutoRedirect = true; // Habilita el seguimiento de redirecciones
-
-            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
-            {
-                // La propiedad ResponseUri contiene la URL final después de seguir las redirecciones
-                return response.ResponseUri.ToString();
-            }
-        }*/
-
         private void buttonCoverNext_Click(object sender, EventArgs e)
         {
             int sR = dataGridViewCovers.CurrentCell.RowIndex;//Fila seleccionada
@@ -726,35 +731,91 @@ namespace CoverPadLauncher
             }
         }
 
+        #region Cambiar la dimension de la api de steam
+        private void radioButton600x900_CheckedChanged(object sender, EventArgs e)
+        {
+            steamDBDimension = 0;
+        }
+
+        private void radioButton460x215_CheckedChanged(object sender, EventArgs e)
+        {
+            steamDBDimension = 1;
+        }
+
+        private void radioButton920x430_CheckedChanged(object sender, EventArgs e)
+        {
+            steamDBDimension = 2;
+        }
+
+        private void radioButton342x482_CheckedChanged(object sender, EventArgs e)
+        {
+            steamDBDimension = 3;
+        }
+
+        private void radioButton660x930_CheckedChanged(object sender, EventArgs e)
+        {
+            steamDBDimension = 4;
+        }
+
+        private void radioButton512x512_CheckedChanged(object sender, EventArgs e)
+        {
+            steamDBDimension = 5;
+        }
+
+        private void radioButton1024x1024_CheckedChanged(object sender, EventArgs e)
+        {
+            steamDBDimension = 6;
+        }
+        #endregion
+
+        #region Cambiar la API
         private void radioButtonGames_CheckedChanged(object sender, EventArgs e)
         {
-            type = 0;
+            if (radioButtonGames.Checked == true)
+            {
+                type = 0;
+                labelApi.Text = "Api suministrada por SteamGridDB.com";
+                groupBoxSteamDBRes.Visible = true;
+                groupBoxSteamDBRes.Enabled = true;
+            } else
+            {
+                groupBoxSteamDBRes.Visible = false;
+                groupBoxSteamDBRes.Enabled = false;
+            }
+            
         }
 
         private void radioButtonFilms_CheckedChanged(object sender, EventArgs e)
         {
             type = 1;
+            labelApi.Text = "Api suministrada por TheMovieDB.org";
         }
 
         private void radioButtonSeries_CheckedChanged(object sender, EventArgs e)
         {
             type = 2;
+            labelApi.Text = "Api suministrada por TheMovieDB.org";
         }
 
         private void radioButtonMangas_CheckedChanged(object sender, EventArgs e)
         {
             type = 3;
+            labelApi.Text = "Api suministrada por MangaDex.org";
         }
 
         private void radioButtonComics_CheckedChanged(object sender, EventArgs e)
         {
             type = 4;
+            labelApi.Text = "Api suministrada por Comicvine.gamespot.com";
         }
 
         private void radioButtonBooks_CheckedChanged(object sender, EventArgs e)
         {
             type = 5;
+            labelApi.Text = "Api suministrada por OpenLibrary.org";
         }
+
+        #endregion
 
         private void updateProgressBar(int actualProgress, int maxProgress)
         {
@@ -787,5 +848,7 @@ namespace CoverPadLauncher
             ReturnedObject?.Invoke(this, passFile);
             this.Close();
         }
+
+        
     }
 }

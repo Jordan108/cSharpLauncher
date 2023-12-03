@@ -64,7 +64,6 @@
             this.textBoxScanFolder = new System.Windows.Forms.TextBox();
             this.buttonSearchDir = new System.Windows.Forms.Button();
             this.dataGridViewScanOpenExtension = new System.Windows.Forms.DataGridView();
-            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.numericScanStart = new System.Windows.Forms.NumericUpDown();
             this.labelExecuteFile = new System.Windows.Forms.Label();
             this.buttonDeleteCover = new System.Windows.Forms.Button();
@@ -86,6 +85,7 @@
             this.groupBoxSon = new System.Windows.Forms.GroupBox();
             this.labelSonWarning = new System.Windows.Forms.Label();
             this.buttonCoverOnline = new System.Windows.Forms.Button();
+            this.Column1 = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.groupBoxCover.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.numericColHeight)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericColWidth)).BeginInit();
@@ -121,7 +121,7 @@
             this.labelName.Name = "labelName";
             this.labelName.Size = new System.Drawing.Size(96, 13);
             this.labelName.TabIndex = 1;
-            this.labelName.Text = "Nombre coleccion:";
+            this.labelName.Text = "Nombre colección:";
             // 
             // comboBoxFather
             // 
@@ -143,7 +143,7 @@
             this.labelFather.Name = "labelFather";
             this.labelFather.Size = new System.Drawing.Size(87, 13);
             this.labelFather.TabIndex = 3;
-            this.labelFather.Text = "Padre coleccion:";
+            this.labelFather.Text = "Colección padre:";
             // 
             // comboBoxResolutionCol
             // 
@@ -166,7 +166,7 @@
             this.labelResolutionCol.Name = "labelResolutionCol";
             this.labelResolutionCol.Size = new System.Drawing.Size(109, 13);
             this.labelResolutionCol.TabIndex = 5;
-            this.labelResolutionCol.Text = "Resolucion coleccion";
+            this.labelResolutionCol.Text = "Resolución colección";
             // 
             // groupBoxCover
             // 
@@ -375,7 +375,7 @@
             this.labelContentRes.Name = "labelContentRes";
             this.labelContentRes.Size = new System.Drawing.Size(127, 13);
             this.labelContentRes.TabIndex = 12;
-            this.labelContentRes.Text = "Resolucion del contenido";
+            this.labelContentRes.Text = "Resolución del contenido";
             // 
             // groupBoxSonFormat
             // 
@@ -422,7 +422,7 @@
             this.buttonSearchCover.Name = "buttonSearchCover";
             this.buttonSearchCover.Size = new System.Drawing.Size(118, 23);
             this.buttonSearchCover.TabIndex = 13;
-            this.buttonSearchCover.Text = "Seleccionar Caratula";
+            this.buttonSearchCover.Text = "Seleccionar caratula";
             this.buttonSearchCover.UseVisualStyleBackColor = false;
             this.buttonSearchCover.Click += new System.EventHandler(this.buttonSearchCover_Click);
             // 
@@ -529,12 +529,6 @@
             this.dataGridViewScanOpenExtension.RowTemplate.Height = 28;
             this.dataGridViewScanOpenExtension.Size = new System.Drawing.Size(104, 203);
             this.dataGridViewScanOpenExtension.TabIndex = 39;
-            // 
-            // Column1
-            // 
-            this.Column1.HeaderText = "Extension";
-            this.Column1.MinimumWidth = 8;
-            this.Column1.Name = "Column1";
             // 
             // numericScanStart
             // 
@@ -801,7 +795,7 @@
             this.labelSonWarning.Name = "labelSonWarning";
             this.labelSonWarning.Size = new System.Drawing.Size(225, 13);
             this.labelSonWarning.TabIndex = 51;
-            this.labelSonWarning.Text = "La caratula seleccionada no sera almacenada";
+            this.labelSonWarning.Text = "La caratula seleccionada no será almacenada";
             // 
             // buttonCoverOnline
             // 
@@ -812,9 +806,15 @@
             this.buttonCoverOnline.Name = "buttonCoverOnline";
             this.buttonCoverOnline.Size = new System.Drawing.Size(145, 23);
             this.buttonCoverOnline.TabIndex = 52;
-            this.buttonCoverOnline.Text = "Buscar Caratula Online";
+            this.buttonCoverOnline.Text = "Buscar caratula online";
             this.buttonCoverOnline.UseVisualStyleBackColor = false;
             this.buttonCoverOnline.Click += new System.EventHandler(this.buttonCoverOnline_Click);
+            // 
+            // Column1
+            // 
+            this.Column1.HeaderText = "Extensión";
+            this.Column1.MinimumWidth = 8;
+            this.Column1.Name = "Column1";
             // 
             // NewCollection
             // 
@@ -865,7 +865,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "NewCollection";
-            this.Text = "Nueva Coleccion";
+            this.Text = "Nueva colección";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.NewCollection_FormClosed);
             this.groupBoxCover.ResumeLayout(false);
             this.groupBoxCover.PerformLayout();
@@ -932,7 +932,6 @@
         private System.Windows.Forms.Button buttonDeleteCover;
         private System.Windows.Forms.Button buttonDeleteTestCover;
         private System.Windows.Forms.DataGridView dataGridViewTags;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Column2;
         private System.Windows.Forms.DataGridViewTextBoxColumn dataGridViewTextBoxColumn1;
         private System.Windows.Forms.DataGridViewCheckBoxColumn Column3;
@@ -949,5 +948,6 @@
         private System.Windows.Forms.GroupBox groupBoxSon;
         private System.Windows.Forms.Label labelSonWarning;
         private System.Windows.Forms.Button buttonCoverOnline;
+        private System.Windows.Forms.DataGridViewTextBoxColumn Column1;
     }
 }

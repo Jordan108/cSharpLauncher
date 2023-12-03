@@ -29,18 +29,6 @@
         private void InitializeComponent()
         {
             this.dataGridViewFiles = new System.Windows.Forms.DataGridView();
-            this.ColumnName = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnCheckBox = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.ColumnFile = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnProgram = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnCMD = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnWidth = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnHeight = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnRes = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.ColumnCover = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ColumnFormat = new System.Windows.Forms.DataGridViewComboBoxColumn();
-            this.checkBackgroundColor = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.ColumnColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.labelFather = new System.Windows.Forms.Label();
             this.comboBoxFather = new System.Windows.Forms.ComboBox();
             this.buttonSave = new System.Windows.Forms.Button();
@@ -67,6 +55,18 @@
             this.buttonSearchCoverOnlineRow = new System.Windows.Forms.Button();
             this.buttonSelectCover = new System.Windows.Forms.Button();
             this.buttonDeleteCoverRow = new System.Windows.Forms.Button();
+            this.ColumnName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnCheckBox = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.ColumnFile = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnProgram = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnCMD = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnWidth = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnHeight = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnRes = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.ColumnCover = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ColumnFormat = new System.Windows.Forms.DataGridViewComboBoxColumn();
+            this.checkBackgroundColor = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.ColumnColor = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewFiles)).BeginInit();
             this.panelImageLimit.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCover)).BeginInit();
@@ -103,102 +103,6 @@
             this.dataGridViewFiles.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewFiles_CellClick);
             this.dataGridViewFiles.CellEndEdit += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridViewFiles_CellEndEdit);
             // 
-            // ColumnName
-            // 
-            this.ColumnName.HeaderText = "Nombre";
-            this.ColumnName.MinimumWidth = 8;
-            this.ColumnName.Name = "ColumnName";
-            this.ColumnName.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.ColumnName.Width = 150;
-            // 
-            // ColumnCheckBox
-            // 
-            this.ColumnCheckBox.HeaderText = "URL";
-            this.ColumnCheckBox.MinimumWidth = 8;
-            this.ColumnCheckBox.Name = "ColumnCheckBox";
-            this.ColumnCheckBox.Width = 50;
-            // 
-            // ColumnFile
-            // 
-            this.ColumnFile.HeaderText = "Ruta archivo";
-            this.ColumnFile.MinimumWidth = 8;
-            this.ColumnFile.Name = "ColumnFile";
-            this.ColumnFile.ReadOnly = true;
-            this.ColumnFile.Width = 150;
-            // 
-            // ColumnProgram
-            // 
-            this.ColumnProgram.HeaderText = "Ruta lanzador";
-            this.ColumnProgram.MinimumWidth = 8;
-            this.ColumnProgram.Name = "ColumnProgram";
-            this.ColumnProgram.ReadOnly = true;
-            this.ColumnProgram.Width = 150;
-            // 
-            // ColumnCMD
-            // 
-            this.ColumnCMD.HeaderText = "Parametros de lanzamiento";
-            this.ColumnCMD.MinimumWidth = 8;
-            this.ColumnCMD.Name = "ColumnCMD";
-            this.ColumnCMD.Width = 150;
-            // 
-            // ColumnWidth
-            // 
-            this.ColumnWidth.HeaderText = "Ancho";
-            this.ColumnWidth.MinimumWidth = 8;
-            this.ColumnWidth.Name = "ColumnWidth";
-            this.ColumnWidth.Width = 50;
-            // 
-            // ColumnHeight
-            // 
-            this.ColumnHeight.HeaderText = "Alto";
-            this.ColumnHeight.MinimumWidth = 8;
-            this.ColumnHeight.Name = "ColumnHeight";
-            this.ColumnHeight.Width = 50;
-            // 
-            // ColumnRes
-            // 
-            this.ColumnRes.HeaderText = "Resolucion";
-            this.ColumnRes.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "3",
-            "4",
-            "5"});
-            this.ColumnRes.MinimumWidth = 8;
-            this.ColumnRes.Name = "ColumnRes";
-            this.ColumnRes.Resizable = System.Windows.Forms.DataGridViewTriState.True;
-            this.ColumnRes.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
-            this.ColumnRes.Width = 150;
-            // 
-            // ColumnCover
-            // 
-            this.ColumnCover.HeaderText = "Caratula";
-            this.ColumnCover.MinimumWidth = 8;
-            this.ColumnCover.Name = "ColumnCover";
-            this.ColumnCover.ReadOnly = true;
-            this.ColumnCover.Width = 150;
-            // 
-            // ColumnFormat
-            // 
-            this.ColumnFormat.HeaderText = "Formato de imagen";
-            this.ColumnFormat.MinimumWidth = 8;
-            this.ColumnFormat.Name = "ColumnFormat";
-            this.ColumnFormat.Width = 150;
-            // 
-            // checkBackgroundColor
-            // 
-            this.checkBackgroundColor.HeaderText = "Fondo Transparente";
-            this.checkBackgroundColor.Name = "checkBackgroundColor";
-            // 
-            // ColumnColor
-            // 
-            this.ColumnColor.HeaderText = "Color de fondo";
-            this.ColumnColor.MinimumWidth = 8;
-            this.ColumnColor.Name = "ColumnColor";
-            this.ColumnColor.ReadOnly = true;
-            this.ColumnColor.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-            this.ColumnColor.Width = 75;
-            // 
             // labelFather
             // 
             this.labelFather.AutoSize = true;
@@ -207,7 +111,7 @@
             this.labelFather.Name = "labelFather";
             this.labelFather.Size = new System.Drawing.Size(136, 13);
             this.labelFather.TabIndex = 4;
-            this.labelFather.Text = "Coleccion de los elementos";
+            this.labelFather.Text = "Colección de los elementos";
             // 
             // comboBoxFather
             // 
@@ -254,7 +158,7 @@
             this.labelGlobalRes.Name = "labelGlobalRes";
             this.labelGlobalRes.Size = new System.Drawing.Size(91, 13);
             this.labelGlobalRes.TabIndex = 29;
-            this.labelGlobalRes.Text = "Resolucion global";
+            this.labelGlobalRes.Text = "Resolución global";
             // 
             // buttonGlobalResolution
             // 
@@ -353,12 +257,12 @@
             // 
             this.labelGlobalCMD.AutoSize = true;
             this.labelGlobalCMD.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelGlobalCMD.Location = new System.Drawing.Point(653, 7);
+            this.labelGlobalCMD.Location = new System.Drawing.Point(648, 7);
             this.labelGlobalCMD.Margin = new System.Windows.Forms.Padding(2, 0, 2, 0);
             this.labelGlobalCMD.Name = "labelGlobalCMD";
-            this.labelGlobalCMD.Size = new System.Drawing.Size(131, 13);
+            this.labelGlobalCMD.Size = new System.Drawing.Size(160, 13);
             this.labelGlobalCMD.TabIndex = 37;
-            this.labelGlobalCMD.Text = "Argumento de inicio global";
+            this.labelGlobalCMD.Text = "Parámetro de lanzamiento global";
             // 
             // textBoxGlobalCMD
             // 
@@ -442,7 +346,7 @@
             this.buttonSearchCoversOnline.Name = "buttonSearchCoversOnline";
             this.buttonSearchCoversOnline.Size = new System.Drawing.Size(300, 23);
             this.buttonSearchCoversOnline.TabIndex = 44;
-            this.buttonSearchCoversOnline.Text = "Buscar Caratulas Online de todas las filas";
+            this.buttonSearchCoversOnline.Text = "Buscar caratulas online de todas las filas";
             this.buttonSearchCoversOnline.UseVisualStyleBackColor = false;
             this.buttonSearchCoversOnline.Click += new System.EventHandler(this.buttonSearchCoversOnline_Click);
             // 
@@ -481,7 +385,7 @@
             this.buttonSearchCoverOnlineRow.Name = "buttonSearchCoverOnlineRow";
             this.buttonSearchCoverOnlineRow.Size = new System.Drawing.Size(300, 23);
             this.buttonSearchCoverOnlineRow.TabIndex = 47;
-            this.buttonSearchCoverOnlineRow.Text = "Buscar Caratulas Online de la fila seleccionada";
+            this.buttonSearchCoverOnlineRow.Text = "Buscar caratulas online de la fila seleccionada";
             this.buttonSearchCoverOnlineRow.UseVisualStyleBackColor = false;
             this.buttonSearchCoverOnlineRow.Click += new System.EventHandler(this.buttonSearchCoverOnlineRow_Click);
             // 
@@ -494,7 +398,7 @@
             this.buttonSelectCover.Name = "buttonSelectCover";
             this.buttonSelectCover.Size = new System.Drawing.Size(300, 23);
             this.buttonSelectCover.TabIndex = 48;
-            this.buttonSelectCover.Text = "Seleccionar Caratula de la fila seleccionada";
+            this.buttonSelectCover.Text = "Seleccionar caratula de la fila seleccionada";
             this.buttonSelectCover.UseVisualStyleBackColor = false;
             this.buttonSelectCover.Click += new System.EventHandler(this.buttonSelectCover_Click);
             // 
@@ -507,9 +411,105 @@
             this.buttonDeleteCoverRow.Name = "buttonDeleteCoverRow";
             this.buttonDeleteCoverRow.Size = new System.Drawing.Size(300, 23);
             this.buttonDeleteCoverRow.TabIndex = 49;
-            this.buttonDeleteCoverRow.Text = "Borrar Caratula de la fila seleccionada";
+            this.buttonDeleteCoverRow.Text = "Borrar caratula de la fila seleccionada";
             this.buttonDeleteCoverRow.UseVisualStyleBackColor = false;
             this.buttonDeleteCoverRow.Click += new System.EventHandler(this.buttonDeleteCoverRow_Click);
+            // 
+            // ColumnName
+            // 
+            this.ColumnName.HeaderText = "Nombre";
+            this.ColumnName.MinimumWidth = 8;
+            this.ColumnName.Name = "ColumnName";
+            this.ColumnName.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.ColumnName.Width = 150;
+            // 
+            // ColumnCheckBox
+            // 
+            this.ColumnCheckBox.HeaderText = "URL";
+            this.ColumnCheckBox.MinimumWidth = 8;
+            this.ColumnCheckBox.Name = "ColumnCheckBox";
+            this.ColumnCheckBox.Width = 50;
+            // 
+            // ColumnFile
+            // 
+            this.ColumnFile.HeaderText = "Ruta archivo";
+            this.ColumnFile.MinimumWidth = 8;
+            this.ColumnFile.Name = "ColumnFile";
+            this.ColumnFile.ReadOnly = true;
+            this.ColumnFile.Width = 150;
+            // 
+            // ColumnProgram
+            // 
+            this.ColumnProgram.HeaderText = "Ruta lanzador";
+            this.ColumnProgram.MinimumWidth = 8;
+            this.ColumnProgram.Name = "ColumnProgram";
+            this.ColumnProgram.ReadOnly = true;
+            this.ColumnProgram.Width = 150;
+            // 
+            // ColumnCMD
+            // 
+            this.ColumnCMD.HeaderText = "Parámetros de lanzamiento";
+            this.ColumnCMD.MinimumWidth = 8;
+            this.ColumnCMD.Name = "ColumnCMD";
+            this.ColumnCMD.Width = 150;
+            // 
+            // ColumnWidth
+            // 
+            this.ColumnWidth.HeaderText = "Ancho";
+            this.ColumnWidth.MinimumWidth = 8;
+            this.ColumnWidth.Name = "ColumnWidth";
+            this.ColumnWidth.Width = 50;
+            // 
+            // ColumnHeight
+            // 
+            this.ColumnHeight.HeaderText = "Alto";
+            this.ColumnHeight.MinimumWidth = 8;
+            this.ColumnHeight.Name = "ColumnHeight";
+            this.ColumnHeight.Width = 50;
+            // 
+            // ColumnRes
+            // 
+            this.ColumnRes.HeaderText = "Resolución";
+            this.ColumnRes.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "3",
+            "4",
+            "5"});
+            this.ColumnRes.MinimumWidth = 8;
+            this.ColumnRes.Name = "ColumnRes";
+            this.ColumnRes.Resizable = System.Windows.Forms.DataGridViewTriState.True;
+            this.ColumnRes.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.Automatic;
+            this.ColumnRes.Width = 150;
+            // 
+            // ColumnCover
+            // 
+            this.ColumnCover.HeaderText = "Caratula";
+            this.ColumnCover.MinimumWidth = 8;
+            this.ColumnCover.Name = "ColumnCover";
+            this.ColumnCover.ReadOnly = true;
+            this.ColumnCover.Width = 150;
+            // 
+            // ColumnFormat
+            // 
+            this.ColumnFormat.HeaderText = "Formato de imagen";
+            this.ColumnFormat.MinimumWidth = 8;
+            this.ColumnFormat.Name = "ColumnFormat";
+            this.ColumnFormat.Width = 150;
+            // 
+            // checkBackgroundColor
+            // 
+            this.checkBackgroundColor.HeaderText = "Fondo transparente";
+            this.checkBackgroundColor.Name = "checkBackgroundColor";
+            // 
+            // ColumnColor
+            // 
+            this.ColumnColor.HeaderText = "Color de fondo";
+            this.ColumnColor.MinimumWidth = 8;
+            this.ColumnColor.Name = "ColumnColor";
+            this.ColumnColor.ReadOnly = true;
+            this.ColumnColor.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+            this.ColumnColor.Width = 75;
             // 
             // NewMultipleFiles
             // 
@@ -579,6 +579,13 @@
         private System.Windows.Forms.Label labelGlobalImageFormat;
         private System.Windows.Forms.Button buttonGlobalImageFormat;
         private System.Windows.Forms.Button addResolution;
+        private System.Windows.Forms.Button buttonSearchCoversOnline;
+        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.Panel panelImageLimit;
+        private System.Windows.Forms.PictureBox pictureBoxCover;
+        private System.Windows.Forms.Button buttonSearchCoverOnlineRow;
+        private System.Windows.Forms.Button buttonSelectCover;
+        private System.Windows.Forms.Button buttonDeleteCoverRow;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnName;
         private System.Windows.Forms.DataGridViewCheckBoxColumn ColumnCheckBox;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnFile;
@@ -591,12 +598,5 @@
         private System.Windows.Forms.DataGridViewComboBoxColumn ColumnFormat;
         private System.Windows.Forms.DataGridViewCheckBoxColumn checkBackgroundColor;
         private System.Windows.Forms.DataGridViewTextBoxColumn ColumnColor;
-        private System.Windows.Forms.Button buttonSearchCoversOnline;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
-        private System.Windows.Forms.Panel panelImageLimit;
-        private System.Windows.Forms.PictureBox pictureBoxCover;
-        private System.Windows.Forms.Button buttonSearchCoverOnlineRow;
-        private System.Windows.Forms.Button buttonSelectCover;
-        private System.Windows.Forms.Button buttonDeleteCoverRow;
     }
 }

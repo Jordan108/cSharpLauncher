@@ -24,6 +24,7 @@ namespace CoverPadLauncher.Clases
         private int treeViewWidth;//Ancho del treeview
         private int panelOrder;//Orden de los paneles
         private int searchFilter;//Tipo de filtro de busqueda
+        private bool startUpdate;//Buscar una actualizacion cuando inicie el programa
 
         //Constructor que llama los datos desde el XML
         public Configurations() 
@@ -32,7 +33,7 @@ namespace CoverPadLauncher.Clases
         }
 
         //Constructor al que le pasamos los datos
-        public Configurations(string themeName, bool pictureBoxName, int lastDepth, int windowsWidth, int windowsHeight, int windowsMaxScreen, int treeViewWidth, int panelOrder, int searchFilter)
+        public Configurations(string themeName, bool pictureBoxName, int lastDepth, int windowsWidth, int windowsHeight, int windowsMaxScreen, int treeViewWidth, int panelOrder, int searchFilter, bool startUpdate)
         {
             this.themeName = themeName;
             this.pictureBoxName = pictureBoxName;
@@ -43,6 +44,7 @@ namespace CoverPadLauncher.Clases
             this.treeViewWidth = treeViewWidth;
             this.panelOrder = panelOrder;
             this.searchFilter = searchFilter;
+            this.startUpdate = startUpdate;
         }
 
         #region Encapsulamiento
@@ -96,6 +98,12 @@ namespace CoverPadLauncher.Clases
             get { return searchFilter; }
             set { searchFilter = value; }
         }
+
+        public bool StartUpdate
+        {
+            get { return startUpdate; }
+            set { startUpdate = value; }
+        }
         #endregion
 
         #region funciones de guardado/cargado
@@ -105,6 +113,7 @@ namespace CoverPadLauncher.Clases
 
             XmlDocument doc = new XmlDocument();
             doc.Load(xmlSettingsPath);
+           
 
             string xpath = "//Launcher/settings";
             XmlNode root = doc.SelectSingleNode(xpath);
@@ -137,6 +146,9 @@ namespace CoverPadLauncher.Clases
             //Cargar el tipo de filtro a utilizar en la barra de busqueda
             int searchFilter = int.Parse(gf.XMLDefaultReturn(root, "SearchFilter", "0"));
 
+            //Buscar actualizaciones al iniciar el programa (por default si buscara actualizaciones)
+            bool checkUpdateStart = bool.Parse(gf.XMLDefaultReturn(root, "StartCheckUpdate", "true"));
+
 
             //Actualizar los atributos de la clase
             this.themeName = themeName;
@@ -148,6 +160,7 @@ namespace CoverPadLauncher.Clases
             this.treeViewWidth = treeViewWidth;
             this.panelOrder = panelOrder;
             this.searchFilter = searchFilter;
+            this.startUpdate = checkUpdateStart;
         }
 
         public void SaveConfigurations(Configurations settings)
@@ -202,20 +215,10 @@ namespace CoverPadLauncher.Clases
             XmlElement settTreeViewWidth = xmlDoc.CreateElement("TreeWidth"); settTreeViewWidth.InnerText = settings.TreeViewWidth.ToString(); sett.AppendChild(settTreeViewWidth);
             XmlElement settPanelOrder = xmlDoc.CreateElement("PanelOrder"); settPanelOrder.InnerText = settings.PanelOrder.ToString(); sett.AppendChild(settPanelOrder);
             XmlElement settSearchFilter = xmlDoc.CreateElement("SearchFilter"); settSearchFilter.InnerText = settings.SearchFilter.ToString(); sett.AppendChild(settSearchFilter);
+            XmlElement settStartUpdate = xmlDoc.CreateElement("StartCheckUpdate"); settStartUpdate.InnerText = settings.StartUpdate.ToString(); sett.AppendChild(settStartUpdate);
 
             xmlDoc.Save(xmlSettingsPath);
         }
-
-        //Esta funcion deberia pasarla a una clase de funciones
-        /*private string XMLDefaultReturn(XmlNode node, string singleNode, string defaultValue)
-        {
-            XmlNode selectedNode = node.SelectSingleNode(singleNode);
-            if (selectedNode != null)
-            {
-                return selectedNode.InnerText;
-            }
-            return defaultValue;
-        }*/
         #endregion
     }
 }

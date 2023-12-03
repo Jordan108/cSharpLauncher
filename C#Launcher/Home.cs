@@ -22,15 +22,24 @@ using MediaToolkit.Options;
 using CoverPadLauncher.Clases.Controles;
 using System.Threading.Tasks;
 
+using System.Configuration;
+using System.Net;
+using Newtonsoft.Json.Linq;
+using System.Net.Http.Headers;
+using System.Net.Http;
+using System.Threading;
+using System.Reflection;
+using System.IO.Compression;
+
 namespace C_Launcher
 {
 
     public partial class Home : Form
     {
+        private static string AppVersion = "0.9.0";
+
         private PictureBox[] picBoxArr = new PictureBox[0];//Crear el array de picBox que se mantendra en memoria
         //Crea el array de las colecciones y los archivos (solo contendran las colecciones que se mostraran en en la vista)
-
-        
 
         //Valores de settings
         //private int WinWidht, WinHeight = 900;
@@ -49,8 +58,11 @@ namespace C_Launcher
         //private string xmlSettingsPath = "System\\Settings.xml";
         private string xmlTagPath = "System\\Tags.xml";
         private string xmlScannedPath = "System\\ScannedDirs.xml";
+        //Ruta de las configuraciones
+        private string xmlSettingsPath = "System\\Settings.xml";
         //Ruta de los covers
         private string dirCoversPath = "System\\Covers";
+        
         //Ruta de los elementos del sistema (iconos y demas)
         private string[] imgResourceIcons = { 
             "System\\Resources\\CollectionIcon.png" ,//0
@@ -83,6 +95,9 @@ namespace C_Launcher
         public Home()
         {
             InitializeComponent();
+
+            this.Text = $"Cover Pad Launcher {AppVersion}";
+
             //Verificar el contenido de la carpeta system, si no existe, crearlo
             verifySystemDir();
             //Cargar las opciones
@@ -126,11 +141,12 @@ namespace C_Launcher
             catch (Exception)
             {
                 // Manejar cualquier error al cargar la imagen
-                MessageBox.Show($"Error al cargar imagenes a los botones", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show($"Error al cargar imágenes a los botones del inicio", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
 
 
             //Tool strip (click derecho)
+            #region Tool Strip
             //flow Layout Panel Tool Strip
             ContextMenuStrip contextMenuLayoutPanel   = new ContextMenuStrip();
             ToolStripMenuItem ToolStripAddCollection   = new ToolStripMenuItem();
@@ -150,6 +166,8 @@ namespace C_Launcher
             ToolStripEditAllElements.Image = Image.FromFile(imgResourceIcons[5]);
             ToolStripEditAllElements.Click += new EventHandler(ToolStripEditMultipleFlowLayoutPanel_Click);
             contextMenuLayoutPanel.Items.AddRange(new ToolStripItem[] { ToolStripAddFile, ToolStripAddCollection, ToolStripAddMultipleFile, ToolStripEditAllElements });
+            #endregion
+
             //Agregar al layout panel
             flowLayoutPanelMain.ContextMenuStrip = contextMenuLayoutPanel;
 
@@ -173,6 +191,61 @@ namespace C_Launcher
 
             treeViewMain.DrawMode = TreeViewDrawMode.OwnerDrawAll;
             treeViewMain.DrawNode += new DrawTreeNodeEventHandler(treeViewMain_DrawNode);
+
+        }
+
+        //Cuando el formulario se muestre
+        private void Home_Shown(object sender, EventArgs e)
+        {
+            if (config.StartUpdate == true)
+            {
+                checkUpdate();//Verificar si existe una actualizacion
+            }
+            
+        }
+
+        private bool checkUpdate()
+        {
+            string nameUser = "Jordan108";
+            string nameRepo = "cSharpLauncher";
+            try
+            {
+                HttpClient client = new HttpClient();
+                client.BaseAddress = new Uri($"https://api.github.com/repos/{nameUser}/{nameRepo}/releases/latest");
+                client.DefaultRequestHeaders.Add("User-Agent", "CoverPadLauncher");//Tengo que establecer el user agent o la api rechaza la solicitud por que webos
+
+                //Header en formato json
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = client.GetAsync("").Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    //Analizar la respuesta
+                    var apiResponse = response.Content.ReadAsStringAsync().Result;
+                    JObject release = JObject.Parse(apiResponse);//Serializar el objetoJson
+                    string latestVersion = release["tag_name"].ToString();
+
+                    if (Version.Parse(latestVersion) > Version.Parse(AppVersion))
+                    {
+                        string message = $"Se encontró una nueva versión de Cover Pad Launcher\n({AppVersion} => {latestVersion})\n¿Quieres actualizar?";
+                        var result = MessageBox.Show(message, "Actualizar", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
+                        if (result == DialogResult.Yes)
+                        {
+                            //Si se confirma la actualizacion, llamar al updater
+                            string updaterPath = Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\Updater.exe";
+                            //Process.Start(updaterPath, $"{zipUrl} {downloadPath} {extractPath}");
+                            Process.Start(updaterPath);
+                            //Cerrar CoverPadLauncher para que el updater pueda extraer el zip
+                            Environment.Exit(0);
+                            return true;
+                        }
+                    }
+                }
+            } catch(Exception e)
+            {
+                Console.WriteLine($"Error intentando actualizar: {e}");
+            }
+            return false;
         }
 
         #region ToolStrip
@@ -185,6 +258,8 @@ namespace C_Launcher
             int defaultHeight = 200;
             int defaultRes = 0;
             int defaultImageLayout = 0;
+            string defaultProgramPath = "";
+            string defaultCMDLine = "";
 
             //Si la profundidad es mayor a 0, buscar la coleccion con esa id en especifico y extraerle los valores default
             if (viewDepth > 0)
@@ -201,10 +276,12 @@ namespace C_Launcher
                 defaultWidth = int.Parse(gf.XMLDefaultReturn(root, "CoverSonWidth", "200"));
                 defaultHeight = int.Parse(gf.XMLDefaultReturn(root, "CoverSonHeight", "200"));
                 defaultImageLayout = int.Parse(gf.XMLDefaultReturn(root, "SonImageLayout", "0"));
+                defaultProgramPath = gf.XMLDefaultReturn(root, "SonProgramPath", "");
+                defaultCMDLine = gf.XMLDefaultReturn(root, "SonCMDLine", "");
             }
 
 
-            NewMultipleFiles newMultFiles = new NewMultipleFiles(viewDepth, defaultRes, defaultWidth, defaultHeight, defaultImageLayout);
+            NewMultipleFiles newMultFiles = new NewMultipleFiles(viewDepth, defaultRes, defaultWidth, defaultHeight, defaultImageLayout, defaultProgramPath, defaultCMDLine);
             newMultFiles.ReturnedObject += NewMultFiles_ReturnedObject;
             newMultFiles.ShowDialog();
         }
@@ -366,7 +443,7 @@ namespace C_Launcher
                 editMultipleElementsFromCollection(id);
             } else
             {
-                MessageBox.Show("No se puede editar los archivos de algo que no es una coleccion", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("No se puede editar los archivos de algo que no es una colección", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -399,7 +476,7 @@ namespace C_Launcher
 
             if (files.Length <= 0)
             {
-                MessageBox.Show("Esta coleccion no tiene archivos para editar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Esta colección no tiene archivos para editar", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             NewMultipleFiles editFilesCollection = new NewMultipleFiles(files, int.Parse(id), defaultRes, defaultWidth, defaultHeight, defaultImageLayout);
@@ -418,10 +495,10 @@ namespace C_Launcher
             string message;
             if (boxType == "file")
             {
-                message = $"¿Estas seguro de querer eliminar el elemento '{pic.Name}'?\n\n(Esto tambien eliminara la imagen almacenada en 'System/Covers')";
+                message = $"¿Estas seguro de querer eliminar el elemento '{pic.Name}'?\n\n(Esto también eliminara la imagen almacenada en 'System/Covers')";
             } else
             {
-                message = $"¿Estas seguro de querer eliminar la coleccion '{pic.Name}'?\n\n(Esto tambien eliminara su contenido y las imagenes almacenadas en 'System/Covers')";
+                message = $"¿Estas seguro de querer eliminar la colección '{pic.Name}'?\n\n(Esto también eliminara su contenido y las imágenes almacenadas en 'System/Covers')";
             }
 
             //PictureBox pictureBox = (PictureBox)sender;
@@ -506,7 +583,7 @@ namespace C_Launcher
             }
             catch
             {
-                MessageBox.Show("No se pudo encontrar el programa del elemento", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("No se pudo encontrar el programa de este elemento", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -529,7 +606,7 @@ namespace C_Launcher
             //En caso de errores
             catch (Exception)
             {
-                MessageBox.Show("Error abrir el programa", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);//Error con archivos/programas/cmdLin
+                MessageBox.Show("Error al abrir el programa", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);//Error con archivos/programas/cmdLin
             }
 
         }
@@ -560,7 +637,7 @@ namespace C_Launcher
             }
             else
             {
-                MessageBox.Show("No se pudo encontrar la ubicacion, verifica que el elemento exista en su equipo", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("No se pudo encontrar la ubicación, verifica que el elemento exista en su equipo", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -737,6 +814,7 @@ namespace C_Launcher
         {
             //SaveXMLCollection(e);
             Collections classCollection = new Collections();
+            Console.WriteLine(e);
             classCollection.SaveCollection(e);
             //Actualizar cantidad de colecciones
             colSize = new Collections().GetCollectionsSize(); //LoadCollectionSize();
@@ -878,10 +956,10 @@ namespace C_Launcher
             {
                 if (url)
                 {
-                    MessageBox.Show("error abrir URL", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);//Error con URL
+                    MessageBox.Show("Error al abrir la URL", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);//Error con URL
                     Console.WriteLine("error: " + ex);
                 }
-                else MessageBox.Show("error abrir archivo", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);//Error con archivos/programas/cmdLine
+                else MessageBox.Show("Error al abrir el archivo", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);//Error con archivos/programas/cmdLine
 
             }
 
@@ -2318,8 +2396,6 @@ namespace C_Launcher
 
                     if (count > 0)
                     {
-                        //MessageBox.Show($"Se encontraron {count} elementos coincidentes en la id {colls[i].ID}");
-
                         foreach (var element in matchingElements)
                         {
                             Collections col = colls.FirstOrDefault(o => o.ID == int.Parse(element.Id));
@@ -2563,6 +2639,10 @@ namespace C_Launcher
             //Guardar el tamaño actual de la venana
             config.WindowsWidth = Width;
             config.WindowsHeight = Height;
+
+            //Guardar ultima coleccion abierta
+            config.LastDepth = viewDepth;
+
             if (WindowState == FormWindowState.Maximized) config.WindowsMaxScreen = 1;
 
             Configurations classConfig = new Configurations();
@@ -2661,6 +2741,20 @@ namespace C_Launcher
                     writer.WriteEndElement();
                 }
             }
+
+            //Verificar la existencia de settings
+            if (!File.Exists(xmlSettingsPath))
+            {
+                XmlWriterSettings settings = new XmlWriterSettings();
+                settings.Indent = true;
+
+                using (XmlWriter writer = XmlWriter.Create(xmlSettingsPath, settings))
+                {
+                    //Crear el elemento raiz del archivo (obligatorio)
+                    writer.WriteStartElement("Launcher");
+                    writer.WriteEndElement();
+                }
+            }
         }
 
         private void configuracionesToolStripMenuItem_Click(object sender, EventArgs e)
@@ -2678,10 +2772,15 @@ namespace C_Launcher
             loadPictureBox(colSize, fileSize, false); //Recargar la vista
         }
 
-        private void importaToolStripMenuItem_Click(object sender, EventArgs e)
+        private void buscarActualizacionToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            if (checkUpdate() == false)
+            {
+                MessageBox.Show("Tienes la versión más reciente de Cover Pad Launcher", "Actualizar", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
         }
+
+
         #endregion
 
 

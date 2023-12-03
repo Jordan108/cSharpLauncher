@@ -5,6 +5,7 @@ using System.Linq;
 using System.Collections.Generic;
 using System.IO;
 using System.Xml.Linq;
+using System.Windows.Forms;
 
 namespace C_Launcher.Clases
 {
@@ -239,6 +240,7 @@ namespace C_Launcher.Clases
             xmlDoc.Load(xmlColPath);
 
             XmlElement coleccion;
+
             //Crear colecciones nuevas
             if (Class.ID == -1)
             {
@@ -295,7 +297,7 @@ namespace C_Launcher.Clases
             XmlElement colSonResolution = xmlDoc.CreateElement("CoverSonResolutionID"); colSonResolution.InnerText = Class.SonResolution.ToString(); coleccion.AppendChild(colSonResolution);
             XmlElement colSonWidth = xmlDoc.CreateElement("CoverSonWidth"); colSonWidth.InnerText = Class.SonWidth.ToString(); coleccion.AppendChild(colSonWidth);
             XmlElement colSonHeight = xmlDoc.CreateElement("CoverSonHeight"); colSonHeight.InnerText = Class.SonHeight.ToString(); coleccion.AppendChild(colSonHeight);
-            XmlElement colSonLayout = xmlDoc.CreateElement("SonImageLayout"); colSonLayout.InnerText = Class.ImageLayout.ToString(); coleccion.AppendChild(colSonLayout);
+            XmlElement colSonLayout = xmlDoc.CreateElement("SonImageLayout"); colSonLayout.InnerText = Class.sonImageLayout.ToString(); coleccion.AppendChild(colSonLayout);
             XmlElement colSonProgramPath = xmlDoc.CreateElement("SonProgramPath"); colSonProgramPath.InnerText = Class.SonProgramPath.ToString(); coleccion.AppendChild(colSonProgramPath);
             XmlElement colSonCMDLine = xmlDoc.CreateElement("SonCMDLine"); colSonCMDLine.InnerText = Class.SonCMDLine.ToString(); coleccion.AppendChild(colSonCMDLine);
             //Guardar el array de las etiquetas

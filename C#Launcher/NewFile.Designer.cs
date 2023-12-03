@@ -111,11 +111,11 @@
             // 
             this.labelFather.AutoSize = true;
             this.labelFather.ForeColor = System.Drawing.SystemColors.Window;
-            this.labelFather.Location = new System.Drawing.Point(32, 38);
+            this.labelFather.Location = new System.Drawing.Point(19, 38);
             this.labelFather.Name = "labelFather";
-            this.labelFather.Size = new System.Drawing.Size(98, 13);
+            this.labelFather.Size = new System.Drawing.Size(117, 13);
             this.labelFather.TabIndex = 3;
-            this.labelFather.Text = "Padre del elemento";
+            this.labelFather.Text = "Colección del elemento";
             // 
             // checkBoxURL
             // 
@@ -158,7 +158,7 @@
             this.labelCMD.Name = "labelCMD";
             this.labelCMD.Size = new System.Drawing.Size(134, 13);
             this.labelCMD.TabIndex = 7;
-            this.labelCMD.Text = "Parametros de lanzamiento";
+            this.labelCMD.Text = "Parámetros de lanzamiento";
             // 
             // labelOptional
             // 
@@ -373,7 +373,7 @@
             this.buttonSearchCover.Name = "buttonSearchCover";
             this.buttonSearchCover.Size = new System.Drawing.Size(115, 23);
             this.buttonSearchCover.TabIndex = 24;
-            this.buttonSearchCover.Text = "Seleccionar Caratula";
+            this.buttonSearchCover.Text = "Seleccionar caratula";
             this.buttonSearchCover.UseVisualStyleBackColor = false;
             this.buttonSearchCover.Click += new System.EventHandler(this.buttonSearchCover_Click);
             // 
@@ -424,7 +424,7 @@
             this.labelResolution.Name = "labelResolution";
             this.labelResolution.Size = new System.Drawing.Size(60, 13);
             this.labelResolution.TabIndex = 28;
-            this.labelResolution.Text = "Resolucion";
+            this.labelResolution.Text = "Resolución";
             // 
             // buttonColorPickIMG
             // 
@@ -534,7 +534,7 @@
             this.buttonCoverOnline.Name = "buttonCoverOnline";
             this.buttonCoverOnline.Size = new System.Drawing.Size(145, 23);
             this.buttonCoverOnline.TabIndex = 46;
-            this.buttonCoverOnline.Text = "Buscar Caratula Online";
+            this.buttonCoverOnline.Text = "Buscar caratula online";
             this.buttonCoverOnline.UseVisualStyleBackColor = false;
             this.buttonCoverOnline.Click += new System.EventHandler(this.buttonCoverOnline_Click);
             // 

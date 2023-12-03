@@ -31,6 +31,7 @@ namespace C_Launcher
         //Datos default al crear un nuevo archivo (al editar obviamente no es necesario)
         private int defaultFather, defaultRes, defaultImageLayout = 0;
         private int defaultWidth, defaultHeight = 200;
+        private string defaultProgramPath, defaultCMDLine = "";
 
         //Combobox de las resoluciones
         private ComboBox CmbRes = new ComboBox();
@@ -38,7 +39,7 @@ namespace C_Launcher
         private ComboBox CmbImageFormat = new ComboBox();
 
         //Crear nuevos archivos desde 0
-        public NewMultipleFiles(int viewDepth, int ResId, int Width, int Height, int Layout)
+        public NewMultipleFiles(int viewDepth, int ResId, int Width, int Height, int Layout, string ProgramPath, string CMDline)
         {
             InitializeComponent();
             this.defaultFather = viewDepth;
@@ -46,6 +47,8 @@ namespace C_Launcher
             this.defaultWidth = Width;
             this.defaultHeight = Height;
             this.defaultImageLayout = Layout;
+            this.defaultProgramPath = ProgramPath;
+            this.defaultCMDLine = CMDline;
             CustomComponent();
         }
 
@@ -184,8 +187,8 @@ namespace C_Launcher
             #region formato de la imagen
             CmbImageFormat.Items.Add("Mantener escala");
             CmbImageFormat.Items.Add("Estirar");
-            CmbImageFormat.SelectedIndex = 0;
-            int defaultImage = 0;
+            CmbImageFormat.SelectedIndex = defaultImageLayout;
+            int defaultImage = defaultImageLayout;
 
             if (defaultFather > 0)
             {
@@ -209,6 +212,10 @@ namespace C_Launcher
             #endregion
 
             #endregion
+
+            //textbox
+            if (defaultProgramPath != null) textBoxGlobalLauncher.Text = defaultProgramPath;
+            if (defaultCMDLine != null) textBoxGlobalCMD.Text = defaultCMDLine;
         }
 
         private void loadTheme()
@@ -304,16 +311,17 @@ namespace C_Launcher
 
                     // Crear una nueva fila para el DataGridView
                     //nombre, checkbox url, ruta archivo, ruta lanzador, cmd, ancho, alto, resolucion, ruta caratula, Formato imagen, Color de fondo
-                    this.dataGridViewFiles.Rows.Add(fileName, false, texto, textBoxGlobalLauncher.Text, "", 200, 200, null, "", null, null);
+                    this.dataGridViewFiles.Rows.Add(fileName, false, texto, textBoxGlobalLauncher.Text, textBoxGlobalCMD.Text, defaultWidth, defaultHeight, null, "", null, null);
 
                     //Optimizar el combobox para que la opcion default sea "ninguno"
                     int rowCount = dataGridViewFiles.Rows.Count;
                     dataGridViewFiles.CurrentCell = dataGridViewFiles.Rows[rowCount - 1].Cells[0];
+
                     //Combobox de las resoluciones
                     //dataGridViewFiles.Rows[rowCount - 1].Cells[7].Value = (dataGridViewFiles.Rows[rowCount - 1].Cells[7] as DataGridViewComboBoxCell).Items[0];
                     dataGridViewFiles.Rows[rowCount - 1].Cells[7].Value = (dataGridViewFiles.Rows[rowCount - 1].Cells[7] as DataGridViewComboBoxCell).Items[comboBoxResolution.SelectedIndex];
                     //Combobox del formato de imagen
-                    dataGridViewFiles.Rows[rowCount - 1].Cells[9].Value = (dataGridViewFiles.Rows[rowCount - 1].Cells[9] as DataGridViewComboBoxCell).Items[0];
+                    dataGridViewFiles.Rows[rowCount - 1].Cells[9].Value = (dataGridViewFiles.Rows[rowCount - 1].Cells[9] as DataGridViewComboBoxCell).Items[comboBoxImageFormat.SelectedIndex];
                     //Color del boton
                     DataGridViewCellStyle CellStyle = new DataGridViewCellStyle();
                     CellStyle.BackColor = Color.FromArgb(255, 0, 0, 0); ;

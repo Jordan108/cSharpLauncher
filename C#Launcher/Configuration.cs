@@ -27,6 +27,7 @@ namespace CoverPadLauncher
         {
             Console.WriteLine($"Settings: {settings.PictureBoxName}");
             checkBoxPictureBoxRectangle.Checked = settings.PictureBoxName;
+            checkBoxUpdateCheck.Checked = settings.StartUpdate;
             loadWindowTheme();
             loadThemes();
 
@@ -64,7 +65,9 @@ namespace CoverPadLauncher
 
             //Combobox
             comboBoxThemes.BackColor = theme.ComboboxBackground;
-            comboBoxThemes.BackColor = theme.ComboboxBackground;
+            comboBoxThemes.ForeColor = theme.ComboboxText;
+            checkBoxUpdateCheck.BackColor = theme.ComboboxBackground;
+            checkBoxUpdateCheck.ForeColor = theme.ComboboxText;
 
             //Botones
             buttonSave.BackColor = theme.ButtonBackground;
@@ -99,6 +102,12 @@ namespace CoverPadLauncher
         {
             //Actualizar el tema
             settings.ThemeName = comboBoxThemes.GetItemText(comboBoxThemes.SelectedItem);
+        }
+
+        private void checkBoxUpdateCheck_CheckedChanged(object sender, EventArgs e)
+        {
+            //Actualizar settings
+            settings.StartUpdate = checkBoxUpdateCheck.Checked;
         }
     }
 }

@@ -137,6 +137,7 @@ namespace C_Launcher
             numericSonHeight.Value = h;
             pictureBoxCoverSon.Width = w;
             pictureBoxCoverSon.Height = h;
+
             if (colData.SonLayout == 1)
             {
                 radioButtonSonEstreched.Checked = true;
@@ -1229,91 +1230,6 @@ namespace C_Launcher
             //string cleanName = Path.GetInvalidFileNameChars().Aggregate(textBoxName.Text, (current, c) => current.Replace(c.ToString(), string.Empty));
             //string imgPath = "";
              
-            //Guardar la imagen
-            /*if (pictureBoxCoverCollection.Tag != null)
-            {
-                /*if (checkBoxImageLocation.Checked == true)
-                {
-                    imgPath = pictureBoxCoverCollection.Tag.ToString();
-                }
-                else
-                {*/
-                    //string outputFolder = System.Environment.CurrentDirectory + "\\System\\Covers";
-                    /*string outputFolder = coverPath;
-
-                    //Si estas creando un nuevo archivo, verificar si no existe un archivo con el mismo nombre, y si es asi, ponerle un iterador
-                    if (idCollection == -1)
-                    {
-                        imgPath = returnImagePath(outputFolder, cleanName);
-                    }
-                    else
-                    {
-                        //Si estas editando un archivo, ocupar la misma direccion que en el xml, pues el nombre se decidio al crearlo (arriba)
-                        if (xmlImagePath != null)
-                        {
-                            //string systemCoverDir = System.Environment.CurrentDirectory + "\\System\\Covers";
-                            string systemCoverDir = coverPath;
-                            string xmlDir = Path.GetDirectoryName(xmlImagePath);
-                            if (xmlDir != systemCoverDir)
-                            {
-                                imgPath = returnImagePath(outputFolder, cleanName);
-                            }
-                            else
-                            {
-                                imgPath = xmlImagePath;//pictureBoxCover.Tag.ToString();
-                            }
-
-                        }
-                        else
-                        {
-                            imgPath = returnImagePath(outputFolder, cleanName);
-                        }
-
-                    }
-
-                    if (!Directory.Exists(outputFolder))
-                    {
-                        // Crea la carpeta si no existe
-                        Directory.CreateDirectory(outputFolder);
-                    }
-
-                    string source = pictureBoxCoverCollection.Tag.ToString();
-                    //Solo reemplazar una imagen si esta existe o si la imagen de origen no es la misma que el destino
-                    if ((imgPath != "") && (imgPath != null) && (source != imgPath))
-                    {
-                        //Las imagenes webp no pueden ser copiadas y pegadas a un formato png, deben ser transformadas y guardadas dentro de un objeto
-                        if (Path.GetExtension(source).ToLower() == ".webp")
-                        {
-                            Image saveImage;
-                            using (MagickImage img = new MagickImage(source))
-                            {
-                                // Convierte la imagen WebP a un formato compatible con PictureBox (por ejemplo, JPEG)
-                                // Para mostrar la imagen en el PictureBox
-                                img.Format = MagickFormat.Png;
-
-                                // Convierte la imagen en un flujo de memoria
-                                using (var memoryStream = new System.IO.MemoryStream())
-                                {
-                                    img.Write(memoryStream);
-
-                                    // Carga el flujo de memoria en el PictureBox
-                                    saveImage = System.Drawing.Image.FromStream(memoryStream);//img;
-                                }
-                            }
-
-                            if (saveImage != null)
-                            {
-                                saveImage.Save(imgPath, ImageFormat.Png);
-                            }
-                        }
-                        else
-                        {
-                            System.IO.File.Copy(source, imgPath, true);
-                        }
-                    }
-                //}
-            }*/
-
             //Image layout
             int imgLayout = 0;
             if (radioButtonColEstreched.Checked == true) imgLayout = 1;
@@ -1390,7 +1306,7 @@ namespace C_Launcher
 
             string imageDir = pictureBoxCoverCollection.Tag != null ? pictureBoxCoverCollection.Tag.ToString() : "";
 
-            Collections passCollection = new Collections(idCollection, idFather, textBoxName.Text, imageDir, imgLayout, background, R, G, B, resID, width, height, resSonID, sonWidth, sonHeight, sonLayout, sonProgramPath, sonCMDLine, saveTagsArray, scanTagsArray, favorite, scanFolder, scanPath, scanStartNumber, scanOpenExtension);
+            Collections passCollection = new Collections(idCollection, idFather, textBoxName.Text, imageDir, imgLayout, background, R, G, B, resID, width, height, resSonID, sonWidth, sonHeight, 1, sonProgramPath, sonCMDLine, saveTagsArray, scanTagsArray, favorite, scanFolder, scanPath, scanStartNumber, scanOpenExtension);
             ReturnedObject?.Invoke(this, passCollection);
             this.Close();
         }
