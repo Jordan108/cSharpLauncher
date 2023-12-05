@@ -227,7 +227,7 @@ namespace CoverPadLauncher
 
                         if (film["poster_path"] != null && !string.IsNullOrEmpty(film["poster_path"].ToString()))
                         {
-                            Console.WriteLine($"Film Poster: \n{film["poster_path"]}\n\n\n");
+                            Console.WriteLine($"Film Poster: \nhttp://image.tmdb.org/t/p/w500{film["poster_path"]}\n\n\n");
                             posterPaths.Add($"http://image.tmdb.org/t/p/w500{film["poster_path"]}");
                         }
 

@@ -90,10 +90,10 @@
             this.tabControl.Controls.Add(this.tabPage1);
             this.tabControl.Controls.Add(this.tabPage2);
             this.tabControl.Controls.Add(this.tabPage3);
-            this.tabControl.Location = new System.Drawing.Point(-5, -23);
+            this.tabControl.Location = new System.Drawing.Point(-5, -25);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(757, 508);
+            this.tabControl.Size = new System.Drawing.Size(757, 510);
             this.tabControl.TabIndex = 4;
             // 
             // tabPage1
@@ -105,7 +105,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(749, 482);
+            this.tabPage1.Size = new System.Drawing.Size(749, 484);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Tipo";
             this.tabPage1.UseVisualStyleBackColor = true;
@@ -217,6 +217,7 @@
             // 
             // buttonContinueType
             // 
+            this.buttonContinueType.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonContinueType.Location = new System.Drawing.Point(668, 417);
             this.buttonContinueType.Name = "buttonContinueType";
             this.buttonContinueType.Size = new System.Drawing.Size(75, 23);
@@ -322,7 +323,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(749, 459);
+            this.tabPage2.Size = new System.Drawing.Size(749, 453);
             this.tabPage2.TabIndex = 2;
             this.tabPage2.Text = "Confirmar Nombre";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -346,6 +347,7 @@
             // 
             // buttonContinueName
             // 
+            this.buttonContinueName.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonContinueName.Location = new System.Drawing.Point(662, 404);
             this.buttonContinueName.Name = "buttonContinueName";
             this.buttonContinueName.Size = new System.Drawing.Size(75, 23);
@@ -396,7 +398,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(749, 459);
+            this.tabPage3.Size = new System.Drawing.Size(749, 467);
             this.tabPage3.TabIndex = 1;
             this.tabPage3.Text = "Descargar";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -412,6 +414,7 @@
             // 
             // buttonCoverBack
             // 
+            this.buttonCoverBack.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonCoverBack.Location = new System.Drawing.Point(526, 346);
             this.buttonCoverBack.Name = "buttonCoverBack";
             this.buttonCoverBack.Size = new System.Drawing.Size(25, 25);
@@ -422,6 +425,7 @@
             // 
             // buttonCoverNext
             // 
+            this.buttonCoverNext.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonCoverNext.Location = new System.Drawing.Point(641, 346);
             this.buttonCoverNext.Name = "buttonCoverNext";
             this.buttonCoverNext.Size = new System.Drawing.Size(25, 25);
@@ -432,6 +436,7 @@
             // 
             // buttonFinish
             // 
+            this.buttonFinish.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.buttonFinish.Location = new System.Drawing.Point(668, 404);
             this.buttonFinish.Name = "buttonFinish";
             this.buttonFinish.Size = new System.Drawing.Size(75, 23);

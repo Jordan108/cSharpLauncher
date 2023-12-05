@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Launcher>
+  <settings>
+    <ThemeName>Default</ThemeName>
+    <BoxName>False</BoxName>
+    <LastDepth>0</LastDepth>
+    <WindowSize>
+      <Width>917</Width>
+      <Height>683</Height>
+      <MxScreen>0</MxScreen>
+    </WindowSize>
+    <TreeWidth>100</TreeWidth>
+    <PanelOrder>0</PanelOrder>
+    <SearchFilter>0</SearchFilter>
+    <StartCheckUpdate>True</StartCheckUpdate>
+  </settings>
+</Launcher>

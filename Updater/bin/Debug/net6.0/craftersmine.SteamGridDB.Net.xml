@@ -1,0 +1,1571 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>craftersmine.SteamGridDB.Net</name>
+    </assembly>
+    <members>
+        <member name="T:craftersmine.SteamGridDBNet.Exceptions.InvalidMimeTypeException">
+            <summary>
+            The exception that is thrown when data with invalid or unsupported MIME type is provided
+            </summary>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.Exceptions.InvalidMimeTypeException.#ctor">
+            <summary>
+            Instantiates new instance of <see cref="T:craftersmine.SteamGridDBNet.Exceptions.InvalidMimeTypeException"/>
+            </summary>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.Exceptions.InvalidMimeTypeException.#ctor(System.String)">
+            <summary>
+            Instantiates new instance of <see cref="T:craftersmine.SteamGridDBNet.Exceptions.InvalidMimeTypeException"/>
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.Exceptions.InvalidMimeTypeException.#ctor(System.String,System.Exception)">
+            <summary>
+            Instantiates new instance of <see cref="T:craftersmine.SteamGridDBNet.Exceptions.InvalidMimeTypeException"/>
+            </summary>
+            <param name="message"></param>
+            <param name="inner"></param>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.Exceptions.InvalidMimeTypeException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Instantiates new instance of <see cref="T:craftersmine.SteamGridDBNet.Exceptions.InvalidMimeTypeException"/>
+            </summary>
+            <param name="info"></param>
+            <param name="context"></param>
+        </member>
+        <member name="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbBadRequestException">
+            <summary>
+            The exception that is thrown when a bad request is returned by SteamGridDB API
+            </summary>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbBadRequestException.#ctor(System.String)">
+            <summary>
+            Instantiates new instance of <see cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbBadRequestException"/>
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException">
+            <summary>
+            The exception that is thrown when generic SteamGridDB or library error occurred
+            </summary>
+        </member>
+        <member name="P:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException.ExceptionType">
+            <summary>
+            Gets a type of exception occurred
+            </summary>
+        </member>
+        <member name="P:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException.SteamGridDbErrorMessages">
+            <summary>
+            Gets an array of SteamGridDB API response error messages, when request is not succeeded
+            </summary>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException.#ctor">
+            <summary>
+            Instantiates new instance of <see cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException"/>
+            </summary>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException.#ctor(System.String)">
+            <summary>
+            Instantiates new instance of <see cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException"/>
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException.#ctor(System.String,System.Exception)">
+            <summary>
+            Instantiates new instance of <see cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException"/>
+            </summary>
+            <param name="message"></param>
+            <param name="inner"></param>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Instantiates new instance of <see cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException"/>
+            </summary>
+            <param name="info"></param>
+            <param name="context"></param>
+        </member>
+        <member name="T:craftersmine.SteamGridDBNet.Exceptions.ExceptionType">
+            <summary>
+            Contains types of exceptions
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.Exceptions.ExceptionType.Unauthorized">
+            <summary>
+            When unauthorized access to API made
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.Exceptions.ExceptionType.NotFound">
+            <summary>
+            When resource not found on server
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.Exceptions.ExceptionType.BadRequest">
+            <summary>
+            When request to server constructed incorrectly
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.Exceptions.ExceptionType.Forbidden">
+            <summary>
+            When made request is forbidden on server
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.Exceptions.ExceptionType.RateLimited">
+            <summary>
+            When you are rate limited on the server
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.Exceptions.ExceptionType.Unknown">
+            <summary>
+            When unknown error occurred
+            </summary>
+        </member>
+        <member name="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbForbiddenException">
+            <summary>
+            The exception that is thrown when SteamGridDB returns a Forbidden response. Probably because user doesn't own an item
+            </summary>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbForbiddenException.#ctor(System.String)">
+            <summary>
+            Instantiates new instance of <see cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbForbiddenException"/>
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbImageException">
+            <summary>
+            The exception that is thrown when image failed to load from specified URL
+            </summary>
+        </member>
+        <member name="P:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbImageException.ExceptionType">
+            <summary>
+            Gets an SteamGridDB response exception type
+            </summary>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbImageException.#ctor(craftersmine.SteamGridDBNet.Exceptions.ExceptionType)">
+            <summary>
+            Instantiates new instance of <see cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbImageException"/>
+            </summary>
+            <param name="type"></param>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbImageException.#ctor(craftersmine.SteamGridDBNet.Exceptions.ExceptionType,System.String)">
+            <summary>
+            Instantiates new instance of <see cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbImageException"/>
+            </summary>
+            <param name="type"></param>
+            <param name="message"></param>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbImageException.#ctor(craftersmine.SteamGridDBNet.Exceptions.ExceptionType,System.String,System.Exception)">
+            <summary>
+            Instantiates new instance of <see cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbImageException"/>
+            </summary>
+            <param name="type"></param>
+            <param name="message"></param>
+            <param name="inner"></param>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbImageException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <summary>
+            Instantiates new instance of <see cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbImageException"/>
+            </summary>
+            <param name="info"></param>
+            <param name="context"></param>
+        </member>
+        <member name="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbNotFoundException">
+            <summary>
+            The exception that is thrown when item is not found in SteamGridDB
+            </summary>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbNotFoundException.#ctor(System.String)">
+            <summary>
+            Instantiates new instance of <see cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbNotFoundException"/>
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbRateLimitedException">
+            <summary>
+            The exception that is thrown when you are being rate-limited on server
+            </summary>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbRateLimitedException.#ctor(System.TimeSpan)">
+            <inheritdoc cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException"/>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbRateLimitedException.#ctor(System.String,System.TimeSpan)">
+            <inheritdoc cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException"/>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbRateLimitedException.#ctor(System.String,System.TimeSpan,System.Exception)">
+            <inheritdoc cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException"/>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbRateLimitedException.#ctor(System.Runtime.Serialization.SerializationInfo,System.Runtime.Serialization.StreamingContext)">
+            <inheritdoc cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException"/>
+        </member>
+        <member name="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbUnauthorizedException">
+            <summary>
+            The exception that is thrown when invalid API key is provided
+            </summary>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbUnauthorizedException.#ctor(System.String)">
+            <summary>
+            Instantiates new instance of <see cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbUnauthorizedException"/>
+            </summary>
+            <param name="message"></param>
+        </member>
+        <member name="T:craftersmine.SteamGridDBNet.Resources.Resources">
+            <summary>
+              Класс ресурса со строгой типизацией для поиска локализованных строк и т.д.
+            </summary>
+        </member>
+        <member name="P:craftersmine.SteamGridDBNet.Resources.Resources.ResourceManager">
+            <summary>
+              Возвращает кэшированный экземпляр ResourceManager, использованный этим классом.
+            </summary>
+        </member>
+        <member name="P:craftersmine.SteamGridDBNet.Resources.Resources.Culture">
+            <summary>
+              Перезаписывает свойство CurrentUICulture текущего потока для всех
+              обращений к ресурсу с помощью этого класса ресурса со строгой типизацией.
+            </summary>
+        </member>
+        <member name="P:craftersmine.SteamGridDBNet.Resources.Resources.Exception_BadRequest">
+            <summary>
+              Ищет локализованную строку, похожую на Bad request to SteamGridDB. Invalid ID, asset, parameter, etc..
+            </summary>
+        </member>
+        <member name="P:craftersmine.SteamGridDBNet.Resources.Resources.Exception_ExpectedDateTimeObject">
+            <summary>
+              Ищет локализованную строку, похожую на Expected date time object value..
+            </summary>
+        </member>
+        <member name="P:craftersmine.SteamGridDBNet.Resources.Resources.Exception_ExpectedIntegerValue">
+            <summary>
+              Ищет локализованную строку, похожую на Expected integer token type in JSON..
+            </summary>
+        </member>
+        <member name="P:craftersmine.SteamGridDBNet.Resources.Resources.Exception_Forbidden">
+            <summary>
+              Ищет локализованную строку, похожую на Request to SteamGridDB forbidden. Probably because you don&apos;t own item action on which you want to perform..
+            </summary>
+        </member>
+        <member name="P:craftersmine.SteamGridDBNet.Resources.Resources.Exception_ImageStreamIsEmpty">
+            <summary>
+              Ищет локализованную строку, похожую на Image stream appears to be empty..
+            </summary>
+        </member>
+        <member name="P:craftersmine.SteamGridDBNet.Resources.Resources.Exception_InvalidDateTime">
+            <summary>
+              Ищет локализованную строку, похожую на Unix epoc starts January 1st, 1970..
+            </summary>
+        </member>
+        <member name="P:craftersmine.SteamGridDBNet.Resources.Resources.Exception_InvalidMimeType">
+            <summary>
+              Ищет локализованную строку, похожую на Invalid file MIME type. Supported MIME types are {0}..
+            </summary>
+        </member>
+        <member name="P:craftersmine.SteamGridDBNet.Resources.Resources.Exception_InvalidStyleSelected">
+            <summary>
+              Ищет локализованную строку, похожую на This type of item doesn&apos;t support style &quot;{0}&quot;.
+            </summary>
+        </member>
+        <member name="P:craftersmine.SteamGridDBNet.Resources.Resources.Exception_MoreThanOnePlatformSelected">
+            <summary>
+              Ищет локализованную строку, похожую на Only one selected platform supported.
+            </summary>
+        </member>
+        <member name="P:craftersmine.SteamGridDBNet.Resources.Resources.Exception_MoreThanOneStyleSelected">
+            <summary>
+              Ищет локализованную строку, похожую на Only one style supported to select for uploading item..
+            </summary>
+        </member>
+        <member name="P:craftersmine.SteamGridDBNet.Resources.Resources.Exception_NotFound">
+            <summary>
+              Ищет локализованную строку, похожую на Requested grid/hero/icon/logo/game not found on SteamGridDB..
+            </summary>
+        </member>
+        <member name="P:craftersmine.SteamGridDBNet.Resources.Resources.Exception_RateLimited">
+            <summary>
+              Ищет локализованную строку, похожую на You are rate limited by the server! Retry after: {0}.
+            </summary>
+        </member>
+        <member name="P:craftersmine.SteamGridDBNet.Resources.Resources.Exception_Unauthorized">
+            <summary>
+              Ищет локализованную строку, похожую на Unauthorized request to SteamGridDB. Probably due to missing or invalid API key..
+            </summary>
+        </member>
+        <member name="P:craftersmine.SteamGridDBNet.Resources.Resources.Exception_Unknown">
+            <summary>
+              Ищет локализованную строку, похожую на Unknown Exception occurred..
+            </summary>
+        </member>
+        <member name="P:craftersmine.SteamGridDBNet.Resources.Resources.Exception_UnknownImageException">
+            <summary>
+              Ищет локализованную строку, похожую на Unknown error has occurred while downloading image..
+            </summary>
+        </member>
+        <member name="T:craftersmine.SteamGridDBNet.SteamAuthor">
+            <summary>
+            Represents a Steam Author information. This class cannot be inherited
+            </summary>
+        </member>
+        <member name="P:craftersmine.SteamGridDBNet.SteamAuthor.Name">
+            <summary>
+            Gets a Steam username of author
+            </summary>
+        </member>
+        <member name="P:craftersmine.SteamGridDBNet.SteamAuthor.SteamId64">
+            <summary>
+            Gets a SteamID64 of author
+            </summary>
+        </member>
+        <member name="P:craftersmine.SteamGridDBNet.SteamAuthor.AvatarUrl">
+            <summary>
+            Gets a Steam avatar URL of author
+            </summary>
+        </member>
+        <member name="P:craftersmine.SteamGridDBNet.SteamAuthor.SteamProfileUrl">
+            <summary>
+            Gets full URL to Steam Profile of Author
+            </summary>
+        </member>
+        <member name="T:craftersmine.SteamGridDBNet.SteamGridDb">
+            <summary>
+            SteamGridDB API main class, get, upload, delete grids/heroes/icons/grids, search for games and get info about games. This class cannot be inherited
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.SteamGridDb.BaseAddress">
+            <summary>
+            Base SteamGridDB API URI address
+            </summary>
+        </member>
+        <member name="P:craftersmine.SteamGridDBNet.SteamGridDb.ApiKey">
+            <summary>
+            Gets current API key string
+            </summary>
+        </member>
+        <member name="P:craftersmine.SteamGridDBNet.SteamGridDb.Timeout">
+            <summary>
+            Gets or sets connection timeout time span
+            </summary>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.SteamGridDb.#ctor(System.String)">
+            <summary>
+            Instantiates new instance of SteamGridDB API class.
+            </summary>
+            <param name="apiKey">Your API key to authorize you do things</param>
+            <exception cref="T:System.ArgumentNullException">When API key is empty, null or whitespace</exception>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.SteamGridDb.CancelPendingRequests">
+            <summary>
+            Cancels all HTTP client pending requests
+            </summary>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.SteamGridDb.GetGameByIdAsync(System.Int32)">
+            <summary>
+            Gets game information from SteamGridDB server by SteamGridDB game ID
+            </summary>
+            <param name="id">SteamGridDB specific game ID</param>
+            <returns>Game information <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbGame"/> object if succeeded</returns>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbNotFoundException">When item is not found on server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbUnauthorizedException">When your API key is invalid, not set, or you've reset it on API preferences page and use old one</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbBadRequestException">When library makes invalid request to server due to invalid URI generated</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbForbiddenException">When you don't have permissions to perform action on item, probably because you don't own item</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbRateLimitedException">When you've been rate limited by the server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException">When unknown exception occurred in request</exception>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.SteamGridDb.GetGameBySteamIdAsync(System.Int32)">
+            <summary>
+            Gets game information from SteamGridDB server by game Steam app ID
+            </summary>
+            <param name="steamId">Steam specific App ID. Can be seen in URL of game Steam store page</param>
+            <returns>Game information <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbGame"/> object if succeeded</returns>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbNotFoundException">When item is not found on server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbUnauthorizedException">When your API key is invalid, not set, or you've reset it on API preferences page and use old one</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbBadRequestException">When library makes invalid request to server due to invalid URI generated</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbForbiddenException">When you don't have permissions to perform action on item, probably because you don't own item</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbRateLimitedException">When you've been rate limited by the server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException">When unknown exception occurred in request</exception>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.SteamGridDb.GetGridsByGameIdAsync(System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Int32,craftersmine.SteamGridDBNet.SteamGridDbTags,craftersmine.SteamGridDBNet.SteamGridDbStyles,craftersmine.SteamGridDBNet.SteamGridDbDimensions,craftersmine.SteamGridDBNet.SteamGridDbFormats,craftersmine.SteamGridDBNet.SteamGridDbTypes)">
+            <summary>
+            Gets <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbGrid"/> array for specified game with specified filters
+            </summary>
+            <param name="gameId">SteamGridDB game ID of game</param>
+            <param name="nsfw">Include Non-Suitable-For-Work results, default <see langword="false"/></param>
+            <param name="humorous">Include humorous results, default <see langword="false"/></param>
+            <param name="epilepsy">Include content that can cause epilepsy</param>
+            <param name="page">Page index to request data</param>
+            <param name="tags">Bitmask for tags filter.</param>
+            <param name="styles">Bitmask for styles filter. Allowed values see in <see cref="F:craftersmine.SteamGridDBNet.SteamGridDbStyles.AllGrids"/></param>
+            <param name="dimensions">Bitmask for dimensions filter. Allowed values see in <see cref="F:craftersmine.SteamGridDBNet.SteamGridDbDimensions.AllGrids"/></param>
+            <param name="formats">Bitmask for formats/mimes filter. Allowed values see in <see cref="F:craftersmine.SteamGridDBNet.SteamGridDbFormats.All"/></param>
+            <param name="types">Bitmask for type of image, animated or static. <see cref="F:craftersmine.SteamGridDBNet.SteamGridDbTypes.All"/></param>
+            <returns><see cref="T:craftersmine.SteamGridDBNet.SteamGridDbGrid"/> array of results</returns>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbNotFoundException">When item is not found on server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbUnauthorizedException">When your API key is invalid, not set, or you've reset it on API preferences page and use old one</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbBadRequestException">When library makes invalid request to server due to invalid URI generated</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbForbiddenException">When you don't have permissions to perform action on item, probably because you don't own item</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbRateLimitedException">When you've been rate limited by the server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException">When unknown exception occurred in request</exception>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.SteamGridDb.GetGridsByPlatformGameIdAsync(craftersmine.SteamGridDBNet.SteamGridDbGamePlatform,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Int32,craftersmine.SteamGridDBNet.SteamGridDbTags,craftersmine.SteamGridDBNet.SteamGridDbStyles,craftersmine.SteamGridDBNet.SteamGridDbDimensions,craftersmine.SteamGridDBNet.SteamGridDbFormats,craftersmine.SteamGridDBNet.SteamGridDbTypes)">
+            <summary>
+            Gets <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbGrid"/> array for specified game by selected platform and platform specific Game ID (like Steam App ID) with specified filters
+            </summary>
+            <param name="platform">Platform of which items get</param>
+            <param name="platformGameId">Platform specific game ID of game</param>
+            <param name="nsfw">Include Non-Suitable-For-Work results, default <see langword="false"/></param>
+            <param name="humorous">Include humorous results, default <see langword="false"/></param>
+            <param name="epilepsy">Include content that can cause epilepsy</param>
+            <param name="page">Page index to request data</param>
+            <param name="tags">Bitmask for tags filter.</param>
+            <param name="styles">Bitmask for styles filter. Allowed values see in <see cref="F:craftersmine.SteamGridDBNet.SteamGridDbStyles.AllGrids"/></param>
+            <param name="dimensions">Bitmask for dimensions filter. Allowed values see in <see cref="F:craftersmine.SteamGridDBNet.SteamGridDbDimensions.AllGrids"/></param>
+            <param name="formats">Bitmask for formats/mimes filter. Allowed values see in <see cref="F:craftersmine.SteamGridDBNet.SteamGridDbFormats.All"/></param>
+            <param name="types">Bitmask for type of image, animated or static. <see cref="F:craftersmine.SteamGridDBNet.SteamGridDbTypes.All"/></param>
+            <returns><see cref="T:craftersmine.SteamGridDBNet.SteamGridDbGrid"/> array of results</returns>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbNotFoundException">When item is not found on server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbUnauthorizedException">When your API key is invalid, not set, or you've reset it on API preferences page and use old one</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbBadRequestException">When library makes invalid request to server due to invalid URI generated</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbForbiddenException">When you don't have permissions to perform action on item, probably because you don't own item</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbRateLimitedException">When you've been rate limited by the server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException">When unknown exception occurred in request</exception>
+            <exception cref="T:System.ArgumentException">When more than one platform selected</exception>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.SteamGridDb.GetGridsForGameAsync(craftersmine.SteamGridDBNet.SteamGridDbGame,System.Boolean,System.Boolean,System.Boolean,System.Int32,craftersmine.SteamGridDBNet.SteamGridDbTags,craftersmine.SteamGridDBNet.SteamGridDbStyles,craftersmine.SteamGridDBNet.SteamGridDbDimensions,craftersmine.SteamGridDBNet.SteamGridDbFormats,craftersmine.SteamGridDBNet.SteamGridDbTypes)">
+            <summary>
+            Gets <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbGrid"/> array for specified game with specified filters
+            </summary>
+            <param name="game"><see cref="T:craftersmine.SteamGridDBNet.SteamGridDbGame"/> object for game data</param>
+            <param name="nsfw">Include Non-Suitable-For-Work results, default <see langword="false"/></param>
+            <param name="humorous">Include humorous results, default <see langword="false"/></param>
+            <param name="epilepsy">Include content that can cause epilepsy</param>
+            <param name="page">Page index to request data</param>
+            <param name="tags">Bitmask for tags filter.</param>
+            <param name="styles">Bitmask for styles filter. Allowed values see in <see cref="F:craftersmine.SteamGridDBNet.SteamGridDbStyles.AllGrids"/></param>
+            <param name="dimensions">Bitmask for dimensions filter. Allowed values see in <see cref="F:craftersmine.SteamGridDBNet.SteamGridDbDimensions.AllGrids"/></param>
+            <param name="formats">Bitmask for formats/mimes filter. Allowed values see in <see cref="F:craftersmine.SteamGridDBNet.SteamGridDbFormats.All"/></param>
+            <param name="types">Bitmask for type of image, animated or static. <see cref="F:craftersmine.SteamGridDBNet.SteamGridDbTypes.All"/></param>
+            <returns><see cref="T:craftersmine.SteamGridDBNet.SteamGridDbGrid"/> array of results</returns>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbNotFoundException">When item is not found on server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbUnauthorizedException">When your API key is invalid, not set, or you've reset it on API preferences page and use old one</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbBadRequestException">When library makes invalid request to server due to invalid URI generated</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbForbiddenException">When you don't have permissions to perform action on item, probably because you don't own item</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbRateLimitedException">When you've been rate limited by the server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException">When unknown exception occurred in request</exception>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.SteamGridDb.UploadGridAsync(System.Int32,System.IO.Stream,craftersmine.SteamGridDBNet.SteamGridDbStyles)">
+            <summary>
+            Uploads image from <see cref="T:System.IO.Stream"/> as <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbGrid"/> to SteamGridDB
+            </summary>
+            <param name="gameId">SteamGridDB Game ID</param>
+            <param name="imageStream"><see cref="T:System.IO.Stream"/> of data, that represents an image. Must contain data following MIME types: image/png, image/jpeg</param>
+            <param name="style">Style of Grid image for filters</param>
+            <returns><see langword="true"/> if image uploaded correctly, otherwise <see langword="false"/> or exception will be thrown</returns>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbNotFoundException">When item is not found on server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbUnauthorizedException">When your API key is invalid, not set, or you've reset it on API preferences page and use old one</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbBadRequestException">When library makes invalid request to server due to invalid URI generated</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbForbiddenException">When you don't have permissions to perform action on item, probably because you don't own item</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbRateLimitedException">When you've been rate limited by the server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException">When unknown exception occurred in request</exception>
+            <exception cref="T:System.ArgumentException">When more then one style selected</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">When stream is empty or has length of 0</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.InvalidMimeTypeException">When data in stream doesn't represent correct MIME type</exception>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.SteamGridDb.UploadGridAsync(craftersmine.SteamGridDBNet.SteamGridDbGame,System.IO.Stream,craftersmine.SteamGridDBNet.SteamGridDbStyles)">
+            <summary>
+            Uploads image from <see cref="T:System.IO.Stream"/> as <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbGrid"/> to SteamGridDB
+            </summary>
+            <param name="game"><see cref="T:craftersmine.SteamGridDBNet.SteamGridDbGame"/> object for game data</param>
+            <param name="imageStream"><see cref="T:System.IO.Stream"/> of data, that represents an image. Must contain data following MIME types: image/png, image/jpeg</param>
+            <param name="style">Style of Grid image for filters</param>
+            <returns><see langword="true"/> if image uploaded correctly, otherwise <see langword="false"/> or exception will be thrown</returns>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbNotFoundException">When item is not found on server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbUnauthorizedException">When your API key is invalid, not set, or you've reset it on API preferences page and use old one</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbBadRequestException">When library makes invalid request to server due to invalid URI generated</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbForbiddenException">When you don't have permissions to perform action on item, probably because you don't own item</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbRateLimitedException">When you've been rate limited by the server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException">When unknown exception occurred in request</exception>
+            <exception cref="T:System.ArgumentException">When more then one style selected</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">When stream is empty or has length of 0</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.InvalidMimeTypeException">When data in stream doesn't represent correct MIME type</exception>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.SteamGridDb.UploadGridFromFileAsync(System.Int32,System.String,craftersmine.SteamGridDBNet.SteamGridDbStyles)">
+            <summary>
+            Uploads image from file as <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbGrid"/> to SteamGridDB
+            </summary>
+            <param name="gameId">SteamGridDB Game ID</param>
+            <param name="filePath">Full path to the file that represents an image. Must contain data following MIME types: image/png, image/jpeg</param>
+            <param name="style">Style of Grid image for filters</param>
+            <returns><see langword="true"/> if image uploaded correctly, otherwise <see langword="false"/> or exception will be thrown</returns>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbNotFoundException">When item is not found on server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbUnauthorizedException">When your API key is invalid, not set, or you've reset it on API preferences page and use old one</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbBadRequestException">When library makes invalid request to server due to invalid URI generated</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbForbiddenException">When you don't have permissions to perform action on item, probably because you don't own item</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbRateLimitedException">When you've been rate limited by the server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException">When unknown exception occurred in request</exception>
+            <exception cref="T:System.ArgumentException">When more then one style selected</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">When stream is empty or has length of 0</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.InvalidMimeTypeException">When data in stream doesn't represent correct MIME type</exception>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.SteamGridDb.UploadGridFromFileAsync(craftersmine.SteamGridDBNet.SteamGridDbGame,System.String,craftersmine.SteamGridDBNet.SteamGridDbStyles)">
+            <summary>
+            Uploads image from file as <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbGrid"/> to SteamGridDB
+            </summary>
+            <param name="game"><see cref="T:craftersmine.SteamGridDBNet.SteamGridDbGame"/> object for game data</param>
+            <param name="filePath">Full path to the file that represents an image. Must contain data following MIME types: image/png, image/jpeg</param>
+            <param name="style">Style of Grid image for filters</param>
+            <returns><see langword="true"/> if image uploaded correctly, otherwise <see langword="false"/> or exception will be thrown</returns>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbNotFoundException">When item is not found on server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbUnauthorizedException">When your API key is invalid, not set, or you've reset it on API preferences page and use old one</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbBadRequestException">When library makes invalid request to server due to invalid URI generated</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbForbiddenException">When you don't have permissions to perform action on item, probably because you don't own item</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbRateLimitedException">When you've been rate limited by the server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException">When unknown exception occurred in request</exception>
+            <exception cref="T:System.ArgumentException">When more then one style selected</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">When stream is empty or has length of 0</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.InvalidMimeTypeException">When data in stream doesn't represent correct MIME type</exception>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.SteamGridDb.DeleteGridsAsync(System.Int32[])">
+            <summary>
+            Removes <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbGrid"/> with specified IDs from server
+            </summary>
+            <param name="gridIds">List of IDs of <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbGrid"/> objects</param>
+            <returns><see langword="true"/> if successfully removed, otherwise <see langword="false"/> or thrown exception</returns>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbNotFoundException">When item is not found on server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbUnauthorizedException">When your API key is invalid, not set, or you've reset it on API preferences page and use old one</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbBadRequestException">When library makes invalid request to server due to invalid URI generated</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbForbiddenException">When you don't have permissions to perform action on item, probably because you don't own item</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbRateLimitedException">When you've been rate limited by the server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException">When unknown exception occurred in request</exception>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.SteamGridDb.DeleteGridAsync(System.Int32)">
+            <summary>
+            Removes single <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbGrid"/> with specified ID from server
+            </summary>
+            <param name="gridId">ID of <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbGrid"/> object to remove</param>
+            <returns><see langword="true"/> if successfully removed, otherwise <see langword="false"/> or thrown exception</returns>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbNotFoundException">When item is not found on server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbUnauthorizedException">When your API key is invalid, not set, or you've reset it on API preferences page and use old one</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbBadRequestException">When library makes invalid request to server due to invalid URI generated</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbForbiddenException">When you don't have permissions to perform action on item, probably because you don't own item</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbRateLimitedException">When you've been rate limited by the server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException">When unknown exception occurred in request</exception>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.SteamGridDb.GetHeroesByGameIdAsync(System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Int32,craftersmine.SteamGridDBNet.SteamGridDbTags,craftersmine.SteamGridDBNet.SteamGridDbStyles,craftersmine.SteamGridDBNet.SteamGridDbDimensions,craftersmine.SteamGridDBNet.SteamGridDbFormats,craftersmine.SteamGridDBNet.SteamGridDbTypes)">
+            <summary>
+            Gets <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbHero"/> array for specified game with specified filters
+            </summary>
+            <param name="gameId">SteamGridDB game ID of game</param>
+            <param name="nsfw">Include Non-Suitable-For-Work results, default <see langword="false"/></param>
+            <param name="humorous">Include humorous results, default <see langword="false"/></param>
+            <param name="epilepsy">Include content that can cause epilepsy</param>
+            <param name="page">Page index to request data</param>
+            <param name="tags">Bitmask for tags filter.</param>
+            <param name="styles">Bitmask for styles filter. Allowed values see in <see cref="F:craftersmine.SteamGridDBNet.SteamGridDbStyles.AllHeroes"/></param>
+            <param name="dimensions">Bitmask for dimensions filter. Allowed values see in <see cref="F:craftersmine.SteamGridDBNet.SteamGridDbDimensions.AllHeroes"/></param>
+            <param name="formats">Bitmask for formats/mimes filter. Allowed values see in <see cref="F:craftersmine.SteamGridDBNet.SteamGridDbFormats.All"/></param>
+            <param name="types">Bitmask for type of image, animated or static. <see cref="F:craftersmine.SteamGridDBNet.SteamGridDbTypes.All"/></param>
+            <returns><see cref="T:craftersmine.SteamGridDBNet.SteamGridDbGrid"/> array of results</returns>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbNotFoundException">When item is not found on server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbUnauthorizedException">When your API key is invalid, not set, or you've reset it on API preferences page and use old one</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbBadRequestException">When library makes invalid request to server due to invalid URI generated</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbForbiddenException">When you don't have permissions to perform action on item, probably because you don't own item</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbRateLimitedException">When you've been rate limited by the server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException">When unknown exception occurred in request</exception>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.SteamGridDb.GetHeroesByPlatformGameIdAsync(craftersmine.SteamGridDBNet.SteamGridDbGamePlatform,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Int32,craftersmine.SteamGridDBNet.SteamGridDbTags,craftersmine.SteamGridDBNet.SteamGridDbStyles,craftersmine.SteamGridDBNet.SteamGridDbDimensions,craftersmine.SteamGridDBNet.SteamGridDbFormats,craftersmine.SteamGridDBNet.SteamGridDbTypes)">
+            <summary>
+            Gets <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbHero"/> array for specified game by selected platform and platform specific Game ID (like Steam App ID) with specified filters
+            </summary>
+            <param name="platform">Platform of which items get</param>
+            <param name="platformGameId">Platform specific game ID of game</param>
+            <param name="nsfw">Include Non-Suitable-For-Work results, default <see langword="false"/></param>
+            <param name="humorous">Include humorous results, default <see langword="false"/></param>
+            <param name="epilepsy">Include content that can cause epilepsy</param>
+            <param name="page">Page index to request data</param>
+            <param name="tags">Bitmask for tags filter.</param>
+            <param name="styles">Bitmask for styles filter. Allowed values see in <see cref="F:craftersmine.SteamGridDBNet.SteamGridDbStyles.AllHeroes"/></param>
+            <param name="dimensions">Bitmask for dimensions filter. Allowed values see in <see cref="F:craftersmine.SteamGridDBNet.SteamGridDbDimensions.AllHeroes"/></param>
+            <param name="formats">Bitmask for formats/mimes filter. Allowed values see in <see cref="F:craftersmine.SteamGridDBNet.SteamGridDbFormats.All"/></param>
+            <param name="types">Bitmask for type of image, animated or static. <see cref="F:craftersmine.SteamGridDBNet.SteamGridDbTypes.All"/></param>
+            <returns><see cref="T:craftersmine.SteamGridDBNet.SteamGridDbGrid"/> array of results</returns>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbNotFoundException">When item is not found on server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbUnauthorizedException">When your API key is invalid, not set, or you've reset it on API preferences page and use old one</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbBadRequestException">When library makes invalid request to server due to invalid URI generated</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbForbiddenException">When you don't have permissions to perform action on item, probably because you don't own item</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbRateLimitedException">When you've been rate limited by the server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException">When unknown exception occurred in request</exception>
+            <exception cref="T:System.ArgumentException">When more than one platform selected</exception>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.SteamGridDb.GetHeroesForGameAsync(craftersmine.SteamGridDBNet.SteamGridDbGame,System.Boolean,System.Boolean,System.Boolean,System.Int32,craftersmine.SteamGridDBNet.SteamGridDbTags,craftersmine.SteamGridDBNet.SteamGridDbStyles,craftersmine.SteamGridDBNet.SteamGridDbDimensions,craftersmine.SteamGridDBNet.SteamGridDbFormats,craftersmine.SteamGridDBNet.SteamGridDbTypes)">
+            <summary>
+            Gets <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbHero"/> array for specified game with specified filters
+            </summary>
+            <param name="game"><see cref="T:craftersmine.SteamGridDBNet.SteamGridDbGame"/> object for game data</param>
+            <param name="nsfw">Include Non-Suitable-For-Work results, default <see langword="false"/></param>
+            <param name="humorous">Include humorous results, default <see langword="false"/></param>
+            <param name="epilepsy">Include content that can cause epilepsy</param>
+            <param name="page">Page index to request data</param>
+            <param name="tags">Bitmask for tags filter.</param>
+            <param name="styles">Bitmask for styles filter. Allowed values see in <see cref="F:craftersmine.SteamGridDBNet.SteamGridDbStyles.AllGrids"/></param>
+            <param name="dimensions">Bitmask for dimensions filter. Allowed values see in <see cref="F:craftersmine.SteamGridDBNet.SteamGridDbDimensions.AllGrids"/></param>
+            <param name="formats">Bitmask for formats/mimes filter. Allowed values see in <see cref="F:craftersmine.SteamGridDBNet.SteamGridDbFormats.All"/></param>
+            <param name="types">Bitmask for type of image, animated or static. <see cref="F:craftersmine.SteamGridDBNet.SteamGridDbTypes.All"/></param>
+            <returns><see cref="T:craftersmine.SteamGridDBNet.SteamGridDbGrid"/> array of results</returns>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbNotFoundException">When item is not found on server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbUnauthorizedException">When your API key is invalid, not set, or you've reset it on API preferences page and use old one</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbBadRequestException">When library makes invalid request to server due to invalid URI generated</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbForbiddenException">When you don't have permissions to perform action on item, probably because you don't own item</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbRateLimitedException">When you've been rate limited by the server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException">When unknown exception occurred in request</exception>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.SteamGridDb.UploadHeroAsync(System.Int32,System.IO.Stream,craftersmine.SteamGridDBNet.SteamGridDbStyles)">
+            <summary>
+            Uploads image from <see cref="T:System.IO.Stream"/> as <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbHero"/> to SteamGridDB
+            </summary>
+            <param name="gameId">SteamGridDB Game ID</param>
+            <param name="imageStream"><see cref="T:System.IO.Stream"/> of data, that represents an image. Must contain data following MIME types: image/png, image/jpeg</param>
+            <param name="style">Style of Hero image for filters</param>
+            <returns><see langword="true"/> if image uploaded correctly, otherwise <see langword="false"/> or exception will be thrown</returns>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbNotFoundException">When item is not found on server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbUnauthorizedException">When your API key is invalid, not set, or you've reset it on API preferences page and use old one</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbBadRequestException">When library makes invalid request to server due to invalid URI generated</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbForbiddenException">When you don't have permissions to perform action on item, probably because you don't own item</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbRateLimitedException">When you've been rate limited by the server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException">When unknown exception occurred in request</exception>
+            <exception cref="T:System.ArgumentException">When more then one style selected</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">When stream is empty or has length of 0</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.InvalidMimeTypeException">When data in stream doesn't represent correct MIME type</exception>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.SteamGridDb.UploadHeroAsync(craftersmine.SteamGridDBNet.SteamGridDbGame,System.IO.Stream,craftersmine.SteamGridDBNet.SteamGridDbStyles)">
+            <summary>
+            Uploads image from <see cref="T:System.IO.Stream"/> as <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbHero"/> to SteamGridDB
+            </summary>
+            <param name="game"><see cref="T:craftersmine.SteamGridDBNet.SteamGridDbGame"/> object for game data</param>
+            <param name="imageStream"><see cref="T:System.IO.Stream"/> of data, that represents an image. Must contain data following MIME types: image/png, image/jpeg</param>
+            <param name="style">Style of Hero image for filters</param>
+            <returns><see langword="true"/> if image uploaded correctly, otherwise <see langword="false"/> or exception will be thrown</returns>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbNotFoundException">When item is not found on server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbUnauthorizedException">When your API key is invalid, not set, or you've reset it on API preferences page and use old one</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbBadRequestException">When library makes invalid request to server due to invalid URI generated</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbForbiddenException">When you don't have permissions to perform action on item, probably because you don't own item</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbRateLimitedException">When you've been rate limited by the server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException">When unknown exception occurred in request</exception>
+            <exception cref="T:System.ArgumentException">When more then one style selected</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">When stream is empty or has length of 0</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.InvalidMimeTypeException">When data in stream doesn't represent correct MIME type</exception>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.SteamGridDb.UploadHeroFromFileAsync(System.Int32,System.String,craftersmine.SteamGridDBNet.SteamGridDbStyles)">
+            <summary>
+            Uploads image from file as <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbHero"/> to SteamGridDB
+            </summary>
+            <param name="gameId">SteamGridDB Game ID</param>
+            <param name="filePath">Full path to the file that represents an image. Must contain data following MIME types: image/png, image/jpeg</param>
+            <param name="style">Style of Hero image for filters</param>
+            <returns><see langword="true"/> if image uploaded correctly, otherwise <see langword="false"/> or exception will be thrown</returns>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbNotFoundException">When item is not found on server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbUnauthorizedException">When your API key is invalid, not set, or you've reset it on API preferences page and use old one</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbBadRequestException">When library makes invalid request to server due to invalid URI generated</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbForbiddenException">When you don't have permissions to perform action on item, probably because you don't own item</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbRateLimitedException">When you've been rate limited by the server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException">When unknown exception occurred in request</exception>
+            <exception cref="T:System.ArgumentException">When more then one style selected</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">When stream is empty or has length of 0</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.InvalidMimeTypeException">When data in stream doesn't represent correct MIME type</exception>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.SteamGridDb.UploadHeroFromFileAsync(craftersmine.SteamGridDBNet.SteamGridDbGame,System.String,craftersmine.SteamGridDBNet.SteamGridDbStyles)">
+            <summary>
+            Uploads image from file as <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbHero"/> to SteamGridDB
+            </summary>
+            <param name="game"><see cref="T:craftersmine.SteamGridDBNet.SteamGridDbGame"/> object for game data</param>
+            <param name="filePath">Full path to the file that represents an image. Must contain data following MIME types: image/png, image/jpeg</param>
+            <param name="style">Style of Hero image for filters</param>
+            <returns><see langword="true"/> if image uploaded correctly, otherwise <see langword="false"/> or exception will be thrown</returns>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbNotFoundException">When item is not found on server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbUnauthorizedException">When your API key is invalid, not set, or you've reset it on API preferences page and use old one</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbBadRequestException">When library makes invalid request to server due to invalid URI generated</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbForbiddenException">When you don't have permissions to perform action on item, probably because you don't own item</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbRateLimitedException">When you've been rate limited by the server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException">When unknown exception occurred in request</exception>
+            <exception cref="T:System.ArgumentException">When more then one style selected</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">When stream is empty or has length of 0</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.InvalidMimeTypeException">When data in stream doesn't represent correct MIME type</exception>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.SteamGridDb.DeleteHeroesAsync(System.Int32[])">
+            <summary>
+            Removes <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbHero"/> with specified IDs from server
+            </summary>
+            <param name="heroIds">List of IDs of <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbHero"/> objects</param>
+            <returns><see langword="true"/> if successfully removed, otherwise <see langword="false"/> or thrown exception</returns>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbNotFoundException">When item is not found on server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbUnauthorizedException">When your API key is invalid, not set, or you've reset it on API preferences page and use old one</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbBadRequestException">When library makes invalid request to server due to invalid URI generated</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbForbiddenException">When you don't have permissions to perform action on item, probably because you don't own item</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbRateLimitedException">When you've been rate limited by the server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException">When unknown exception occurred in request</exception>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.SteamGridDb.DeleteHeroAsync(System.Int32)">
+            <summary>
+            Removes single <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbHero"/> with specified ID from server
+            </summary>
+            <param name="heroId">ID of <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbHero"/> object to remove</param>
+            <returns><see langword="true"/> if successfully removed, otherwise <see langword="false"/> or thrown exception</returns>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbNotFoundException">When item is not found on server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbUnauthorizedException">When your API key is invalid, not set, or you've reset it on API preferences page and use old one</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbBadRequestException">When library makes invalid request to server due to invalid URI generated</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbForbiddenException">When you don't have permissions to perform action on item, probably because you don't own item</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbRateLimitedException">When you've been rate limited by the server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException">When unknown exception occurred in request</exception>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.SteamGridDb.GetLogosByGameIdAsync(System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Int32,craftersmine.SteamGridDBNet.SteamGridDbTags,craftersmine.SteamGridDBNet.SteamGridDbStyles,craftersmine.SteamGridDBNet.SteamGridDbFormats,craftersmine.SteamGridDBNet.SteamGridDbTypes)">
+            <summary>
+            Gets <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbLogo"/> array for specified game with specified filters
+            </summary>
+            <param name="gameId">SteamGridDB game ID of game</param>
+            <param name="nsfw">Include Non-Suitable-For-Work results, default <see langword="false"/></param>
+            <param name="humorous">Include humorous results, default <see langword="false"/></param>
+            <param name="epilepsy">Include content that can cause epilepsy</param>
+            <param name="page">Page index to request data</param>
+            <param name="tags">Bitmask for tags filter.</param>
+            <param name="styles">Bitmask for styles filter. Allowed values see in <see cref="F:craftersmine.SteamGridDBNet.SteamGridDbStyles.AllLogos"/></param>
+            <param name="formats">Bitmask for formats/mimes filter. Allowed values see in <see cref="F:craftersmine.SteamGridDBNet.SteamGridDbFormats.All"/></param>
+            <param name="types">Bitmask for type of image, animated or static. <see cref="F:craftersmine.SteamGridDBNet.SteamGridDbTypes.All"/></param>
+            <returns><see cref="T:craftersmine.SteamGridDBNet.SteamGridDbGrid"/> array of results</returns>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbNotFoundException">When item is not found on server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbUnauthorizedException">When your API key is invalid, not set, or you've reset it on API preferences page and use old one</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbBadRequestException">When library makes invalid request to server due to invalid URI generated</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbForbiddenException">When you don't have permissions to perform action on item, probably because you don't own item</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbRateLimitedException">When you've been rate limited by the server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException">When unknown exception occurred in request</exception>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.SteamGridDb.GetLogosByPlatformGameIdAsync(craftersmine.SteamGridDBNet.SteamGridDbGamePlatform,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Int32,craftersmine.SteamGridDBNet.SteamGridDbTags,craftersmine.SteamGridDBNet.SteamGridDbStyles,craftersmine.SteamGridDBNet.SteamGridDbFormats,craftersmine.SteamGridDBNet.SteamGridDbTypes)">
+            <summary>
+            Gets <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbLogo"/> array for specified game by selected platform and platform specific Game ID (like Steam App ID) with specified filters
+            </summary>
+            <param name="platform">Platform of which items get</param>
+            <param name="platformGameId">Platform specific game ID of game</param>
+            <param name="nsfw">Include Non-Suitable-For-Work results, default <see langword="false"/></param>
+            <param name="humorous">Include humorous results, default <see langword="false"/></param>/// <param name="epilepsy">Include content that can cause epilepsy</param>
+            <param name="page">Page index to request data</param>
+            <param name="tags">Bitmask for tags filter.</param>
+            <param name="styles">Bitmask for styles filter. Allowed values see in <see cref="F:craftersmine.SteamGridDBNet.SteamGridDbStyles.AllLogos"/></param>
+            <param name="formats">Bitmask for formats/mimes filter. Allowed values see in <see cref="F:craftersmine.SteamGridDBNet.SteamGridDbFormats.All"/></param>
+            <param name="types">Bitmask for type of image, animated or static. <see cref="F:craftersmine.SteamGridDBNet.SteamGridDbTypes.All"/></param>
+            <returns><see cref="T:craftersmine.SteamGridDBNet.SteamGridDbGrid"/> array of results</returns>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbNotFoundException">When item is not found on server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbUnauthorizedException">When your API key is invalid, not set, or you've reset it on API preferences page and use old one</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbBadRequestException">When library makes invalid request to server due to invalid URI generated</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbForbiddenException">When you don't have permissions to perform action on item, probably because you don't own item</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbRateLimitedException">When you've been rate limited by the server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException">When unknown exception occurred in request</exception>
+            <exception cref="T:System.ArgumentException">When more than one platform selected</exception>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.SteamGridDb.GetLogosForGameAsync(craftersmine.SteamGridDBNet.SteamGridDbGame,System.Boolean,System.Boolean,System.Boolean,System.Int32,craftersmine.SteamGridDBNet.SteamGridDbTags,craftersmine.SteamGridDBNet.SteamGridDbStyles,craftersmine.SteamGridDBNet.SteamGridDbFormats,craftersmine.SteamGridDBNet.SteamGridDbTypes)">
+            <summary>
+            Gets <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbLogo"/> array for specified game with specified filters
+            </summary>
+            <param name="game"><see cref="T:craftersmine.SteamGridDBNet.SteamGridDbGame"/> object for game data</param>
+            <param name="nsfw">Include Non-Suitable-For-Work results, default <see langword="false"/></param>
+            <param name="humorous">Include humorous results, default <see langword="false"/></param>
+            <param name="epilepsy">Include content that can cause epilepsy</param>
+            <param name="page">Page index to request data</param>
+            <param name="tags">Bitmask for tags filter.</param>
+            <param name="styles">Bitmask for styles filter. Allowed values see in <see cref="F:craftersmine.SteamGridDBNet.SteamGridDbStyles.AllGrids"/></param>
+            <param name="dimensions">Bitmask for dimensions filter. Allowed values see in <see cref="F:craftersmine.SteamGridDBNet.SteamGridDbDimensions.AllGrids"/></param>
+            <param name="formats">Bitmask for formats/mimes filter. Allowed values see in <see cref="F:craftersmine.SteamGridDBNet.SteamGridDbFormats.All"/></param>
+            <param name="types">Bitmask for type of image, animated or static. <see cref="F:craftersmine.SteamGridDBNet.SteamGridDbTypes.All"/></param>
+            <returns><see cref="T:craftersmine.SteamGridDBNet.SteamGridDbLogo"/> array of results</returns>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbNotFoundException">When item is not found on server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbUnauthorizedException">When your API key is invalid, not set, or you've reset it on API preferences page and use old one</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbBadRequestException">When library makes invalid request to server due to invalid URI generated</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbForbiddenException">When you don't have permissions to perform action on item, probably because you don't own item</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbRateLimitedException">When you've been rate limited by the server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException">When unknown exception occurred in request</exception>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.SteamGridDb.UploadLogoAsync(System.Int32,System.IO.Stream,craftersmine.SteamGridDBNet.SteamGridDbStyles)">
+            <summary>
+            Uploads image from <see cref="T:System.IO.Stream"/> as <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbLogo"/> to SteamGridDB
+            </summary>
+            <param name="gameId">SteamGridDB Game ID</param>
+            <param name="imageStream"><see cref="T:System.IO.Stream"/> of data, that represents an image. Must contain data following MIME types: image/png</param>
+            <param name="style">Style of Hero image for filters</param>
+            <returns><see langword="true"/> if image uploaded correctly, otherwise <see langword="false"/> or exception will be thrown</returns>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbNotFoundException">When item is not found on server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbUnauthorizedException">When your API key is invalid, not set, or you've reset it on API preferences page and use old one</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbBadRequestException">When library makes invalid request to server due to invalid URI generated</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbForbiddenException">When you don't have permissions to perform action on item, probably because you don't own item</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbRateLimitedException">When you've been rate limited by the server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException">When unknown exception occurred in request</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">When stream is empty or has length of 0</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.InvalidMimeTypeException">When data in stream doesn't represent correct MIME type</exception>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.SteamGridDb.UploadLogoAsync(craftersmine.SteamGridDBNet.SteamGridDbGame,System.IO.Stream,craftersmine.SteamGridDBNet.SteamGridDbStyles)">
+            <summary>
+            Uploads image from <see cref="T:System.IO.Stream"/> as <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbLogo"/> to SteamGridDB
+            </summary>
+            <param name="game"><see cref="T:craftersmine.SteamGridDBNet.SteamGridDbGame"/> object for game data</param>
+            <param name="imageStream"><see cref="T:System.IO.Stream"/> of data, that represents an image. Must contain data following MIME types: image/png</param>
+            <param name="style">Style of Hero image for filters</param>
+            <returns><see langword="true"/> if image uploaded correctly, otherwise <see langword="false"/> or exception will be thrown</returns>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbNotFoundException">When item is not found on server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbUnauthorizedException">When your API key is invalid, not set, or you've reset it on API preferences page and use old one</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbBadRequestException">When library makes invalid request to server due to invalid URI generated</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbForbiddenException">When you don't have permissions to perform action on item, probably because you don't own item</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbRateLimitedException">When you've been rate limited by the server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException">When unknown exception occurred in request</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">When stream is empty or has length of 0</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.InvalidMimeTypeException">When data in stream doesn't represent correct MIME type</exception>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.SteamGridDb.UploadLogoFromFileAsync(System.Int32,System.String,craftersmine.SteamGridDBNet.SteamGridDbStyles)">
+            <summary>
+            Uploads image from file as <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbLogo"/> to SteamGridDB
+            </summary>
+            <param name="gameId">SteamGridDB Game ID</param>
+            <param name="filePath">Full path to the file that represents an image. Must contain data following MIME types: image/png</param>
+            <param name="style">Style of Hero image for filters</param>
+            <returns><see langword="true"/> if image uploaded correctly, otherwise <see langword="false"/> or exception will be thrown</returns>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbNotFoundException">When item is not found on server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbUnauthorizedException">When your API key is invalid, not set, or you've reset it on API preferences page and use old one</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbBadRequestException">When library makes invalid request to server due to invalid URI generated</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbForbiddenException">When you don't have permissions to perform action on item, probably because you don't own item</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbRateLimitedException">When you've been rate limited by the server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException">When unknown exception occurred in request</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">When stream is empty or has length of 0</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.InvalidMimeTypeException">When data in stream doesn't represent correct MIME type</exception>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.SteamGridDb.UploadLogoFromFileAsync(craftersmine.SteamGridDBNet.SteamGridDbGame,System.String,craftersmine.SteamGridDBNet.SteamGridDbStyles)">
+            <summary>
+            Uploads image from file as <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbLogo"/> to SteamGridDB
+            </summary>
+            <param name="game"><see cref="T:craftersmine.SteamGridDBNet.SteamGridDbGame"/> object for game data</param>
+            <param name="filePath">Full path to the file that represents an image. Must contain data following MIME types: image/png</param>
+            <param name="style">Style of Hero image for filters</param>
+            <returns><see langword="true"/> if image uploaded correctly, otherwise <see langword="false"/> or exception will be thrown</returns>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbNotFoundException">When item is not found on server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbUnauthorizedException">When your API key is invalid, not set, or you've reset it on API preferences page and use old one</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbBadRequestException">When library makes invalid request to server due to invalid URI generated</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbForbiddenException">When you don't have permissions to perform action on item, probably because you don't own item</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbRateLimitedException">When you've been rate limited by the server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException">When unknown exception occurred in request</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">When stream is empty or has length of 0</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.InvalidMimeTypeException">When data in stream doesn't represent correct MIME type</exception>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.SteamGridDb.DeleteLogosAsync(System.Int32[])">
+            <summary>
+            Removes <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbLogo"/> with specified IDs from server
+            </summary>
+            <param name="logoIds">List of IDs of <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbLogo"/> objects</param>
+            <returns><see langword="true"/> if successfully removed, otherwise <see langword="false"/> or thrown exception</returns>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbNotFoundException">When item is not found on server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbUnauthorizedException">When your API key is invalid, not set, or you've reset it on API preferences page and use old one</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbBadRequestException">When library makes invalid request to server due to invalid URI generated</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbForbiddenException">When you don't have permissions to perform action on item, probably because you don't own item</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbRateLimitedException">When you've been rate limited by the server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException">When unknown exception occurred in request</exception>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.SteamGridDb.DeleteLogoAsync(System.Int32)">
+            <summary>
+            Removes single <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbLogo"/> with specified ID from server
+            </summary>
+            <param name="logoId">ID of <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbLogo"/> object to remove</param>
+            <returns><see langword="true"/> if successfully removed, otherwise <see langword="false"/> or thrown exception</returns>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbNotFoundException">When item is not found on server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbUnauthorizedException">When your API key is invalid, not set, or you've reset it on API preferences page and use old one</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbBadRequestException">When library makes invalid request to server due to invalid URI generated</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbForbiddenException">When you don't have permissions to perform action on item, probably because you don't own item</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbRateLimitedException">When you've been rate limited by the server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException">When unknown exception occurred in request</exception>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.SteamGridDb.GetIconsByGameIdAsync(System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Int32,craftersmine.SteamGridDBNet.SteamGridDbTags,craftersmine.SteamGridDBNet.SteamGridDbStyles,craftersmine.SteamGridDBNet.SteamGridDbFormats,craftersmine.SteamGridDBNet.SteamGridDbTypes)">
+            <summary>
+            Gets <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbIcon"/> array for specified game with specified filters
+            </summary>
+            <param name="gameId">SteamGridDB game ID of game</param>
+            <param name="nsfw">Include Non-Suitable-For-Work results, default <see langword="false"/></param>
+            <param name="humorous">Include humorous results, default <see langword="false"/></param>
+            <param name="epilepsy">Include content that can cause epilepsy</param>
+            <param name="page">Page index to request data</param>
+            <param name="tags">Bitmask for tags filter.</param>
+            <param name="styles">Bitmask for styles filter. Allowed values see in <see cref="F:craftersmine.SteamGridDBNet.SteamGridDbStyles.AllIcons"/></param>
+            <param name="formats">Bitmask for formats/mimes filter. Allowed values see in <see cref="F:craftersmine.SteamGridDBNet.SteamGridDbFormats.AllIcons"/></param>
+            <param name="types">Bitmask for type of image, animated or static. <see cref="F:craftersmine.SteamGridDBNet.SteamGridDbTypes.All"/></param>
+            <returns><see cref="T:craftersmine.SteamGridDBNet.SteamGridDbGrid"/> array of results</returns>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbNotFoundException">When item is not found on server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbUnauthorizedException">When your API key is invalid, not set, or you've reset it on API preferences page and use old one</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbBadRequestException">When library makes invalid request to server due to invalid URI generated</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbForbiddenException">When you don't have permissions to perform action on item, probably because you don't own item</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbRateLimitedException">When you've been rate limited by the server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException">When unknown exception occurred in request</exception>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.SteamGridDb.GetIconsByPlatformGameIdAsync(craftersmine.SteamGridDBNet.SteamGridDbGamePlatform,System.Int32,System.Boolean,System.Boolean,System.Boolean,System.Int32,craftersmine.SteamGridDBNet.SteamGridDbTags,craftersmine.SteamGridDBNet.SteamGridDbStyles,craftersmine.SteamGridDBNet.SteamGridDbFormats,craftersmine.SteamGridDBNet.SteamGridDbTypes)">
+            <summary>
+            Gets <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbIcon"/> array for specified game by selected platform and platform specific Game ID (like Steam App ID) with specified filters
+            </summary>
+            <param name="platform">Platform of which items get</param>
+            <param name="platformGameId">Platform specific game ID of game</param>
+            <param name="nsfw">Include Non-Suitable-For-Work results, default <see langword="false"/></param>
+            <param name="humorous">Include humorous results, default <see langword="false"/></param>
+            <param name="epilepsy">Include content that can cause epilepsy</param>
+            <param name="page">Page index to request data</param>
+            <param name="tags">Bitmask for tags filter.</param>
+            <param name="styles">Bitmask for styles filter. Allowed values see in <see cref="F:craftersmine.SteamGridDBNet.SteamGridDbStyles.AllIcons"/></param>
+            <param name="formats">Bitmask for formats/mimes filter. Allowed values see in <see cref="F:craftersmine.SteamGridDBNet.SteamGridDbFormats.AllIcons"/></param>
+            <param name="types">Bitmask for type of image, animated or static. <see cref="F:craftersmine.SteamGridDBNet.SteamGridDbTypes.All"/></param>
+            <returns><see cref="T:craftersmine.SteamGridDBNet.SteamGridDbGrid"/> array of results</returns>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbNotFoundException">When item is not found on server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbUnauthorizedException">When your API key is invalid, not set, or you've reset it on API preferences page and use old one</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbBadRequestException">When library makes invalid request to server due to invalid URI generated</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbForbiddenException">When you don't have permissions to perform action on item, probably because you don't own item</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbRateLimitedException">When you've been rate limited by the server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException">When unknown exception occurred in request</exception>
+            <exception cref="T:System.ArgumentException">When more than one platform selected</exception>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.SteamGridDb.GetIconsForGameAsync(craftersmine.SteamGridDBNet.SteamGridDbGame,System.Boolean,System.Boolean,System.Boolean,System.Int32,craftersmine.SteamGridDBNet.SteamGridDbTags,craftersmine.SteamGridDBNet.SteamGridDbStyles,craftersmine.SteamGridDBNet.SteamGridDbFormats,craftersmine.SteamGridDBNet.SteamGridDbTypes)">
+            <summary>
+            Gets <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbIcon"/> array for specified game with specified filters
+            </summary>
+            <param name="game"><see cref="T:craftersmine.SteamGridDBNet.SteamGridDbGame"/> object for game data</param>
+            <param name="nsfw">Include Non-Suitable-For-Work results, default <see langword="false"/></param>
+            <param name="humorous">Include humorous results, default <see langword="false"/></param>
+            <param name="epilepsy">Include content that can cause epilepsy</param>
+            <param name="page">Page index to request data</param>
+            <param name="tags">Bitmask for tags filter.</param>
+            <param name="styles">Bitmask for styles filter. Allowed values see in <see cref="F:craftersmine.SteamGridDBNet.SteamGridDbStyles.AllIcons"/></param>
+            <param name="formats">Bitmask for formats/mimes filter. Allowed values see in <see cref="F:craftersmine.SteamGridDBNet.SteamGridDbFormats.AllIcons"/></param>
+            <param name="types">Bitmask for type of image, animated or static. <see cref="F:craftersmine.SteamGridDBNet.SteamGridDbTypes.All"/></param>
+            <returns><see cref="T:craftersmine.SteamGridDBNet.SteamGridDbGrid"/> array of results</returns>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbNotFoundException">When item is not found on server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbUnauthorizedException">When your API key is invalid, not set, or you've reset it on API preferences page and use old one</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbBadRequestException">When library makes invalid request to server due to invalid URI generated</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbForbiddenException">When you don't have permissions to perform action on item, probably because you don't own item</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbRateLimitedException">When you've been rate limited by the server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException">When unknown exception occurred in request</exception>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.SteamGridDb.UploadIconAsync(System.Int32,System.IO.Stream,craftersmine.SteamGridDBNet.SteamGridDbStyles)">
+            <summary>
+            Uploads image from <see cref="T:System.IO.Stream"/> as <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbIcon"/> to SteamGridDB
+            </summary>
+            <param name="gameId">SteamGridDB Game ID</param>
+            <param name="imageStream"><see cref="T:System.IO.Stream"/> of data, that represents an image. Must contain data following MIME types: image/png, image/vnd.microsoft.icon (.ico file)</param>
+            <param name="style">Style of Icon image for filters</param>
+            <returns><see langword="true"/> if image uploaded correctly, otherwise <see langword="false"/> or exception will be thrown</returns>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbNotFoundException">When item is not found on server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbUnauthorizedException">When your API key is invalid, not set, or you've reset it on API preferences page and use old one</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbBadRequestException">When library makes invalid request to server due to invalid URI generated</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbForbiddenException">When you don't have permissions to perform action on item, probably because you don't own item</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbRateLimitedException">When you've been rate limited by the server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException">When unknown exception occurred in request</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">When stream is empty or has length of 0</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.InvalidMimeTypeException">When data in stream doesn't represent correct MIME type</exception>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.SteamGridDb.UploadIconAsync(craftersmine.SteamGridDBNet.SteamGridDbGame,System.IO.Stream,craftersmine.SteamGridDBNet.SteamGridDbStyles)">
+            <summary>
+            Uploads image from <see cref="T:System.IO.Stream"/> as <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbIcon"/> to SteamGridDB
+            </summary>
+            <param name="game"><see cref="T:craftersmine.SteamGridDBNet.SteamGridDbGame"/> object for game data</param>
+            <param name="imageStream"><see cref="T:System.IO.Stream"/> of data, that represents an image. Must contain data following MIME types: image/png, image/vnd.microsoft.icon (.ico file)</param>
+            <param name="style">Style of Icon image for filters</param>
+            <returns><see langword="true"/> if image uploaded correctly, otherwise <see langword="false"/> or exception will be thrown</returns>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbNotFoundException">When item is not found on server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbUnauthorizedException">When your API key is invalid, not set, or you've reset it on API preferences page and use old one</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbBadRequestException">When library makes invalid request to server due to invalid URI generated</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbForbiddenException">When you don't have permissions to perform action on item, probably because you don't own item</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbRateLimitedException">When you've been rate limited by the server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException">When unknown exception occurred in request</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">When stream is empty or has length of 0</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.InvalidMimeTypeException">When data in stream doesn't represent correct MIME type</exception>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.SteamGridDb.UploadIconFromFileAsync(System.Int32,System.String,craftersmine.SteamGridDBNet.SteamGridDbStyles)">
+            <summary>
+            Uploads image from file as <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbGrid"/> to SteamGridDB
+            </summary>
+            <param name="gameId">SteamGridDB Game ID</param>
+            <param name="filePath">Full path to the file that represents an image. Must contain data following MIME types: image/png, image/vnd.microsoft.icon (.ico file)</param>
+            <param name="style">Style of Hero image for filters</param>
+            <returns><see langword="true"/> if image uploaded correctly, otherwise <see langword="false"/> or exception will be thrown</returns>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbNotFoundException">When item is not found on server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbUnauthorizedException">When your API key is invalid, not set, or you've reset it on API preferences page and use old one</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbBadRequestException">When library makes invalid request to server due to invalid URI generated</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbForbiddenException">When you don't have permissions to perform action on item, probably because you don't own item</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbRateLimitedException">When you've been rate limited by the server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException">When unknown exception occurred in request</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">When stream is empty or has length of 0</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.InvalidMimeTypeException">When data in stream doesn't represent correct MIME type</exception>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.SteamGridDb.UploadIconFromFileAsync(craftersmine.SteamGridDBNet.SteamGridDbGame,System.String,craftersmine.SteamGridDBNet.SteamGridDbStyles)">
+            <summary>
+            Uploads image from file as <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbGrid"/> to SteamGridDB
+            </summary>
+            <param name="game"><see cref="T:craftersmine.SteamGridDBNet.SteamGridDbGame"/> object for game data</param>
+            <param name="filePath">Full path to the file that represents an image. Must contain data following MIME types: image/png, image/vnd.microsoft.icon (.ico file)</param>
+            <param name="style">Style of Hero image for filters</param>
+            <returns><see langword="true"/> if image uploaded correctly, otherwise <see langword="false"/> or exception will be thrown</returns>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbNotFoundException">When item is not found on server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbUnauthorizedException">When your API key is invalid, not set, or you've reset it on API preferences page and use old one</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbBadRequestException">When library makes invalid request to server due to invalid URI generated</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbForbiddenException">When you don't have permissions to perform action on item, probably because you don't own item</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbRateLimitedException">When you've been rate limited by the server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException">When unknown exception occurred in request</exception>
+            <exception cref="T:System.ArgumentOutOfRangeException">When stream is empty or has length of 0</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.InvalidMimeTypeException">When data in stream doesn't represent correct MIME type</exception>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.SteamGridDb.DeleteIconsAsync(System.Int32[])">
+            <summary>
+            Removes <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbIcon"/> with specified IDs from server
+            </summary>
+            <param name="iconIds">List of IDs of <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbIcon"/> objects</param>
+            <returns><see langword="true"/> if successfully removed, otherwise <see langword="false"/> or thrown exception</returns>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbNotFoundException">When item is not found on server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbUnauthorizedException">When your API key is invalid, not set, or you've reset it on API preferences page and use old one</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbBadRequestException">When library makes invalid request to server due to invalid URI generated</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbForbiddenException">When you don't have permissions to perform action on item, probably because you don't own item</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbRateLimitedException">When you've been rate limited by the server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException">When unknown exception occurred in request</exception>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.SteamGridDb.DeleteIconAsync(System.Int32)">
+            <summary>
+            Removes single <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbIcon"/> with specified ID from server
+            </summary>
+            <param name="iconId">ID of <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbIcon"/> object to remove</param>
+            <returns><see langword="true"/> if successfully removed, otherwise <see langword="false"/> or thrown exception</returns>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbNotFoundException">When item is not found on server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbUnauthorizedException">When your API key is invalid, not set, or you've reset it on API preferences page and use old one</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbBadRequestException">When library makes invalid request to server due to invalid URI generated</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbForbiddenException">When you don't have permissions to perform action on item, probably because you don't own item</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbRateLimitedException">When you've been rate limited by the server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException">When unknown exception occurred in request</exception>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.SteamGridDb.SearchForGamesAsync(System.String)">
+            <summary>
+            Searches for <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbGame"/> object array by specified search term
+            </summary>
+            <param name="searchTerm">Search term query string</param>
+            <returns>Array of <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbGame"/> objects, otherwise empty array or null</returns>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbNotFoundException">When item is not found on server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbUnauthorizedException">When your API key is invalid, not set, or you've reset it on API preferences page and use old one</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbBadRequestException">When library makes invalid request to server due to invalid URI generated</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbForbiddenException">When you don't have permissions to perform action on item, probably because you don't own item</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbRateLimitedException">When you've been rate limited by the server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException">When unknown exception occurred in request</exception>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.SteamGridDb.Dispose">
+            <summary>
+            Cancels all pending requests, closes HTTP client and releases all resources used by object
+            </summary>
+        </member>
+        <member name="T:craftersmine.SteamGridDBNet.SteamGridDbGamePlatform">
+            <summary>
+            Contains all supported platforms by SteamGridDB. Can be used as bitmask in some cases
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.SteamGridDbGamePlatform.Steam">
+            <summary>
+            Represents Valve Steam platform
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.SteamGridDbGamePlatform.Gog">
+            <summary>
+            Represents GOG platform
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.SteamGridDbGamePlatform.Origin">
+            <summary>
+            Represents EA Origin platform
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.SteamGridDbGamePlatform.Egs">
+            <summary>
+            Represents Epic Games Store platform
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.SteamGridDbGamePlatform.Bnet">
+            <summary>
+            Represents Blizzard Battle.Net platform
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.SteamGridDbGamePlatform.Uplay">
+            <summary>
+            Represents Ubisoft Connect platform (Uplay before)
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.SteamGridDbGamePlatform.Flashpoint">
+            <summary>
+            Represents BlueMaxima's Flashpoint platform
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.SteamGridDbGamePlatform.Eshop">
+            <summary>
+            Represents Nintendo Eshop platform
+            </summary>
+        </member>
+        <member name="T:craftersmine.SteamGridDBNet.SteamGridDbStyles">
+            <summary>
+            Contains all supported Style tags on SteamGridDB
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.SteamGridDbStyles.None">
+            <summary>
+            No style selected. Only for internal library use
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.SteamGridDbStyles.Alternate">
+            <summary>
+            Alternate style
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.SteamGridDbStyles.Blurred">
+            <summary>
+            Blurred image background style
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.SteamGridDbStyles.WhiteLogo">
+            <summary>
+            Contains game logo drawn completely in white
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.SteamGridDbStyles.Material">
+            <summary>
+            Material Design or Windows 8-10 tile styled
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.SteamGridDbStyles.NoLogo">
+            <summary>
+            Image doesn't contain any logos
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.SteamGridDbStyles.Official">
+            <summary>
+            Official or alike style
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.SteamGridDbStyles.Black">
+            <summary>
+            Completely black logo
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.SteamGridDbStyles.White">
+            <summary>
+            Completely white logo
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.SteamGridDbStyles.Custom">
+            <summary>
+            Custom styled
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.SteamGridDbStyles.AllGrids">
+            <summary>
+            All styles supported by <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbGrid"/> objects:
+            <para><see cref="F:craftersmine.SteamGridDBNet.SteamGridDbStyles.Alternate"/></para>
+            <para><see cref="F:craftersmine.SteamGridDBNet.SteamGridDbStyles.Blurred"/></para>
+            <para><see cref="F:craftersmine.SteamGridDBNet.SteamGridDbStyles.WhiteLogo"/></para>
+            <para><see cref="F:craftersmine.SteamGridDBNet.SteamGridDbStyles.Material"/></para>
+            <para><see cref="F:craftersmine.SteamGridDBNet.SteamGridDbStyles.NoLogo"/></para>
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.SteamGridDbStyles.AllHeroes">
+            <summary>
+            All styles supported by <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbHero"/> objects:
+            <para><see cref="F:craftersmine.SteamGridDBNet.SteamGridDbStyles.Alternate"/></para>
+            <para><see cref="F:craftersmine.SteamGridDBNet.SteamGridDbStyles.Blurred"/></para>
+            <para><see cref="F:craftersmine.SteamGridDBNet.SteamGridDbStyles.Material"/></para>
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.SteamGridDbStyles.AllLogos">
+            <summary>
+            All styles supported by <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbLogo"/> objects:
+            <para><see cref="F:craftersmine.SteamGridDBNet.SteamGridDbStyles.Official"/></para>
+            <para><see cref="F:craftersmine.SteamGridDBNet.SteamGridDbStyles.White"/></para>
+            <para><see cref="F:craftersmine.SteamGridDBNet.SteamGridDbStyles.Black"/></para>
+            <para><see cref="F:craftersmine.SteamGridDBNet.SteamGridDbStyles.Custom"/></para>
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.SteamGridDbStyles.AllIcons">
+            <summary>
+            All styles supported by <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbIcon"/> objects:
+            <para><see cref="F:craftersmine.SteamGridDBNet.SteamGridDbStyles.Official"/></para>
+            <para><see cref="F:craftersmine.SteamGridDBNet.SteamGridDbStyles.Custom"/></para>
+            </summary>
+        </member>
+        <member name="T:craftersmine.SteamGridDBNet.SteamGridDbDimensions">
+            <summary>
+            Contains all supported <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbGrid"/> and <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbHero"/> dimensions
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.SteamGridDbDimensions.W600H900">
+            <summary>
+            600x900px
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.SteamGridDbDimensions.W460H215">
+            <summary>
+            460x215px
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.SteamGridDbDimensions.W920H430">
+            <summary>
+            920x430px
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.SteamGridDbDimensions.W342H482">
+            <summary>
+            342x482px
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.SteamGridDbDimensions.W660H930">
+            <summary>
+            660x930px
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.SteamGridDbDimensions.W512H512">
+            <summary>
+            512x512px
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.SteamGridDbDimensions.W1024H1024">
+            <summary>
+            1024x1024px
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.SteamGridDbDimensions.W1920H620">
+            <summary>
+            1920x620px
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.SteamGridDbDimensions.W3840H1240">
+            <summary>
+            3840x1240px
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.SteamGridDbDimensions.W1600H650">
+            <summary>
+            1600x650px
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.SteamGridDbDimensions.AllGrids">
+            <summary>
+            Contains all supported dimensions for <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbGrid"/> object:
+            <para><see cref="F:craftersmine.SteamGridDBNet.SteamGridDbDimensions.W600H900"/></para>
+            <para><see cref="F:craftersmine.SteamGridDBNet.SteamGridDbDimensions.W460H215"/></para>
+            <para><see cref="F:craftersmine.SteamGridDBNet.SteamGridDbDimensions.W920H430"/></para>
+            <para><see cref="F:craftersmine.SteamGridDBNet.SteamGridDbDimensions.W342H482"/></para>
+            <para><see cref="F:craftersmine.SteamGridDBNet.SteamGridDbDimensions.W660H930"/></para>
+            <para><see cref="F:craftersmine.SteamGridDBNet.SteamGridDbDimensions.W512H512"/></para>
+            <para><see cref="F:craftersmine.SteamGridDBNet.SteamGridDbDimensions.W1024H1024"/></para>
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.SteamGridDbDimensions.AllHeroes">
+            <summary>
+            Contains all supported dimensions for <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbHero"/> object:
+            <para><see cref="F:craftersmine.SteamGridDBNet.SteamGridDbDimensions.W1920H620"/></para>
+            <para><see cref="F:craftersmine.SteamGridDBNet.SteamGridDbDimensions.W3840H1240"/></para>
+            <para><see cref="F:craftersmine.SteamGridDBNet.SteamGridDbDimensions.W1600H650"/></para>
+            </summary>
+        </member>
+        <member name="T:craftersmine.SteamGridDBNet.SteamGridDbFormats">
+            <summary>
+            Contains all supported file types/MIME types by SteamGridDB
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.SteamGridDbFormats.Unknown">
+            <summary>
+            Unknown type. Only if SteamGridDB returns unknown type to library
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.SteamGridDbFormats.Png">
+            <summary>
+            PNG type. image/png MIME type
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.SteamGridDbFormats.Jpeg">
+            <summary>
+            JPEG type. image/jpeg MIME type
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.SteamGridDbFormats.Webp">
+            <summary>
+            WEBP type. image/webp MIME type
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.SteamGridDbFormats.Ico">
+            <summary>
+            Windows Icon type. image/vnd.microsoft.icon MIME type
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.SteamGridDbFormats.All">
+            <summary>
+            All types supported by <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbGrid"/> and <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbHero"/>
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.SteamGridDbFormats.AllLogos">
+            <summary>
+            All types supported by <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbLogo"/>
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.SteamGridDbFormats.AllIcons">
+            <summary>
+            All types supported by <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbIcon"/>
+            </summary>
+        </member>
+        <member name="T:craftersmine.SteamGridDBNet.SteamGridDbTypes">
+            <summary>
+            Contains types of images supported by SteamGridDB
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.SteamGridDbTypes.Static">
+            <summary>
+            Static image. Simple PNG, JPEG or static WEBP
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.SteamGridDbTypes.Animated">
+            <summary>
+            Animated image. APNG or WEBP
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.SteamGridDbTypes.All">
+            <summary>
+            Both static and animated images. Simple PNG, JPEG, static WEBP, APNG and animated WEBP
+            </summary>
+        </member>
+        <member name="T:craftersmine.SteamGridDBNet.SteamGridDbTags">
+            <summary>
+            Contains types of tags for objects
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.SteamGridDbTags.None">
+            <summary>
+            No tags provided
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.SteamGridDbTags.Humor">
+            <summary>
+            Contains humorous content tag
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.SteamGridDbTags.Nsfw">
+            <summary>
+            Contains NSFW content tag
+            </summary>
+        </member>
+        <member name="F:craftersmine.SteamGridDBNet.SteamGridDbTags.Epilepsy">
+            <summary>
+            Contains epilepsy tag
+            </summary>
+        </member>
+        <member name="T:craftersmine.SteamGridDBNet.SteamGridDbGame">
+            <summary>
+            Represents a Game object from SteamGridDB. This class cannot be inherited
+            </summary>
+        </member>
+        <member name="P:craftersmine.SteamGridDBNet.SteamGridDbGame.Name">
+            <summary>
+            Gets a name of game
+            </summary>
+        </member>
+        <member name="P:craftersmine.SteamGridDBNet.SteamGridDbGame.Platforms">
+            <summary>
+            Gets a bitwise mask of platforms on which game is exists
+            </summary>
+        </member>
+        <member name="P:craftersmine.SteamGridDBNet.SteamGridDbGame.Verified">
+            <summary>
+            Gets <see langword="true"/> if game is verified on SteamGridDB, otherwise <see langword="false"/>
+            </summary>
+        </member>
+        <member name="P:craftersmine.SteamGridDBNet.SteamGridDbGame.ReleaseDate">
+            <summary>
+            Gets a <see cref="T:System.DateTime"/> of when the game was released
+            </summary>
+        </member>
+        <member name="T:craftersmine.SteamGridDBNet.SteamGridDbGrid">
+            <summary>
+            Represents a Grid item from SteamGridDB. This class cannot be inherited
+            </summary>
+        </member>
+        <member name="P:craftersmine.SteamGridDBNet.SteamGridDbGrid.Tags">
+            <summary>
+            Gets a user-specified tags for grid
+            </summary>
+        </member>
+        <member name="T:craftersmine.SteamGridDBNet.SteamGridDbHero">
+            <summary>
+            Represents a Hero item from SteamGridDB. This class cannot be inherited
+            </summary>
+        </member>
+        <member name="P:craftersmine.SteamGridDBNet.SteamGridDbHero.Tags">
+            <summary>
+            Gets a user-specified tags for Hero
+            </summary>
+        </member>
+        <member name="T:craftersmine.SteamGridDBNet.SteamGridDbIcon">
+            <summary>
+            Represents an Icon item from SteamGridDB. This class cannot be inherited
+            </summary>
+        </member>
+        <member name="T:craftersmine.SteamGridDBNet.SteamGridDbLogo">
+            <summary>
+            Represents a Logo item from SteamGridDB. This class cannot be inherited
+            </summary>
+        </member>
+        <member name="T:craftersmine.SteamGridDBNet.SteamGridDbObject">
+            <summary>
+            Represents a base object for all SteamGridDB objects, <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbGrid"/>, <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbHero"/>, <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbLogo"/> and <see cref="T:craftersmine.SteamGridDBNet.SteamGridDbIcon"/>
+            </summary>
+        </member>
+        <member name="P:craftersmine.SteamGridDBNet.SteamGridDbObject.Id">
+            <summary>
+            Gets SteamGridDB item ID
+            </summary>
+        </member>
+        <member name="P:craftersmine.SteamGridDBNet.SteamGridDbObject.Score">
+            <summary>
+            Gets item Score. Obsolete by SteamGridDB API and will be always 0
+            </summary>
+        </member>
+        <member name="P:craftersmine.SteamGridDBNet.SteamGridDbObject.Style">
+            <summary>
+            Gets an item style
+            </summary>
+        </member>
+        <member name="P:craftersmine.SteamGridDBNet.SteamGridDbObject.Width">
+            <summary>
+            Gets an item image width
+            </summary>
+        </member>
+        <member name="P:craftersmine.SteamGridDBNet.SteamGridDbObject.Height">
+            <summary>
+            Gets an item image height
+            </summary>
+        </member>
+        <member name="P:craftersmine.SteamGridDBNet.SteamGridDbObject.IsNsfw">
+            <summary>
+            Gets <see langword="true"/> if contains Non-Suitable-For-Work content, otherwise <see langword="false"/>
+            </summary>
+        </member>
+        <member name="P:craftersmine.SteamGridDBNet.SteamGridDbObject.IsHumorous">
+            <summary>
+            Gets <see langword="true"/> if contains humor content, otherwise <see langword="false"/>
+            </summary>
+        </member>
+        <member name="P:craftersmine.SteamGridDBNet.SteamGridDbObject.Notes">
+            <summary>
+            Gets user specified notes for object
+            </summary>
+        </member>
+        <member name="P:craftersmine.SteamGridDBNet.SteamGridDbObject.Format">
+            <summary>
+            Gets item image format
+            </summary>
+        </member>
+        <member name="P:craftersmine.SteamGridDBNet.SteamGridDbObject.Language">
+            <summary>
+            Gets item language
+            </summary>
+        </member>
+        <member name="P:craftersmine.SteamGridDBNet.SteamGridDbObject.FullImageUrl">
+            <summary>
+            Gets item full image URL
+            </summary>
+        </member>
+        <member name="P:craftersmine.SteamGridDBNet.SteamGridDbObject.ThumbnailImageUrl">
+            <summary>
+            Gets item thumbnail image URL
+            </summary>
+        </member>
+        <member name="P:craftersmine.SteamGridDBNet.SteamGridDbObject.IsLocked">
+            <summary>
+            Gets <see langword="true"/> if item is locked by user, otherwise <see langword="false"/>. Obsolete by SteamGridDB API and will be always <see langword="false"/>
+            </summary>
+        </member>
+        <member name="P:craftersmine.SteamGridDBNet.SteamGridDbObject.CanCauseEpilepsy">
+            <summary>
+            Gets <see langword="true"/> if contains content that can cause seizures or epilepsy, otherwise <see langword="false"/>
+            </summary>
+        </member>
+        <member name="P:craftersmine.SteamGridDBNet.SteamGridDbObject.Upvotes">
+            <summary>
+            Gets a number of upvotes for item. Obsolete by SteamGridDB API and will be always 0
+            </summary>
+        </member>
+        <member name="P:craftersmine.SteamGridDBNet.SteamGridDbObject.Downvotes">
+            <summary>
+            Gets a number of downvotes for item. Obsolete by SteamGridDB API and will be always 0
+            </summary>
+        </member>
+        <member name="P:craftersmine.SteamGridDBNet.SteamGridDbObject.Author">
+            <summary>
+            Gets a <see cref="T:craftersmine.SteamGridDBNet.SteamAuthor"/> object that created that item
+            </summary>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.SteamGridDbObject.GetImageAsStreamAsync(System.Boolean)">
+            <summary>
+            Gets an image data as stream from server
+            </summary>
+            <param name="thumbnail">Download full image or thumbnail. If <see langword="true"/>, thumbnail image will be returned as stream, otherwise full image</param>
+            <returns></returns>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException">When unknown exception occurred</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbImageException">When error occurred while downloading image</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbRateLimitedException">When you've been rate limited by the server</exception>
+            <exception cref="T:System.ArgumentNullException">When image URL is null</exception>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.SteamGridDbObject.DownloadToFileAsync(System.String)">
+            <summary>
+            Downloads full image to specified file
+            </summary>
+            <param name="filePath">Full path of file to download</param>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException">When unknown exception occurred</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbImageException">When error occurred while downloading image</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbRateLimitedException">When you've been rate limited by the server</exception>
+            <exception cref="T:System.UnauthorizedAccessException">When access to file is forbidden</exception>
+            <exception cref="T:System.ArgumentException">When path is empty, null, has only whitespaces or has invalid characters</exception>
+            <exception cref="T:System.ArgumentNullException">When path is empty, null or has only whitespaces</exception>
+            <exception cref="T:System.IO.PathTooLongException">When specified path is too long</exception>
+            <exception cref="T:System.IO.DirectoryNotFoundException">When file directory or part of path not found or invalid</exception>
+            <exception cref="T:System.NotSupportedException">When path format has invalid format</exception>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.SteamGridDbObject.DownloadThumbnailToFileAsync(System.String)">
+            <summary>
+            Downloads thumbnail image to specified file
+            </summary>
+            <param name="filePath">Full path of file to download</param>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException">When unknown exception occurred</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbImageException">When error occurred while downloading image</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbRateLimitedException">When you've been rate limited by the server</exception>
+            <exception cref="T:System.UnauthorizedAccessException">When access to file is forbidden</exception>
+            <exception cref="T:System.ArgumentException">When path is empty, null, has only whitespaces or has invalid characters</exception>
+            <exception cref="T:System.ArgumentNullException">When path is empty, null or has only whitespaces</exception>
+            <exception cref="T:System.IO.PathTooLongException">When specified path is too long</exception>
+            <exception cref="T:System.IO.DirectoryNotFoundException">When file directory or part of path not found or invalid</exception>
+            <exception cref="T:System.NotSupportedException">When path format has invalid format</exception>
+        </member>
+        <member name="M:craftersmine.SteamGridDBNet.SteamGridDbObject.DeleteFromServerAsync">
+            <summary>
+            Deletes item from server
+            </summary>
+            <returns><see langword="true"/> if item is deleted from server, otherwise <see langword="false"/></returns>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbNotFoundException">When item is not found on server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbUnauthorizedException">When your API key is invalid, not set, or you've reset it on API preferences page and use old one</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbBadRequestException">When library makes invalid request to server due to invalid URI generated</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbForbiddenException">When you don't have permissions to perform action on item, probably because you don't own item</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbRateLimitedException">When you've been rate limited by the server</exception>
+            <exception cref="T:craftersmine.SteamGridDBNet.Exceptions.SteamGridDbException">When unknown exception occurred in request</exception>
+        </member>
+        <member name="T:craftersmine.SteamGridDBNet.SteamGridDbResponse">
+            <summary>
+            Represents a SteamGridDB API response object. This class cannot be inherited
+            </summary>
+        </member>
+        <member name="P:craftersmine.SteamGridDBNet.SteamGridDbResponse.Success">
+            <summary>
+            Gets <see langword="true"/> if request succeeded, otherwise <see langword="false"/>
+            </summary>
+        </member>
+        <member name="P:craftersmine.SteamGridDBNet.SteamGridDbResponse.Data">
+            <summary>
+            Gets a <see cref="T:Newtonsoft.Json.Linq.JToken"/> object of resulting data. Can be null
+            </summary>
+        </member>
+        <member name="P:craftersmine.SteamGridDBNet.SteamGridDbResponse.Errors">
+            <summary>
+            Gets an array of strings that represent error messages of SteamGridDB
+            </summary>
+        </member>
+    </members>
+</doc>

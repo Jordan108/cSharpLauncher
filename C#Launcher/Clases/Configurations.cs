@@ -25,6 +25,7 @@ namespace CoverPadLauncher.Clases
         private int panelOrder;//Orden de los paneles
         private int searchFilter;//Tipo de filtro de busqueda
         private bool startUpdate;//Buscar una actualizacion cuando inicie el programa
+        private bool tutorial;//Checkea si ya se realizo el tutorial de primera vez (si esta en true, el tutorial no se activa)
 
         //Constructor que llama los datos desde el XML
         public Configurations() 
@@ -104,6 +105,12 @@ namespace CoverPadLauncher.Clases
             get { return startUpdate; }
             set { startUpdate = value; }
         }
+
+        public bool Tutorial
+        {
+            get { return tutorial; }
+            set { tutorial = value; }
+        }
         #endregion
 
         #region funciones de guardado/cargado
@@ -149,6 +156,9 @@ namespace CoverPadLauncher.Clases
             //Buscar actualizaciones al iniciar el programa (por default si buscara actualizaciones)
             bool checkUpdateStart = bool.Parse(gf.XMLDefaultReturn(root, "StartCheckUpdate", "true"));
 
+            //Verificar si ya realizamos el tutorial
+            bool tutorial = bool.Parse(gf.XMLDefaultReturn(root, "Tutorial", "false"));
+
 
             //Actualizar los atributos de la clase
             this.themeName = themeName;
@@ -161,6 +171,7 @@ namespace CoverPadLauncher.Clases
             this.panelOrder = panelOrder;
             this.searchFilter = searchFilter;
             this.startUpdate = checkUpdateStart;
+            this.tutorial = tutorial;
         }
 
         public void SaveConfigurations(Configurations settings)
@@ -216,6 +227,7 @@ namespace CoverPadLauncher.Clases
             XmlElement settPanelOrder = xmlDoc.CreateElement("PanelOrder"); settPanelOrder.InnerText = settings.PanelOrder.ToString(); sett.AppendChild(settPanelOrder);
             XmlElement settSearchFilter = xmlDoc.CreateElement("SearchFilter"); settSearchFilter.InnerText = settings.SearchFilter.ToString(); sett.AppendChild(settSearchFilter);
             XmlElement settStartUpdate = xmlDoc.CreateElement("StartCheckUpdate"); settStartUpdate.InnerText = settings.StartUpdate.ToString(); sett.AppendChild(settStartUpdate);
+            XmlElement settTutorial = xmlDoc.CreateElement("Tutorial"); settTutorial.InnerText = settings.Tutorial.ToString(); sett.AppendChild(settTutorial);
 
             xmlDoc.Save(xmlSettingsPath);
         }

@@ -50,10 +50,12 @@
             this.administrarEtiquetasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.herramientasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.configuracionesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.buscarActualizacionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.flowLayoutPanelMain = new System.Windows.Forms.FlowLayoutPanel();
             this.treeViewMain = new System.Windows.Forms.TreeView();
             this.splitter1 = new System.Windows.Forms.Splitter();
-            this.buscarActualizacionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ayudaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.abrirTutorialDeInicioRápidoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelTop.SuspendLayout();
             this.menuStripMain.SuspendLayout();
             this.SuspendLayout();
@@ -144,7 +146,8 @@
             this.menuStripMain.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.archivoToolStripMenuItem,
             this.verToolStripMenuItem,
-            this.herramientasToolStripMenuItem});
+            this.herramientasToolStripMenuItem,
+            this.ayudaToolStripMenuItem});
             this.menuStripMain.Location = new System.Drawing.Point(0, 0);
             this.menuStripMain.Name = "menuStripMain";
             this.menuStripMain.Padding = new System.Windows.Forms.Padding(4, 1, 0, 1);
@@ -201,14 +204,14 @@
             this.fechaDeCreacionToolStripMenuItem.Checked = true;
             this.fechaDeCreacionToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.fechaDeCreacionToolStripMenuItem.Name = "fechaDeCreacionToolStripMenuItem";
-            this.fechaDeCreacionToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.fechaDeCreacionToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
             this.fechaDeCreacionToolStripMenuItem.Text = "Fecha de creacion";
             this.fechaDeCreacionToolStripMenuItem.Click += new System.EventHandler(this.fechaDeCreacionToolStripMenuItem_Click);
             // 
             // nombreToolStripMenuItem
             // 
             this.nombreToolStripMenuItem.Name = "nombreToolStripMenuItem";
-            this.nombreToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.nombreToolStripMenuItem.Size = new System.Drawing.Size(169, 22);
             this.nombreToolStripMenuItem.Text = "Nombre";
             this.nombreToolStripMenuItem.Click += new System.EventHandler(this.nombreToolStripMenuItem_Click);
             // 
@@ -276,6 +279,13 @@
             this.configuracionesToolStripMenuItem.Text = "Configuraciones";
             this.configuracionesToolStripMenuItem.Click += new System.EventHandler(this.configuracionesToolStripMenuItem_Click);
             // 
+            // buscarActualizacionToolStripMenuItem
+            // 
+            this.buscarActualizacionToolStripMenuItem.Name = "buscarActualizacionToolStripMenuItem";
+            this.buscarActualizacionToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
+            this.buscarActualizacionToolStripMenuItem.Text = "Buscar actualizacion";
+            this.buscarActualizacionToolStripMenuItem.Click += new System.EventHandler(this.buscarActualizacionToolStripMenuItem_Click);
+            // 
             // flowLayoutPanelMain
             // 
             this.flowLayoutPanelMain.AutoScroll = true;
@@ -315,12 +325,21 @@
             this.splitter1.TabIndex = 3;
             this.splitter1.TabStop = false;
             // 
-            // buscarActualizacionToolStripMenuItem
+            // ayudaToolStripMenuItem
             // 
-            this.buscarActualizacionToolStripMenuItem.Name = "buscarActualizacionToolStripMenuItem";
-            this.buscarActualizacionToolStripMenuItem.Size = new System.Drawing.Size(181, 22);
-            this.buscarActualizacionToolStripMenuItem.Text = "Buscar actualizacion";
-            this.buscarActualizacionToolStripMenuItem.Click += new System.EventHandler(this.buscarActualizacionToolStripMenuItem_Click);
+            this.ayudaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.abrirTutorialDeInicioRápidoToolStripMenuItem});
+            this.ayudaToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Window;
+            this.ayudaToolStripMenuItem.Name = "ayudaToolStripMenuItem";
+            this.ayudaToolStripMenuItem.Size = new System.Drawing.Size(53, 22);
+            this.ayudaToolStripMenuItem.Text = "Ayuda";
+            // 
+            // abrirTutorialDeInicioRápidoToolStripMenuItem
+            // 
+            this.abrirTutorialDeInicioRápidoToolStripMenuItem.Name = "abrirTutorialDeInicioRápidoToolStripMenuItem";
+            this.abrirTutorialDeInicioRápidoToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
+            this.abrirTutorialDeInicioRápidoToolStripMenuItem.Text = "Abrir tutorial de inicio rápido";
+            this.abrirTutorialDeInicioRápidoToolStripMenuItem.Click += new System.EventHandler(this.abrirTutorialDeInicioRápidoToolStripMenuItem_Click);
             // 
             // Home
             // 
@@ -374,5 +393,7 @@
         private System.Windows.Forms.ToolStripMenuItem herramientasToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem configuracionesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem buscarActualizacionToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem ayudaToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem abrirTutorialDeInicioRápidoToolStripMenuItem;
     }
 }

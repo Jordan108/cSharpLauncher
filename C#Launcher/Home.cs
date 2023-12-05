@@ -14,20 +14,16 @@ using ImageMagick;
 using System.Collections.Generic;
 using CoverPadLauncher;
 using CoverPadLauncher.Clases;
-using System.Drawing.Imaging;
+
 //mediaToolKit para manejar archivos de video y extraer sus caratulas
 using MediaToolkit;
 using MediaToolkit.Model;
 using MediaToolkit.Options;
 using CoverPadLauncher.Clases.Controles;
-using System.Threading.Tasks;
-
-using System.Configuration;
 using System.Net;
 using Newtonsoft.Json.Linq;
 using System.Net.Http.Headers;
 using System.Net.Http;
-using System.Threading;
 using System.Reflection;
 using System.IO.Compression;
 
@@ -36,16 +32,13 @@ namespace C_Launcher
 
     public partial class Home : Form
     {
-        private static string AppVersion = "0.8.0";
+        private static string AppVersion = "0.9.1";
         //private static string UptVersion = "0.0.1";
 
         private PictureBox[] picBoxArr = new PictureBox[0];//Crear el array de picBox que se mantendra en memoria
         //Crea el array de las colecciones y los archivos (solo contendran las colecciones que se mostraran en en la vista)
 
         //Valores de settings
-        //private int WinWidht, WinHeight = 900;
-        //private int orderPanels = 0;
-        //private int formState = 1;
         private int viewDepth = 0;//-1 = favoritos | 0 = inicio
         //private int searchType = 0;//0 = Buscara desde esa coleccion para adentro | 1 = buscara solo en esa coleccion (no sub colecciones) | 2 = buscara en todos los ficheros xml
         private Configurations config;
@@ -187,12 +180,11 @@ namespace C_Launcher
 
             loadTreeView(colSize);
             loadPictureBox(colSize, fileSize, false);
-            
-            
 
             treeViewMain.DrawMode = TreeViewDrawMode.OwnerDrawAll;
             treeViewMain.DrawNode += new DrawTreeNodeEventHandler(treeViewMain_DrawNode);
 
+            
         }
 
         //Cuando el formulario se muestre
@@ -200,7 +192,24 @@ namespace C_Launcher
         {
             if (config.StartUpdate == true)
             {
-                checkUpdate();//Verificar si existe una actualizacion
+                if (!checkUpdate())//Verificar si existe una actualizacion
+                {
+                    //Solo mostrar el tutorial si no hay actualizacion
+                    if (config.Tutorial == false)
+                    {
+                        config.Tutorial = true;
+                        Tutorial tuto = new Tutorial();
+                        tuto.ShowDialog();
+                    }
+                }
+            } else
+            {
+                if (config.Tutorial == false)
+                {
+                    config.Tutorial = true;
+                    Tutorial tuto = new Tutorial();
+                    tuto.ShowDialog();
+                }
             }
             
         }
@@ -2844,6 +2853,12 @@ namespace C_Launcher
             {
                 MessageBox.Show("Tienes la versión más reciente de Cover Pad Launcher", "Actualizar", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
+        }
+
+        private void abrirTutorialDeInicioRápidoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Tutorial tuto = new Tutorial();
+            tuto.ShowDialog();
         }
 
 

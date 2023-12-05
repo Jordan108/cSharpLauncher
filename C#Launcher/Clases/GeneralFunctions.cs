@@ -1,13 +1,10 @@
 ﻿using ImageMagick;
 using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Net;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 
 namespace CoverPadLauncher.Clases
@@ -54,7 +51,7 @@ namespace CoverPadLauncher.Clases
 
 
             //Primero, verificar si la caratula es online (si es asi, descargarla temporalmente en System//Covers)
-            if (originalImageDir.StartsWith("https://"))
+            if (originalImageDir.StartsWith("https://") || originalImageDir.StartsWith("http://"))
             {
                 try
                 {
