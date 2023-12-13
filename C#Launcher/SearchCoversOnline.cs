@@ -774,7 +774,7 @@ namespace CoverPadLauncher
             if (radioButtonGames.Checked == true)
             {
                 type = 0;
-                labelApi.Text = "Api suministrada por SteamGridDB.com";
+                labelApi.Text = "API proveída por SteamGridDB.com";
                 groupBoxSteamDBRes.Visible = true;
                 groupBoxSteamDBRes.Enabled = true;
             } else
@@ -788,31 +788,31 @@ namespace CoverPadLauncher
         private void radioButtonFilms_CheckedChanged(object sender, EventArgs e)
         {
             type = 1;
-            labelApi.Text = "Api suministrada por TheMovieDB.org";
+            labelApi.Text = "API proveída por TheMovieDB.org";
         }
 
         private void radioButtonSeries_CheckedChanged(object sender, EventArgs e)
         {
             type = 2;
-            labelApi.Text = "Api suministrada por TheMovieDB.org";
+            labelApi.Text = "API proveída por TheMovieDB.org";
         }
 
         private void radioButtonMangas_CheckedChanged(object sender, EventArgs e)
         {
             type = 3;
-            labelApi.Text = "Api suministrada por MangaDex.org";
+            labelApi.Text = "API proveída por MangaDex.org";
         }
 
         private void radioButtonComics_CheckedChanged(object sender, EventArgs e)
         {
             type = 4;
-            labelApi.Text = "Api suministrada por Comicvine.gamespot.com";
+            labelApi.Text = "API proveída por Comicvine.gamespot.com";
         }
 
         private void radioButtonBooks_CheckedChanged(object sender, EventArgs e)
         {
             type = 5;
-            labelApi.Text = "Api suministrada por OpenLibrary.org";
+            labelApi.Text = "API proveída por OpenLibrary.org";
         }
 
         #endregion

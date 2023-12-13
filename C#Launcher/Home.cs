@@ -32,7 +32,7 @@ namespace C_Launcher
 
     public partial class Home : Form
     {
-        private static string AppVersion = "0.9.1";
+        private static string AppVersion = "1.0.0";
         //private static string UptVersion = "0.0.1";
 
         private PictureBox[] picBoxArr = new PictureBox[0];//Crear el array de picBox que se mantendra en memoria
@@ -81,8 +81,8 @@ namespace C_Launcher
         private int colSize, fileSize = 0;
         
         //ToolStrip
-        //Se define aqui para poder referenciarlo en la creacion de los paneles
-        private ContextMenuStrip contextMenuPictureBox = new ContextMenuStrip();
+        private ContextMenuStrip contextMenuPictureBox = new ContextMenuStrip();//para referenciarlo en la creacion de los paneles
+
         //Treeview
         private TreeNode lastHoveredNode = null; // Para realizar un seguimiento del nodo que se encuentra actualmente bajo el mouse.
 
@@ -142,24 +142,36 @@ namespace C_Launcher
             //Tool strip (click derecho)
             #region Tool Strip
             //flow Layout Panel Tool Strip
-            ContextMenuStrip contextMenuLayoutPanel   = new ContextMenuStrip();
+            ContextMenuStrip contextMenuLayoutPanel = new ContextMenuStrip();
             ToolStripMenuItem ToolStripAddCollection   = new ToolStripMenuItem();
+            ToolStripMenuItem ToolStripEditCollection = new ToolStripMenuItem();
             ToolStripMenuItem ToolStripAddFile         = new ToolStripMenuItem();
             ToolStripMenuItem ToolStripAddMultipleFile = new ToolStripMenuItem();
             ToolStripMenuItem ToolStripEditAllElements = new ToolStripMenuItem();
             ToolStripAddFile.Text = "Crear elemento";
             ToolStripAddFile.Image = Image.FromFile(imgResourceIcons[3]);
             ToolStripAddFile.Click += new EventHandler(ToolStripAddFile_Click);
-            ToolStripAddCollection.Text = "Crear coleccion";
+            //
+            ToolStripAddCollection.Text = "Crear colección";
             ToolStripAddCollection.Image = Image.FromFile(imgResourceIcons[3]);
             ToolStripAddCollection.Click += new EventHandler(ToolStripAddCollection_Click);
-            ToolStripAddMultipleFile.Text = "Crear multiples elementos";
+            //
+            ToolStripEditCollection.Text = "Editar colección";
+            ToolStripEditCollection.Image = Image.FromFile(imgResourceIcons[5]);
+            ToolStripEditCollection.Click += new EventHandler(ToolStripEditCollection_Click);
+            //
+            ToolStripAddMultipleFile.Text = "Crear múltiples elementos";
             ToolStripAddMultipleFile.Image = Image.FromFile(imgResourceIcons[3]);
             ToolStripAddMultipleFile.Click += new EventHandler(ToolStripAddMultipleFiles_Click);
-            ToolStripEditAllElements.Text = "Editar todos los elementos de la coleccion";
+            //
+            ToolStripEditAllElements.Text = "Editar todos los elementos de la colección";
             ToolStripEditAllElements.Image = Image.FromFile(imgResourceIcons[5]);
             ToolStripEditAllElements.Click += new EventHandler(ToolStripEditMultipleFlowLayoutPanel_Click);
-            contextMenuLayoutPanel.Items.AddRange(new ToolStripItem[] { ToolStripAddFile, ToolStripAddCollection, ToolStripAddMultipleFile, ToolStripEditAllElements });
+            //
+            //Si no estas en la profundidad 0, agregar el editar la coleccion
+            contextMenuLayoutPanel.Items.AddRange(new ToolStripItem[] { ToolStripAddFile, ToolStripAddCollection, ToolStripEditCollection, ToolStripEditCollection, ToolStripAddMultipleFile, ToolStripEditAllElements });
+
+                
             #endregion
 
             //Agregar al layout panel
@@ -389,6 +401,22 @@ namespace C_Launcher
             NewCollection newCollection = new NewCollection(viewDepth, defaultRes, defaultWidth, defaultHeight, defaultImageLayout);
             newCollection.ReturnedObject += NewCollection_ReturnedObject;
             newCollection.ShowDialog();
+        }
+
+        //Editar la coleccion de la profundidad actual
+        private void ToolStripEditCollection_Click(object sender, EventArgs e)
+        {
+            if (viewDepth > 0)
+            {
+                Collections col = new Collections().LoadCollectionData(viewDepth);//searchCollectionData(int.Parse(id));
+
+                NewCollection editCollection = new NewCollection(col);
+                editCollection.ReturnedObject += NewCollection_ReturnedObject;
+                editCollection.ShowDialog();
+            } else
+            {
+                MessageBox.Show("Solo puedes editar colecciones que tu hayas creado.", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         //Crear la nueva ventana para crear los archivos (individual)
@@ -1162,9 +1190,7 @@ namespace C_Launcher
                         if (archivos.Length > 0 && subDir.Length == 0 && scanStart != 0)
                         {
                             //Filtrar los archivos por una extension especifica
-                            //archivos.Where(x => x.EndsWith(".html") || x.EndsWith(".lnk") || x.EndsWith(".url")).ToArray();
                             string[] extensions = new Collections().GetColeScanExtension(viewDepth);
-                            //string[] filter = archivos.Where(x => x.EndsWith(".html")).ToArray();
 
                             string[] filter = archivos.Where(archivo =>
                                     extensions.Any(extension => archivo.EndsWith("." + extension))
@@ -1316,7 +1342,7 @@ namespace C_Launcher
                 else if (boxType == "collection")
                 {
                     ToolStripMenuItem ToolStripEditAll = new ToolStripMenuItem();
-                    ToolStripEditAll.Text = "Editar todos los elementos de la coleccion";
+                    ToolStripEditAll.Text = "Editar todos los elementos de la colección";
                     ToolStripEditAll.Image = Image.FromFile(imgResourceIcons[5]);
                     ToolStripEditAll.Click += new EventHandler(ToolStripEditMultiplePictureBox_Click);
 
@@ -1702,298 +1728,293 @@ namespace C_Launcher
             #endregion
 
             #region Cargar Elementos escaneables
-            if (colls.Length>0 && (scanDepth.Count > 0 || (colls[actualColl].ScanFolder == true && colls[actualColl].ScanPath != "")))
-            {
-                string rutaEscaneo;
-
-                if (scanDepth.Count > 0)
+            if (viewDepth > 0) { 
+                if (colls.Length>0 && (scanDepth.Count > 0 || (colls[actualColl].ScanFolder == true && colls[actualColl].ScanPath != "")))
                 {
-                    rutaEscaneo = scanDepth.Last();//automaticPath;
-                } else
-                {
-                    rutaEscaneo = colls[actualColl].ScanPath;
-                }
+                    string rutaEscaneo;
 
-                //La ruta de escaneo
-                if (Directory.Exists(rutaEscaneo))
-                {
-                    // Obtiene una lista de todos los archivos y sub carpetas en la carpeta
-                    string[] archivos = Directory.GetFiles(rutaEscaneo);
-                    string[] subcarpetas = Directory.GetDirectories(rutaEscaneo);
-                    Array.Resize(ref picBoxArr, colSize + fileSize + archivos.Length + subcarpetas.Length);
-
-                    //Analizar los archivos
-                    foreach (string archivo in archivos)
+                    if (scanDepth.Count > 0)
                     {
-                        string name = Path.GetFileNameWithoutExtension(archivo);
-                        string imgDir = "";
-                        int layout = -1;//-1 para identificar si fue cargado desde un xml o no
-                        int r = 0;
-                        int g = 0;
-                        int b = 0;
-                        bool transparent = false;
-                        int res = 0;
-                        int w = colls[actualColl].SonWidth;
-                        int h = colls[actualColl].SonHeight;
-
-                        #region Cargar desde un XML
-                        XDocument doc = XDocument.Load(xmlScannedPath);
-
-                        var matchingScans = doc.Descendants("scanned")
-                                  .Where(item => item.Attribute("dir")?.Value == archivo)
-                                  .Select(item => new
-                                  {
-                                      //Valores a rescatar
-                                      Name = item.Element("Name").Value,
-                                      ImageDir = item.Element("Image").Value,
-                                      ImageLayout = item.Element("ImageLayout").Value,
-                                      BoolBackground = item.Element("WithoutBackground").Value,
-                                      CRed = item.Element("BackgroundRed").Value,
-                                      CGreen = item.Element("BackgroundGreen").Value,
-                                      CBlue = item.Element("BackgroundBlue").Value,
-                                      ResID = item.Element("CoverResolutionID").Value,
-                                      Width = item.Element("CoverWidth").Value,
-                                      Height = item.Element("CoverHeight").Value,
-                                  });
-                        //Solo se debe recuperar 1
-                        var match = matchingScans.FirstOrDefault();
-
-                        if (match != null)
-                        {
-                            name = match.Name;
-                            imgDir = match.ImageDir;
-                            layout = int.Parse(match.ImageLayout);
-                            r = int.Parse(match.CRed);
-                            g = int.Parse(match.CGreen);
-                            b = int.Parse(match.CBlue);
-                            transparent = bool.Parse(match.BoolBackground);
-                            res = int.Parse(match.ResID);
-                            w = int.Parse(match.Width);
-                            h = int.Parse(match.Height);
-                        }
-                        #endregion
-
-                        picBoxArr[pL] = new PictureBox
-                        {
-                            AccessibleDescription = "automaticFile",//Aqui se indica que tipo de picture box es (coleccion / archivo)
-                            Name = name,//Aqui se guarda el nombre del elemento
-                            Size = new Size(w, h),
-                            BackColor = Color.FromArgb(r, g, b),
-                            Tag = archivo,//Aqui se guarda en que espacio del array estamos buscando//colls[i].ID,
-                        };
-
-                        if (transparent)
-                        {
-                            picBoxArr[pL].BackColor = Color.Transparent;
-                        }
-
-                        #region Caratula
-                        #region Cargar la imagen
-                        //Cargar la caratula del archivo si es posible y si no se encontro una ruta en el xml (dando var match = null)
-                        if (match == null)
-                        {
-                            //Rescatar la imagen del archivo (si es posible)
-                            string extension = Path.GetExtension(archivo);
-
-                            //dependiendo del tipo de archivo, el proceso para extraer una imagen preview es totalmente diferente
-                            if (extension == ".png" || extension == ".jpg" || extension == ".jpeg" || extension == ".webp" || extension == ".gif")
-                            {
-                                Image thumbnail;
-                                thumbnail = loadImage(archivo);
-                                picBoxArr[pL].BackgroundImage = thumbnail;
-                                thumbnail = null;
-                            }
-                            else if (extension == ".mp4" || extension == ".mkv" || extension == ".flv" || extension == ".avi" || extension == ".mov" || extension == ".wmv")//En teoria, esos son los tipos de archivos compatibles
-                            {
-                                //recojer la miniatura del video con MediaToolKit
-                                var inputFile = new MediaFile { Filename = archivo };//ruta del archivo
-                                var outputFile = new MediaFile { Filename = $"{archivo}.thumbnail.jpg" };//guardado temporal de la caratula en el disco duro (la libreria no permite guardar la imagen en un objeto, tiene que guardarse en el disco duro al parecer
-
-                                using (var engine = new Engine())
-                                {
-                                    engine.GetMetadata(inputFile);
-
-
-                                    var options = new ConversionOptions { Seek = TimeSpan.FromSeconds(inputFile.Metadata.Duration.TotalSeconds / 4) };//Seek = TimeSpan.FromSeconds(15) 
-                                    engine.GetThumbnail(inputFile, outputFile, options);
-                                }
-                                Image thumbnail;
-                                //utilizar un bitmap para no mantener abierto el archivo y poder eliminarlo
-                                using (var tempImage = Image.FromFile(outputFile.Filename))
-                                {
-                                    thumbnail = new Bitmap(tempImage);
-                                }
-                                File.Delete(outputFile.Filename);//eliminar el archivo
-
-                                //Cargar la imagen a la caratula
-                                picBoxArr[pL].BackgroundImage = thumbnail;
-                                thumbnail = null;//porsiacaso para evitar fugas de memoria (aunque no deberia pasar si el recolector de basura cumple su funcion)
-                            }
-                        }
-
-
-                        if (imgDir != "")
-                        {
-                            try
-                            {
-                                Image image;
-                                image = loadImage(imgDir);
-                                picBoxArr[pL].BackgroundImage = image;
-                                image = null;
-                            }
-                            catch (Exception)
-                            {
-                                Console.WriteLine($"No se pudo establecer una imagen al archivo automatico {archivo}");
-                            }
-                        }
-                        #endregion
-
-                        #region Formato de la imagen
-                        try
-                        {
-
-                            if (layout != -1)
-                            {
-                                if (layout == 0)
-                                {
-                                    picBoxArr[pL].BackgroundImageLayout = ImageLayout.Zoom;
-                                }
-                                else
-                                {
-                                    picBoxArr[pL].BackgroundImageLayout = ImageLayout.Stretch;
-                                }
-                            }
-                            else
-                            {
-                                if (colls[actualColl].ImageLayout == 0)
-                                {
-                                    picBoxArr[pL].BackgroundImageLayout = ImageLayout.Zoom;
-                                }
-                                else
-                                {
-                                    picBoxArr[pL].BackgroundImageLayout = ImageLayout.Stretch;
-                                }
-                            }
-                        }
-                        catch (Exception)
-                        {
-                            picBoxArr[pL].BackgroundImageLayout = ImageLayout.Zoom;
-                        }
-                        #endregion
-                        #endregion
-
-                        picBoxArr[pL].MouseEnter += new System.EventHandler(this.pictureBox_MouseEnter);
-                        picBoxArr[pL].MouseLeave += new System.EventHandler(this.pictureBox_MouseLeave);
-                        picBoxArr[pL].MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox_Click);
-                        picBoxArr[pL].MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseUp);
-                        picBoxArr[pL].Paint += new PaintEventHandler(this.pictureBox_Paint);
-                        picBoxArr[pL].ContextMenuStrip = contextMenuPictureBox;
-
-                        pL++;//iterar en el array de paneles
+                        rutaEscaneo = scanDepth.Last();//automaticPath;
+                    } else
+                    {
+                        rutaEscaneo = colls[actualColl].ScanPath;
                     }
 
-                    //Analizar las carpetas
-                    foreach (string subcarpeta in subcarpetas)
+                    //La ruta de escaneo
+                    if (Directory.Exists(rutaEscaneo))
                     {
-                        string name = Path.GetFileName(subcarpeta);
-                        string imgDir = "";
-                        int layout = -1;//-1 para identificar si fue cargado desde un xml o no
-                        int r = 0;
-                        int g = 0;
-                        int b = 0;
-                        bool transparent = false;
-                        int res = 0;
-                        int w = colls[actualColl].SonWidth;
-                        int h = colls[actualColl].SonHeight;
-                        int startN = 0;
-                        string[] extensions = { };
+                        // Obtiene una lista de todos los archivos y sub carpetas en la carpeta
+                        string[] archivos = Directory.GetFiles(rutaEscaneo);
+                        string[] subcarpetas = Directory.GetDirectories(rutaEscaneo);
+                        Array.Resize(ref picBoxArr, colSize + fileSize + archivos.Length + subcarpetas.Length);
 
-                        #region Cargar desde un XML
-                        XDocument doc = XDocument.Load(xmlScannedPath); 
-                        
-                        var matchingScans = doc.Descendants("scanned")
-                                  .Where(item => item.Attribute("dir")?.Value == subcarpeta)
-                                  .Select(item => new
-                                  {
-                                      //Valores a rescatar
-                                      Name = item.Element("Name").Value,
-                                      ImageDir = item.Element("Image").Value,
-                                      ImageLayout = item.Element("ImageLayout").Value,
-                                      BoolBackground = item.Element("WithoutBackground").Value,
-                                      CRed = item.Element("BackgroundRed").Value,
-                                      CGreen = item.Element("BackgroundGreen").Value,
-                                      CBlue = item.Element("BackgroundBlue").Value,
-                                      ResID = item.Element("CoverResolutionID").Value,
-                                      Width = item.Element("CoverWidth").Value,
-                                      Height = item.Element("CoverHeight").Value,
-                                      StartNumber = item.Element("StartNumber").Value,
-                                      OpenExtensions = item.Element("OpenExtension").Elements().Select(x => x.Value).ToArray(),
-                                  });
-                        //Solo se debe recuperar 1
-                        var match = matchingScans.FirstOrDefault();
+                        #region Filtrar archivos por extension
+                        //Filtrar los archivos por una extension especifica
+                        string[] ColFilterExtensions = new Collections().GetColeScanExtension(viewDepth);
 
-                        if (match != null)
+                        string[] filterElements = archivos.Where(archivo =>
+                                ColFilterExtensions.Any(extension => archivo.EndsWith("." + extension))
+                            ).ToArray();
+
+                        if (filterElements.Length > 0)
                         {
-                            name = match.Name;
-                            imgDir = match.ImageDir;
-                            layout = int.Parse(match.ImageLayout);
-                            r = int.Parse(match.CRed);
-                            g = int.Parse(match.CGreen);
-                            b = int.Parse(match.CBlue);
-                            transparent = bool.Parse(match.BoolBackground);
-                            res = int.Parse(match.ResID);
-                            w = int.Parse(match.Width);
-                            h = int.Parse(match.Height);
-                            startN = int.Parse(match.StartNumber);
-                            extensions = match.OpenExtensions;
+                            //establecer el array de los filtros como el array para los archivos disponibles
+                            archivos = filterElements;
                         }
                         #endregion
 
-                        picBoxArr[pL] = new PictureBox
+                        //Analizar los archivos
+                        foreach (string archivo in archivos)
                         {
-                            AccessibleDescription = "automaticFolder",//Aqui se indica que tipo de picture box es (coleccion / archivo)
-                            Name = name,//Aqui se guarda el nombre de la coleccion
-                            Size = new Size(w, h),
-                            BackColor = Color.FromArgb(r, g, b),
-                            Tag = subcarpeta,//Aqui se guarda en que espacio del array estamos buscando//colls[i].ID,
-                        };
+                            string name = Path.GetFileNameWithoutExtension(archivo);
+                            string imgDir = "";
+                            int layout = -1;//-1 para identificar si fue cargado desde un xml o no
+                            int r = 0;
+                            int g = 0;
+                            int b = 0;
+                            bool transparent = false;
+                            int res = 0;
+                            int w = colls[actualColl].SonWidth;
+                            int h = colls[actualColl].SonHeight;
 
-                        if (transparent)
-                        {
-                            picBoxArr[pL].BackColor = Color.Transparent;
-                        }
 
-                        #region Caratula
-                        #region Cargar la imagen
-                        if (imgDir != "")
-                        {
-                            try
+                            #region Cargar desde XML si la ruta coincide
+                            XDocument doc = XDocument.Load(xmlScannedPath);
+
+                            var matchingScans = doc.Descendants("scanned")
+                                      .Where(item => item.Attribute("dir")?.Value == archivo)
+                                      .Select(item => new
+                                      {
+                                          //Valores a rescatar
+                                          Name = item.Element("Name").Value,
+                                          ImageDir = item.Element("Image").Value,
+                                          ImageLayout = item.Element("ImageLayout").Value,
+                                          BoolBackground = item.Element("WithoutBackground").Value,
+                                          CRed = item.Element("BackgroundRed").Value,
+                                          CGreen = item.Element("BackgroundGreen").Value,
+                                          CBlue = item.Element("BackgroundBlue").Value,
+                                          ResID = item.Element("CoverResolutionID").Value,
+                                          Width = item.Element("CoverWidth").Value,
+                                          Height = item.Element("CoverHeight").Value,
+                                      });
+                            //Solo se debe recuperar 1
+                            var match = matchingScans.FirstOrDefault();
+
+                            if (match != null)
                             {
-                                Image image;
-                                image = loadImage(imgDir);
-                                picBoxArr[pL].BackgroundImage = image;
-                                image = null;
+                                name = match.Name;
+                                imgDir = match.ImageDir;
+                                layout = int.Parse(match.ImageLayout);
+                                r = int.Parse(match.CRed);
+                                g = int.Parse(match.CGreen);
+                                b = int.Parse(match.CBlue);
+                                transparent = bool.Parse(match.BoolBackground);
+                                res = int.Parse(match.ResID);
+                                w = int.Parse(match.Width);
+                                h = int.Parse(match.Height);
                             }
-                            catch (Exception)
+                            #endregion
+
+
+                            picBoxArr[pL] = new PictureBox
                             {
-                                Console.WriteLine($"No se pudo establecer una imagen a la carpeta automatica {subcarpeta}");
+                                AccessibleDescription = "automaticFile",//Aqui se indica que tipo de picture box es (coleccion / archivo)
+                                Name = name,//Aqui se guarda el nombre del elemento
+                                Size = new Size(w, h),
+                                BackColor = Color.FromArgb(r, g, b),
+                                Tag = archivo,//Aqui se guarda en que espacio del array estamos buscando//colls[i].ID,
+                            };
+
+                            if (transparent)
+                            {
+                                picBoxArr[pL].BackColor = Color.Transparent;
                             }
-                        }
-                        else
-                        {
-                            //Intentar buscar dentro de la carpeta si tiene algun archivo de imagen para establecerlo como background IMAGE
-                            string[] subArchivos = Directory.GetFiles(subcarpeta);
-                            if (subArchivos.Length > 0)
+
+                            #region Caratula
+                            #region Cargar la imagen
+                            //Cargar la caratula del archivo si es posible y si no se encontro una ruta en el xml (dando var match = null)
+                            if (match == null)
                             {
-                                GeneralFunctions gf = new GeneralFunctions();
+                                //Rescatar la imagen del archivo (si es posible)
+                                string extension = Path.GetExtension(archivo);
 
-                                string[] rutasImagenes = subArchivos.Where(ruta => gf.CheckImage(ruta)).ToArray();
+                                //dependiendo del tipo de archivo, el proceso para extraer una imagen preview es totalmente diferente
+                                if (extension == ".png" || extension == ".jpg" || extension == ".jpeg" || extension == ".webp" || extension == ".gif")
+                                {
+                                    Image thumbnail;
+                                    thumbnail = loadImage(archivo);
+                                    picBoxArr[pL].BackgroundImage = thumbnail;
+                                    thumbnail = null;
+                                }
+                                else if (extension == ".mp4" || extension == ".mkv" || extension == ".flv" || extension == ".avi" || extension == ".mov" || extension == ".wmv")//En teoria, esos son los tipos de archivos compatibles
+                                {
+                                    //recojer la miniatura del video con MediaToolKit
+                                    var inputFile = new MediaFile { Filename = archivo };//ruta del archivo
+                                    var outputFile = new MediaFile { Filename = $"{archivo}.thumbnail.jpg" };//guardado temporal de la caratula en el disco duro (la libreria no permite guardar la imagen en un objeto, tiene que guardarse en el disco duro al parecer
 
-                                if (rutasImagenes.Length <= 0) Console.WriteLine($"La carpeta {subcarpeta} no encontro imagenes");
+                                    using (var engine = new Engine())
+                                    {
+                                        engine.GetMetadata(inputFile);
+
+
+                                        var options = new ConversionOptions { Seek = TimeSpan.FromSeconds(inputFile.Metadata.Duration.TotalSeconds / 4) };//Seek = TimeSpan.FromSeconds(15) 
+                                        engine.GetThumbnail(inputFile, outputFile, options);
+                                    }
+                                    Image thumbnail;
+                                    //utilizar un bitmap para no mantener abierto el archivo y poder eliminarlo
+                                    using (var tempImage = Image.FromFile(outputFile.Filename))
+                                    {
+                                        thumbnail = new Bitmap(tempImage);
+                                    }
+                                    File.Delete(outputFile.Filename);//eliminar el archivo
+
+                                    //Cargar la imagen a la caratula
+                                    picBoxArr[pL].BackgroundImage = thumbnail;
+                                    thumbnail = null;//porsiacaso para evitar fugas de memoria (aunque no deberia pasar si el recolector de basura cumple su funcion)
+                                }
+                            }
+
+
+                            if (imgDir != "")
+                            {
                                 try
                                 {
                                     Image image;
-                                    image = loadImage(rutasImagenes[0]);
+                                    image = loadImage(imgDir);
+                                    picBoxArr[pL].BackgroundImage = image;
+                                    image = null;
+                                }
+                                catch (Exception)
+                                {
+                                    Console.WriteLine($"No se pudo establecer una imagen al archivo automatico {archivo}");
+                                }
+                            }
+                            #endregion
+
+                            #region Formato de la imagen
+                            try
+                            {
+
+                                if (layout != -1)
+                                {
+                                    if (layout == 0)
+                                    {
+                                        picBoxArr[pL].BackgroundImageLayout = ImageLayout.Zoom;
+                                    }
+                                    else
+                                    {
+                                        picBoxArr[pL].BackgroundImageLayout = ImageLayout.Stretch;
+                                    }
+                                }
+                                else
+                                {
+                                    if (colls[actualColl].ImageLayout == 0)
+                                    {
+                                        picBoxArr[pL].BackgroundImageLayout = ImageLayout.Zoom;
+                                    }
+                                    else
+                                    {
+                                        picBoxArr[pL].BackgroundImageLayout = ImageLayout.Stretch;
+                                    }
+                                }
+                            }
+                            catch (Exception)
+                            {
+                                picBoxArr[pL].BackgroundImageLayout = ImageLayout.Zoom;
+                            }
+                            #endregion
+                            #endregion
+
+                            picBoxArr[pL].MouseEnter += new System.EventHandler(this.pictureBox_MouseEnter);
+                            picBoxArr[pL].MouseLeave += new System.EventHandler(this.pictureBox_MouseLeave);
+                            picBoxArr[pL].MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox_Click);
+                            picBoxArr[pL].MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseUp);
+                            picBoxArr[pL].Paint += new PaintEventHandler(this.pictureBox_Paint);
+                            picBoxArr[pL].ContextMenuStrip = contextMenuPictureBox;
+
+                            pL++;//iterar en el array de paneles
+                        }
+
+                        //Analizar las carpetas
+                        foreach (string subcarpeta in subcarpetas)
+                        {
+                            string name = Path.GetFileName(subcarpeta);
+                            string imgDir = "";
+                            int layout = -1;//-1 para identificar si fue cargado desde un xml o no
+                            int r = 0;
+                            int g = 0;
+                            int b = 0;
+                            bool transparent = false;
+                            int res = 0;
+                            int w = colls[actualColl].SonWidth;
+                            int h = colls[actualColl].SonHeight;
+                            int startN = 0;
+                            string[] extensions = { };
+
+                            #region Cargar desde XML si la ruta coincide
+                            XDocument doc = XDocument.Load(xmlScannedPath); 
+                        
+                            var matchingScans = doc.Descendants("scanned")
+                                      .Where(item => item.Attribute("dir")?.Value == subcarpeta)
+                                      .Select(item => new
+                                      {
+                                          //Valores a rescatar
+                                          Name = item.Element("Name").Value,
+                                          ImageDir = item.Element("Image").Value,
+                                          ImageLayout = item.Element("ImageLayout").Value,
+                                          BoolBackground = item.Element("WithoutBackground").Value,
+                                          CRed = item.Element("BackgroundRed").Value,
+                                          CGreen = item.Element("BackgroundGreen").Value,
+                                          CBlue = item.Element("BackgroundBlue").Value,
+                                          ResID = item.Element("CoverResolutionID").Value,
+                                          Width = item.Element("CoverWidth").Value,
+                                          Height = item.Element("CoverHeight").Value,
+                                          StartNumber = item.Element("StartNumber").Value,
+                                          OpenExtensions = item.Element("OpenExtension").Elements().Select(x => x.Value).ToArray(),
+                                      });
+                            //Solo se debe recuperar 1
+                            var match = matchingScans.FirstOrDefault();
+
+                            if (match != null)
+                            {
+                                name = match.Name;
+                                imgDir = match.ImageDir;
+                                layout = int.Parse(match.ImageLayout);
+                                r = int.Parse(match.CRed);
+                                g = int.Parse(match.CGreen);
+                                b = int.Parse(match.CBlue);
+                                transparent = bool.Parse(match.BoolBackground);
+                                res = int.Parse(match.ResID);
+                                w = int.Parse(match.Width);
+                                h = int.Parse(match.Height);
+                                startN = int.Parse(match.StartNumber);
+                                extensions = match.OpenExtensions;
+                            }
+                            #endregion
+
+                            picBoxArr[pL] = new PictureBox
+                            {
+                                AccessibleDescription = "automaticFolder",//Aqui se indica que tipo de picture box es (coleccion / archivo)
+                                Name = name,//Aqui se guarda el nombre de la coleccion
+                                Size = new Size(w, h),
+                                BackColor = Color.FromArgb(r, g, b),
+                                Tag = subcarpeta,//Aqui se guarda en que espacio del array estamos buscando//colls[i].ID,
+                            };
+
+                            if (transparent)
+                            {
+                                picBoxArr[pL].BackColor = Color.Transparent;
+                            }
+
+                            #region Caratula
+                            #region Cargar la imagen
+                            if (imgDir != "")
+                            {
+                                try
+                                {
+                                    Image image;
+                                    image = loadImage(imgDir);
                                     picBoxArr[pL].BackgroundImage = image;
                                     image = null;
                                 }
@@ -2002,52 +2023,76 @@ namespace C_Launcher
                                     Console.WriteLine($"No se pudo establecer una imagen a la carpeta automatica {subcarpeta}");
                                 }
                             }
-                        }
-                        #endregion
-
-                        #region Formato de la imagen
-                        try
-                        {
-
-                            if (layout != -1)
-                            {
-                                if (layout == 0)
-                                {
-                                    picBoxArr[pL].BackgroundImageLayout = ImageLayout.Zoom;
-                                }
-                                else
-                                {
-                                    picBoxArr[pL].BackgroundImageLayout = ImageLayout.Stretch;
-                                }
-                            }
                             else
                             {
-                                if (colls[actualColl].ImageLayout == 0)
+                                //Intentar buscar dentro de la carpeta si tiene algun archivo de imagen para establecerlo como background IMAGE
+                                string[] subArchivos = Directory.GetFiles(subcarpeta);
+                                if (subArchivos.Length > 0)
                                 {
-                                    picBoxArr[pL].BackgroundImageLayout = ImageLayout.Zoom;
+                                    GeneralFunctions gf = new GeneralFunctions();
+
+                                    string[] rutasImagenes = subArchivos.Where(ruta => gf.CheckImage(ruta)).ToArray();
+
+                                    if (rutasImagenes.Length <= 0) Console.WriteLine($"La carpeta {subcarpeta} no encontro imagenes");
+                                    try
+                                    {
+                                        Image image;
+                                        image = loadImage(rutasImagenes[0]);
+                                        picBoxArr[pL].BackgroundImage = image;
+                                        image = null;
+                                    }
+                                    catch (Exception)
+                                    {
+                                        Console.WriteLine($"No se pudo establecer una imagen a la carpeta automatica {subcarpeta}");
+                                    }
+                                }
+                            }
+                            #endregion
+
+                            #region Formato de la imagen
+                            try
+                            {
+
+                                if (layout != -1)
+                                {
+                                    if (layout == 0)
+                                    {
+                                        picBoxArr[pL].BackgroundImageLayout = ImageLayout.Zoom;
+                                    }
+                                    else
+                                    {
+                                        picBoxArr[pL].BackgroundImageLayout = ImageLayout.Stretch;
+                                    }
                                 }
                                 else
                                 {
-                                    picBoxArr[pL].BackgroundImageLayout = ImageLayout.Stretch;
+                                    if (colls[actualColl].ImageLayout == 0)
+                                    {
+                                        picBoxArr[pL].BackgroundImageLayout = ImageLayout.Zoom;
+                                    }
+                                    else
+                                    {
+                                        picBoxArr[pL].BackgroundImageLayout = ImageLayout.Stretch;
+                                    }
                                 }
                             }
+                            catch (Exception)
+                            {
+                                picBoxArr[pL].BackgroundImageLayout = ImageLayout.Zoom;
+                            }
+                            #endregion
+                            #endregion
+
+                            picBoxArr[pL].MouseEnter += new System.EventHandler(this.pictureBox_MouseEnter);
+                            picBoxArr[pL].MouseLeave += new System.EventHandler(this.pictureBox_MouseLeave);
+                            picBoxArr[pL].MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox_Click);
+                            picBoxArr[pL].MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseUp);
+                            picBoxArr[pL].Paint += new PaintEventHandler(this.pictureBox_Paint);
+
+                            picBoxArr[pL].ContextMenuStrip = contextMenuPictureBox;
+
+                            pL++;//iterar en el array de paneles
                         }
-                        catch (Exception)
-                        {
-                            picBoxArr[pL].BackgroundImageLayout = ImageLayout.Zoom;
-                        }
-                        #endregion
-                        #endregion
-
-                        picBoxArr[pL].MouseEnter += new System.EventHandler(this.pictureBox_MouseEnter);
-                        picBoxArr[pL].MouseLeave += new System.EventHandler(this.pictureBox_MouseLeave);
-                        picBoxArr[pL].MouseClick += new System.Windows.Forms.MouseEventHandler(this.pictureBox_Click);
-                        picBoxArr[pL].MouseUp += new System.Windows.Forms.MouseEventHandler(this.pictureBox_MouseUp);
-                        picBoxArr[pL].Paint += new PaintEventHandler(this.pictureBox_Paint);
-
-                        picBoxArr[pL].ContextMenuStrip = contextMenuPictureBox;
-
-                        pL++;//iterar en el array de paneles
                     }
                 }
             }

@@ -356,6 +356,95 @@ namespace C_Launcher
                 Console.WriteLine("tag de la fila: " + selectedRow.Tag);
                 rowSelected = e.RowIndex;
 
+                #region PictureBox
+                //Tomar la ruta de la caratula de la columna 8 y establecerlo en el picture Box junto al ancho y alto
+                string coverDir = dataGridViewFiles.Rows[rowSelected].Cells[8].Value.ToString();
+                if (coverDir != "" || coverDir != null)
+                {
+                    if (coverDir.StartsWith("https://") || coverDir.StartsWith("http://"))
+                    {
+                        try
+                        {
+                            // Descargar la imagen desde la URL
+                            using (WebClient webClient = new WebClient())
+                            {
+                                byte[] imageBytes = webClient.DownloadData(coverDir);
+
+                                // Crear un MemoryStream desde los bytes
+                                using (MemoryStream ms = new MemoryStream(imageBytes))
+                                {
+                                    // Crear una imagen desde el MemoryStream
+                                    Image image = Image.FromStream(ms);
+
+                                    // Mostrar la imagen en el PictureBox u otro control
+                                    pictureBoxCover.BackgroundImage = image;
+
+                                    // Realizar otras operaciones según sea necesario...
+                                }
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Console.WriteLine($"No se pudo descargar la caratula de la url: \n{coverDir}\n debido a: {ex}");
+                        }
+                    } else {
+                        try
+                        {
+                            //Establecer la caratula en el picture Box
+                            Image image;
+                            image = loadImage(coverDir);
+                            pictureBoxCover.BackgroundImage = image;
+                            pictureBoxCover.Tag = coverDir;
+                            image = null;
+                        }
+                        catch (Exception ex)
+                        {
+                            pictureBoxCover.BackgroundImage = null;
+                            pictureBoxCover.Tag = null;
+                            Console.WriteLine($"No se pudo establecer una caratula en dataGridViewFiles_CellClick debido a el error: {ex}");
+                        }
+                    }
+                       
+                }
+                //Verificar si tiene una resolucion para establecer el tamaño, si no, establecer el tamaño de ancho y alto
+                int resID = 0;
+                int selectedIndex = comboBoxResolution.Items.IndexOf(dataGridViewFiles.Rows[rowSelected].Cells[7].Value);
+                if (selectedIndex > 0)
+                {
+                    resID = combResID[selectedIndex - 1];
+                }
+
+                if (resID != 0)
+                {
+                    XmlDocument doc = new XmlDocument();
+                    doc.Load(xmlResPath);
+
+                    string xpath = "//Launcher/resolution[@id='" + resID + "']";
+                    XmlNode root = doc.SelectSingleNode(xpath);
+
+                    int width = int.Parse(root.SelectSingleNode("Width").InnerText);
+                    int height = int.Parse(root.SelectSingleNode("Height").InnerText);
+
+                    //Cambiar el tamaño con respecto a la resolucion escogida
+                    pictureBoxCover.Width = width; pictureBoxCover.Height = height;
+                } else
+                {
+                    int width = int.Parse(dataGridViewFiles.Rows[rowSelected].Cells[5].Value.ToString());
+                    int height = int.Parse(dataGridViewFiles.Rows[rowSelected].Cells[6].Value.ToString());
+                    pictureBoxCover.Width = width; pictureBoxCover.Height = height;
+                }
+                //Formato de la imagen
+                int selectedLayoutIndex = comboBoxImageFormat.Items.IndexOf(dataGridViewFiles.Rows[rowSelected].Cells[9].Value);
+                if (selectedLayoutIndex == 1)
+                {
+                    pictureBoxCover.BackgroundImageLayout = ImageLayout.Stretch;
+                }
+                else
+                {
+                    pictureBoxCover.BackgroundImageLayout = ImageLayout.Zoom;
+                }
+                #endregion
+
                 switch (e.ColumnIndex)
                 {
                     case 2:
@@ -384,10 +473,16 @@ namespace C_Launcher
                         if (openDialog.ShowDialog() == DialogResult.OK)
                         {
                             dataGridViewFiles.Rows[e.RowIndex].Cells[8].Value = openDialog.FileName;
+                            //Establecer la caratula en el picture Box
+                            Image image;
+                            image = loadImage(openDialog.FileName);
+                            pictureBoxCover.BackgroundImage = image;
+                            pictureBoxCover.Tag = openDialog.FileName;
+                            image = null;
                         }
                         openDialog.Dispose();
                         break;
-                    case 10:
+                    case 11:
                         //Cambiar el color de fondo
                         ColorDialog colorDialog = new ColorDialog();
 
@@ -407,39 +502,80 @@ namespace C_Launcher
 
         private void dataGridViewFiles_CellEndEdit(object sender, DataGridViewCellEventArgs e)
         {
+            int width = 200;
+            int height = 200;
             //Identificar si se esta ajustando el ancho o el alto
-            if (e.ColumnIndex == 5)//Ancho
+            switch (e.ColumnIndex)
             {
-                int width = 200;
-                try
-                {
-                    width = int.Parse(dataGridViewFiles.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
-                    if (width < 100) { width = 100; dataGridViewFiles.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = "100"; }
-                    if (width > 300) { width = 300; dataGridViewFiles.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = "300"; }
-                }
-                catch
-                {
-                    //Si da un error, es por que no se pudo transformar el contenido puesto a int, transformarlo
-                    dataGridViewFiles.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = width;
-                }
+                case 5://Ancho
+                    
+                    try
+                    {
+                        width = int.Parse(dataGridViewFiles.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
+                        if (width < 100) { width = 100; dataGridViewFiles.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = "100"; }
+                        if (width > 300) { width = 300; dataGridViewFiles.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = "300"; }
+                    }
+                    catch
+                    {
+                        //Si da un error, es por que no se pudo transformar el contenido puesto a int, transformarlo
+                        dataGridViewFiles.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = width;
+                    }
 
+                    pictureBoxCover.Width = width;
+                break;
 
+                case 6://Alto
+                    
+                    try
+                    {
+                        height = int.Parse(dataGridViewFiles.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
+                        if (height < 100) { height = 100; dataGridViewFiles.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = "100"; }
+                        if (height > 300) { height = 300; dataGridViewFiles.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = "300"; }
+                    }
+                    catch
+                    {
+                        //Si da un error, es por que no se pudo transformar el contenido puesto a int, transformarlo
+                        dataGridViewFiles.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = height;
+                    }
+                    pictureBoxCover.Height = height;
+                    break;
+
+                case 7://Resolucion
+                    int resID = 0;
+                    int selectedIndex = comboBoxResolution.Items.IndexOf(dataGridViewFiles.Rows[e.RowIndex].Cells[7].Value);
+                    if (selectedIndex > 0)
+                    {
+                        resID = combResID[selectedIndex - 1];
+                    }
+
+                    if (resID != 0)
+                    {
+                        XmlDocument doc = new XmlDocument();
+                        doc.Load(xmlResPath);
+
+                        string xpath = "//Launcher/resolution[@id='" + resID + "']";
+                        XmlNode root = doc.SelectSingleNode(xpath);
+
+                        width = int.Parse(root.SelectSingleNode("Width").InnerText);
+                        height = int.Parse(root.SelectSingleNode("Height").InnerText);
+
+                        //Cambiar el tamaño con respecto a la resolucion escogida
+                        pictureBoxCover.Width = width; pictureBoxCover.Height = height;
+                    }
+                    break;
+
+                case 9://Formato de la imagen
+                    int selectedLayoutIndex = comboBoxImageFormat.Items.IndexOf(dataGridViewFiles.Rows[e.RowIndex].Cells[9].Value);
+                    if (selectedLayoutIndex == 1)
+                    {
+                        pictureBoxCover.BackgroundImageLayout = ImageLayout.Stretch;
+                    } else
+                    {
+                        pictureBoxCover.BackgroundImageLayout = ImageLayout.Zoom;
+                    }
+                    break;
             }
-            else if (e.ColumnIndex == 6)//Alto
-            {
-                int height = 200;
-                try
-                {
-                    height = int.Parse(dataGridViewFiles.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString());
-                    if (height < 100) { height = 100; dataGridViewFiles.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = "100"; }
-                    if (height > 300) { height = 300; dataGridViewFiles.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = "300"; }
-                }
-                catch
-                {
-                    //Si da un error, es por que no se pudo transformar el contenido puesto a int, transformarlo
-                    dataGridViewFiles.Rows[e.RowIndex].Cells[e.ColumnIndex].Value = height;
-                }
-            }
+
         }
         #endregion
 
@@ -580,7 +716,37 @@ namespace C_Launcher
                 //Nombre elemento
                 dataGridViewFiles.Rows[i].Cells[0].Value = e[i, 0];
                 //Ruta caratula
-                dataGridViewFiles.Rows[i].Cells[2].Value = e[i, 1];
+                dataGridViewFiles.Rows[i].Cells[8].Value = e[i, 1];
+            }
+
+            //Actualizar la caratula con la fila seleccionada
+            int sR = dataGridViewFiles.CurrentCell.RowIndex;//Fila seleccionada
+            string downloadImage = dataGridViewFiles.Rows[sR].Cells[8].Value.ToString();
+
+            //Actualizar la caratula
+            try
+            {
+                // Descargar la imagen desde la URL
+                using (WebClient webClient = new WebClient())
+                {
+                    byte[] imageBytes = webClient.DownloadData(downloadImage);
+
+                    // Crear un MemoryStream desde los bytes
+                    using (MemoryStream ms = new MemoryStream(imageBytes))
+                    {
+                        // Crear una imagen desde el MemoryStream
+                        Image image = Image.FromStream(ms);
+
+                        // Mostrar la imagen en el PictureBox u otro control
+                        pictureBoxCover.BackgroundImage = image;
+
+                        // Realizar otras operaciones según sea necesario...
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"No se pudo establecer la caratula de la url: \n{e[0, 1]}\n debido a: {ex}");
             }
         }
 
@@ -607,7 +773,7 @@ namespace C_Launcher
             //Nombre elemento
             dataGridViewFiles.Rows[sR].Cells[0].Value = e[0, 0];
             //Ruta caratula
-            dataGridViewFiles.Rows[sR].Cells[2].Value = e[0, 1];
+            dataGridViewFiles.Rows[sR].Cells[8].Value = e[0, 1];
 
             //Actualizar la caratula
             try
@@ -642,6 +808,8 @@ namespace C_Launcher
             openFileDialog.Filter = "Archivos de imagen (*.png;*.jpg;*.jpeg;*.webp;*.gif)|*.png;*.jpg;*.jpeg;*.webp;*.gif";
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
+                int sR = dataGridViewFiles.CurrentCell.RowIndex;
+                dataGridViewFiles.Rows[sR].Cells[8].Value = openFileDialog.FileName;
                 Image image;
                 image = loadImage(openFileDialog.FileName);
                 pictureBoxCover.BackgroundImage = image;
@@ -654,6 +822,7 @@ namespace C_Launcher
         //Para reducir el tamaño de las imagenes del picture box
         private Image loadImage(string imagePath)
         {
+            Console.WriteLine($"Image path: {imagePath}");
             // Image image = null;
 
             // Carga la imagen original.
@@ -720,6 +889,8 @@ namespace C_Launcher
 
         private void buttonDeleteCoverRow_Click(object sender, EventArgs e)
         {
+            int sR = dataGridViewFiles.CurrentCell.RowIndex;
+            dataGridViewFiles.Rows[sR].Cells[8].Value = "";
             pictureBoxCover.BackgroundImage = null;
             pictureBoxCover.Tag = null;
         }

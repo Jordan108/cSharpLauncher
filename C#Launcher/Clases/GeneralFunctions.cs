@@ -62,6 +62,7 @@ namespace CoverPadLauncher.Clases
                     using (WebClient webClient = new WebClient())
                     {
                         byte[] imageBytes = webClient.DownloadData(finalImageUrl);
+                        Console.WriteLine($"Descargando imagen desde: {finalImageUrl}");
 
                         // Crear un MemoryStream desde los bytes
                         using (MemoryStream ms = new MemoryStream(imageBytes))
@@ -87,6 +88,7 @@ namespace CoverPadLauncher.Clases
             {
                 if (newCover)
                 {
+                    //Creando una nueva caratula
                     imgPath = ReturnImagePath(dirCoversPath, cleanName, coverType);
                 }
                 else
@@ -96,18 +98,25 @@ namespace CoverPadLauncher.Clases
                     {
                         string systemCoverDir = dirCoversPath;
                         string xmlDir = Path.GetDirectoryName(originalImageDir);
+
+                        imgPath = ReturnImagePath(dirCoversPath, cleanName, coverType);
                         if (xmlDir != systemCoverDir)
                         {
+                            //Si la ubicacion de la caratula al editar no esta en system/Covers moverla alli
                             imgPath = ReturnImagePath(dirCoversPath, cleanName, coverType);
+                            Console.WriteLine($"save A imagePath: {imgPath}");
                         }
                         else
                         {
-                            imgPath = originalImageDir;
+                            //Caso contrario dejarlo como estaba, Excepto si el nombre del archivo es http_temp_Cover (en caso de que alguien quiera editar la ruta desde el xml)
+                            if (originalImageDir != "System\\Covers\\http_temp_Cover.png") imgPath = originalImageDir;
+                            else imgPath = ReturnImagePath(dirCoversPath, cleanName, coverType);
+                            Console.WriteLine($"save B imagePath: {imgPath}");
                         }
                     }
                     else
                     {
-
+                        Console.WriteLine("save C");
                         imgPath = ReturnImagePath(dirCoversPath, cleanName, coverType);
                     }
 

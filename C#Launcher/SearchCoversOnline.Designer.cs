@@ -115,9 +115,9 @@
             this.labelApi.AutoSize = true;
             this.labelApi.Location = new System.Drawing.Point(6, 3);
             this.labelApi.Name = "labelApi";
-            this.labelApi.Size = new System.Drawing.Size(191, 13);
+            this.labelApi.Size = new System.Drawing.Size(178, 13);
             this.labelApi.TabIndex = 3;
-            this.labelApi.Text = "Api suministrada por SteamGridDB.com";
+            this.labelApi.Text = "API proveída por SteamGridDB.com";
             this.labelApi.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             // 
             // groupBoxSteamDBRes
@@ -323,7 +323,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(749, 453);
+            this.tabPage2.Size = new System.Drawing.Size(749, 484);
             this.tabPage2.TabIndex = 2;
             this.tabPage2.Text = "Confirmar Nombre";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -398,7 +398,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(749, 467);
+            this.tabPage3.Size = new System.Drawing.Size(749, 484);
             this.tabPage3.TabIndex = 1;
             this.tabPage3.Text = "Descargar";
             this.tabPage3.UseVisualStyleBackColor = true;
