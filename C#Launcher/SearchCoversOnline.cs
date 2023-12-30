@@ -101,6 +101,7 @@ namespace CoverPadLauncher
             radioButton660x930.ForeColor = theme.LabelText;
             radioButton512x512.ForeColor = theme.LabelText;
             radioButton1024x1024.ForeColor = theme.LabelText;
+            groupBoxGameOrigin.ForeColor = theme.LabelText;
             labelApi.ForeColor = theme.LabelText;
             radioButtonGameSteam.ForeColor = theme.LabelText;
             radioButtonGameOther.ForeColor = theme.LabelText;

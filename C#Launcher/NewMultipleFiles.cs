@@ -358,7 +358,7 @@ namespace C_Launcher
 
                 #region PictureBox
                 //Tomar la ruta de la caratula de la columna 8 y establecerlo en el picture Box junto al ancho y alto
-                string coverDir = dataGridViewFiles.Rows[rowSelected].Cells[8].Value.ToString();
+                string coverDir = dataGridViewFiles.Rows[rowSelected].Cells[8].Value?.ToString();
                 if (coverDir != "" || coverDir != null)
                 {
                     if (coverDir.StartsWith("https://") || coverDir.StartsWith("http://"))
@@ -716,16 +716,18 @@ namespace C_Launcher
                 //Nombre elemento
                 dataGridViewFiles.Rows[i].Cells[0].Value = e[i, 0];
                 //Ruta caratula
-                dataGridViewFiles.Rows[i].Cells[8].Value = e[i, 1];
-            }
+                string coverValue = "";
+                if (e[i, 1] != null) coverValue = e[i, 1];
 
-            //Actualizar la caratula con la fila seleccionada
-            int sR = dataGridViewFiles.CurrentCell.RowIndex;//Fila seleccionada
-            string downloadImage = dataGridViewFiles.Rows[sR].Cells[8].Value.ToString();
+                dataGridViewFiles.Rows[i].Cells[8].Value = coverValue;
+            }
 
             //Actualizar la caratula
             try
             {
+                //Actualizar la caratula con la fila seleccionada
+                int sR = dataGridViewFiles.CurrentCell.RowIndex;//Fila seleccionada
+                string downloadImage = dataGridViewFiles.Rows[sR].Cells[8].Value.ToString();
                 // Descargar la imagen desde la URL
                 using (WebClient webClient = new WebClient())
                 {
@@ -996,8 +998,8 @@ namespace C_Launcher
                 }
                 
 
-                string nameFile = dataGridViewFiles.Rows[i].Cells[0].Value.ToString();
-                string cellImgPath = dataGridViewFiles.Rows[i].Cells[8].Value.ToString();
+                string nameFile = dataGridViewFiles.Rows[i].Cells[0].Value?.ToString();
+                string cellImgPath = dataGridViewFiles.Rows[i].Cells[8].Value?.ToString();
                 //Evitar que se guarde la imagen con caracteres invalidos
                 string cleanName = Path.GetInvalidFileNameChars().Aggregate(nameFile, (current, c) => current.Replace(c.ToString(), string.Empty));
                 string imgPath = "";
@@ -1024,7 +1026,7 @@ namespace C_Launcher
 
                         string source = cellImgPath;
                         //Solo reemplazar una imagen si esta existe o si la imagen de origen no es la misma que el destino
-                        if ((imgPath != "") && (imgPath != null) && (source != imgPath))
+                        if ((imgPath != "") && (imgPath != null) && (source != imgPath) && (source != null) && (source != ""))
                         {
                         //Las imagenes webp no pueden ser copiadas y pegadas a un formato png, deben ser transformadas y guardadas dentro de un objeto
                             if (Path.GetExtension(source).ToLower() == ".webp")
@@ -1068,15 +1070,15 @@ namespace C_Launcher
                 }
                 //if (radioButtonEstreched.Checked == true) imgLayout = 1;
 
-                string filePath = dataGridViewFiles.Rows[i].Cells[2].Value.ToString();
-                string programPath = dataGridViewFiles.Rows[i].Cells[3].Value.ToString();
-                string cmdLine = dataGridViewFiles.Rows[i].Cells[4].Value.ToString();
+                string filePath = dataGridViewFiles.Rows[i].Cells[2].Value?.ToString();
+                string programPath = dataGridViewFiles.Rows[i].Cells[3].Value?.ToString();
+                string cmdLine = dataGridViewFiles.Rows[i].Cells[4].Value?.ToString();
                 bool background = Convert.ToBoolean(dataGridViewFiles.Rows[i].Cells[10].Value?.ToString());//Convert.ToBoolean transforma los null en false
                 int R = dataGridViewFiles.Rows[i].Cells[11].Style.BackColor.R;
                 int G = dataGridViewFiles.Rows[i].Cells[11].Style.BackColor.G;
                 int B = dataGridViewFiles.Rows[i].Cells[11].Style.BackColor.B;
-                int width = int.Parse(dataGridViewFiles.Rows[i].Cells[5].Value.ToString());
-                int height = int.Parse(dataGridViewFiles.Rows[i].Cells[6].Value.ToString());
+                int width = int.Parse(dataGridViewFiles.Rows[i].Cells[5].Value?.ToString());
+                int height = int.Parse(dataGridViewFiles.Rows[i].Cells[6].Value?.ToString());
                 bool url = Convert.ToBoolean(dataGridViewFiles.Rows[i].Cells[1].Value?.ToString());
                 int[] tagsArray = new int[] { };
                 bool favorite = false;

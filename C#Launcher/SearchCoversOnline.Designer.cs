@@ -96,10 +96,10 @@
             this.tabControl.Controls.Add(this.tabPage1);
             this.tabControl.Controls.Add(this.tabPage2);
             this.tabControl.Controls.Add(this.tabPage3);
-            this.tabControl.Location = new System.Drawing.Point(-5, 3);
+            this.tabControl.Location = new System.Drawing.Point(-5, -24);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(757, 482);
+            this.tabControl.Size = new System.Drawing.Size(757, 509);
             this.tabControl.TabIndex = 4;
             // 
             // tabPage1
@@ -112,7 +112,7 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(749, 456);
+            this.tabPage1.Size = new System.Drawing.Size(749, 483);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Tipo";
             this.tabPage1.UseVisualStyleBackColor = true;
