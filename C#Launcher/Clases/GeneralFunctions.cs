@@ -5,6 +5,7 @@ using System.Drawing.Imaging;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Threading.Tasks;
 using System.Xml;
 
 namespace CoverPadLauncher.Clases
@@ -197,6 +198,7 @@ namespace CoverPadLauncher.Clases
             }
             return false;
         }
+
 
         //rescata un valor desde el json env.json
         /*public string EnvVariable(string key)

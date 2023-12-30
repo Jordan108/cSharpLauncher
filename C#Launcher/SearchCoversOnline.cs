@@ -10,6 +10,7 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using static System.Net.WebRequestMethods;
@@ -21,6 +22,7 @@ namespace CoverPadLauncher
         public event EventHandler<string[,]> ReturnedObject;
 
         private int type = 0;//El tipo de multimedia a buscar (juegos, peliculas/series)
+        private int gameDB = 0;//0- SteamGrid / 1- ThegamesDB
         private int steamDBDimension = 0;//0-600x900 1-460x214 2-920x430 3-342x482 4-660x930 5-512x512 6-1024x1024
 
         private string[] names;
@@ -100,6 +102,8 @@ namespace CoverPadLauncher
             radioButton512x512.ForeColor = theme.LabelText;
             radioButton1024x1024.ForeColor = theme.LabelText;
             labelApi.ForeColor = theme.LabelText;
+            radioButtonGameSteam.ForeColor = theme.LabelText;
+            radioButtonGameOther.ForeColor = theme.LabelText;
 
             //Botones
             buttonContinueType.BackColor = theme.ButtonBackground;
@@ -417,6 +421,130 @@ namespace CoverPadLauncher
             return null;
         }
 
+        private async Task<string[]> SearchSpotify(string songName)
+        {
+            try
+            {
+                string clientID = new EnvironmentKeys().SpotifyClientID;
+                string clientSecret = new EnvironmentKeys().SpotifyClientSecret;
+
+                //HTTP Post
+                HttpClient clientToken = new HttpClient();
+                var requestToken = new HttpRequestMessage(HttpMethod.Post, $"https://accounts.spotify.com/api/token?grant_type=client_credentials&client_id={clientID}&client_secret={clientSecret}");
+                var contentToken = new StringContent("", null, "application/x-www-form-urlencoded");
+                requestToken.Content = contentToken;
+                var responseToken = await clientToken.SendAsync(requestToken);
+
+                responseToken.EnsureSuccessStatusCode();
+
+                Console.WriteLine("Spotify Token Response success");
+
+                //Analizar la respuesta
+                var apiTokenResponse = responseToken.Content.ReadAsStringAsync().Result;
+                JObject jsonTokenResponse = JObject.Parse(apiTokenResponse);//Serializar el objetoJson
+
+                //Crear un array de la data de las caratulas
+                var accessToken = jsonTokenResponse["access_token"];//Obtener el token para hacer el request
+                Console.WriteLine($"Token {accessToken}");
+
+                //Hacer la solicitud para buscar caratulas de canciones
+                HttpClient client = new HttpClient();
+                var requestSong = new HttpRequestMessage(HttpMethod.Get, $"https://api.spotify.com/v1/search?q={songName}&type=track");
+                requestSong.Headers.Add("Authorization", $"Bearer {accessToken}");
+                var response = await client.SendAsync(requestSong);
+
+                response.EnsureSuccessStatusCode();
+                Console.WriteLine($"Response {response}");
+
+                //Analizar la respuesta
+                var apiResponse = response.Content.ReadAsStringAsync().Result;
+                JObject jsonResponse = JObject.Parse(apiResponse);//Serializar el objetoJson
+
+                //Crear un array de los items de spotify
+                var results = jsonResponse["tracks"]["items"];
+
+                Console.WriteLine($"Results Track json: \n{results}\n\n\n");
+                List<string> posterPaths = new List<string>();
+
+                //Adaptar el objeto a un arrayString
+                for (int i = 0; i < results.Count(); i++)
+                {
+                    var cover = results[i]["album"]["images"][0]["url"];//el 0 toma la imagen 640x640 (el mas grande)
+
+                    if (cover != null && !string.IsNullOrEmpty(cover.ToString()))
+                    {
+                        Console.WriteLine($"Song Cover: \n{cover}\n\n\n");
+                        posterPaths.Add($"{cover}");
+                    }
+
+                    updateProgressBar(i, results.Count());
+                }
+
+                string[] returnString = posterPaths.ToArray();
+
+                return returnString;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error en SearchSpotify: {ex.Message}");
+            }
+            return null;
+        }
+
+        public async Task<string[]> SearchGameDBAPI(string gameName)
+        {
+            try
+            {
+                HttpClient client = new HttpClient();
+                client.BaseAddress = new Uri("https://thegamesdb.net/search.php");
+                client.DefaultRequestHeaders.Add("User-Agent", "CoverPadLauncher");//Por si acaso
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));//Header en formato json
+
+                HttpResponseMessage response = client.GetAsync($"?name={gameName}").Result;
+                if (response.IsSuccessStatusCode)
+                {
+                    Console.WriteLine("GameDB Response success");
+                    //
+                    
+
+                    //Analizar la respuesta
+                    var apiResponse = response.Content.ReadAsStringAsync().Result;
+                    string pattern = "<img[^>]*class\\s*=\\s*\"card-img-top\"[^>]*src\\s*=\\s*\"([^\"]+)\"";
+                    MatchCollection matches = Regex.Matches(apiResponse, pattern, RegexOptions.IgnoreCase);
+
+                    List<string> coversPaths = new List<string>();
+
+                    int count = 0;
+                    // Iterar sobre las coincidencias y mostrar las URLs
+                    foreach (Match match in matches)
+                    {
+                        string srcValue = match.Groups[1].Value;
+                        Console.WriteLine($"SRC: {srcValue}");
+                        coversPaths.Add(srcValue);
+                        count++;
+                        updateProgressBar(count, matches.Count);
+                    }
+
+                    string[] returnString = coversPaths.ToArray();
+
+                    return returnString;
+
+                }
+                else
+                {
+                    Console.WriteLine("{0} ({1})", (int)response.StatusCode, response.ReasonPhrase);
+                }
+
+                //client.Dispose();
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error en SearchOpenLibrary: {ex.Message}");
+            }
+
+            return null;
+        }
+
         private static bool URLImageExists(string imageUrl)
         {
             try
@@ -545,9 +673,21 @@ namespace CoverPadLauncher
                 case 0:
                     for (int j = 0; j < names.Length; j++)
                     {
-                        //Buscar las url de las caratulas
-                        string[] covers = await SearchSteamGridDB(names[j]);
-
+                        string[] covers;
+                        switch (gameDB)
+                        {
+                            //Steam DB
+                            default:
+                                //Buscar las url de las caratulas
+                                covers = await SearchSteamGridDB(names[j]);
+                                break;
+                            //GamesDB
+                            case 1:
+                                //Buscar las url de las caratulas
+                                GeneralFunctions gf = new GeneralFunctions();
+                                covers = await SearchGameDBAPI(names[j]);
+                                break;
+                        }
                         //Establecerlo en el dataGridView
                         dataGridViewCovers.Rows.Add(names[j], covers.Length, covers.Length > 0 ? 1 : 0);
                         dataGridViewCovers.Rows[j].Tag = covers;
@@ -601,13 +741,24 @@ namespace CoverPadLauncher
                         dataGridViewCovers.Rows[j].Tag = covers;
                     }
                     break;
-
                 //Buscar libros
                 case 5:
                     for (int j = 0; j < names.Length; j++)
                     {
                         //Buscar las url de las caratulas
                         string[] covers = SearchOpenLibrary(names[j]);
+
+                        //Establecerlo en el dataGridView
+                        dataGridViewCovers.Rows.Add(names[j], covers.Length, covers.Length > 0 ? 1 : 0);
+                        dataGridViewCovers.Rows[j].Tag = covers;
+                    }
+                    break;
+                //Buscar canciones de spotify
+                case 6:
+                    for (int j = 0; j < names.Length; j++)
+                    {
+                        //Buscar las url de las caratulas
+                        string[] covers = await SearchSpotify(names[j]);
 
                         //Establecerlo en el dataGridView
                         dataGridViewCovers.Rows.Add(names[j], covers.Length, covers.Length > 0 ? 1 : 0);
@@ -688,7 +839,8 @@ namespace CoverPadLauncher
                 {
                     //Si no se encuentran caratulas estara vacio
                     if (coverArray.Length > 0) SetPictureBoxCover(coverArray[actualCover-1]);
-                    labelCoverArraySelected.Text = $"{actualCover}/{arrayLength}";
+                    textBoxCoverNumber.Text = actualCover.ToString();
+                    labelCoverArraySelected.Text = $"/ {arrayLength}";
                 }
             }
         }
@@ -708,7 +860,8 @@ namespace CoverPadLauncher
                 {
                     //Si no se encuentran caratulas estara vacio
                     if (coverArray.Length > 0) SetPictureBoxCover(coverArray[actualCover-1]);
-                    labelCoverArraySelected.Text = $"{actualCover}/{dataGridViewCovers.Rows[sR].Cells[1].Value}";
+                    textBoxCoverNumber.Text = actualCover.ToString();
+                    labelCoverArraySelected.Text = $"/ {dataGridViewCovers.Rows[sR].Cells[1].Value}";
                 }
             }
         }
@@ -720,7 +873,8 @@ namespace CoverPadLauncher
             int actualCover = int.Parse(dataGridViewCovers.Rows[sR].Cells[2].Value.ToString());
 
             //Actualizar la cantidad de caratulas encontradas
-            labelCoverArraySelected.Text = $"{actualCover}/{dataGridViewCovers.Rows[sR].Cells[1].Value}";
+            textBoxCoverNumber.Text = actualCover.ToString();
+            labelCoverArraySelected.Text = $"/ {dataGridViewCovers.Rows[sR].Cells[1].Value}";
 
 
             //Establecer la caratula por url
@@ -728,6 +882,15 @@ namespace CoverPadLauncher
             {
                 //Si no se encuentran caratulas estara vacio
                 if (coverArray.Length > 0) SetPictureBoxCover(coverArray[actualCover-1]);
+            }
+        }
+
+        //Que el Textbox solo acepte valores numericos y actualizar limites
+        private void textBoxCoverNumber_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar) /*&& (e.KeyChar != '.')*/)
+            {
+                e.Handled = true;
             }
         }
 
@@ -774,15 +937,35 @@ namespace CoverPadLauncher
             if (radioButtonGames.Checked == true)
             {
                 type = 0;
+                gameDB = 0;//Por default, juegos de steam
                 labelApi.Text = "API proveída por SteamGridDB.com";
                 groupBoxSteamDBRes.Visible = true;
                 groupBoxSteamDBRes.Enabled = true;
+                groupBoxGameOrigin.Visible = true;
+                groupBoxGameOrigin.Enabled = true;
             } else
             {
                 groupBoxSteamDBRes.Visible = false;
                 groupBoxSteamDBRes.Enabled = false;
+                groupBoxGameOrigin.Visible = false;
+                groupBoxGameOrigin.Enabled = false;
             }
             
+        }
+
+        private void radioButtonGameSteam_CheckedChanged(object sender, EventArgs e)
+        {
+            gameDB = 0;
+            labelApi.Text = "API proveída por SteamGridDB.net";
+            groupBoxSteamDBRes.Visible = true;
+            groupBoxSteamDBRes.Enabled = true;
+        }
+        private void radioButtonGameOther_CheckedChanged(object sender, EventArgs e)
+        {
+            gameDB = 1;
+            labelApi.Text = "API proveída por Thegamesdb.net";
+            groupBoxSteamDBRes.Visible = false;
+            groupBoxSteamDBRes.Enabled = false;
         }
 
         private void radioButtonFilms_CheckedChanged(object sender, EventArgs e)
@@ -813,6 +996,12 @@ namespace CoverPadLauncher
         {
             type = 5;
             labelApi.Text = "API proveída por OpenLibrary.org";
+        }
+
+        private void radioButtonSongs_CheckedChanged(object sender, EventArgs e)
+        {
+            type = 6;
+            labelApi.Text = "API proveída por Spotify.com";
         }
 
         #endregion
@@ -849,6 +1038,32 @@ namespace CoverPadLauncher
             this.Close();
         }
 
-        
+        private void textBoxCoverNumber_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                int sR = dataGridViewCovers.CurrentCell.RowIndex;//Fila seleccionada
+
+                int arrayLength = int.Parse(dataGridViewCovers.Rows[sR].Cells[1].Value.ToString());
+
+                int numberCover = int.Parse(textBoxCoverNumber.Text);
+
+                if (numberCover < 0) numberCover = 0;
+                else if (numberCover > arrayLength) numberCover = arrayLength;
+                //Se establece de nuevo el numero por las validaciones
+                textBoxCoverNumber.Text = numberCover.ToString();
+
+                //Actualizar la tabla
+                dataGridViewCovers.Rows[sR].Cells[2].Value = numberCover.ToString();
+                //Mostrar la caratula
+                if (dataGridViewCovers.Rows[sR].Tag is string[] coverArray)
+                {
+                    //Si no se encuentran caratulas estara vacio
+                    if (coverArray.Length > 0) SetPictureBoxCover(coverArray[numberCover - 1]);
+                }
+            }
+        }
+
+       
     }
 }

@@ -454,7 +454,7 @@
             // BackgroundColorCheck
             // 
             this.BackgroundColorCheck.AutoSize = true;
-            this.BackgroundColorCheck.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(55)))), ((int)(((byte)(61)))), ((int)(((byte)(72)))));
+            this.BackgroundColorCheck.BackColor = System.Drawing.Color.Transparent;
             this.BackgroundColorCheck.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BackgroundColorCheck.ForeColor = System.Drawing.SystemColors.Window;
             this.BackgroundColorCheck.Location = new System.Drawing.Point(549, 258);

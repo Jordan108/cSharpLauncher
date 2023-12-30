@@ -92,6 +92,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="About.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="About.Designer.cs">
+      <DependentUpon>About.cs</DependentUpon>
+    </Compile>
     <Compile Include="Clases\Collections.cs" />
     <Compile Include="Clases\Controles\WindowsComparator.cs" />
     <Compile Include="Clases\Controles\DropdownItem.cs">
@@ -168,6 +174,9 @@
     <Compile Include="Tutorial.Designer.cs">
       <DependentUpon>Tutorial.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="About.resx">
+      <DependentUpon>About.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Configuration.resx">
       <DependentUpon>Configuration.cs</DependentUpon>
     </EmbeddedResource>

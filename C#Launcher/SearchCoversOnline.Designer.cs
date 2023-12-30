@@ -31,6 +31,9 @@
             this.pictureBoxCover = new System.Windows.Forms.PictureBox();
             this.tabControl = new System.Windows.Forms.TabControl();
             this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.groupBoxGameOrigin = new System.Windows.Forms.GroupBox();
+            this.radioButtonGameOther = new System.Windows.Forms.RadioButton();
+            this.radioButtonGameSteam = new System.Windows.Forms.RadioButton();
             this.labelApi = new System.Windows.Forms.Label();
             this.groupBoxSteamDBRes = new System.Windows.Forms.GroupBox();
             this.radioButton1024x1024 = new System.Windows.Forms.RadioButton();
@@ -42,6 +45,7 @@
             this.radioButton600x900 = new System.Windows.Forms.RadioButton();
             this.buttonContinueType = new System.Windows.Forms.Button();
             this.groupBoxApi = new System.Windows.Forms.GroupBox();
+            this.radioButtonSongs = new System.Windows.Forms.RadioButton();
             this.radioButtonBooks = new System.Windows.Forms.RadioButton();
             this.radioButtonComics = new System.Windows.Forms.RadioButton();
             this.radioButtonMangas = new System.Windows.Forms.RadioButton();
@@ -56,6 +60,7 @@
             this.ColumnName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.ColumnDir = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.tabPage3 = new System.Windows.Forms.TabPage();
+            this.textBoxCoverNumber = new System.Windows.Forms.TextBox();
             this.labelCoverArraySelected = new System.Windows.Forms.Label();
             this.buttonCoverBack = new System.Windows.Forms.Button();
             this.buttonCoverNext = new System.Windows.Forms.Button();
@@ -67,6 +72,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBoxCover)).BeginInit();
             this.tabControl.SuspendLayout();
             this.tabPage1.SuspendLayout();
+            this.groupBoxGameOrigin.SuspendLayout();
             this.groupBoxSteamDBRes.SuspendLayout();
             this.groupBoxApi.SuspendLayout();
             this.tabPage2.SuspendLayout();
@@ -90,14 +96,15 @@
             this.tabControl.Controls.Add(this.tabPage1);
             this.tabControl.Controls.Add(this.tabPage2);
             this.tabControl.Controls.Add(this.tabPage3);
-            this.tabControl.Location = new System.Drawing.Point(-5, -25);
+            this.tabControl.Location = new System.Drawing.Point(-5, 3);
             this.tabControl.Name = "tabControl";
             this.tabControl.SelectedIndex = 0;
-            this.tabControl.Size = new System.Drawing.Size(757, 510);
+            this.tabControl.Size = new System.Drawing.Size(757, 482);
             this.tabControl.TabIndex = 4;
             // 
             // tabPage1
             // 
+            this.tabPage1.Controls.Add(this.groupBoxGameOrigin);
             this.tabPage1.Controls.Add(this.labelApi);
             this.tabPage1.Controls.Add(this.groupBoxSteamDBRes);
             this.tabPage1.Controls.Add(this.buttonContinueType);
@@ -105,10 +112,45 @@
             this.tabPage1.Location = new System.Drawing.Point(4, 22);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage1.Size = new System.Drawing.Size(749, 484);
+            this.tabPage1.Size = new System.Drawing.Size(749, 456);
             this.tabPage1.TabIndex = 0;
             this.tabPage1.Text = "Tipo";
             this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // groupBoxGameOrigin
+            // 
+            this.groupBoxGameOrigin.Controls.Add(this.radioButtonGameOther);
+            this.groupBoxGameOrigin.Controls.Add(this.radioButtonGameSteam);
+            this.groupBoxGameOrigin.Location = new System.Drawing.Point(190, 105);
+            this.groupBoxGameOrigin.Name = "groupBoxGameOrigin";
+            this.groupBoxGameOrigin.Size = new System.Drawing.Size(82, 111);
+            this.groupBoxGameOrigin.TabIndex = 4;
+            this.groupBoxGameOrigin.TabStop = false;
+            this.groupBoxGameOrigin.Text = "Origen";
+            // 
+            // radioButtonGameOther
+            // 
+            this.radioButtonGameOther.AutoSize = true;
+            this.radioButtonGameOther.Location = new System.Drawing.Point(7, 44);
+            this.radioButtonGameOther.Name = "radioButtonGameOther";
+            this.radioButtonGameOther.Size = new System.Drawing.Size(50, 17);
+            this.radioButtonGameOther.TabIndex = 1;
+            this.radioButtonGameOther.Text = "Otros";
+            this.radioButtonGameOther.UseVisualStyleBackColor = true;
+            this.radioButtonGameOther.CheckedChanged += new System.EventHandler(this.radioButtonGameOther_CheckedChanged);
+            // 
+            // radioButtonGameSteam
+            // 
+            this.radioButtonGameSteam.AutoSize = true;
+            this.radioButtonGameSteam.Checked = true;
+            this.radioButtonGameSteam.Location = new System.Drawing.Point(7, 20);
+            this.radioButtonGameSteam.Name = "radioButtonGameSteam";
+            this.radioButtonGameSteam.Size = new System.Drawing.Size(55, 17);
+            this.radioButtonGameSteam.TabIndex = 0;
+            this.radioButtonGameSteam.TabStop = true;
+            this.radioButtonGameSteam.Text = "Steam";
+            this.radioButtonGameSteam.UseVisualStyleBackColor = true;
+            this.radioButtonGameSteam.CheckedChanged += new System.EventHandler(this.radioButtonGameSteam_CheckedChanged);
             // 
             // labelApi
             // 
@@ -228,6 +270,7 @@
             // 
             // groupBoxApi
             // 
+            this.groupBoxApi.Controls.Add(this.radioButtonSongs);
             this.groupBoxApi.Controls.Add(this.radioButtonBooks);
             this.groupBoxApi.Controls.Add(this.radioButtonComics);
             this.groupBoxApi.Controls.Add(this.radioButtonMangas);
@@ -236,10 +279,22 @@
             this.groupBoxApi.Controls.Add(this.radioButtonGames);
             this.groupBoxApi.Location = new System.Drawing.Point(25, 105);
             this.groupBoxApi.Name = "groupBoxApi";
-            this.groupBoxApi.Size = new System.Drawing.Size(200, 180);
+            this.groupBoxApi.Size = new System.Drawing.Size(159, 208);
             this.groupBoxApi.TabIndex = 0;
             this.groupBoxApi.TabStop = false;
             this.groupBoxApi.Text = "¿Que estas importando?";
+            // 
+            // radioButtonSongs
+            // 
+            this.radioButtonSongs.AutoSize = true;
+            this.radioButtonSongs.Location = new System.Drawing.Point(7, 170);
+            this.radioButtonSongs.Name = "radioButtonSongs";
+            this.radioButtonSongs.Size = new System.Drawing.Size(75, 17);
+            this.radioButtonSongs.TabIndex = 6;
+            this.radioButtonSongs.TabStop = true;
+            this.radioButtonSongs.Text = "Canciones";
+            this.radioButtonSongs.UseVisualStyleBackColor = true;
+            this.radioButtonSongs.CheckedChanged += new System.EventHandler(this.radioButtonSongs_CheckedChanged);
             // 
             // radioButtonBooks
             // 
@@ -323,7 +378,7 @@
             this.tabPage2.Location = new System.Drawing.Point(4, 22);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(749, 484);
+            this.tabPage2.Size = new System.Drawing.Size(749, 456);
             this.tabPage2.TabIndex = 2;
             this.tabPage2.Text = "Confirmar Nombre";
             this.tabPage2.UseVisualStyleBackColor = true;
@@ -389,6 +444,7 @@
             // 
             // tabPage3
             // 
+            this.tabPage3.Controls.Add(this.textBoxCoverNumber);
             this.tabPage3.Controls.Add(this.labelCoverArraySelected);
             this.tabPage3.Controls.Add(this.buttonCoverBack);
             this.tabPage3.Controls.Add(this.buttonCoverNext);
@@ -398,19 +454,30 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(749, 484);
+            this.tabPage3.Size = new System.Drawing.Size(749, 456);
             this.tabPage3.TabIndex = 1;
             this.tabPage3.Text = "Descargar";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
+            // textBoxCoverNumber
+            // 
+            this.textBoxCoverNumber.Location = new System.Drawing.Point(573, 349);
+            this.textBoxCoverNumber.Name = "textBoxCoverNumber";
+            this.textBoxCoverNumber.Size = new System.Drawing.Size(21, 20);
+            this.textBoxCoverNumber.TabIndex = 9;
+            this.textBoxCoverNumber.Text = "1";
+            this.textBoxCoverNumber.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            this.textBoxCoverNumber.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBoxCoverNumber_KeyDown);
+            this.textBoxCoverNumber.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.textBoxCoverNumber_KeyPress);
+            // 
             // labelCoverArraySelected
             // 
             this.labelCoverArraySelected.AutoSize = true;
-            this.labelCoverArraySelected.Location = new System.Drawing.Point(585, 352);
+            this.labelCoverArraySelected.Location = new System.Drawing.Point(595, 353);
             this.labelCoverArraySelected.Name = "labelCoverArraySelected";
-            this.labelCoverArraySelected.Size = new System.Drawing.Size(24, 13);
+            this.labelCoverArraySelected.Size = new System.Drawing.Size(21, 13);
             this.labelCoverArraySelected.TabIndex = 8;
-            this.labelCoverArraySelected.Text = "1/1";
+            this.labelCoverArraySelected.Text = "/ 1";
             // 
             // buttonCoverBack
             // 
@@ -454,11 +521,12 @@
             this.Nombre,
             this.ColumnCount,
             this.ColumnSelected});
-            this.dataGridViewCovers.Location = new System.Drawing.Point(16, 29);
+            this.dataGridViewCovers.Location = new System.Drawing.Point(39, 29);
             this.dataGridViewCovers.MultiSelect = false;
             this.dataGridViewCovers.Name = "dataGridViewCovers";
+            this.dataGridViewCovers.RowHeadersVisible = false;
             this.dataGridViewCovers.RowHeadersWidth = 62;
-            this.dataGridViewCovers.Size = new System.Drawing.Size(400, 355);
+            this.dataGridViewCovers.Size = new System.Drawing.Size(360, 355);
             this.dataGridViewCovers.TabIndex = 4;
             this.dataGridViewCovers.SelectionChanged += new System.EventHandler(this.dataGridViewCovers_SelectionChanged);
             // 
@@ -500,6 +568,8 @@
             this.tabControl.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
             this.tabPage1.PerformLayout();
+            this.groupBoxGameOrigin.ResumeLayout(false);
+            this.groupBoxGameOrigin.PerformLayout();
             this.groupBoxSteamDBRes.ResumeLayout(false);
             this.groupBoxSteamDBRes.PerformLayout();
             this.groupBoxApi.ResumeLayout(false);
@@ -551,5 +621,10 @@
         private System.Windows.Forms.RadioButton radioButton460x215;
         private System.Windows.Forms.RadioButton radioButton600x900;
         private System.Windows.Forms.Label labelApi;
+        private System.Windows.Forms.RadioButton radioButtonSongs;
+        private System.Windows.Forms.TextBox textBoxCoverNumber;
+        private System.Windows.Forms.GroupBox groupBoxGameOrigin;
+        private System.Windows.Forms.RadioButton radioButtonGameOther;
+        private System.Windows.Forms.RadioButton radioButtonGameSteam;
     }
 }

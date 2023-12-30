@@ -74,3 +74,4 @@ C:\Users\Duoc\Documents\GitHub\cSharpLauncher\C#Launcher\obj\Debug\CoverPadLaunc
 C:\Users\Duoc\Documents\GitHub\cSharpLauncher\C#Launcher\obj\Debug\CoverPadLauncher.SearchCoversOnline.resources
 C:\Users\Duoc\Documents\GitHub\cSharpLauncher\C#Launcher\obj\Debug\CoverPadLauncher.Tags.resources
 D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\obj\Debug\CoverPadLauncher.Tutorial.resources
+D:\Bibliotecas\Documentos\GitHub\cSharpLauncher\C#Launcher\obj\Debug\CoverPadLauncher.About.resources

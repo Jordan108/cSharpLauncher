@@ -51,11 +51,13 @@
             this.herramientasToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.configuracionesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.buscarActualizacionToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ayudaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.abrirTutorialDeInicioRápidoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.abrirManualDeUsowebToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.acercaDeCoverPadLauncherToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.flowLayoutPanelMain = new System.Windows.Forms.FlowLayoutPanel();
             this.treeViewMain = new System.Windows.Forms.TreeView();
             this.splitter1 = new System.Windows.Forms.Splitter();
-            this.ayudaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.abrirTutorialDeInicioRápidoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panelTop.SuspendLayout();
             this.menuStripMain.SuspendLayout();
             this.SuspendLayout();
@@ -286,6 +288,38 @@
             this.buscarActualizacionToolStripMenuItem.Text = "Buscar actualizacion";
             this.buscarActualizacionToolStripMenuItem.Click += new System.EventHandler(this.buscarActualizacionToolStripMenuItem_Click);
             // 
+            // ayudaToolStripMenuItem
+            // 
+            this.ayudaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.abrirTutorialDeInicioRápidoToolStripMenuItem,
+            this.abrirManualDeUsowebToolStripMenuItem,
+            this.acercaDeCoverPadLauncherToolStripMenuItem});
+            this.ayudaToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Window;
+            this.ayudaToolStripMenuItem.Name = "ayudaToolStripMenuItem";
+            this.ayudaToolStripMenuItem.Size = new System.Drawing.Size(53, 22);
+            this.ayudaToolStripMenuItem.Text = "Ayuda";
+            // 
+            // abrirTutorialDeInicioRápidoToolStripMenuItem
+            // 
+            this.abrirTutorialDeInicioRápidoToolStripMenuItem.Name = "abrirTutorialDeInicioRápidoToolStripMenuItem";
+            this.abrirTutorialDeInicioRápidoToolStripMenuItem.Size = new System.Drawing.Size(235, 22);
+            this.abrirTutorialDeInicioRápidoToolStripMenuItem.Text = "Abrir tutorial de inicio rápido";
+            this.abrirTutorialDeInicioRápidoToolStripMenuItem.Click += new System.EventHandler(this.abrirTutorialDeInicioRápidoToolStripMenuItem_Click);
+            // 
+            // abrirManualDeUsowebToolStripMenuItem
+            // 
+            this.abrirManualDeUsowebToolStripMenuItem.Name = "abrirManualDeUsowebToolStripMenuItem";
+            this.abrirManualDeUsowebToolStripMenuItem.Size = new System.Drawing.Size(235, 22);
+            this.abrirManualDeUsowebToolStripMenuItem.Text = "Abrir manual de uso (web)";
+            this.abrirManualDeUsowebToolStripMenuItem.Click += new System.EventHandler(this.abrirManualDeUsowebToolStripMenuItem_Click);
+            // 
+            // acercaDeCoverPadLauncherToolStripMenuItem
+            // 
+            this.acercaDeCoverPadLauncherToolStripMenuItem.Name = "acercaDeCoverPadLauncherToolStripMenuItem";
+            this.acercaDeCoverPadLauncherToolStripMenuItem.Size = new System.Drawing.Size(235, 22);
+            this.acercaDeCoverPadLauncherToolStripMenuItem.Text = "Acerca de Cover Pad Launcher";
+            this.acercaDeCoverPadLauncherToolStripMenuItem.Click += new System.EventHandler(this.acercaDeCoverPadLauncherToolStripMenuItem_Click);
+            // 
             // flowLayoutPanelMain
             // 
             this.flowLayoutPanelMain.AutoScroll = true;
@@ -324,22 +358,6 @@
             this.splitter1.Size = new System.Drawing.Size(5, 586);
             this.splitter1.TabIndex = 3;
             this.splitter1.TabStop = false;
-            // 
-            // ayudaToolStripMenuItem
-            // 
-            this.ayudaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.abrirTutorialDeInicioRápidoToolStripMenuItem});
-            this.ayudaToolStripMenuItem.ForeColor = System.Drawing.SystemColors.Window;
-            this.ayudaToolStripMenuItem.Name = "ayudaToolStripMenuItem";
-            this.ayudaToolStripMenuItem.Size = new System.Drawing.Size(53, 22);
-            this.ayudaToolStripMenuItem.Text = "Ayuda";
-            // 
-            // abrirTutorialDeInicioRápidoToolStripMenuItem
-            // 
-            this.abrirTutorialDeInicioRápidoToolStripMenuItem.Name = "abrirTutorialDeInicioRápidoToolStripMenuItem";
-            this.abrirTutorialDeInicioRápidoToolStripMenuItem.Size = new System.Drawing.Size(226, 22);
-            this.abrirTutorialDeInicioRápidoToolStripMenuItem.Text = "Abrir tutorial de inicio rápido";
-            this.abrirTutorialDeInicioRápidoToolStripMenuItem.Click += new System.EventHandler(this.abrirTutorialDeInicioRápidoToolStripMenuItem_Click);
             // 
             // Home
             // 
@@ -395,5 +413,7 @@
         private System.Windows.Forms.ToolStripMenuItem buscarActualizacionToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ayudaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem abrirTutorialDeInicioRápidoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem acercaDeCoverPadLauncherToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem abrirManualDeUsowebToolStripMenuItem;
     }
 }

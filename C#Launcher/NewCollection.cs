@@ -444,6 +444,8 @@ namespace C_Launcher
             addResolution.ForeColor = theme.ButtonText;
             buttonSave.BackColor = theme.ButtonBackground;
             buttonSave.ForeColor = theme.ButtonText;
+            buttonCoverOnline.BackColor = theme.ButtonBackground;
+            buttonCoverOnline.ForeColor = theme.ButtonText;
 
             //Numeric UpDown
             numericScanStart.BackColor = theme.NumericBackground;

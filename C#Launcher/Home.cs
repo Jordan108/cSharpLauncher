@@ -876,7 +876,8 @@ namespace C_Launcher
                 Console.WriteLine($"renderer text {this.text}");
             }
 
-            readonly static Themes theme = new Themes("System\\Themes\\cyan.css");
+            //config = new Configurations();
+            //readonly static Themes theme = new Themes($"System\\Themes\\{config.ThemeName}.css");
 
 
             //Establecer color del fondo
@@ -1383,8 +1384,8 @@ namespace C_Launcher
             if (textBoxSearch.Text == "Buscar...")
             {
                 textBoxSearch.Text = "";
-                Color text = new Themes("System\\Themes\\cyan.css").TextBoxSearchText;
-                textBoxSearch.ForeColor = text;
+                //Color text = new Themes("System\\Themes\\cyan.css").TextBoxSearchText;
+                textBoxSearch.ForeColor = theme.TextBoxSearchText;
             }
         }
 
@@ -1394,8 +1395,8 @@ namespace C_Launcher
             if (textBoxSearch.Text.Length  == 0)
             {
                 textBoxSearch.Text = "Buscar...";
-                Color text = new Themes("System\\Themes\\cyan.css").TextBoxSearchTextEmpty;
-                textBoxSearch.ForeColor = text;
+                //Color text = new Themes("System\\Themes\\cyan.css").TextBoxSearchTextEmpty;
+                textBoxSearch.ForeColor = theme.TextBoxSearchText;
             }
         }
 
@@ -1425,6 +1426,8 @@ namespace C_Launcher
             viewDepth = config.LastDepth;//Ultima profundidad
 
             flowLayoutPanelMain.BackColor = theme.PanelBackground;
+
+            
 
             //searchBox
             textBoxSearch.BackColor = theme.TextBoxSearchBackground;
@@ -2904,6 +2907,21 @@ namespace C_Launcher
         {
             Tutorial tuto = new Tutorial();
             tuto.ShowDialog();
+        }
+
+        private void acercaDeCoverPadLauncherToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            About ab = new About();
+            ab.ShowDialog();
+        }
+
+        private void abrirManualDeUsowebToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            System.Diagnostics.Process.Start(new ProcessStartInfo
+            {
+                FileName = "http://www.webpage.com",
+                UseShellExecute = true
+            });
         }
 
 

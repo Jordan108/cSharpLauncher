@@ -61,13 +61,15 @@ namespace CoverPadLauncher
 
             //Texto
             labelTheme.ForeColor = theme.LabelText;
+            checkBoxPictureBoxRectangle.BackColor = theme.WindowBackground;
             checkBoxPictureBoxRectangle.ForeColor = theme.LabelText;
+            checkBoxUpdateCheck.BackColor = theme.WindowBackground;
+            checkBoxUpdateCheck.ForeColor = theme.ComboboxText;
 
             //Combobox
             comboBoxThemes.BackColor = theme.ComboboxBackground;
             comboBoxThemes.ForeColor = theme.ComboboxText;
-            checkBoxUpdateCheck.BackColor = theme.ComboboxBackground;
-            checkBoxUpdateCheck.ForeColor = theme.ComboboxText;
+            
 
             //Botones
             buttonSave.BackColor = theme.ButtonBackground;

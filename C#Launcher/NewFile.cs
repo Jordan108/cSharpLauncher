@@ -80,7 +80,7 @@ namespace C_Launcher
             if (checkBoxURL.Checked == true)
             {
                 labelFilePath.Text = "URL";
-                labelFilePath.Location = new Point(98, 164);
+                labelFilePath.Location = new Point(98, 103);
                 buttonSearchFile.Enabled = false;
                 labelOptional.Enabled = false;
                 labelProgramPath.Enabled = false;
@@ -337,7 +337,6 @@ namespace C_Launcher
             labelCMD.ForeColor = theme.LabelText;
             checkBoxFavorite.ForeColor = theme.LabelText;
             checkBoxURL.ForeColor = theme.LabelText;
-            BackgroundColorCheck.ForeColor = theme.LabelText;
             labelResolution.ForeColor = theme.LabelText;
             groupBoxSize.ForeColor = theme.LabelText;
             labelWidth.ForeColor = theme.LabelText;
@@ -345,12 +344,17 @@ namespace C_Launcher
             groupBoxImageFormat.ForeColor = theme.LabelText;
             radioButtonZoom.ForeColor = theme.LabelText;
             radioButtonEstreched.ForeColor = theme.LabelText;
+            labelOptional.ForeColor = theme.LabelText;
 
             //Combobox
             comboBoxFather.BackColor = theme.ComboboxBackground;
             comboBoxFather.ForeColor = theme.ComboboxText;
             comboBoxResolution.BackColor = theme.ComboboxBackground;
             comboBoxResolution.ForeColor = theme.ComboboxText;
+
+            //CheckBox
+            BackgroundColorCheck.ForeColor = theme.LabelText;
+            BackgroundColorCheck.BackColor = theme.WindowBackground;
 
             //Botones
             buttonSearchFile.BackColor = theme.ButtonBackground;
@@ -955,16 +959,14 @@ namespace C_Launcher
             {
                 labelFilePath.Text = "URL";
                 labelFilePath.Location = new Point(98, 103);
+                //Volver invisibles los inputs
                 buttonSearchFile.Enabled = false;
                 labelOptional.Enabled = false;
                 labelProgramPath.Enabled = false;
-                textBoxProgramPath.Enabled = false;
-                buttonSearchProgram.Enabled = false;
                 labelCMD.Enabled = false;
-                textBoxCMD.Enabled = false;
-                //Cambiar los colores de los inputs
-                textBoxProgramPath.BackColor = Color.FromArgb(55, 61, 72);
-                textBoxCMD.BackColor = Color.FromArgb(55, 61, 72);
+                buttonSearchProgram.Enabled = false;
+                textBoxProgramPath.Enabled = false;//BackColor = Color.FromArgb(55, 61, 72);
+                textBoxCMD.Enabled = false;//BackColor = Color.FromArgb(55, 61, 72);
             } else
             {
                 labelFilePath.Text = "Ruta del archivo";
@@ -976,9 +978,9 @@ namespace C_Launcher
                 buttonSearchProgram.Enabled = true;
                 labelCMD.Enabled = true;
                 textBoxCMD.Enabled = true;
-                //Cambiar los colores de los inputs
-                textBoxProgramPath.BackColor = Color.FromArgb(36, 40, 47);
-                textBoxCMD.BackColor = Color.FromArgb(36, 40, 47);
+                //Volver visibles los inputs
+                //textBoxProgramPath.Visible = true;//BackColor = Color.FromArgb(36, 40, 47);
+                //textBoxCMD.Visible = true;//BackColor = Color.FromArgb(36, 40, 47);
             }
         }
 
