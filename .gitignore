@@ -12,3 +12,5 @@ C\#Launcher/bin/Debug/env.txt
 C\#Launcher/Clases/EnvironmentKeys.cs
 Updater/CoverPadLauncher-Updater/
 C\#Launcher/bin/Debug/System/Elements.xml
+C\#Launcher/bin/Debug/System/Tags.xml
+C\#Launcher/bin/Debug/System/ScannedDirs.xml

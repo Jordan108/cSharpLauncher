@@ -999,20 +999,20 @@ namespace C_Launcher
                 
 
                 string nameFile = dataGridViewFiles.Rows[i].Cells[0].Value?.ToString();
-                string cellImgPath = dataGridViewFiles.Rows[i].Cells[8].Value?.ToString();
+                string imgPath = dataGridViewFiles.Rows[i].Cells[8].Value?.ToString();
                 //Evitar que se guarde la imagen con caracteres invalidos
-                string cleanName = Path.GetInvalidFileNameChars().Aggregate(nameFile, (current, c) => current.Replace(c.ToString(), string.Empty));
-                string imgPath = "";
+                //string cleanName = Path.GetInvalidFileNameChars().Aggregate(nameFile, (current, c) => current.Replace(c.ToString(), string.Empty));
+                //string imgPath = "";
 
                 //Guardar la imagen
-                if (cellImgPath != "")
+                /*if (cellImgPath != "")
                 {
                     /*if (checkBoxImageLocation.Checked == true)
                     {
                         imgPath = pictureBoxCover.Tag.ToString();
                     }
                     else
-                    {*/
+                    {*//*
                         //string outputFolder = System.Environment.CurrentDirectory + "\\System\\Covers";
                         string outputFolder = coverPath;
 
@@ -1026,7 +1026,7 @@ namespace C_Launcher
 
                         string source = cellImgPath;
                         //Solo reemplazar una imagen si esta existe o si la imagen de origen no es la misma que el destino
-                        if ((imgPath != "") && (imgPath != null) && (source != imgPath) && (source != null) && (source != ""))
+                        if ((imgPath != "") && (imgPath != null) && (source != imgPath))
                         {
                         //Las imagenes webp no pueden ser copiadas y pegadas a un formato png, deben ser transformadas y guardadas dentro de un objeto
                             if (Path.GetExtension(source).ToLower() == ".webp")
@@ -1059,7 +1059,7 @@ namespace C_Launcher
                             }
                         }
                    // }
-                }
+                }*/
 
                 //Image layout
                 int imgLayout = 0;
